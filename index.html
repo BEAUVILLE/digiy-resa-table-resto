@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>DIGIY RÉSA — Réservation de Tables</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="DIGIY RÉSA — Plateforme de réservation de tables en ligne.">
+
+    <style>
+        :root{
+            --bg:#020617;
+            --bg-soft:#020818;
+            --card:#030712;
+            --accent:#facc15;
+            --accent-soft:#f97316;
+            --accent-green:#22c55e;
+            --ink:#f9fafb;
+            --muted:#cbd5f5;
+            --line:#1f2937;
+            --shadow-soft:0 20px 45px rgba(15,23,42,0.9);
+        }
+        *{
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+            font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
+        }
+        body{
+            min-height:100vh;
+            background:
+                radial-gradient(circle at top,rgba(34,197,94,0.16),transparent 60%),
+                radial-gradient(circle at bottom,rgba(250,204,21,0.16),transparent 55%),
+                #020617;
+            color:var(--ink);
+            display:flex;
+            justify-content:center;
+            padding:10px;
+            font-size:16px; 
+        }
+        .app{
+            width:100%;
+            max-width:1100px;
+            min-height:100vh;
+            background:linear-gradient(135deg,#020617 0%,#020818 50%,#020617 100%);
+            border-radius:24px;
+            border:1px solid rgba(148,163,184,0.25);
+            box-shadow:var(--shadow-soft);
+            padding:16px 16px 22px;
+            display:flex;
+            flex-direction:column;
+            position:relative;
+            overflow:hidden;
+        }
+        .app::before{
+            content:"";
+            position:absolute;
+            inset:-40%;
+            background:
+                radial-gradient(circle at 0% 0%,rgba(34,197,94,0.14),transparent 55%),
+                radial-gradient(circle at 100% 100%,rgba(250,204,21,0.14),transparent 45%);
+            opacity:0.8;
+            pointer-events:none;
+        }
+        header{
+            position:relative;
+            z-index:2;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:12px;
+        }
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+        .brand-logo{
+            width:42px;
+            height:42px;
+            border-radius:14px;
+            background:radial-gradient(circle at 30% 0%,#22c55e,#15803d);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:24px;
+            box-shadow:0 12px 30px rgba(34,197,94,0.65);
+        }
+        .brand-text-title{
+            font-size:20px;
+            font-weight:900;
+            letter-spacing:0.09em;
+            text-transform:uppercase;
+            color:var(--accent-green);
+        }
+        .brand-text-sub{
+            font-size:14px; 
+            color:var(--muted);
+            font-weight:600;
+        }
+
+        .back-link{
+            font-size:13px; 
+            color:var(--muted);
+            text-decoration:none;
+            background:rgba(15,23,42,0.9);
+            border-radius:999px;
+            border:1px solid rgba(148,163,184,0.6);
+            padding:8px 14px; 
+            font-weight:700;
+        }
+
+        main{
+            position:relative;
+            z-index:2;
+            flex:1;
+            display:flex;
+            flex-direction:column;
+            gap:14px;
+        }
+
+        .hero{
+            background:radial-gradient(circle at top left,rgba(34,197,94,0.18),rgba(3,7,18,0.96));
+            border-radius:22px;
+            border:1px solid rgba(148,163,184,0.6);
+            padding:16px;
+            box-shadow:0 18px 44px rgba(15,23,42,0.95);
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+        .hero-title{
+            font-size:26px; 
+            font-weight:900;
+            color:var(--accent);
+        }
+        .hero-title span{
+             color:var(--accent-green);
+        }
+        
+        .hero-sub{
+            font-size:16px; 
+            color:#e5e7eb;
+            max-width:620px;
+            font-weight:500;
+            line-height:1.6; 
+        }
+        .hero-sub strong{
+            font-weight:800;
+            color:var(--accent-green);
+        }
+        .hero-tags{
+            display:flex;
+            flex-wrap:wrap;
+            gap:7px;
+            margin-top:4px;
+        }
+        .hero-tag{
+            font-size:13px;
+            padding:5px 11px;
+            border-radius:999px;
+            border:1px solid rgba(148,163,184,0.7);
+            background:rgba(15,23,42,0.95);
+            color:#e5e7eb;
+            font-weight:600;
+        }
+        .hero-tag strong{
+            color:var(--accent-green);
+            font-weight:800;
+        }
+
+        .grid{
+            margin-top:14px; 
+            display:grid;
+            grid-template-columns:repeat(3,minmax(0,1fr));
+            gap:14px; 
+        }
+        @media(max-width:900px){
+            .grid{
+                grid-template-columns:repeat(2,minmax(0,1fr));
+            }
+        }
+        @media(max-width:640px){
+            .app{
+                border-radius:0;
+                border:none;
+                box-shadow:none;
+            }
+            .grid{
+                grid-template-columns:1fr;
+                gap:20px; 
+            }
+        }
+
+        .shop-card{
+            background:radial-gradient(circle at top,rgba(15,23,42,0.98),#020617);
+            border-radius:24px; 
+            border:1px solid rgba(148,163,184,0.7);
+            padding:12px;
+            box-shadow:0 14px 34px rgba(15,23,42,0.95);
+            display:flex;
+            flex-direction:column;
+            gap:10px; 
+            position:relative;
+        }
+        .shop-head{
+            display:flex;
+            justify-content:space-between;
+        }
+        .shop-name{
+            font-size:22px; 
+            font-weight:900; 
+            color:var(--accent-green);
+        }
+        .shop-type{
+            font-size:15px; 
+            color:#facc15;
+            font-weight:600;
+        }
+        .shop-badge{
+            font-size:12px; 
+            padding:5px 9px;
+            border-radius:999px;
+            border:1px solid rgba(250,204,21,0.9);
+            color:var(--accent);
+            background:rgba(15,23,42,0.98);
+        }
+
+        .shop-photo{
+            border-radius:16px; 
+            overflow:hidden;
+            height:220px; 
+            border:2px solid rgba(250,204,21,0.85);
+        }
+        .shop-photo img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+        }
+
+        .shop-desc{
+            font-size:15px; 
+            color:#f3f4f6;
+            font-weight:500;
+        }
+
+        .shop-meta{
+            font-size:14px; 
+            color:#e5e7eb;
+        }
+
+        .shop-actions{
+            margin-top:10px;
+            display:flex;
+            gap:10px;
+            flex-wrap:wrap;
+        }
+        .btn{
+            border:none;
+            border-radius:999px;
+            padding:10px 14px;
+            font-size:14px; 
+            font-weight:900; 
+            cursor:pointer;
+            flex:1;
+            text-align:center;
+        }
+        .btn-resa{
+            background:linear-gradient(135deg,#facc15,#f97316);
+            color:#111827;
+            box-shadow:0 7px 18px rgba(250,204,21,0.55);
+        }
+        .btn-wa{
+            background:rgba(22,163,74,0.2);
+            color:#bbf7d0;
+            border:1px solid rgba(34,197,94,0.85);
+        }
+
+        footer{
+            margin-top:16px;
+            font-size:12px; 
+            color:var(--muted);
+            display:flex;
+            justify-content:space-between;
+            flex-wrap:wrap;
+        }
+        footer span{
+            color:var(--accent);
+        }
+    </style>
+</head>
+
+<body>
+<div class="app">
+
+    <header>
+        <div class="brand">
+            <div class="brand-logo">📅</div>
+            <div>
+                <div class="brand-text-title">DIGIY RÉSA</div>
+                <div class="brand-text-sub">Réservation de Tables en ligne</div>
+            </div>
+        </div>
+        <a href="index.html" class="back-link">← Retour DIGIY HUB</a>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <div class="hero-title">
+                Réservation de tables chez nos <span>Partenaires</span>
+            </div>
+            <div class="hero-sub">
+                Trouvez, réservez et confirmez votre table instantanément.
+                Service client par <strong>WhatsApp</strong>.
+            </div>
+
+            <div class="hero-tags">
+                <div class="hero-tag"><strong>Confirmation Immédiate</strong></div>
+                <div class="hero-tag">Groupes & Événements</div>
+                <div class="hero-tag">Service 7j/7</div>
+            </div>
+        </section>
+
+        <section class="grid">
+
+            <!-- —— RESTAURANT CARD 1 —— -->
+            <article class="shop-card">
+                <div class="shop-head">
+                    <div>
+                        <div class="shop-name">L'Ambiance</div>
+                        <div class="shop-type">Gastronomie Française • Saly</div>
+                    </div>
+                    <div class="shop-badge">Haut de gamme</div>
+                </div>
+
+                <div class="shop-photo">
+                    <img src="https://images.unsplash.com/photo-1550968603-f11654e580e0?auto=format&fit=crop&w=800&q=80">
+                </div>
+
+                <p class="shop-desc">
+                    Cuisine française raffinée avec une touche locale.
+                </p>
+
+                <div class="shop-meta">
+                    Réservations : Mardi → Samedi (19h-23h)
+                </div>
+
+                <div class="shop-actions">
+                    <a class="btn btn-resa" href="https://lien-fictif-reservation/lambiance" target="_blank">
+                        Réserver une table
+                    </a>
+                    <button class="btn btn-wa"
+                        onclick="openWa('+221771112233','Bonjour, je souhaite réserver une table à L\\'Ambiance via DIGIY RÉSA.')">
+                        💬 WhatsApp
+                    </button>
+                </div>
+            </article>
+
+            <!-- —— RESTAURANT CARD 2 —— -->
+            <article class="shop-card">
+                <div class="shop-head">
+                    <div>
+                        <div class="shop-name">Le Tapis Rouge</div>
+                        <div class="shop-type">Asiatique Fusion • Dakar</div>
+                    </div>
+                    <div class="shop-badge">Vue panoramique</div>
+                </div>
+
+                <div class="shop-photo">
+                    <img src="https://images.unsplash.com/photo-1517248135460-4c311c6d9a1e?auto=format&fit=crop&w=800&q=80">
+                </div>
+
+                <p class="shop-desc">
+                    Fusion japonaise & vietnamienne avec terrasse panoramique.
+                </p>
+
+                <div class="shop-meta">
+                    Ouvert 7j/7 (12h-15h & 19h-00h)
+                </div>
+
+                <div class="shop-actions">
+                    <a class="btn btn-resa" href="https://lien-fictif-reservation/tapisrouge" target="_blank">
+                        Réserver une table
+                    </a>
+                    <button class="btn btn-wa"
+                        onclick="openWa('+221773334455','Bonjour, je souhaite réserver une table au Tapis Rouge via DIGIY RÉSA.')">
+                        💬 WhatsApp
+                    </button>
+                </div>
+            </article>
+
+            <!-- —— RESTAURANT CARD 3 —— -->
+            <article class="shop-card">
+                <div class="shop-head">
+                    <div>
+                        <div class="shop-name">La Cabane du Pêcheur</div>
+                        <div class="shop-type">Poissons & Fruits de mer • Mbour</div>
+                    </div>
+                    <div class="shop-badge">Pieds dans l'eau</div>
+                </div>
+
+                <div class="shop-photo">
+                    <img src="https://images.unsplash.com/photo-1549887534-1541e932668e?auto=format&fit=crop&w=800&q=80">
+                </div>
+
+                <p class="shop-desc">
+                    Poisson frais du jour, homards grillés, ambiance plage.
+                </p>
+
+                <div class="shop-meta">
+                    Service continu — 7j/7 — 10h→22h
+                </div>
+
+                <div class="shop-actions">
+                    <a class="btn btn-resa" href="https://lien-fictif-reservation/cabanepecheur" target="_blank">
+                        Réserver une table
+                    </a>
+                    <button class="btn btn-wa"
+                        onclick="openWa('+221776667788','Bonjour, je souhaite réserver une table à La Cabane du Pêcheur via DIGIY RÉSA.')">
+                        💬 WhatsApp
+                    </button>
+                </div>
+            </article>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <div>DIGIY RÉSA • <span>Super App DIGIYLYFE</span></div>
+        <div>Réservation de tables simple et rapide.</div>
+    </footer>
+</div>
+
+<script>
+function openWa(phone, message){
+    const txt = encodeURIComponent(message || "");
+    const clean = phone.replace(/\s+/g,"");
+    window.open(
+        "https://wa.me/" + clean.replace("+","") + (txt ? ("?text=" + txt) : ""),
+        "_blank"
+    );
+}
+</script>
+
+</body>
+</html>
