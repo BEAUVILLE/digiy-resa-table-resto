@@ -1,0 +1,53 @@
+DIGIY RÉSA — Réservation de Tables en Ligne
+Super App DIGIYLYFE • Sénégal → Afrique • 0% commission
+
+DIGIY RÉSA est la vitrine officielle des restaurants et espaces partenaires permettant aux clients de réserver une table instantanément, sans commission, sans détours, avec un service fluide et moderne.
+
+L’objectif :
+🔥 mettre en valeur chaque partenaire
+🔥 offrir une expérience premium aux clients
+🔥 garder 100% des revenus pour le restaurant
+
+🚀 Fonctionnalités
+
+Galerie des restaurants partenaires DIGIY.
+
+Fiches détaillées : photos, descriptions, horaires, catégories.
+
+Bouton Réserver une Table (lien externe ou page DIGIY si activée).
+
+Bouton WhatsApp Direct avec message pré-rempli.
+
+Interface 100% mobile-first (optimisée téléphones).
+
+Design premium DIGIY (Or + Vert Sénégal).
+
+Aucun backend requis pour la version statique → ultra légère, ultra rapide.
+
+🧩 Arborescence du projet
+DIGIY-RESA/
+│── index.html      → Page principale (galerie de restaurants)
+│── README.md       → Documentation du projet
+│── /assets         → (optionnel) Images locales si ajoutées
+
+🍽️ Concept DIGIY RÉSA
+
+La philosophie est simple :
+
+🔸 1. Le restaurateur reste maître de son argent
+
+DIGIY n’encaisse rien →
+Paiement direct, 0% commission.
+
+🔸 2. Le client réserve en quelques secondes
+
+Choix → Vue → Réservation → WhatsApp.
+Tout est pensé pour la rapidité et la simplicité.
+
+🔸 3. Vitrine digitale gratuite
+
+Chaque partenaire gagne une présence DIGIY :
+📸 photo
+📋 description
+📞 WhatsApp direct
+🌍 localisation (option)
