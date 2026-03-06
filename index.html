@@ -1,1188 +1,889 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <title>DIGIY RESA — Réserver simplement</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="DIGIY RESA : établissements visibles, réservation simple, contact direct, accueil sérieux.">
-  <meta name="robots" content="index,follow">
-  <meta name="theme-color" content="#07140f">
-
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="preconnect" href="https://wesqmwjjtsefyjnluosj.supabase.co" crossorigin>
+  <meta charset="utf-8" />
+  <title>DIGIY RESA TABLE — Vitrine Saly</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="DIGIY RESA TABLE — Vitrine publique des établissements à Saly. Réservation simple, contact direct, visibilité locale." />
+  <meta name="theme-color" content="#061b14" />
+  <meta name="robots" content="index,follow" />
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root{
-      --bg:#07140f;
-      --bg2:#0b1d15;
-      --card:#10241b;
-      --card-2:#0d2018;
-      --line:rgba(255,255,255,.10);
-      --text:#ecfff4;
-      --muted:rgba(236,255,244,.72);
-      --primary:#22c55e;
-      --primary-2:#16a34a;
+      --bg:#061b14;
+      --ink:#F4FFF8;
+      --muted:#CFE9D7;
+      --line:rgba(148,163,184,.20);
       --gold:#facc15;
-      --gold-soft:rgba(250,204,21,.12);
-      --shadow:0 20px 60px rgba(0,0,0,.38);
+      --green:#22c55e;
+      --orange:#f97316;
+      --shadow:0 18px 55px rgba(0,0,0,.42);
+      --fs-hero: 38px;
+      --fs-sub: 16px;
+      --lh:1.55;
     }
-
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    }
-
-    html{scroll-behavior:smooth}
-
+    *{ box-sizing:border-box; margin:0; padding:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
     body{
       min-height:100vh;
       background:
-        radial-gradient(circle at top, rgba(250,204,21,.08) 0, transparent 50%),
-        radial-gradient(circle at 20% 10%, rgba(34,197,94,.10) 0, transparent 45%),
-        linear-gradient(180deg, #07140f 0%, #05100c 55%, #040b08 100%);
-      color:var(--text);
-      display:flex;
-      flex-direction:column;
+        radial-gradient(circle at top, rgba(250,204,21,.10) 0, transparent 55%),
+        radial-gradient(circle at 18% 10%, rgba(34,197,94,.10) 0, transparent 55%),
+        radial-gradient(circle at top,#0b2218 0,#061b14 50%,#04110d 100%);
+      color:var(--ink);
     }
-
-    .page{
-      max-width:1140px;
-      width:100%;
-      margin:0 auto;
-      padding:18px 16px 42px;
-    }
-
-    :root{
-      --fs-hero:42px;
-      --fs-sub:18px;
-      --fs-body:16px;
-      --fs-small:13px;
-      --lh:1.55;
-    }
-
-    @media(max-width:860px){
-      :root{
-        --fs-hero:35px;
-        --fs-sub:17px;
-        --fs-body:16px;
-        --fs-small:13px;
-      }
-    }
-
-    @media(max-width:600px){
-      :root{
-        --fs-hero:30px;
-        --fs-sub:16px;
-        --fs-body:16px;
-        --fs-small:13px;
-      }
-      .page{ padding:16px 14px 40px; }
-    }
+    .page{ max-width:1100px; margin:0 auto; padding:16px 14px 42px; }
+    @media(max-width:860px){ :root{ --fs-hero: 32px; } }
+    @media(max-width:600px){ :root{ --fs-hero: 28px; --fs-sub: 15px; } .page{ padding:14px 12px 38px; } }
 
     .nav{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:10px 0 14px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding:10px 0 14px;
       border-bottom:1px solid rgba(255,255,255,.06);
-      margin-bottom:14px;
+      margin-bottom:14px; flex-wrap:wrap;
     }
-
-    .nav-left{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:0;
-    }
-
+    .nav-left{ display:flex; align-items:center; gap:12px; min-width:0; }
     .logo-badge{
-      width:42px;
-      height:42px;
-      border-radius:16px;
-      background:radial-gradient(circle at 30% 20%,#facc15,#22c55e);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#07140f;
-      font-weight:1000;
-      font-size:20px;
-      box-shadow:0 10px 26px rgba(34,197,94,0.28);
+      width:42px;height:42px;border-radius:16px;
+      background:radial-gradient(circle at 30% 20%,var(--gold),var(--orange));
+      display:flex; align-items:center; justify-content:center;
+      color:#04110d; font-weight:1000; font-size:18px;
+      box-shadow:0 10px 26px rgba(250,204,21,0.40);
       flex:0 0 auto;
     }
-
-    .logo-text{ min-width:0; }
-
-    .logo-text-title{
-      font-size:17px;
-      font-weight:950;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      line-height:1.15;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+    .logo-title{
+      font-size:16px; font-weight:950; letter-spacing:.10em;
+      text-transform:uppercase; line-height:1.1;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      max-width:min(62vw, 520px);
     }
-
-    .logo-text-sub{
-      font-size:13px;
-      color:var(--muted);
-      font-weight:800;
-      margin-top:2px;
-    }
-
-    .nav-right{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
+    .logo-sub{ font-size:12px; color:var(--muted); font-weight:850; margin-top:2px; }
+    .nav-right{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
 
     .pill{
-      border-radius:999px;
-      padding:8px 12px;
-      font-size:12px;
-      font-weight:950;
-      border:1px solid rgba(203,213,225,0.24);
-      color:var(--muted);
-      display:flex;
-      align-items:center;
-      gap:8px;
+      border-radius:999px; padding:8px 12px;
+      font-size:12px; font-weight:950;
+      border:1px solid rgba(203,213,225,0.35);
+      color:rgba(234,255,241,.92);
+      display:inline-flex; align-items:center; gap:8px;
       background:rgba(2,6,23,.22);
     }
-
-    .pill span.dot{
-      width:8px;
-      height:8px;
-      border-radius:999px;
-      background:var(--primary);
-      box-shadow:0 0 0 4px rgba(34,197,94,.10);
+    .pill .dot{ width:8px;height:8px;border-radius:999px; background:var(--green); box-shadow:0 0 0 4px rgba(34,197,94,.12); }
+    a.btn-small{
+      border-radius:999px; padding:10px 14px;
+      font-size:13px; font-weight:950;
+      border:1px solid rgba(203,213,225,0.32);
+      background:rgba(15,23,42,0.32);
+      color:var(--ink); text-decoration:none;
+      display:inline-flex; align-items:center; gap:8px;
+      white-space:nowrap; line-height:1;
     }
-
-    .btn-small{
-      border-radius:999px;
-      padding:10px 14px;
-      font-size:13px;
-      font-weight:950;
-      border:1px solid rgba(203,213,225,0.22);
-      background:rgba(15,23,42,0.42);
-      color:var(--text);
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      line-height:1;
-      white-space:nowrap;
-    }
-
-    .btn-small.primary{
+    a.btn-small.primary{
       border:none;
-      background:linear-gradient(135deg,#22c55e,#16a34a);
-      color:#041b12;
-      box-shadow:0 10px 26px rgba(34,197,94,0.28);
+      background:linear-gradient(135deg,var(--gold),var(--orange));
+      color:#04110d;
+      box-shadow:0 10px 26px rgba(250,204,21,0.35);
     }
 
     .hero{
-      display:grid;
-      grid-template-columns:minmax(0,1.25fr) minmax(0,.95fr);
-      gap:24px;
-      margin-top:16px;
-      align-items:center;
-    }
-
-    @media(max-width:900px){
-      .hero{ grid-template-columns:1fr; }
-    }
-
-    .hero-title{
-      font-size:var(--fs-hero);
-      line-height:1.10;
-      font-weight:1000;
-      margin-bottom:12px;
-      letter-spacing:-0.02em;
-    }
-
-    .hero-title .highlight{
-      background:linear-gradient(135deg,#facc15,#22c55e);
-      -webkit-background-clip:text;
-      color:transparent;
-    }
-
-    .hero-sub{
-      font-size:var(--fs-sub);
-      color:var(--muted);
-      margin-bottom:16px;
-      line-height:var(--lh);
-      font-weight:850;
-      max-width:62ch;
-    }
-
-    .hero-badges{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-bottom:16px;
-      font-size:13px;
-    }
-
-    .hero-badge{
-      border-radius:999px;
-      padding:8px 12px;
-      border:1px solid rgba(203,213,225,0.20);
-      color:var(--muted);
-      font-weight:950;
-      background:rgba(2,6,23,.24);
-    }
-
-    .hero-badge span{
-      color:var(--primary);
-      font-weight:1000;
-    }
-
-    .hero-cta{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      margin-bottom:12px;
-    }
-
-    .btn-hero-primary,
-    .btn-hero-secondary{
-      border-radius:999px;
-      padding:14px 18px;
-      font-size:15px;
-      font-weight:1000;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      cursor:pointer;
-      line-height:1;
-    }
-
-    .btn-hero-primary{
-      border:none;
-      background:linear-gradient(135deg,#22c55e,#16a34a);
-      color:#041b12;
-      box-shadow:0 14px 34px rgba(34,197,94,0.32);
-    }
-
-    .btn-hero-secondary{
-      border:1px solid rgba(203,213,225,0.22);
-      color:var(--text);
-      background:rgba(15,23,42,0.42);
-    }
-
-    .hero-note{
-      font-size:var(--fs-small);
-      color:var(--muted);
-      font-weight:850;
-      line-height:var(--lh);
-    }
-
-    .hero-card{
-      border-radius:24px;
+      margin-top:16px; border-radius:24px;
       border:1px solid rgba(255,255,255,.10);
-      background:rgba(11,17,32,.42);
-      padding:14px;
+      background:rgba(7,24,17,.55);
       box-shadow:var(--shadow);
+      padding:18px 16px; overflow:hidden; position:relative;
     }
-
-    .hero-card-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:10px;
-      font-size:12px;
-      color:var(--muted);
-      font-weight:950;
-    }
-
-    .chip-online{
-      border-radius:999px;
-      padding:6px 10px;
-      border:1px solid rgba(203,213,225,0.20);
-      display:flex;
-      align-items:center;
-      gap:8px;
-      font-size:11px;
-      font-weight:950;
-      background:rgba(2,6,23,.24);
-    }
-
-    .chip-online .dot{
-      width:10px;
-      height:10px;
-      border-radius:999px;
-      background:var(--primary);
-      box-shadow:0 0 0 0 rgba(34,197,94,0.5);
-      animation:pulse 1.6s infinite;
-    }
-
-    @keyframes pulse{
-      0%{box-shadow:0 0 0 0 rgba(34,197,94,0.45);}
-      70%{box-shadow:0 0 0 12px rgba(34,197,94,0);}
-      100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}
-    }
-
-    .fake-place{
-      border-radius:18px;
-      border:1px solid rgba(203,213,225,0.12);
-      overflow:hidden;
-      background:rgba(2,6,23,0.45);
-    }
-
-    .fake-place-cover{
-      height:180px;
+    .hero:before{
+      content:""; position:absolute; inset:-1px;
       background:
-        radial-gradient(circle at 20% 10%, rgba(250,204,21,.18), transparent 32%),
-        radial-gradient(circle at 75% 20%, rgba(34,197,94,.14), transparent 28%),
-        linear-gradient(180deg,#1f2937,#0b1120);
-      display:grid;
-      place-items:center;
-      font-size:40px;
-      font-weight:1000;
+        radial-gradient(700px 360px at 20% -10%, rgba(34,197,94,.18), transparent 65%),
+        radial-gradient(700px 360px at 110% 0%, rgba(250,204,21,.14), transparent 60%);
+      pointer-events:none;
     }
-
-    .fake-place-body{
-      padding:14px;
-    }
-
-    .fake-place-title{
-      font-size:18px;
-      font-weight:1000;
-      margin-bottom:6px;
-    }
-
-    .fake-place-sub{
-      font-size:13px;
-      color:var(--muted);
-      font-weight:850;
-      line-height:1.5;
-      margin-bottom:10px;
-    }
-
-    .fake-place-chips{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-bottom:10px;
-    }
-
-    .fake-chip{
-      padding:7px 10px;
-      border-radius:999px;
+    .hero-inner{ position:relative; display:grid; grid-template-columns:1.2fr 0.8fr; gap:14px; align-items:center; }
+    @media(max-width:900px){ .hero-inner{ grid-template-columns:1fr; } }
+    .hero h1{ font-size:var(--fs-hero); line-height:1.12; font-weight:1000; letter-spacing:-0.01em; margin-bottom:10px; }
+    .hero h1 .hl{ background:linear-gradient(135deg,var(--gold),var(--green)); -webkit-background-clip:text; color:transparent; }
+    .hero p{ font-size:var(--fs-sub); color:var(--muted); line-height:var(--lh); font-weight:850; max-width:70ch; }
+    .hero-badges{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+    .hero-badge{
+      border-radius:999px; padding:8px 12px;
+      border:1px solid rgba(203,213,225,0.28);
+      color:var(--muted); font-weight:950;
+      background:rgba(2,6,23,.25);
       font-size:12px;
-      font-weight:900;
-      border:1px solid rgba(203,213,225,0.18);
-      background:rgba(15,23,42,.42);
-      color:var(--muted);
+    }
+    .hero-badge b{ color:var(--green); font-weight:1000; }
+
+    .hero-box{ border-radius:18px; border:1px solid rgba(203,213,225,0.16); background:rgba(2,6,23,.28); padding:14px; }
+    .hero-box .kpi{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
+    .kpi .chip{
+      border-radius:14px; border:1px solid rgba(203,213,225,0.16);
+      background:rgba(15,23,42,.30);
+      padding:10px 10px; font-size:12px;
+      color:var(--muted); font-weight:950;
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+    }
+    .kpi .chip .v{ color:var(--gold); font-weight:1000; white-space:nowrap; }
+
+    .statsbar{
+      margin-top:12px; border-radius:18px;
+      border:1px solid rgba(203,213,225,0.14);
+      background:rgba(2,6,23,.24);
+      padding:10px 12px;
+      display:flex; gap:10px; flex-wrap:wrap;
+      align-items:center; justify-content:space-between;
+    }
+    .statsbar .left{ font-weight:1000; color:rgba(234,255,241,.92); display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .statsbar .left .sep{ opacity:.5; }
+    .statsbar .right{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .stats-pill{
+      font-size:12px; padding:6px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(15,23,42,.28);
+      color:var(--muted); font-weight:950;
+    }
+    .stats-pill.good{ border-color: rgba(34,197,94,.30); color:#bfffe0; }
+    .stats-pill.warn{ border-color: rgba(249,115,22,.30); color:#ffe0c2; }
+
+    .controls{ margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between; }
+    .searchRow{ display:flex; gap:10px; flex:1; min-width:260px; }
+    .input{
+      flex:1; background:rgba(2,6,23,.28);
+      border:1px solid rgba(203,213,225,0.20);
+      color:var(--ink); border-radius:14px;
+      padding:12px 12px; outline:none;
+      font-weight:900; font-size:14px;
+    }
+    .input:focus{ border-color: rgba(250,204,21,.55); box-shadow:0 0 0 3px rgba(250,204,21,.12); }
+    .select{
+      background:rgba(2,6,23,.28);
+      border:1px solid rgba(203,213,225,0.20);
+      color:var(--ink); border-radius:14px;
+      padding:12px 12px; outline:none;
+      font-weight:900; font-size:14px; min-width:190px;
     }
 
-    .fake-place-text{
-      font-size:14px;
-      color:rgba(236,255,244,.92);
-      line-height:1.55;
-      font-weight:850;
-    }
+    .section{ margin-top:18px; }
+    .section-title{ font-size:18px; font-weight:1000; margin:12px 0 10px; letter-spacing:-0.01em; }
+    .muted{ color:var(--muted); font-weight:850; line-height:1.55; }
 
-    .section{
-      margin-top:34px;
-    }
-
-    .section-title{
-      font-size:22px;
-      font-weight:1000;
-      margin-bottom:10px;
-      letter-spacing:-0.01em;
-    }
-
-    .section-sub{
-      font-size:16px;
-      color:var(--muted);
-      margin-bottom:18px;
-      line-height:var(--lh);
-      font-weight:850;
-      max-width:75ch;
-    }
-
-    .grid-3{
+    .grid{
+      margin-top:10px;
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
       gap:14px;
     }
-
-    @media(max-width:900px){
-      .grid-3{ grid-template-columns:1fr; }
-    }
+    @media(max-width:980px){ .grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media(max-width:640px){ .grid{ grid-template-columns:1fr; } }
 
     .card{
-      border-radius:20px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(11,17,32,.42);
-      padding:16px 14px 14px;
-      box-shadow:0 14px 40px rgba(0,0,0,.25);
-    }
-
-    .card-emoji{
-      font-size:22px;
-      margin-bottom:6px;
-    }
-
-    .card h3{
-      font-size:18px;
-      font-weight:1000;
-      margin-bottom:8px;
-    }
-
-    .card p{
-      font-size:15px;
-      color:var(--muted);
-      font-weight:850;
-      line-height:var(--lh);
-    }
-
-    .list{
-      margin-top:10px;
-      font-size:14px;
-      color:var(--muted);
-      font-weight:850;
-      line-height:1.5;
-    }
-
-    .list li{
-      margin-left:18px;
-      margin-bottom:6px;
-    }
-
-    .places{
-      margin-top:36px;
       border-radius:22px;
       border:1px solid rgba(255,255,255,.10);
-      background:rgba(11,17,32,.36);
-      padding:18px 14px;
-      box-shadow:0 14px 40px rgba(0,0,0,.25);
-    }
-
-    .places-head{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:12px;
-    }
-
-    .places-head h2{
-      margin:0;
-      font-size:22px;
-      font-weight:1000;
-    }
-
-    .places-head p{
-      margin:0;
-      color:var(--muted);
-      font-weight:850;
-    }
-
-    .places-tools{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      margin:12px 0 14px;
-    }
-
-    .place-input{
-      flex:1;
-      min-width:240px;
-      padding:12px 14px;
-      border-radius:14px;
-      border:1px solid rgba(203,213,225,0.16);
-      background:rgba(2,6,23,.36);
-      color:var(--text);
-      outline:none;
-    }
-
-    .place-input::placeholder{
-      color:rgba(236,255,244,.40);
-      font-weight:800;
-    }
-
-    .places-grid{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:12px;
-    }
-
-    @media(max-width:980px){
-      .places-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
-    }
-
-    @media(max-width:640px){
-      .places-grid{ grid-template-columns:1fr; }
-    }
-
-    .pcard{
-      border-radius:20px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(2,6,23,.42);
+      background:rgba(7,24,17,.55);
+      box-shadow:0 14px 40px rgba(0,0,0,.35);
       overflow:hidden;
-      box-shadow:0 14px 40px rgba(0,0,0,.20);
-    }
-
-    .pcard-cover{
+      display:flex;
+      flex-direction:column;
+      min-height:100%;
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
       position:relative;
-      height:190px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)),
-        #0f172a;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      overflow:hidden;
+    }
+    .card:hover{
+      transform:translateY(-3px);
+      border-color: rgba(250,204,21,.28);
+      box-shadow:0 18px 48px rgba(0,0,0,.45);
     }
 
-    .pcard-cover img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    .pcard-cover-fallback{
-      width:100%;
-      height:100%;
-      display:grid;
-      place-items:center;
-      background:
-        radial-gradient(circle at 30% 20%, rgba(250,204,21,.18), transparent 32%),
-        radial-gradient(circle at 75% 15%, rgba(34,197,94,.14), transparent 30%),
-        linear-gradient(180deg, #111827, #0b1120);
-      color:#fff;
-      font-size:40px;
-      font-weight:1000;
-    }
-
-    .pcard-cover-badge{
-      position:absolute;
-      left:12px;
-      bottom:12px;
-      z-index:2;
-      border-radius:999px;
-      padding:7px 10px;
-      font-size:12px;
-      font-weight:950;
-      color:#fff7cc;
-      background:rgba(7,20,15,.72);
-      border:1px solid rgba(255,255,255,.14);
-      backdrop-filter:blur(8px);
-    }
-
-    .pcard-body{
-      padding:14px;
-    }
-
-    .ptop{
-      display:flex;
-      gap:12px;
-      align-items:center;
-    }
-
-    .pavatar{
-      width:50px;
-      height:50px;
-      border-radius:16px;
-      background:radial-gradient(circle at 30% 20%, rgba(250,204,21,.28), rgba(34,197,94,.10));
-      border:1px solid rgba(250,204,21,.22);
-      display:grid;
-      place-items:center;
-      color:var(--text);
-      font-weight:1000;
-      overflow:hidden;
-      flex:0 0 auto;
-    }
-
-    .pavatar img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    .pname{
-      margin:0;
-      font-size:17px;
-      font-weight:1000;
-      line-height:1.2;
-    }
-
-    .pmeta{
-      margin:4px 0 0;
-      color:var(--muted);
-      font-weight:850;
-      font-size:13px;
-      line-height:1.45;
-    }
-
-    .pbadges{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:12px;
-    }
-
-    .pbadge{
-      border-radius:999px;
-      padding:7px 10px;
-      font-size:12px;
-      font-weight:900;
-      border:1px solid rgba(203,213,225,0.18);
-      background:rgba(15,23,42,.42);
-      color:var(--muted);
-    }
-
-    .pbio{
-      margin:12px 0 0;
-      color:rgba(236,255,244,.92);
-      font-weight:850;
-      line-height:1.6;
-      font-size:14px;
-      min-height:46px;
-    }
-
-    .pfacts{
-      display:grid;
-      gap:8px;
-      margin-top:12px;
-    }
-
-    .pfact{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:12px;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.08);
+    .card.placeholder{
+      border-style:dashed;
+      border-color:rgba(34,197,94,.22);
       background:rgba(255,255,255,.03);
-      font-size:13px;
+    }
+    .card.placeholder:hover{
+      transform:none;
+      border-color:rgba(34,197,94,.32);
+      box-shadow:0 14px 40px rgba(0,0,0,.35);
     }
 
-    .pfact .k{
+    .photo{
+      position:relative;
+      width:100%;
+      height:210px;
+      overflow:hidden;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background:rgba(0,0,0,.25);
+    }
+    .photo img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover;
+      object-position:center;
+      transform:scale(1.01);
+      transition: transform .25s ease, filter .25s ease;
+      filter:saturate(1.05);
+    }
+    .card:hover .photo img{
+      transform:scale(1.04);
+      filter:saturate(1.10) contrast(1.02);
+    }
+
+    .placeholder-photo{
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(250,204,21,.16), transparent 30%),
+        radial-gradient(circle at 75% 18%, rgba(34,197,94,.14), transparent 28%),
+        linear-gradient(180deg,#0b2218,#071610);
+      font-size:58px;
+      color:#fff;
+    }
+
+    .badgeTop{
+      position:absolute; top:10px; left:10px;
+      display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+      max-width: calc(100% - 20px);
+    }
+    .chip{
+      border-radius:999px; padding:6px 10px;
+      font-size:11px; font-weight:1000;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(2,6,23,.55);
+      color:rgba(234,255,241,.92);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%;
+      display:inline-flex; align-items:center; gap:6px;
+      backdrop-filter: blur(6px);
+    }
+    .chip.gold{ border-color:rgba(250,204,21,.30); }
+    .chip.green{ border-color:rgba(34,197,94,.30); }
+    .chip.new{ border-color:rgba(249,115,22,.30); }
+
+    .body{ padding:14px; display:flex; flex-direction:column; gap:10px; flex:1; }
+    .name{ font-size:18px; font-weight:1000; color:var(--gold); line-height:1.15; }
+    .meta{ display:flex; flex-wrap:wrap; gap:10px; font-size:13px; color:var(--muted); font-weight:850; }
+    .meta span{ display:inline-flex; gap:6px; align-items:center; }
+    .bio{ font-size:14px; color:rgba(234,255,241,.90); font-weight:850; line-height:1.45; }
+
+    .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:2px; }
+    .tag{
+      border-radius:999px; padding:6px 10px;
+      border:1px solid rgba(203,213,225,0.22);
       color:var(--muted);
-      font-weight:900;
+      background:rgba(2,6,23,.35);
+      font-size:11px; font-weight:950;
     }
 
-    .pfact .v{
-      color:var(--text);
-      font-weight:950;
-      text-align:right;
-      line-height:1.45;
-    }
-
-    .pactions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:12px;
-    }
-
-    .pbtn{
-      border-radius:999px;
-      padding:10px 12px;
-      font-size:13px;
-      font-weight:1000;
-      text-decoration:none;
-      border:1px solid rgba(203,213,225,0.18);
-      background:rgba(15,23,42,.42);
-      color:var(--text);
+    .placeholder-note{
       display:inline-flex;
       align-items:center;
       gap:8px;
-    }
-
-    .pbtn:hover{ filter:brightness(1.05); }
-
-    .pbtn.primary{
-      border:none;
-      background:linear-gradient(135deg,#22c55e,#16a34a);
-      color:#041b12;
-    }
-
-    .places-empty{
-      display:none;
-      margin-top:12px;
-      padding:12px;
-      border-radius:14px;
-      border:1px dashed rgba(203,213,225,0.20);
-      color:var(--muted);
-      font-weight:900;
-    }
-
-    .places-hint{
-      margin-top:10px;
-      font-size:13px;
-      color:var(--muted);
-      font-weight:850;
-      line-height:1.55;
-    }
-
-    .cta{
-      margin-top:30px;
-      border-radius:22px;
-      border:1px solid rgba(34,197,94,0.24);
-      background:
-        radial-gradient(circle at top, rgba(34,197,94,0.10), transparent 60%),
-        rgba(2,6,23,.32);
-      padding:18px 14px 16px;
-      text-align:center;
-      box-shadow:0 18px 55px rgba(0,0,0,.28);
-    }
-
-    .cta h2{
-      font-size:20px;
+      font-size:11px;
       font-weight:1000;
-      margin-bottom:10px;
+      color:#bbf7d0;
+    }
+    .placeholder-note .dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--green);
+      box-shadow:0 0 0 4px rgba(34,197,94,.12);
     }
 
-    .cta p{
-      font-size:15px;
-      color:var(--muted);
-      margin-bottom:14px;
-      font-weight:850;
-      line-height:var(--lh);
-    }
-
-    .cta-buttons{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
+    .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:auto; }
+    a.btn{
+      flex:1; min-width:140px;
+      border-radius:999px;
+      padding:12px 14px;
+      font-size:14px;
+      font-weight:1000;
+      border:0;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
       justify-content:center;
-      margin-bottom:8px;
+      gap:8px;
+      line-height:1;
+      white-space:nowrap;
+      transition:transform .15s ease, filter .15s ease, box-shadow .15s ease;
     }
+    .btn.primary{
+      background:linear-gradient(135deg,var(--gold),var(--orange));
+      color:#04110d;
+      box-shadow:0 10px 24px rgba(250,204,21,0.30);
+    }
+    .btn.secondary{
+      background:rgba(34,197,94,.15);
+      border:1px solid rgba(34,197,94,.30);
+      color:#bbf7d0;
+    }
+    .btn.ghost{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      color:var(--ink);
+    }
+    .btn:active{ transform:scale(.99); }
 
-    .cta-note{
+    .status{
+      margin-top:12px;
+      border-radius:16px;
+      border:1px solid rgba(203,213,225,0.14);
+      background:rgba(2,6,23,.45);
+      padding:12px 12px;
       font-size:13px;
+      font-weight:900;
       color:var(--muted);
-      font-weight:850;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
     .footer{
+      margin-top:26px;
       border-top:1px solid rgba(255,255,255,.08);
-      padding:14px 10px 0;
-      font-size:13px;
+      padding-top:14px;
+      font-size:12px;
       color:var(--muted);
       text-align:center;
-      margin-top:24px;
       font-weight:850;
       line-height:1.5;
     }
+    .footer .brand{ color:var(--gold); font-weight:1000; }
+    .footer .zero{ color:var(--green); font-weight:1000; }
 
-    .footer .brand{
-      color:var(--gold);
-      font-weight:1000;
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%);
+      background:rgba(2,6,23,.86);
+      border:1px solid rgba(255,255,255,.12);
+      color:#fff;
+      padding:10px 14px;
+      border-radius:14px;
+      font-weight:950;
+      font-size:13px;
+      display:none;
+      z-index:9999;
+      box-shadow:var(--shadow);
+      max-width:92vw;
+      text-align:center;
     }
+    .toast.show{ display:block; }
 
-    .footer .green{
-      color:var(--primary);
-      font-weight:1000;
+    .skeleton{
+      animation: shimmer 1.2s infinite linear;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,.05) 0%,
+        rgba(255,255,255,.10) 50%,
+        rgba(255,255,255,.05) 100%);
+      background-size: 200% 100%;
     }
+    @keyframes shimmer{ 0%{ background-position: 200% 0; } 100%{ background-position: -200% 0; } }
+    .sk-photo{ height:210px; }
+    .sk-line{ height:12px; border-radius:999px; margin-top:10px; }
   </style>
-
-  <script>
-    function digiyBasePath(){
-      const parts = location.pathname.split("/").filter(Boolean);
-      const isGh = /\.github\.io$/i.test(location.hostname);
-      if(isGh && parts.length > 0) return "/" + parts[0] + "/";
-      return "/";
-    }
-
-    function digiyLocal(path){
-      path = String(path || "").replace(/^\/+/, "");
-      return digiyBasePath() + path;
-    }
-  </script>
 </head>
 
 <body>
   <div class="page">
-
     <header class="nav">
       <div class="nav-left">
-        <div class="logo-badge">R</div>
+        <div class="logo-badge">🍽️</div>
         <div class="logo-text">
-          <div class="logo-text-title">DIGIY RESA</div>
-          <div class="logo-text-sub">Réservation simple • accueil sérieux</div>
+          <div class="logo-title">DIGIY RESA TABLE • SALY</div>
+          <div class="logo-sub">La vitrine publique • Réservation simple • Terrain</div>
         </div>
       </div>
 
       <div class="nav-right">
         <div class="pill"><span class="dot"></span> Réservation directe</div>
-
-        <a href="#etablissements" class="btn-small" id="btnVitrine">🌍 Voir les établissements</a>
-
-        <a href="https://beauville.github.io/digiy/?from=resa" class="btn-small">
-          📦 Voir les offres
-        </a>
-
-        <a href="https://beauville.github.io/commencer-a-payer/?module=RESA&offre=RESA" class="btn-small primary">
-          💳 Commencer à payer
-        </a>
+        <div class="pill">📍 Saly</div>
+        <a class="btn-small" id="btnHub" href="#" rel="noopener">🦅 DIGIY HUB</a>
+        <a class="btn-small primary" id="btnJoinTop" href="#" target="_blank" rel="noopener">🪑 Poser ma carte</a>
       </div>
     </header>
 
     <section class="hero">
-      <div>
-        <h1 class="hero-title">
-          Réserve simplement.<br>
-          Accueille sérieusement.<br>
-          <span class="highlight">DIGIY RESA</span>
-        </h1>
+      <div class="hero-inner">
+        <div>
+          <h1>La vitrine <span class="hl">RESA TABLE</span><br/>de <span class="hl">Saly</span></h1>
+          <p>
+            Ici tu vois les établissements visibles publiquement.
+            Le client ouvre la fiche, regarde les infos utiles, puis
+            <b style="color:var(--gold);font-weight:1000;">réserve simplement</b>.
+          </p>
 
-        <p class="hero-sub">
-          Trouve un établissement, consulte sa fiche, puis envoie une demande de réservation propre.
-          Le contact reste direct, l’accueil reste humain, la plateforme reste claire.
-        </p>
+          <div class="hero-badges">
+            <div class="hero-badge">✅ <b>Public</b> (vitrine)</div>
+            <div class="hero-badge">📅 Réservation simple</div>
+            <div class="hero-badge">🆕 Nouveaux en avant</div>
+          </div>
 
-        <div class="hero-badges">
-          <div class="hero-badge">📅 <span>Réservation simple</span> sans usine à gaz</div>
-          <div class="hero-badge">💬 Contact direct WhatsApp</div>
-          <div class="hero-badge">🏠 Fiche établissement claire</div>
+          <div class="statsbar" id="resaStatsBar">
+            <div class="left">
+              <span>🍽️ Table <span style="color:var(--gold)">Saly</span> :</span>
+              <span><span id="msTotal">—</span> établissements</span>
+              <span class="sep">•</span>
+              <span>+<span id="ms7d">—</span>/7j</span>
+              <span class="sep">•</span>
+              <span>+<span id="ms24h">—</span>/24h</span>
+            </div>
+            <div class="right">
+              <span class="stats-pill good">Publics: <span id="msPublic">—</span></span>
+              <span class="stats-pill warn">Catégories: <span id="msCats">—</span></span>
+            </div>
+          </div>
         </div>
 
-        <div class="hero-cta">
-          <a href="#etablissements" class="btn-hero-primary">
-            🍽️ Voir les établissements
-          </a>
+        <aside class="hero-box">
+          <div class="muted" style="font-weight:1000;">📊 Stats vitrine (Saly)</div>
+          <div class="kpi">
+            <div class="chip"><span>Profils</span><span class="v" id="kpiCount">—</span></div>
+            <div class="chip"><span>Nouveaux 7j</span><span class="v" id="kpiNew7d">—</span></div>
+          </div>
 
-          <a href="https://beauville.github.io/commencer-a-payer/?module=RESA&offre=RESA" class="btn-hero-secondary">
-            💳 Activer mon établissement
-          </a>
+          <div class="status" style="margin-top:12px;">
+            <span id="statusText">🔎 Chargement…</span>
+            <div class="right"><span class="muted">Source :</span><b>Supabase</b></div>
+          </div>
 
-          <a href="#" class="btn-hero-secondary" id="btnPin">
-            🔑 Déjà payé ? Entrer mon PIN
-          </a>
-        </div>
-
-        <div class="hero-note">
-          Établissement activé → profil public → réservation publique → suivi côté pro.
-        </div>
+          <div class="status" style="margin-top:10px;">
+            <span class="muted">Dernier publié :</span>
+            <b id="kpiLast">—</b>
+          </div>
+        </aside>
       </div>
 
-      <aside class="hero-card" aria-hidden="true">
-        <div class="hero-card-header">
-          <span>Fiche établissement (aperçu)</span>
-          <div class="chip-online">
-            <span class="dot"></span> Vitrine active
-          </div>
+      <div class="controls">
+        <div class="searchRow">
+          <input id="q" class="input" type="search" placeholder="Rechercher (nom, catégorie, ville…)" autocomplete="off" />
+          <select id="cat" class="select" title="Filtrer par catégorie">
+            <option value="">Toutes les catégories</option>
+          </select>
         </div>
-
-        <div class="fake-place">
-          <div class="fake-place-cover">🍽️</div>
-          <div class="fake-place-body">
-            <div class="fake-place-title">La Terrasse de Saly</div>
-            <div class="fake-place-sub">Saly • Restaurant • Réservation simple</div>
-
-            <div class="fake-place-chips">
-              <div class="fake-chip">Saly</div>
-              <div class="fake-chip">40 places</div>
-              <div class="fake-chip">12h - 23h</div>
-            </div>
-
-            <div class="fake-place-text">
-              Établissement propre, accueil sérieux, réservation facile pour déjeuner, dîner ou soirée.
-            </div>
-          </div>
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <a class="btn-small" id="btnRefresh" href="#">🔄 Rafraîchir</a>
+          <a class="btn-small" id="btnSupport" href="#" target="_blank" rel="noopener">💬 Support</a>
         </div>
-      </aside>
+      </div>
     </section>
 
     <section class="section">
-      <h2 class="section-title">Pourquoi DIGIY RESA ?</h2>
-      <p class="section-sub">
-        L’idée n’est pas de compliquer la réservation. L’idée est de la rendre visible, simple et rassurante, pour le client comme pour l’établissement.
-      </p>
-
-      <div class="grid-3">
-        <div class="card">
-          <div class="card-emoji">👁️</div>
-          <h3>Fiche claire</h3>
-          <p>Le client voit l’établissement, les zones, la capacité, les horaires et le contact sans se perdre.</p>
-          <ul class="list">
-            <li>Présentation propre</li>
-            <li>Image forte</li>
-            <li>Infos utiles visibles</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <div class="card-emoji">📅</div>
-          <h3>Réservation directe</h3>
-          <p>Une demande simple, propre, avec date, heure, nombre de personnes et note éventuelle.</p>
-          <ul class="list">
-            <li>Pas de tunnel infernal</li>
-            <li>Demande claire</li>
-            <li>Lecture facile côté pro</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <div class="card-emoji">🤝</div>
-          <h3>Accueil sérieux</h3>
-          <p>Le but n’est pas juste de prendre une réservation. Le but est d’inspirer confiance avant même l’arrivée du client.</p>
-          <ul class="list">
-            <li>Positionnement plus propre</li>
-            <li>Relation plus humaine</li>
-            <li>Image établissement renforcée</li>
-          </ul>
-        </div>
+      <div class="section-title">📍 Vitrine (public)</div>
+      <div class="muted">
+        Profils affichés : <b style="color:var(--gold)">publiés</b> • Ville : <b>Saly</b>
       </div>
-    </section>
-
-    <section class="places" id="etablissements">
-      <div class="places-head">
-        <div>
-          <h2>🍽️ Établissements disponibles</h2>
-          <p>Fiches claires • réservation simple • contact direct</p>
-        </div>
-      </div>
-
-      <div class="places-tools">
-        <input id="placeSearch" class="place-input" type="search" placeholder="Rechercher : Saly, restaurant, lounge, Somone...">
-      </div>
-
-      <div id="placesGrid" class="places-grid"></div>
-      <div id="placesEmpty" class="places-empty">Aucun établissement publié pour le moment.</div>
-
-      <div class="places-hint">
-        Un établissement apparaît ici dès qu’il a un <strong>slug</strong>, qu’il est <strong>actif</strong> et <strong>publié</strong>.
-      </div>
-    </section>
-
-    <section class="cta">
-      <h2>Tu veux rendre ton établissement visible ?</h2>
-      <p>Active ton module, règle ta fiche, publie proprement, puis commence à recevoir des demandes de réservation.</p>
-
-      <div class="cta-buttons">
-        <a href="https://beauville.github.io/commencer-a-payer/?module=RESA&offre=RESA" class="btn-hero-primary">
-          💳 Commencer & payer
-        </a>
-
-        <a href="#" class="btn-hero-secondary" id="btnPin2">
-          🔑 Entrer mon PIN
-        </a>
-
-        <a href="https://wa.me/221771342889?text=Salut%20DIGIY%20RESA%2C%20j%27ai%20une%20question%20sur%20le%20module%20r%C3%A9servation."
-           class="btn-hero-secondary">
-          💬 Support WhatsApp
-        </a>
-      </div>
-
-      <div class="cta-note">DIGIY RESA • réserver simplement • accueillir sérieusement.</div>
+      <div id="grid" class="grid" style="margin-top:12px;"></div>
     </section>
 
     <footer class="footer">
-      DIGIY RESA • <span class="green">Réservation directe</span> • <span class="brand">Fiche établissement propre</span>
+      DIGIY RESA TABLE • Saly • <span class="zero">Vitrine locale</span> • <span class="brand">Réservation simple</span> ∞
     </footer>
   </div>
 
-  <script>
-    document.getElementById("btnPin").href = digiyLocal("pin.html");
-    document.getElementById("btnPin2").href = digiyLocal("pin.html");
-    document.getElementById("btnVitrine").href = "#etablissements";
-  </script>
+  <div id="toast" class="toast"></div>
 
   <script>
-    (async function(){
-      "use strict";
+    const CITY_LOCK = "Saly";
+    const NEW_DAYS = 7;
+    const EXTRA_PLACEHOLDERS = 8;
 
-      const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+    const FALLBACK_PHOTO = "https://orange-pig-270004.hostingersite.com/wp-content/uploads/2026/03/chatgpt-image-4-mars-2026-23_40_53.png";
+    const HUB_URL = "https://beauville.github.io/digiy-hub/";
+    const SUPPORT_WA = "221771342889";
 
-      const supabaseLib = window.supabase;
+    const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
-      if (!supabaseLib || typeof supabaseLib.createClient !== "function") {
-        console.error("Supabase JS non chargé.");
-        return;
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { persistSession: false },
+      global: { headers: { "X-Client-Info": "digiy-resa-public" } }
+    });
+
+    let ROWS = [];
+
+    (function initLinks(){
+      document.getElementById("btnHub").href = HUB_URL;
+      document.getElementById("btnSupport").href =
+        "https://wa.me/" + SUPPORT_WA + "?text=" +
+        encodeURIComponent("Salut DIGIY RESA TABLE, j'ai une question sur la vitrine de Saly.");
+      document.getElementById("btnJoinTop").href =
+        "https://wa.me/" + SUPPORT_WA + "?text=" +
+        encodeURIComponent("Salut DIGIY RESA TABLE, je veux poser ma carte dans la vitrine de Saly.");
+      document.getElementById("btnRefresh").addEventListener("click", (e) => {
+        e.preventDefault();
+        load();
+      });
+    })();
+
+    function toast(msg){
+      const t = document.getElementById("toast");
+      if(!t) return;
+      t.textContent = msg || "";
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 2200);
+    }
+
+    function setStatus(msg){
+      const el = document.getElementById("statusText");
+      if(el) el.textContent = msg || "";
+    }
+
+    function esc(s){
+      return String(s ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function pick(arr, key){
+      const v = (arr || []).map(x => (x?.[key] ?? "")).filter(Boolean);
+      return Array.from(new Set(v)).sort((a,b)=>String(a).localeCompare(String(b)));
+    }
+
+    function tagsToArray(tags){
+      if(Array.isArray(tags)) return tags.filter(Boolean).map(String);
+      const s = String(tags || "").trim();
+      if(!s) return [];
+      return s.split(",").map(x => x.trim()).filter(Boolean);
+    }
+
+    function isNew(dateIso){
+      if(!dateIso) return false;
+      const t = Date.parse(dateIso);
+      if(!Number.isFinite(t)) return false;
+      const days = (Date.now() - t) / (1000 * 60 * 60 * 24);
+      return days <= NEW_DAYS;
+    }
+
+    function sameCity(a, b){
+      return String(a || "").trim().toLowerCase() === String(b || "").trim().toLowerCase();
+    }
+
+    function first(...vals){
+      for(const v of vals){
+        if(v !== null && v !== undefined && String(v).trim() !== "") return v;
+      }
+      return "";
+    }
+
+    function updateStatsBar(rows){
+      const list = Array.isArray(rows) ? rows : [];
+      const now = Date.now();
+
+      const new7d = list.filter(r => {
+        const t = Date.parse(r.created_at || "");
+        return Number.isFinite(t) && ((now - t) / (1000*60*60*24) <= 7);
+      }).length;
+
+      const new24h = list.filter(r => {
+        const t = Date.parse(r.created_at || "");
+        return Number.isFinite(t) && ((now - t) / (1000*60*60) <= 24);
+      }).length;
+
+      const cats = new Set(list.map(r => String(r.category || "").trim()).filter(Boolean)).size;
+
+      document.getElementById("msTotal").textContent = String(list.length);
+      document.getElementById("ms7d").textContent = String(new7d);
+      document.getElementById("ms24h").textContent = String(new24h);
+      document.getElementById("msPublic").textContent = String(list.length);
+      document.getElementById("msCats").textContent = String(cats);
+    }
+
+    function updateKpi(){
+      const list = ROWS || [];
+      const total = list.length;
+      const new7d = list.filter(x => isNew(x.created_at)).length;
+
+      const kCount = document.getElementById("kpiCount");
+      const kNew7d = document.getElementById("kpiNew7d");
+      const kLast  = document.getElementById("kpiLast");
+
+      if(kCount) kCount.textContent = String(total);
+      if(kNew7d) kNew7d.textContent = String(new7d);
+
+      let last = null;
+      for(const r of list){
+        if(!r?.created_at) continue;
+        if(!last) last = r;
+        else if(Date.parse(r.created_at) > Date.parse(last.created_at)) last = r;
       }
 
-      const sb = supabaseLib.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-      const grid = document.getElementById("placesGrid");
-      const empty = document.getElementById("placesEmpty");
-      const search = document.getElementById("placeSearch");
-
-      function initials(name){
-        const s = String(name || "").trim();
-        if(!s) return "RE";
-        const parts = s.split(/\s+/).slice(0,2);
-        return parts.map(p => (p[0] || "").toUpperCase()).join("");
+      if(kLast){
+        kLast.textContent = last
+          ? `${last.display_name || "—"} (${last.slug || ""})`
+          : "—";
       }
 
-      function waLink(whatsapp, name){
-        const w = String(whatsapp || "").replace(/[^\d]/g, "");
-        if(!w) return "";
-        const msg = encodeURIComponent(`Bonjour ${name || ""}, je souhaite faire une réservation via DIGIY RESA.`);
-        return `https://wa.me/${w}?text=${msg}`;
-      }
+      setStatus(total ? `✅ ${total} profil(s) affiché(s) — ${new7d} nouveau(x) / 7j` : "⚠️ Aucun profil public (Saly)");
+    }
 
-      function esc(s){
-        return String(s ?? "")
-          .replaceAll("&","&amp;")
-          .replaceAll("<","&lt;")
-          .replaceAll(">","&gt;")
-          .replaceAll('"',"&quot;")
-          .replaceAll("'","&#39;");
-      }
+    function fillSelects(){
+      const catSel = document.getElementById("cat");
+      const cats = pick(ROWS, "category");
+      catSel.innerHTML =
+        `<option value="">Toutes les catégories</option>` +
+        cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
+    }
 
-      function fallbackProfileUrl(slug){
-        if(!slug) return "";
-        return `https://resa.digiylyfe.com/etablissement.html?slug=${encodeURIComponent(slug)}`;
-      }
+    function renderSkeleton(){
+      const grid = document.getElementById("grid");
+      if(!grid) return;
+      grid.innerHTML = Array.from({length:6}).map(() => `
+        <div class="card">
+          <div class="photo skeleton sk-photo"></div>
+          <div class="body">
+            <div class="skeleton sk-line" style="width:70%"></div>
+            <div class="skeleton sk-line" style="width:48%"></div>
+            <div class="skeleton sk-line" style="width:90%"></div>
+            <div class="skeleton sk-line" style="width:60%"></div>
+            <div class="actions" style="margin-top:10px;">
+              <div class="skeleton sk-line" style="height:42px; width:100%"></div>
+              <div class="skeleton sk-line" style="height:42px; width:100%"></div>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
 
-      function bookingUrl(slug){
-        if(!slug) return "";
-        return `https://resa.digiylyfe.com/reserver.html?slug=${encodeURIComponent(slug)}`;
-      }
-
-      function defaultCover(place){
-        return place.cover_url || place.photo_url || "";
-      }
-
-      function renderTags(place){
-        const zones = Array.isArray(place.zones) ? place.zones.slice(0,3) : [];
-        const tags = Array.isArray(place.tags) ? place.tags.slice(0,4) : [];
-
-        return [
-          ...(place.city ? [`<span class="pbadge">${esc(place.city)}</span>`] : []),
-          ...(place.business_type ? [`<span class="pbadge">${esc(place.business_type)}</span>`] : []),
-          ...zones.map(z => `<span class="pbadge">${esc(z)}</span>`),
-          ...tags.map(t => `<span class="pbadge">${esc(t)}</span>`)
-        ].slice(0,6).join("");
-      }
-
-      function card(place){
-        const cover = defaultCover(place);
-        const zones = Array.isArray(place.zones) ? place.zones.slice(0,3) : [];
-        const avatar = place.photo_url
-          ? `<div class="pavatar"><img src="${esc(place.photo_url)}" alt=""></div>`
-          : `<div class="pavatar">${esc(initials(place.display_name))}</div>`;
-
-        const profileUrl = (place.profile_url || fallbackProfileUrl(place.slug) || "").trim();
-        const reserveUrl = bookingUrl(place.slug);
-        const wa = waLink(place.whatsapp, place.display_name);
-
-        const searchHay = (
-          (place.display_name || "") + " " +
-          (place.city || "") + " " +
-          (place.business_type || "") + " " +
-          (place.bio || "") + " " +
-          (place.address_text || "") + " " +
-          (place.opening_hours_text || "") + " " +
-          zones.join(" ")
-        ).toLowerCase();
+    function placeholderCardsHtml(count = EXTRA_PLACEHOLDERS){
+      return Array.from({ length: count }).map((_, i) => {
+        const rank = i + 1;
 
         return `
-          <article class="pcard" data-search="${esc(searchHay)}">
-            <div class="pcard-cover">
-              ${cover
-                ? `<img src="${esc(cover)}" alt="${esc(place.display_name || "Établissement")}" loading="lazy" onerror="this.outerHTML='<div class=&quot;pcard-cover-fallback&quot;>🍽️</div>';">`
-                : `<div class="pcard-cover-fallback">🍽️</div>`
-              }
-              <div class="pcard-cover-badge">${esc(place.city || "Établissement")}</div>
+          <article class="card placeholder">
+            <div class="photo placeholder-photo">
+              🍽️
+              <div class="badgeTop">
+                <span class="chip gold">🪑 SLOT DISPONIBLE</span>
+                <span class="chip green">🍽️ RESA TABLE</span>
+              </div>
             </div>
 
-            <div class="pcard-body">
-              <div class="ptop">
-                ${avatar}
-                <div>
-                  <p class="pname">${esc(place.display_name || "Établissement")}</p>
-                  <p class="pmeta">${esc((place.city || "") + ((place.business_type || "") ? (" • " + place.business_type) : ""))}</p>
-                </div>
+            <div class="body">
+              <div class="name">Votre établissement ici</div>
+
+              <div class="meta">
+                <span>🏷️ Place vitrine</span>
+                <span>📍 ${esc(CITY_LOCK)} • emplacement ${rank}</span>
               </div>
 
-              <div class="pbadges">${renderTags(place)}</div>
-
-              <p class="pbio">${esc(place.bio || "Présentation à découvrir sur la fiche établissement.")}</p>
-
-              <div class="pfacts">
-                <div class="pfact">
-                  <span class="k">Horaires</span>
-                  <span class="v">${esc(place.opening_hours_text || "À préciser")}</span>
-                </div>
-                <div class="pfact">
-                  <span class="k">Capacité</span>
-                  <span class="v">${place.capacity ? esc(place.capacity + " places") : "À préciser"}</span>
-                </div>
-                <div class="pfact">
-                  <span class="k">Adresse</span>
-                  <span class="v">${esc(place.address_text || "À préciser")}</span>
-                </div>
-                <div class="pfact">
-                  <span class="k">WhatsApp</span>
-                  <span class="v">${esc(place.whatsapp || "À préciser")}</span>
-                </div>
+              <div class="bio">
+                Carte disponible pour un établissement local prêt à être visible publiquement
+                et recevoir des réservations simplement.
               </div>
 
-              <div class="pactions">
-                ${profileUrl
-                  ? `<a class="pbtn" href="${esc(profileUrl)}" target="_blank" rel="noopener noreferrer">👁 Voir la fiche</a>`
-                  : `<span class="pbtn" style="opacity:.6;pointer-events:none">Fiche bientôt</span>`
-                }
+              <div class="tags">
+                <span class="tag">Vitrine locale</span>
+                <span class="tag">Réservation simple</span>
+                <span class="tag">Visibilité directe</span>
+              </div>
 
-                ${reserveUrl
-                  ? `<a class="pbtn primary" href="${esc(reserveUrl)}" target="_blank" rel="noopener noreferrer">📅 Réserver</a>`
-                  : `<span class="pbtn primary" style="opacity:.6;pointer-events:none">Réserver</span>`
-                }
+              <div class="placeholder-note">
+                <span class="dot"></span>
+                Slot ouvert pour un établissement de ${esc(CITY_LOCK)}
+              </div>
 
-                ${wa
-                  ? `<a class="pbtn" href="${wa}" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>`
-                  : ``
-                }
+              <div class="actions">
+                <a class="btn primary" href="https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Salut DIGIY RESA TABLE, je veux poser ma carte dans la vitrine de " + CITY_LOCK + ".")}" target="_blank" rel="noopener">🪑 Poser ma carte</a>
+                <a class="btn secondary" href="https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Salut DIGIY RESA TABLE, je veux des infos pour rejoindre la vitrine de " + CITY_LOCK + ".")}" target="_blank" rel="noopener">💬 WhatsApp</a>
               </div>
             </div>
           </article>
         `;
+      }).join("");
+    }
+
+    function render(list){
+      const grid = document.getElementById("grid");
+      if(!grid) return;
+
+      const rows = Array.isArray(list) ? list : [];
+
+      const liveHtml = rows.map(r => {
+        const name = esc(r.display_name || "Établissement");
+        const category = esc(r.category || "Table locale");
+        const city = esc(r.city || CITY_LOCK);
+        const address = esc(r.address || "");
+        const bio = esc(r.bio || "");
+        const badge = esc(r.badge || "🍽️ ÉTABLISSEMENT");
+        const hub = esc(r.hub_badge || "🪑 RESA TABLE");
+        const price = esc(r.price_label || "");
+        const tags = tagsToArray(r.tags).slice(0, 6);
+        const isNewCard = isNew(r.created_at);
+
+        const rawPhoto = String(r.photo_url || "").trim();
+        const basePhoto = rawPhoto || FALLBACK_PHOTO;
+        const photoFinal = esc(basePhoto + (basePhoto.includes("?") ? "&" : "?") + "v=3");
+
+        const ficheHref = `./etablissement.html?slug=${encodeURIComponent(r.slug || "")}`;
+        const resaHref = `./reserver.html?slug=${encodeURIComponent(r.slug || "")}`;
+
+        return `
+          <article class="card" data-slug="${esc(r.slug || "")}">
+            <div class="photo">
+              <img
+                src="${photoFinal}"
+                alt="${name}"
+                loading="lazy"
+                onerror="this.onerror=null; this.src='${esc(FALLBACK_PHOTO)}';"
+              />
+              <div class="badgeTop">
+                <span class="chip gold">${badge}</span>
+                <span class="chip green">${hub}</span>
+                ${isNewCard ? `<span class="chip new">🆕 Nouveau</span>` : ``}
+              </div>
+            </div>
+
+            <div class="body">
+              <div class="name">${name}</div>
+              <div class="meta">
+                <span>🏷️ ${category}</span>
+                <span>📍 ${city}${address ? " • " + address : ""}</span>
+              </div>
+
+              ${bio
+                ? `<div class="bio">${bio}</div>`
+                : `<div class="bio" style="color:var(--muted)">Fiche publique DIGIY RESA TABLE.</div>`}
+
+              <div class="tags">
+                ${tags.map(t => `<span class="tag">${esc(t)}</span>`).join("")}
+                ${price ? `<span class="tag" style="border-color:rgba(250,204,21,.22);color:#fde68a;">${price}</span>` : ""}
+              </div>
+
+              <div class="actions">
+                <a class="btn primary" href="${esc(ficheHref)}">📄 Voir</a>
+                <a class="btn secondary" href="${esc(resaHref)}">📅 Réserver</a>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      const placeholdersHtml = placeholderCardsHtml(EXTRA_PLACEHOLDERS);
+
+      if(!rows.length){
+        grid.innerHTML = `
+          <div class="status" style="grid-column:1/-1;">
+            <span>⚠️ Aucun profil public pour l’instant. La vitrine reste pleine avec 8 emplacements visibles.</span>
+            <div class="right">
+              <a class="btn-small primary" href="https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Salut DIGIY RESA TABLE, je veux poser ma carte dans la vitrine de " + CITY_LOCK + ".")}" target="_blank" rel="noopener">🪑 Poser ma carte</a>
+            </div>
+          </div>
+        ` + placeholdersHtml;
+        return;
       }
 
-      function render(list){
-        if(!grid) return;
-        grid.innerHTML = (list || []).map(card).join("");
-        const has = (list || []).length > 0;
-        if(empty) empty.style.display = has ? "none" : "block";
+      grid.innerHTML = liveHtml + placeholdersHtml;
+    }
+
+    function applyFilters(){
+      const q = (document.getElementById("q").value || "").trim().toLowerCase();
+      const cat = (document.getElementById("cat").value || "").trim().toLowerCase();
+
+      const filtered = (ROWS || []).filter(r => {
+        const hay = [
+          r.display_name,
+          r.category,
+          r.city,
+          r.address,
+          r.bio,
+          r.badge,
+          r.hub_badge,
+          r.price_label,
+          ...tagsToArray(r.tags)
+        ].join(" ").toLowerCase();
+
+        const okQ = !q || hay.includes(q);
+        const okCat = !cat || String(r.category || "").toLowerCase() === cat;
+        return okQ && okCat;
+      });
+
+      render(filtered);
+      updateKpi();
+    }
+
+    async function load(){
+      renderSkeleton();
+      setStatus("🔎 Chargement depuis Supabase…");
+
+      try{
+        const { data, error } = await sb
+          .from("digiy_resa_public_profiles_v2")
+          .select("*")
+          .order("updated_at", { ascending: false });
+
+        if(error) throw error;
+
+        const raw = Array.isArray(data) ? data : [];
+
+        ROWS = raw
+          .filter(r => sameCity(first(r.city), CITY_LOCK))
+          .map(r => ({
+            slug: first(r.slug),
+            display_name: first(r.business_name, r.restaurant_name, r.name, r.establishment_name) || "Établissement",
+            category: first(r.category, r.cuisine_type, r.cuisine, r.type_label, r.speciality) || "Table locale",
+            city: first(r.city) || "",
+            address: first(r.address_text, r.address, r.location_text) || "",
+            bio: first(r.description, r.about, r.short_description) || "",
+            badge: "🍽️ ÉTABLISSEMENT",
+            hub_badge: "🪑 RESA TABLE",
+            price_label: first(r.open_hours, r.opening_hours) ? `Horaires: ${first(r.open_hours, r.opening_hours)}` : "",
+            tags: [
+              first(r.category, r.cuisine_type, r.cuisine, r.type_label, r.speciality) || "",
+              first(r.city) || "",
+              first(r.open_hours, r.opening_hours) ? `Horaires: ${first(r.open_hours, r.opening_hours)}` : ""
+            ].filter(Boolean),
+            photo_url: first(r.cover_image_url, r.logo_url, r.image_url, r.photo_url) || "",
+            created_at: first(r.published_at, r.updated_at, r.created_at) || null
+          }));
+
+        fillSelects();
+        updateStatsBar(ROWS);
+        applyFilters();
+        toast("✅ Vitrine chargée");
+      }catch(e){
+        console.error(e);
+        setStatus("❌ Erreur chargement vitrine.");
+        const bar = document.getElementById("resaStatsBar");
+        if(bar) bar.style.display = "none";
+
+        const grid = document.getElementById("grid");
+        if(grid){
+          grid.innerHTML = `
+            <div class="status" style="grid-column:1/-1;">
+              <span>❌ Impossible de charger la vitrine. <b>Détail :</b> ${esc(e?.message || e)}</span>
+              <div class="right">
+                <a class="btn-small"
+                   href="https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Salut DIGIY RESA TABLE, la vitrine Saly ne charge pas.")}"
+                   target="_blank" rel="noopener">💬 Support</a>
+              </div>
+            </div>
+          `;
+        }
       }
+    }
 
-      function applyFilter(){
-        const q = (search?.value || "").trim().toLowerCase();
-        document.querySelectorAll("#placesGrid .pcard").forEach(el => {
-          const hay = (el.getAttribute("data-search") || "");
-          el.style.display = (!q || hay.includes(q)) ? "" : "none";
-        });
-      }
+    (function bind(){
+      const q = document.getElementById("q");
+      const cat = document.getElementById("cat");
+      let t = null;
 
-      const { data, error } = await sb
-        .from("digiy_resa_public_profiles_v2")
-        .select("slug, phone, display_name, business_type, city, zones_text, zones, address_text, capacity, opening_hours_text, whatsapp, bio, photo_url, cover_url, priority, updated_at, is_active, is_published, profile_url, tags")
-        .eq("is_active", true)
-        .eq("is_published", true)
-        .not("slug", "is", null)
-        .order("priority", { ascending: true })
-        .order("updated_at", { ascending: false })
-        .limit(60);
+      q.addEventListener("input", () => {
+        clearTimeout(t);
+        t = setTimeout(applyFilters, 120);
+      });
 
-      if(error){
-        console.error("[DIGIY RESA LIST] error:", error);
-        render([]);
-      } else {
-        render(data || []);
-      }
-
-      search?.addEventListener("input", applyFilter);
+      cat.addEventListener("change", applyFilters);
     })();
+
+    load();
   </script>
 </body>
 </html>
