@@ -1,484 +1,851 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <title>DIGIY RÉSA — Réservation de Tables</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="DIGIY RÉSA — Plateforme de réservation de tables en ligne.">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>DIGIY RESA — Profil établissement</title>
+  <meta name="theme-color" content="#07140f"/>
+  <meta name="description" content="Profil établissement DIGIY RESA. Gestion identité, horaires, capacité, publication."/>
 
-    <style>
-        :root{
-            --bg:#020617;
-            --bg-soft:#020818;
-            --card:#030712;
-            --accent:#facc15;
-            --accent-soft:#f97316;
-            --accent-green:#22c55e;
-            --ink:#f9fafb;
-            --muted:#cbd5f5;
-            --line:#1f2937;
-            --shadow-soft:0 20px 45px rgba(15,23,42,0.9);
-        }
-        *{
-            box-sizing:border-box;
-            margin:0;
-            padding:0;
-            font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
-        }
-        body{
-            min-height:100vh;
-            background:
-                radial-gradient(circle at top,rgba(34,197,94,0.16),transparent 60%),
-                radial-gradient(circle at bottom,rgba(250,204,21,0.16),transparent 55%),
-                #020617;
-            color:var(--ink);
-            display:flex;
-            justify-content:center;
-            padding:10px;
-            font-size:16px; 
-        }
-        .app{
-            width:100%;
-            max-width:1100px;
-            min-height:100vh;
-            background:linear-gradient(135deg,#020617 0%,#020818 50%,#020617 100%);
-            border-radius:24px;
-            border:1px solid rgba(148,163,184,0.25);
-            box-shadow:var(--shadow-soft);
-            padding:16px 16px 22px;
-            display:flex;
-            flex-direction:column;
-            position:relative;
-            overflow:hidden;
-        }
-        .app::before{
-            content:"";
-            position:absolute;
-            inset:-40%;
-            background:
-                radial-gradient(circle at 0% 0%,rgba(34,197,94,0.14),transparent 55%),
-                radial-gradient(circle at 100% 100%,rgba(250,204,21,0.14),transparent 45%);
-            opacity:0.8;
-            pointer-events:none;
-        }
-        header{
-            position:relative;
-            z-index:2;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            margin-bottom:12px;
-        }
-        .brand{
-            display:flex;
-            align-items:center;
-            gap:10px;
-        }
-        .brand-logo{
-            width:42px;
-            height:42px;
-            border-radius:14px;
-            background:radial-gradient(circle at 30% 0%,#22c55e,#15803d);
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-size:24px;
-            box-shadow:0 12px 30px rgba(34,197,94,0.65);
-        }
-        .brand-text-title{
-            font-size:20px;
-            font-weight:900;
-            letter-spacing:0.09em;
-            text-transform:uppercase;
-            color:var(--accent-green);
-        }
-        .brand-text-sub{
-            font-size:14px; 
-            color:var(--muted);
-            font-weight:600;
-        }
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        .back-link{
-            font-size:13px; 
-            color:var(--muted);
-            text-decoration:none;
-            background:rgba(15,23,42,0.9);
-            border-radius:999px;
-            border:1px solid rgba(148,163,184,0.6);
-            padding:8px 14px; 
-            font-weight:700;
-        }
+  <style>
+    :root{
+      --bg:#07140f;
+      --bg2:#0b1d15;
+      --card:#10241b;
+      --card-2:#0d2018;
+      --line:rgba(255,255,255,.10);
+      --text:#ecfff4;
+      --muted:rgba(236,255,244,.72);
+      --primary:#22c55e;
+      --primary-2:#16a34a;
+      --gold:#facc15;
+      --gold-soft:rgba(250,204,21,.12);
+      --danger:#ef4444;
+      --shadow:0 20px 60px rgba(0,0,0,.38);
+      --r:24px;
+      --max:1180px;
+    }
 
-        main{
-            position:relative;
-            z-index:2;
-            flex:1;
-            display:flex;
-            flex-direction:column;
-            gap:14px;
-        }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
 
-        .hero{
-            background:radial-gradient(circle at top left,rgba(34,197,94,0.18),rgba(3,7,18,0.96));
-            border-radius:22px;
-            border:1px solid rgba(148,163,184,0.6);
-            padding:16px;
-            box-shadow:0 18px 44px rgba(15,23,42,0.95);
-            display:flex;
-            flex-direction:column;
-            gap:8px;
-        }
-        .hero-title{
-            font-size:26px; 
-            font-weight:900;
-            color:var(--accent);
-        }
-        .hero-title span{
-             color:var(--accent-green);
-        }
-        
-        .hero-sub{
-            font-size:16px; 
-            color:#e5e7eb;
-            max-width:620px;
-            font-weight:500;
-            line-height:1.6; 
-        }
-        .hero-sub strong{
-            font-weight:800;
-            color:var(--accent-green);
-        }
-        .hero-tags{
-            display:flex;
-            flex-wrap:wrap;
-            gap:7px;
-            margin-top:4px;
-        }
-        .hero-tag{
-            font-size:13px;
-            padding:5px 11px;
-            border-radius:999px;
-            border:1px solid rgba(148,163,184,0.7);
-            background:rgba(15,23,42,0.95);
-            color:#e5e7eb;
-            font-weight:600;
-        }
-        .hero-tag strong{
-            color:var(--accent-green);
-            font-weight:800;
-        }
+    body{
+      margin:0;
+      min-height:100vh;
+      background:
+        radial-gradient(900px 520px at 10% -10%, rgba(34,197,94,.14), transparent 60%),
+        radial-gradient(900px 520px at 110% 0%, rgba(250,204,21,.10), transparent 55%),
+        linear-gradient(180deg, #07140f, #05100c 55%, #040b08 100%);
+      color:var(--text);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      padding:16px;
+    }
 
-        /* CTA PRO RESTO */
-        .cta-pro{
-            margin-top:10px;
-            display:flex;
-            justify-content:center;
-        }
-        .cta-pro-btn{
-            background:linear-gradient(135deg,#facc15,#f97316);
-            padding:12px 20px;
-            border-radius:999px;
-            color:#111827;
-            font-size:15px;
-            font-weight:900;
-            text-decoration:none;
-            border:1px solid rgba(250,204,21,0.7);
-            box-shadow:0 8px 20px rgba(250,204,21,0.45);
-            text-align:center;
-        }
-        .cta-pro-btn:hover{
-            transform:translateY(-2px);
-            box-shadow:0 12px 26px rgba(250,204,21,0.7);
-        }
+    a{color:inherit;text-decoration:none}
 
-        .grid{
-            margin-top:14px; 
-            display:grid;
-            grid-template-columns:repeat(3,minmax(0,1fr));
-            gap:14px; 
-        }
-        @media(max-width:900px){
-            .grid{
-                grid-template-columns:repeat(2,minmax(0,1fr));
-            }
-        }
-        @media(max-width:640px){
-            .app{
-                border-radius:0;
-                border:none;
-                box-shadow:none;
-            }
-            .grid{
-                grid-template-columns:1fr;
-                gap:20px; 
-            }
-        }
+    .wrap{
+      max-width:var(--max);
+      margin:auto;
+      display:grid;
+      gap:14px;
+    }
 
-        .shop-card{
-            background:radial-gradient(circle at top,rgba(15,23,42,0.98),#020617);
-            border-radius:24px; 
-            border:1px solid rgba(148,163,184,0.7);
-            padding:12px;
-            box-shadow:0 14px 34px rgba(15,23,42,0.95);
-            display:flex;
-            flex-direction:column;
-            gap:10px; 
-            position:relative;
-        }
-        .shop-head{
-            display:flex;
-            justify-content:space-between;
-        }
-        .shop-name{
-            font-size:22px; 
-            font-weight:900; 
-            color:var(--accent-green);
-        }
-        .shop-type{
-            font-size:15px; 
-            color:#facc15;
-            font-weight:600;
-        }
-        .shop-badge{
-            font-size:12px; 
-            padding:5px 9px;
-            border-radius:999px;
-            border:1px solid rgba(250,204,21,0.9);
-            color:var(--accent);
-            background:rgba(15,23,42,0.98);
-        }
+    .card{
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.018));
+      box-shadow:var(--shadow);
+    }
 
-        .shop-photo{
-            border-radius:16px; 
-            overflow:hidden;
-            height:220px; 
-            border:2px solid rgba(250,204,21,0.85);
-        }
-        .shop-photo img{
-            width:100%;
-            height:100%;
-            object-fit:cover;
-        }
+    .topbar{
+      padding:18px;
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
 
-        .shop-desc{
-            font-size:15px; 
-            color:#f3f4f6;
-            font-weight:500;
-        }
+    .brand{
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+      min-width:0;
+    }
 
-        .shop-meta{
-            font-size:14px; 
-            color:#e5e7eb;
-        }
+    .logo{
+      width:64px;
+      height:64px;
+      border-radius:20px;
+      display:grid;
+      place-items:center;
+      font-size:24px;
+      font-weight:1000;
+      color:#041b12;
+      background:linear-gradient(135deg, var(--gold), var(--primary));
+      box-shadow:0 12px 28px rgba(34,197,94,.22);
+      flex:0 0 auto;
+    }
 
-        .shop-actions{
-            margin-top:10px;
-            display:flex;
-            gap:10px;
-            flex-wrap:wrap;
-        }
-        .btn{
-            border:none;
-            border-radius:999px;
-            padding:10px 14px;
-            font-size:14px; 
-            font-weight:900; 
-            cursor:pointer;
-            flex:1;
-            text-align:center;
-        }
-        .btn-resa{
-            background:linear-gradient(135deg,#facc15,#f97316);
-            color:#111827;
-            box-shadow:0 7px 18px rgba(250,204,21,0.55);
-        }
-        .btn-wa{
-            background:rgba(22,163,74,0.2);
-            color:#bbf7d0;
-            border:1px solid rgba(34,197,94,0.85);
-        }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 13px;
+      border-radius:999px;
+      border:1px solid rgba(34,197,94,.28);
+      background:rgba(34,197,94,.12);
+      color:#bbf7d0;
+      font-size:12px;
+      font-weight:950;
+      width:max-content;
+      margin-bottom:10px;
+    }
 
-        footer{
-            margin-top:16px;
-            font-size:12px; 
-            color:var(--muted);
-            display:flex;
-            justify-content:space-between;
-            flex-wrap:wrap;
-        }
-        footer span{
-            color:var(--accent);
-        }
-    </style>
+    .badge .dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--primary);
+      box-shadow:0 0 0 4px rgba(34,197,94,.14);
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(28px, 4vw, 40px);
+      line-height:1.04;
+      letter-spacing:-.02em;
+    }
+
+    .subtitle{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:15px;
+      font-weight:800;
+      line-height:1.5;
+    }
+
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.18);
+      color:var(--muted);
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .pill.slug{
+      color:var(--gold);
+      border-color:rgba(250,204,21,.22);
+      background:var(--gold-soft);
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+    }
+
+    .btn{
+      min-height:48px;
+      padding:12px 16px;
+      border-radius:14px;
+      font-weight:950;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      color:#041b12;
+      border-color:transparent;
+      box-shadow:0 12px 28px rgba(34,197,94,.22);
+    }
+    .btn.gold{
+      background:rgba(250,204,21,.12);
+      color:var(--gold);
+      border-color:rgba(250,204,21,.22);
+    }
+    .btn.danger{
+      background:rgba(239,68,68,.12);
+      color:#fecaca;
+      border-color:rgba(239,68,68,.22);
+    }
+
+    .layout{
+      display:grid;
+      gap:14px;
+    }
+
+    @media(min-width:980px){
+      .layout{
+        grid-template-columns:1.05fr .95fr;
+      }
+    }
+
+    .panel{
+      padding:18px;
+    }
+
+    .panel h2{
+      margin:0 0 8px;
+      font-size:21px;
+    }
+
+    .muted{
+      color:var(--muted);
+      font-size:14px;
+      font-weight:800;
+      line-height:1.55;
+    }
+
+    .form-grid{
+      display:grid;
+      gap:12px;
+      margin-top:16px;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    @media(max-width:760px){
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .field{
+      display:grid;
+      gap:8px;
+    }
+
+    .field.full{
+      grid-column:1 / -1;
+    }
+
+    label{
+      font-size:13px;
+      color:var(--muted);
+      font-weight:900;
+    }
+
+    input, textarea, select{
+      width:100%;
+      min-height:48px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.16);
+      color:var(--text);
+      padding:12px 14px;
+      outline:none;
+      font:inherit;
+    }
+
+    textarea{
+      min-height:110px;
+      resize:vertical;
+    }
+
+    input::placeholder,
+    textarea::placeholder{
+      color:rgba(236,255,244,.38);
+    }
+
+    .switch-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:14px;
+    }
+
+    .switch{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.16);
+      font-weight:900;
+      color:var(--muted);
+    }
+
+    .switch input{
+      width:18px;
+      height:18px;
+      min-height:auto;
+      margin:0;
+      accent-color:var(--primary);
+    }
+
+    .statusbox{
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.16);
+      font-weight:900;
+      color:var(--muted);
+      min-height:48px;
+      display:flex;
+      align-items:center;
+    }
+
+    .statusbox.ok{
+      color:#bbf7d0;
+      border-color:rgba(34,197,94,.22);
+      background:rgba(34,197,94,.10);
+    }
+
+    .statusbox.warn{
+      color:#fde68a;
+      border-color:rgba(250,204,21,.22);
+      background:rgba(250,204,21,.08);
+    }
+
+    .statusbox.err{
+      color:#fecaca;
+      border-color:rgba(239,68,68,.22);
+      background:rgba(239,68,68,.08);
+    }
+
+    .preview{
+      overflow:hidden;
+    }
+
+    .preview-cover{
+      position:relative;
+      min-height:240px;
+      background:#0a1712;
+      border-bottom:1px solid var(--line);
+    }
+
+    .preview-cover img{
+      width:100%;
+      height:100%;
+      min-height:240px;
+      object-fit:cover;
+      display:block;
+    }
+
+    .preview-fallback{
+      width:100%;
+      min-height:240px;
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(250,204,21,.18), transparent 30%),
+        radial-gradient(circle at 75% 15%, rgba(34,197,94,.14), transparent 28%),
+        linear-gradient(180deg, #111827, #0b1120);
+      color:#fff;
+      font-size:48px;
+      font-weight:1000;
+    }
+
+    .preview-badge{
+      position:absolute;
+      left:14px;
+      bottom:14px;
+      z-index:2;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(7,20,15,.72);
+      color:#fff6c9;
+      font-size:12px;
+      font-weight:950;
+      backdrop-filter:blur(8px);
+    }
+
+    .preview-body{
+      padding:18px;
+      display:grid;
+      gap:14px;
+    }
+
+    .preview-title{
+      margin:0;
+      font-size:28px;
+      line-height:1.08;
+      letter-spacing:-.02em;
+    }
+
+    .preview-sub{
+      color:var(--muted);
+      font-size:15px;
+      font-weight:850;
+      line-height:1.5;
+    }
+
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .chip{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.16);
+      color:var(--muted);
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .facts{
+      display:grid;
+      gap:10px;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .fact{
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.16);
+    }
+
+    .fact .k{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:800;
+      margin-bottom:5px;
+    }
+
+    .fact .v{
+      font-size:15px;
+      font-weight:900;
+      line-height:1.45;
+    }
+
+    .preview-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .footer{
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:800;
+      padding:6px 0 2px;
+    }
+  </style>
 </head>
-
 <body>
-<div class="app">
+  <div class="wrap">
 
-    <header>
-        <div class="brand">
-            <div class="brand-logo">📅</div>
-            <div>
-                <div class="brand-text-title">DIGIY RÉSA</div>
-                <div class="brand-text-sub">Réservation de Tables en ligne</div>
-            </div>
+    <section class="card topbar">
+      <div class="brand">
+        <div class="logo">R</div>
+        <div>
+          <div class="badge"><span class="dot"></span> DIGIY RESA PRO</div>
+          <h1 id="topTitle">Profil établissement</h1>
+          <div class="subtitle" id="topSubtitle">Identité, horaires, capacité, publication publique.</div>
+
+          <div class="meta">
+            <div class="pill slug" id="slugPill">slug : —</div>
+            <div class="pill" id="pubPill">Publication : brouillon</div>
+            <div class="pill" id="activePill">Statut : actif</div>
+          </div>
         </div>
-        <a href="index.html" class="back-link">← Retour DIGIY HUB</a>
-    </header>
+      </div>
 
-    <main>
+      <div class="actions">
+        <button class="btn primary" id="btnSave">💾 Enregistrer</button>
+        <button class="btn gold" id="btnPublish">🌍 Publier</button>
+        <a class="btn" id="btnPublic" href="#" target="_blank" rel="noopener">👁 Voir la fiche</a>
+        <a class="btn" href="./cockpit.html">🏠 Cockpit</a>
+      </div>
+    </section>
 
-        <section class="hero">
-            <div class="hero-title">
-                Réservation de tables chez nos <span>Partenaires</span>
+    <section class="layout">
+      <section class="card panel">
+        <h2>Informations établissement</h2>
+        <div class="muted">Remplis le profil public de ton établissement. Plus c’est propre, plus la fiche inspire confiance.</div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="display_name">Nom établissement</label>
+            <input id="display_name" type="text" placeholder="Ex: La Terrasse de Saly">
+          </div>
+
+          <div class="field">
+            <label for="business_type">Type de lieu</label>
+            <input id="business_type" type="text" placeholder="Ex: Restaurant, Lounge, Salon privé">
+          </div>
+
+          <div class="field">
+            <label for="city">Ville</label>
+            <input id="city" type="text" placeholder="Ex: Saly">
+          </div>
+
+          <div class="field">
+            <label for="capacity">Capacité</label>
+            <input id="capacity" type="number" min="0" step="1" placeholder="Ex: 40">
+          </div>
+
+          <div class="field full">
+            <label for="zones_text">Zones desservies / mots-clés</label>
+            <input id="zones_text" type="text" placeholder="Ex: Saly, Ngaparou, Somone">
+          </div>
+
+          <div class="field full">
+            <label for="address_text">Adresse</label>
+            <input id="address_text" type="text" placeholder="Ex: Saly centre, route de la plage">
+          </div>
+
+          <div class="field">
+            <label for="opening_hours_text">Horaires</label>
+            <input id="opening_hours_text" type="text" placeholder="Ex: Tous les jours • 12h - 23h">
+          </div>
+
+          <div class="field">
+            <label for="whatsapp">WhatsApp</label>
+            <input id="whatsapp" type="text" placeholder="Ex: 221771342889">
+          </div>
+
+          <div class="field">
+            <label for="photo_url">Photo / logo</label>
+            <input id="photo_url" type="url" placeholder="https://...">
+          </div>
+
+          <div class="field">
+            <label for="cover_url">Image de couverture</label>
+            <input id="cover_url" type="url" placeholder="https://...">
+          </div>
+
+          <div class="field full">
+            <label for="bio">Description</label>
+            <textarea id="bio" placeholder="Ex: Établissement propre, accueil sérieux, réservation simple."></textarea>
+          </div>
+
+          <div class="field">
+            <label for="priority">Priorité affichage</label>
+            <input id="priority" type="number" min="0" step="1" value="100">
+          </div>
+        </div>
+
+        <div class="switch-row">
+          <label class="switch">
+            <input id="is_active" type="checkbox" checked>
+            Établissement actif
+          </label>
+        </div>
+
+        <div id="statusBox" class="statusbox">Prêt.</div>
+      </section>
+
+      <section class="card preview">
+        <div class="preview-cover" id="previewCover">
+          <div class="preview-fallback">🍽️</div>
+          <div class="preview-badge" id="previewBadge">Établissement public</div>
+        </div>
+
+        <div class="preview-body">
+          <div>
+            <h2 class="preview-title" id="previewName">Nom établissement</h2>
+            <div class="preview-sub" id="previewSub">Ville • Type de lieu</div>
+          </div>
+
+          <div class="chips" id="previewChips">
+            <div class="chip">Zone non précisée</div>
+          </div>
+
+          <div class="facts">
+            <div class="fact">
+              <div class="k">Horaires</div>
+              <div class="v" id="previewHours">—</div>
             </div>
-            <div class="hero-sub">
-                Trouvez, réservez et confirmez votre table instantanément.
-                Service client par <strong>WhatsApp</strong>.
+            <div class="fact">
+              <div class="k">Capacité</div>
+              <div class="v" id="previewCapacity">—</div>
             </div>
-
-            <div class="hero-tags">
-                <div class="hero-tag"><strong>Confirmation Immédiate</strong></div>
-                <div class="hero-tag">Groupes & Événements</div>
-                <div class="hero-tag">Service 7j/7</div>
+            <div class="fact">
+              <div class="k">Adresse</div>
+              <div class="v" id="previewAddress">—</div>
             </div>
-        </section>
+            <div class="fact">
+              <div class="k">WhatsApp</div>
+              <div class="v" id="previewWhatsapp">—</div>
+            </div>
+          </div>
 
-        <!-- CTA PRO : DEVENIR RESTAURANT PARTENAIRE -->
-        <section class="cta-pro">
-            <a href="https://beauville.github.io/inscription-digiy/?module=resto"
-               class="cta-pro-btn" target="_blank" rel="noopener">
-                🍽️ Devenir restaurant partenaire DIGIY • 0% commission
-            </a>
-        </section>
+          <div class="fact">
+            <div class="k">Présentation</div>
+            <div class="v" id="previewBio">—</div>
+          </div>
 
-        <section class="grid">
+          <div class="preview-actions">
+            <a class="btn gold" id="btnPublic2" href="#" target="_blank" rel="noopener">🌍 Ouvrir la fiche publique</a>
+            <a class="btn" id="btnBookingPage" href="#" target="_blank" rel="noopener">📅 Ouvrir réserver</a>
+          </div>
+        </div>
+      </section>
+    </section>
 
-            <!-- —— RESTAURANT CARD 1 —— -->
-            <article class="shop-card">
-                <div class="shop-head">
-                    <div>
-                        <div class="shop-name">L'Ambiance</div>
-                        <div class="shop-type">Gastronomie Française • Saly</div>
-                    </div>
-                    <div class="shop-badge">Haut de gamme</div>
-                </div>
+    <div class="footer">
+      DIGIY RESA • Réserver simplement • Accueillir sérieusement
+    </div>
+  </div>
 
-                <div class="shop-photo">
-                    <img src="https://images.unsplash.com/photo-1550968603-f11654e580e0?auto=format&fit=crop&w=800&q=80"
-                         alt="Assiette de repas gastronomique">
-                </div>
+  <script>
+    const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
-                <p class="shop-desc">
-                    Cuisine française raffinée avec une touche locale. Ambiance feutrée parfaite pour les dîners d'affaires ou romantiques.
-                </p>
+    const supabaseLib = window.supabase;
+    if (!supabaseLib || typeof supabaseLib.createClient !== "function") {
+      console.error("Supabase JS non chargé.");
+    }
+    const sb = supabaseLib.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-                <div class="shop-meta">
-                    Réservations : Mardi → Samedi (19h-23h)
-                </div>
+    const qs = new URLSearchParams(location.search);
+    const slug = (qs.get("slug") || "").trim();
 
-                <div class="shop-actions">
-                    <a class="btn btn-resa" href="https://lien-fictif-reservation/lambiance" target="_blank" rel="noopener">
-                        Réserver une table
-                    </a>
-                    <button class="btn btn-wa"
-                        type="button"
-                        onclick="openWa('+221771112233','Bonjour, je souhaite réserver une table à L\'Ambiance via DIGIY RÉSA.');">
-                        💬 WhatsApp
-                    </button>
-                </div>
-            </article>
+    const $ = (id) => document.getElementById(id);
 
-            <!-- —— RESTAURANT CARD 2 —— -->
-            <article class="shop-card">
-                <div class="shop-head">
-                    <div>
-                        <div class="shop-name">Le Tapis Rouge</div>
-                        <div class="shop-type">Asiatique Fusion • Dakar</div>
-                    </div>
-                    <div class="shop-badge">Vue panoramique</div>
-                </div>
+    function safe(v, fallback=""){
+      const s = String(v ?? "").trim();
+      return s || fallback;
+    }
 
-                <div class="shop-photo">
-                    <img src="https://images.unsplash.com/photo-1517248135460-4c311c6d9a1e?auto=format&fit=crop&w=800&q=80"
-                         alt="Intérieur chic d'un restaurant moderne">
-                </div>
+    function escapeHtml(str){
+      return String(str ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#39;");
+    }
 
-                <p class="shop-desc">
-                    Fusion japonaise & vietnamienne, service élégant et vue imprenable sur la ville depuis la terrasse.
-                </p>
+    function publicProfileUrl(slug){
+      return `https://resa.digiylyfe.com/etablissement.html?slug=${encodeURIComponent(slug)}`;
+    }
 
-                <div class="shop-meta">
-                    Ouvert 7j/7 (12h-15h & 19h-00h)
-                </div>
+    function bookingUrl(slug){
+      return `https://resa.digiylyfe.com/reserver.html?slug=${encodeURIComponent(slug)}`;
+    }
 
-                <div class="shop-actions">
-                    <a class="btn btn-resa" href="https://lien-fictif-reservation/tapisrouge" target="_blank" rel="noopener">
-                        Réserver une table
-                    </a>
-                    <button class="btn btn-wa"
-                        type="button"
-                        onclick="openWa('+221773334455','Bonjour, je souhaite réserver une table au Tapis Rouge via DIGIY RÉSA.');">
-                        💬 WhatsApp
-                    </button>
-                </div>
-            </article>
+    function setStatus(msg, tone=""){
+      const box = $("statusBox");
+      box.className = "statusbox" + (tone ? " " + tone : "");
+      box.textContent = msg;
+    }
 
-            <!-- —— RESTAURANT CARD 3 —— -->
-            <article class="shop-card">
-                <div class="shop-head">
-                    <div>
-                        <div class="shop-name">La Cabane du Pêcheur</div>
-                        <div class="shop-type">Poissons & Fruits de mer • Mbour</div>
-                    </div>
-                    <div class="shop-badge">Pieds dans l'eau</div>
-                </div>
+    function parseZones(v){
+      return String(v || "")
+        .split(",")
+        .map(s => s.trim())
+        .filter(Boolean);
+    }
 
-                <div class="shop-photo">
-                    <img src="https://images.unsplash.com/photo-1549887534-1541e932668e?auto=format&fit=crop&w=800&q=80"
-                         alt="Restaurant en bord de plage au coucher du soleil">
-                </div>
+    function previewCoverUrl(){
+      return safe($("cover_url").value) || safe($("photo_url").value);
+    }
 
-                <p class="shop-desc">
-                    Poisson frais du jour, homards grillés et ambiance plage. Tables directement sur le sable.
-                </p>
+    function syncPreview(){
+      const name = safe($("display_name").value, "Nom établissement");
+      const businessType = safe($("business_type").value, "Établissement");
+      const city = safe($("city").value, "Ville");
+      const capacity = safe($("capacity").value);
+      const address = safe($("address_text").value, "Adresse à préciser");
+      const hours = safe($("opening_hours_text").value, "Horaires à préciser");
+      const whatsapp = safe($("whatsapp").value, "Contact à préciser");
+      const bio = safe($("bio").value, "Présentation à préciser");
+      const zones = parseZones($("zones_text").value);
+      const cover = previewCoverUrl();
 
-                <div class="shop-meta">
-                    Service continu — 7j/7 — 10h→22h
-                </div>
+      $("topTitle").textContent = name || "Profil établissement";
+      $("topSubtitle").textContent = `${city} • ${businessType}`;
+      $("previewName").textContent = name;
+      $("previewSub").textContent = `${city} • ${businessType}`;
+      $("previewHours").textContent = hours;
+      $("previewCapacity").textContent = capacity ? `${capacity} places` : "Capacité à préciser";
+      $("previewAddress").textContent = address;
+      $("previewWhatsapp").textContent = whatsapp;
+      $("previewBio").textContent = bio;
 
-                <div class="shop-actions">
-                    <a class="btn btn-resa" href="https://lien-fictif-reservation/cabanepecheur" target="_blank" rel="noopener">
-                        Réserver une table
-                    </a>
-                    <button class="btn btn-wa"
-                        type="button"
-                        onclick="openWa('+221776667788','Bonjour, je souhaite réserver une table à La Cabane du Pêcheur via DIGIY RÉSA.');">
-                        💬 WhatsApp
-                    </button>
-                </div>
-            </article>
+      $("previewBadge").textContent = city ? `Établissement public • ${city}` : "Établissement public";
 
-        </section>
+      $("previewChips").innerHTML = zones.length
+        ? zones.map(z => `<div class="chip">${escapeHtml(z)}</div>`).join("")
+        : `<div class="chip">Zone non précisée</div>`;
 
-    </main>
+      if (cover) {
+        $("previewCover").innerHTML = `
+          <img src="${escapeHtml(cover)}" alt="${escapeHtml(name)}" onerror="this.outerHTML='<div class=&quot;preview-fallback&quot;>🍽️</div>';">
+          <div class="preview-badge" id="previewBadge">${escapeHtml(city ? `Établissement public • ${city}` : "Établissement public")}</div>
+        `;
+      } else {
+        $("previewCover").innerHTML = `
+          <div class="preview-fallback">🍽️</div>
+          <div class="preview-badge" id="previewBadge">${escapeHtml(city ? `Établissement public • ${city}` : "Établissement public")}</div>
+        `;
+      }
+    }
 
-    <footer>
-        <div>DIGIY RÉSA • <span>Super App DIGIYLYFE</span></div>
-        <div>Réservation de tables simple et rapide.</div>
-    </footer>
-</div>
+    function getPayload(){
+      return {
+        p_slug: slug,
+        p_display_name: safe($("display_name").value) || null,
+        p_business_type: safe($("business_type").value) || null,
+        p_city: safe($("city").value) || null,
+        p_zones_text: safe($("zones_text").value) || null,
+        p_address_text: safe($("address_text").value) || null,
+        p_capacity: $("capacity").value ? Number($("capacity").value) : null,
+        p_opening_hours_text: safe($("opening_hours_text").value) || null,
+        p_whatsapp: safe($("whatsapp").value) || null,
+        p_bio: safe($("bio").value) || null,
+        p_photo_url: safe($("photo_url").value) || null,
+        p_cover_url: safe($("cover_url").value) || null,
+        p_priority: $("priority").value ? Number($("priority").value) : 100,
+        p_is_active: $("is_active").checked
+      };
+    }
 
-<script>
-function openWa(phone, message){
-    const txt = encodeURIComponent(message || "");
-    const clean = phone.replace(/\s+/g,"");
-    window.open(
-        "https://wa.me/" + clean.replace("+","") + (txt ? ("?text=" + txt) : ""),
-        "_blank"
-    );
-}
-</script>
+    function fillForm(p){
+      $("display_name").value = safe(p.display_name);
+      $("business_type").value = safe(p.business_type);
+      $("city").value = safe(p.city);
+      $("zones_text").value = safe(p.zones_text);
+      $("address_text").value = safe(p.address_text);
+      $("capacity").value = p.capacity ?? "";
+      $("opening_hours_text").value = safe(p.opening_hours_text);
+      $("whatsapp").value = safe(p.whatsapp);
+      $("bio").value = safe(p.bio);
+      $("photo_url").value = safe(p.photo_url);
+      $("cover_url").value = safe(p.cover_url);
+      $("priority").value = p.priority ?? 100;
+      $("is_active").checked = p.is_active !== false;
 
+      $("pubPill").textContent = `Publication : ${p.is_published ? "publique" : "brouillon"}`;
+      $("activePill").textContent = `Statut : ${p.is_active === false ? "inactif" : "actif"}`;
+
+      updatePublishButton(!!p.is_published);
+      syncPreview();
+    }
+
+    function updatePublishButton(isPublished){
+      const btn = $("btnPublish");
+      btn.textContent = isPublished ? "🙈 Dépublier" : "🌍 Publier";
+      btn.className = isPublished ? "btn danger" : "btn gold";
+    }
+
+    async function loadProfile(){
+      if (!slug) {
+        setStatus("Slug manquant. Ouvre cette page avec ?slug=resa-...", "err");
+        $("slugPill").textContent = "slug : manquant";
+        return;
+      }
+
+      $("slugPill").textContent = "slug : " + slug;
+      $("btnPublic").href = publicProfileUrl(slug);
+      $("btnPublic2").href = publicProfileUrl(slug);
+      $("btnBookingPage").href = bookingUrl(slug);
+
+      try{
+        const { data, error } = await sb.rpc("resa_get_profile_by_slug", { p_slug: slug });
+        if (error) throw error;
+
+        if (data?.ok && data.profile) {
+          fillForm(data.profile);
+          setStatus("Profil chargé.", "ok");
+        } else {
+          syncPreview();
+          setStatus("Aucun profil trouvé pour ce slug. Tu peux le créer en enregistrant.", "warn");
+        }
+      }catch(e){
+        console.error(e);
+        syncPreview();
+        setStatus("Impossible de charger le profil. Tu peux tenter un premier enregistrement.", "err");
+      }
+    }
+
+    async function saveProfile(){
+      if (!slug) {
+        setStatus("Slug manquant. Impossible d’enregistrer.", "err");
+        return;
+      }
+
+      setStatus("Enregistrement en cours...");
+      try{
+        const { data, error } = await sb.rpc("resa_upsert_profile_by_slug", getPayload());
+        if (error) throw error;
+        if (!data?.ok) throw new Error(data?.error || "save_failed");
+
+        if (data.profile) fillForm(data.profile);
+        setStatus("Profil enregistré proprement.", "ok");
+      }catch(e){
+        console.error(e);
+        setStatus("Échec enregistrement profil.", "err");
+      }
+    }
+
+    async function togglePublish(){
+      if (!slug) {
+        setStatus("Slug manquant. Impossible de publier.", "err");
+        return;
+      }
+
+      const currentlyPublished = $("btnPublish").textContent.includes("Dépublier");
+      const targetState = !currentlyPublished;
+
+      setStatus(targetState ? "Publication en cours..." : "Dépublication en cours...");
+      try{
+        const { data, error } = await sb.rpc("resa_set_publish_by_slug", {
+          p_slug: slug,
+          p_is_published: targetState
+        });
+        if (error) throw error;
+        if (!data?.ok) throw new Error(data?.error || "publish_failed");
+
+        const p = data.profile || {};
+        $("pubPill").textContent = `Publication : ${p.is_published ? "publique" : "brouillon"}`;
+        updatePublishButton(!!p.is_published);
+        setStatus(p.is_published ? "Établissement publié." : "Établissement dépublié.", "ok");
+      }catch(e){
+        console.error(e);
+        setStatus("Impossible de changer la publication.", "err");
+      }
+    }
+
+    ["display_name","business_type","city","zones_text","address_text","capacity","opening_hours_text","whatsapp","bio","photo_url","cover_url","priority","is_active"]
+      .forEach(id => {
+        $(id).addEventListener("input", syncPreview);
+        $(id).addEventListener("change", syncPreview);
+      });
+
+    $("btnSave").addEventListener("click", saveProfile);
+    $("btnPublish").addEventListener("click", togglePublish);
+
+    syncPreview();
+    loadProfile();
+  </script>
 </body>
 </html>
