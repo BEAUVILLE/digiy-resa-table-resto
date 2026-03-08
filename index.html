@@ -2,370 +2,1617 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <title>DIGIY RESA TABLE — Fiche établissement</title>
+  <title>DIGIY RESA TABLE — Vitrine des établissements partenaires</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#061b14" />
-  <meta name="description" content="Fiche publique établissement DIGIY RESA TABLE." />
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta name="description" content="DIGIY RESA TABLE — Réservation directe, WhatsApp rapide, 0% commission. Vitrine publique des établissements partenaires." />
+  <meta name="theme-color" content="#020617" />
+  <meta name="robots" content="index,follow" />
 
   <style>
     :root{
-      --bg:#061b14;
-      --ink:#F4FFF8;
-      --muted:#CFE9D7;
-      --line:rgba(148,163,184,.20);
-      --gold:#facc15;
-      --green:#22c55e;
-      --orange:#f97316;
-      --shadow:0 18px 55px rgba(0,0,0,.42);
+      --bg:#020617;
+      --bg-soft:#020818;
+      --card:#030712;
+      --accent:#facc15;
+      --accent-soft:#f97316;
+      --accent-green:#22c55e;
+      --ink:#f9fafb;
+      --muted:#cbd5f5;
+      --line:rgba(148,163,184,0.22);
+      --shadow-soft:0 20px 45px rgba(15,23,42,0.9);
+      --glass:rgba(2,6,23,.68);
     }
-    *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
+    }
+
     body{
       min-height:100vh;
       background:
-        radial-gradient(circle at top, rgba(250,204,21,.10) 0, transparent 55%),
-        radial-gradient(circle at 18% 10%, rgba(34,197,94,.10) 0, transparent 55%),
-        radial-gradient(circle at top,#0b2218 0,#061b14 50%,#04110d 100%);
+        radial-gradient(circle at top,rgba(250,204,21,0.16),transparent 60%),
+        radial-gradient(circle at bottom,rgba(34,197,94,0.16),transparent 55%),
+        var(--bg);
       color:var(--ink);
-    }
-    .page{max-width:980px;margin:0 auto;padding:16px 14px 42px}
-    .nav{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      padding:10px 0 14px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:14px;flex-wrap:wrap;
-    }
-    .logo{
-      display:flex;align-items:center;gap:12px;
-    }
-    .logo-badge{
-      width:42px;height:42px;border-radius:16px;
-      background:radial-gradient(circle at 30% 20%,var(--gold),var(--orange));
-      display:flex;align-items:center;justify-content:center;
-      color:#04110d;font-weight:1000;font-size:18px;
-      box-shadow:0 10px 26px rgba(250,204,21,.40);
-    }
-    .logo-title{font-size:16px;font-weight:950;letter-spacing:.10em;text-transform:uppercase}
-    .logo-sub{font-size:12px;color:var(--muted);font-weight:850;margin-top:2px}
-    .btn{
-      border-radius:999px;
-      padding:11px 14px;
-      font-size:13px;
-      font-weight:950;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
+      display:flex;
       justify-content:center;
-      gap:8px;
-      white-space:nowrap;
-      border:1px solid rgba(203,213,225,0.28);
-      background:rgba(15,23,42,0.28);
-      color:var(--ink);
+      padding:10px;
+      font-size:16px;
     }
-    .btn.primary{
-      border:none;
-      background:linear-gradient(135deg,var(--gold),var(--orange));
-      color:#04110d;
-      box-shadow:0 10px 24px rgba(250,204,21,.30);
-    }
-    .hero{
+
+    .app{
+      width:100%;
+      max-width:1100px;
+      min-height:100vh;
+      background:linear-gradient(135deg,#020617 0%,#020818 50%,#020617 100%);
       border-radius:24px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(7,24,17,.55);
-      box-shadow:var(--shadow);
+      border:1px solid rgba(148,163,184,0.25);
+      box-shadow:var(--shadow-soft);
+      padding:16px 16px 22px;
+      display:flex;
+      flex-direction:column;
+      position:relative;
       overflow:hidden;
     }
-    .photo{
-      width:100%;
-      height:320px;
-      background:rgba(0,0,0,.24);
-      border-bottom:1px solid rgba(255,255,255,.08);
-      position:relative;
+
+    .app::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:
+        radial-gradient(circle at 0% 0%,rgba(250,204,21,0.14),transparent 55%),
+        radial-gradient(circle at 100% 100%,rgba(34,197,94,0.14),transparent 45%);
+      opacity:0.8;
+      pointer-events:none;
     }
+
+    header{
+      position:relative;
+      z-index:2;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:12px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .brand-logo{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      background:radial-gradient(circle at 30% 0%,#facc15,#f97316);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      box-shadow:0 12px 30px rgba(234,179,8,0.65);
+    }
+
+    .brand-text-title{
+      font-size:20px;
+      font-weight:900;
+      letter-spacing:0.09em;
+      text-transform:uppercase;
+      color:var(--accent-green);
+    }
+
+    .brand-text-sub{
+      font-size:14px;
+      color:var(--muted);
+      font-weight:650;
+    }
+
+    .back-link{
+      font-size:13px;
+      color:var(--muted);
+      text-decoration:none;
+      background:rgba(15,23,42,0.9);
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.6);
+      padding:8px 14px;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .back-link:hover{
+      border-color:var(--accent);
+      color:var(--accent);
+    }
+
+    .hero{
+      background:radial-gradient(circle at top left,rgba(34,197,94,0.18),rgba(3,7,18,0.96));
+      border-radius:22px;
+      border:1px solid rgba(148,163,184,0.6);
+      padding:16px;
+      box-shadow:0 18px 44px rgba(15,23,42,0.95);
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      position:relative;
+      z-index:2;
+    }
+
+    .hero-title{
+      font-size:26px;
+      font-weight:950;
+      color:var(--accent-green);
+      line-height:1.15;
+    }
+
+    .hero-title span{
+      color:var(--accent);
+    }
+
+    .hero-sub{
+      font-size:16px;
+      color:#e5e7eb;
+      max-width:760px;
+      font-weight:500;
+      line-height:1.6;
+    }
+
+    .hero-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      margin-top:4px;
+    }
+
+    .hero-tag{
+      font-size:13px;
+      padding:5px 11px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.7);
+      background:rgba(15,23,42,0.95);
+      color:#e5e7eb;
+      font-weight:650;
+    }
+
+    .hero-tag strong{
+      color:var(--accent);
+    }
+
+    .cta-row{
+      margin-top:14px;
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:10px;
+      position:relative;
+      z-index:2;
+    }
+
+    .cta-btn{
+      background:linear-gradient(135deg,#facc15,#f97316);
+      padding:12px 18px;
+      border-radius:999px;
+      color:#111;
+      font-size:14px;
+      font-weight:950;
+      text-decoration:none;
+      box-shadow:0 8px 20px rgba(250,204,21,0.45);
+      border:1px solid rgba(250,204,21,0.65);
+      transition:transform .2s ease, box-shadow .2s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+    }
+
+    .cta-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 26px rgba(250,204,21,0.65);
+    }
+
+    .cta-btn.secondary{
+      background:rgba(22,163,74,0.16);
+      color:#bbf7d0;
+      border:1px solid rgba(34,197,94,0.8);
+      box-shadow:none;
+    }
+
+    .cta-btn.secondary:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 26px rgba(34,197,94,0.18);
+    }
+
+    .cta-btn.nd{
+      background:rgba(250,204,21,0.12);
+      color:#fde68a;
+      border:1px solid rgba(250,204,21,0.55);
+      box-shadow:none;
+    }
+
+    .filters{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns:1.3fr 1fr auto auto;
+      gap:10px;
+      position:relative;
+      z-index:2;
+    }
+
+    input,select,textarea{
+      padding:11px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(2,6,23,0.85);
+      color:var(--ink);
+      outline:none;
+      font-weight:800;
+    }
+
+    textarea{
+      min-height:92px;
+      resize:vertical;
+    }
+
+    button{
+      padding:11px 14px;
+      border-radius:14px;
+      border:none;
+      background:linear-gradient(135deg,#facc15,#f97316);
+      font-weight:950;
+      cursor:pointer;
+      color:#111;
+      box-shadow:0 10px 22px rgba(250,204,21,0.25);
+      white-space:nowrap;
+    }
+
+    .ghost{
+      background:rgba(15,23,42,0.75);
+      color:#e5e7eb;
+      border:1px solid var(--line);
+      box-shadow:none;
+    }
+
+    @media(max-width:900px){
+      .filters{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media(max-width:640px){
+      body{
+        padding:0;
+      }
+
+      .app{
+        border-radius:0;
+        border:none;
+        box-shadow:none;
+        padding:12px 12px 18px;
+      }
+
+      .brand-text-title{
+        font-size:18px;
+      }
+
+      .hero-title{
+        font-size:22px;
+      }
+
+      .filters{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+      position:relative;
+      z-index:2;
+    }
+
+    @media(max-width:900px){
+      .grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media(max-width:640px){
+      .grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .card{
+      background:radial-gradient(circle at top,rgba(15,23,42,0.98),#020617);
+      border-radius:24px;
+      border:1px solid rgba(30,64,175,0.7);
+      padding:12px;
+      box-shadow:0 14px 34px rgba(15,23,42,0.95);
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card.pinned{
+      border-color:rgba(250,204,21,0.9);
+      box-shadow:0 16px 44px rgba(250,204,21,0.18);
+    }
+
+    .pinnedTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:14px;
+      background:rgba(250,204,21,0.10);
+      border:1px solid rgba(250,204,21,0.35);
+      margin-bottom:2px;
+    }
+
+    .pinnedTop .left{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-weight:950;
+    }
+
+    .pinnedTop .pill{
+      font-size:12px;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid rgba(250,204,21,0.55);
+      background:rgba(250,204,21,0.12);
+      color:#fde68a;
+      white-space:nowrap;
+    }
+
+    .photo{
+      height:220px;
+      border-radius:16px;
+      overflow:hidden;
+      border:2px solid rgba(30,64,175,0.85);
+      background:#0b1220;
+    }
+
+    .card.pinned .photo{
+      border-color:rgba(250,204,21,0.65);
+    }
+
     .photo img{
       width:100%;
       height:100%;
       object-fit:cover;
       display:block;
     }
-    .badgeTop{
-      position:absolute;top:12px;left:12px;display:flex;gap:8px;flex-wrap:wrap;
-    }
-    .chip{
-      border-radius:999px;
-      padding:6px 10px;
-      font-size:11px;
-      font-weight:1000;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(2,6,23,.55);
-      color:rgba(234,255,241,.92);
-      display:inline-flex;align-items:center;gap:6px;
-      backdrop-filter:blur(6px);
-    }
-    .chip.gold{border-color:rgba(250,204,21,.30)}
-    .chip.green{border-color:rgba(34,197,94,.30)}
-    .body{padding:18px;display:grid;gap:14px}
-    h1{font-size:32px;line-height:1.08;font-weight:1000;color:var(--gold)}
-    .meta{display:flex;flex-wrap:wrap;gap:10px;color:var(--muted);font-size:14px;font-weight:850}
-    .bio{font-size:15px;line-height:1.6;color:rgba(234,255,241,.94);font-weight:850}
-    .tags{display:flex;flex-wrap:wrap;gap:8px}
-    .tag{
-      border-radius:999px;
-      padding:6px 10px;
-      border:1px solid rgba(203,213,225,0.22);
-      color:var(--muted);
-      background:rgba(2,6,23,.35);
-      font-size:11px;
+
+    .name{
+      font-size:22px;
       font-weight:950;
+      color:var(--accent);
+      line-height:1.1;
     }
-    .actions{display:flex;gap:10px;flex-wrap:wrap}
-    .card{
-      margin-top:14px;
-      border-radius:20px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(7,24,17,.55);
-      box-shadow:var(--shadow);
-      padding:16px;
+
+    .type{
+      font-size:15px;
+      color:#e5e7eb;
+      font-weight:800;
     }
-    .card h2{font-size:18px;margin-bottom:8px}
-    .muted{color:var(--muted);line-height:1.55;font-weight:850}
-    .status{
-      margin-top:14px;
+
+    .badges{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .badge{
+      width:max-content;
+      padding:5px 9px;
+      font-size:12px;
+      border-radius:999px;
+      border:1px solid rgba(34,197,94,0.9);
+      color:var(--accent-green);
+      background:rgba(15,23,42,0.98);
+      font-weight:950;
+      white-space:nowrap;
+    }
+
+    .badge.gold{
+      border-color:rgba(250,204,21,0.9);
+      color:var(--accent);
+    }
+
+    .badge.free{
+      border-color:rgba(34,197,94,0.95);
+      color:#bbf7d0;
+      background:rgba(6,78,59,0.65);
+    }
+
+    .badge.busy{
+      border-color:rgba(248,113,113,0.95);
+      color:#fecaca;
+      background:rgba(127,29,29,0.55);
+    }
+
+    .desc{
+      font-size:15px;
+      color:#f3f4f6;
+      line-height:1.6;
+      font-weight:550;
+    }
+
+    .meta{
+      font-size:14px;
+      color:#e5e7eb;
+      font-weight:750;
+      opacity:0.95;
+    }
+
+    .contact{
+      margin-top:10px;
       border-radius:16px;
-      border:1px solid rgba(203,213,225,.14);
-      background:rgba(2,6,23,.45);
-      padding:12px 12px;
-      font-size:13px;
-      font-weight:900;
-      color:var(--muted);
+      border:1px solid rgba(34,197,94,1);
+      background:rgba(6,78,59,0.98);
+      padding:10px 12px;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
     }
-    .footer{
-      margin-top:22px;
-      border-top:1px solid rgba(255,255,255,.08);
-      padding-top:14px;
+
+    .contact-title{
+      font-size:14px;
+      font-weight:950;
+      color:#bbf7d0;
+    }
+
+    .contact-value{
+      font-size:18px;
+      font-weight:950;
+      color:#ecfdf5;
+      letter-spacing:0.2px;
+    }
+
+    .actions{
+      margin-top:10px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:none;
+      border-radius:999px;
+      padding:10px 14px;
+      font-size:14px;
+      font-weight:950;
+      cursor:pointer;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-decoration:none;
+      transition:transform .18s ease;
+      flex:1;
+      min-height:44px;
+      white-space:nowrap;
+      touch-action:manipulation;
+      -webkit-tap-highlight-color:transparent;
+      user-select:none;
+    }
+
+    .btn:active{
+      transform:scale(.99);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,#facc15,#f97316);
+      color:#111;
+      box-shadow:0 7px 18px rgba(250,204,21,0.55);
+    }
+
+    .btn-wa{
+      background:rgba(22,163,74,0.2);
+      color:#bbf7d0;
+      border:1px solid rgba(34,197,94,0.85);
+    }
+
+    .btn-nd{
+      background:rgba(250,204,21,0.12);
+      color:#fde68a;
+      border:1px solid rgba(250,204,21,0.55);
+    }
+
+    .btn-pay{
+      background:rgba(34,197,94,0.14);
+      color:#bbf7d0;
+      border:1px solid rgba(34,197,94,0.55);
+    }
+
+    .btn-call{
+      background:rgba(59,130,246,0.14);
+      color:#dbeafe;
+      border:1px solid rgba(96,165,250,0.5);
+    }
+
+    .bigmsg{
+      grid-column:1/-1;
+      background:rgba(2,6,23,0.72);
+      border:1px solid rgba(148,163,184,0.25);
+      padding:14px;
+      border-radius:18px;
+      font-weight:900;
+      color:#e5e7eb;
+      line-height:1.55;
+    }
+
+    .bigmsg b{
+      color:var(--accent);
+    }
+
+    footer{
+      margin-top:20px;
       font-size:12px;
       color:var(--muted);
-      text-align:center;
-      font-weight:850;
-      line-height:1.5;
+      font-weight:750;
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:6px;
+      position:relative;
+      z-index:2;
+    }
+
+    footer span{
+      color:var(--accent);
+      font-weight:950;
+    }
+
+    .digiy-contact{
+      margin-top:16px;
+      padding:14px;
+      border:1px solid rgba(148,163,184,0.25);
+      border-radius:20px;
+      background:rgba(2,6,23,0.55);
+      position:relative;
+      z-index:2;
+    }
+
+    .digiy-contact h3{
+      font-size:18px;
+      font-weight:950;
+      color:#bbf7d0;
+    }
+
+    .digiy-contact p{
+      margin-top:6px;
+      color:#e5e7eb;
+      opacity:.95;
+      font-weight:650;
+    }
+
+    .pickline{
+      margin-top:10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,0.22);
+      background:rgba(15,23,42,0.55);
+    }
+
+    .picktitle{
+      font-weight:950;
+      color:#fde68a;
+    }
+
+    .pickbtn{
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.22);
+      background:rgba(2,6,23,0.65);
+      color:#e5e7eb;
+      font-weight:950;
+      cursor:pointer;
+    }
+
+    .digiy-form{
+      display:grid;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .digiy-form label{
+      display:grid;
+      gap:6px;
+      font-size:14px;
+      color:#e5e7eb;
+      font-weight:800;
+    }
+
+    .digiy-form input,
+    .digiy-form textarea{
+      padding:12px;
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,0.22);
+      background:rgba(2,6,23,0.85);
+      color:#fff;
+      outline:none;
+      font-weight:800;
+    }
+
+    .digiy-form button{
+      padding:12px 14px;
+      border-radius:14px;
+      border:none;
+      background:linear-gradient(135deg,#facc15,#f97316);
+      font-weight:950;
+      cursor:pointer;
+      color:#111;
+      box-shadow:0 10px 22px rgba(250,204,21,0.25);
+    }
+
+    .digiy-form small{
+      opacity:.8;
+    }
+
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:14px;
+      z-index:9999;
+    }
+
+    .overlay.show{
+      display:flex;
+    }
+
+    .panel{
+      width:100%;
+      max-width:860px;
+      border-radius:22px;
+      border:1px solid rgba(148,163,184,.35);
+      background:linear-gradient(135deg, rgba(2,6,23,.92), rgba(2,8,24,.92));
+      box-shadow:0 30px 80px rgba(0,0,0,.55);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .panelTop{
+      padding:16px;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(250,204,21,.18), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(34,197,94,.14), transparent 50%),
+        rgba(2,6,23,.6);
+      border-bottom:1px solid rgba(148,163,184,.28);
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+    }
+
+    .panelTitle{
+      font-size:18px;
+      font-weight:950;
+      color:#fde68a;
+      letter-spacing:.02em;
+    }
+
+    .panelSub{
+      margin-top:6px;
+      font-size:14px;
+      color:#e5e7eb;
+      font-weight:650;
+      line-height:1.55;
+      max-width:640px;
+    }
+
+    .panelClose{
+      background:rgba(15,23,42,.75);
+      border:1px solid rgba(148,163,184,.28);
+      color:#e5e7eb;
+      border-radius:999px;
+      padding:8px 12px;
+      font-weight:950;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+
+    .panelBody{
+      padding:16px;
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:14px;
+    }
+
+    @media(max-width:820px){
+      .panelBody{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .box{
+      border:1px solid rgba(148,163,184,.22);
+      background:rgba(2,6,23,.55);
+      border-radius:18px;
+      padding:14px;
+    }
+
+    .kicker{
+      font-size:12px;
+      font-weight:950;
+      color:#bbf7d0;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      opacity:.95;
+    }
+
+    .big{
+      margin-top:6px;
+      font-size:22px;
+      font-weight:950;
+      line-height:1.15;
+      color:#facc15;
+    }
+
+    .txt{
+      margin-top:10px;
+      font-size:14px;
+      color:#e5e7eb;
+      line-height:1.7;
+      font-weight:650;
+    }
+
+    .bul{
+      margin-top:10px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      font-size:14px;
+      color:#e5e7eb;
+      font-weight:650;
+      line-height:1.55;
+    }
+
+    .bul div{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,.18);
+      background:rgba(15,23,42,.35);
+    }
+
+    .hi{
+      color:#fde68a;
+      font-weight:950;
+    }
+
+    .panelActions{
+      padding:14px 16px;
+      border-top:1px solid rgba(148,163,184,.22);
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      background:rgba(2,6,23,.55);
+    }
+
+    .pbtn{
+      border-radius:999px;
+      padding:10px 14px;
+      font-weight:950;
+      cursor:pointer;
+      border:1px solid rgba(148,163,184,.22);
+      background:rgba(15,23,42,.55);
+      color:#e5e7eb;
+    }
+
+    .pbtn.gold{
+      border-color:rgba(250,204,21,.55);
+      background:rgba(250,204,21,.12);
+      color:#fde68a;
+    }
+
+    .pbtn.green{
+      border-color:rgba(34,197,94,.55);
+      background:rgba(34,197,94,.12);
+      color:#bbf7d0;
     }
   </style>
 </head>
+
 <body>
-  <div class="page">
-    <header class="nav">
-      <div class="logo">
-        <div class="logo-badge">🍽️</div>
+  <div class="app">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">🍽️</div>
         <div>
-          <div class="logo-title">DIGIY RESA TABLE</div>
-          <div class="logo-sub">Fiche publique établissement</div>
+          <div class="brand-text-title">DIGIY RESA TABLE</div>
+          <div class="brand-text-sub">Vitrine des établissements partenaires</div>
         </div>
       </div>
 
-      <a class="btn" href="./index.html">← Retour vitrine</a>
+      <a href="https://beauville.github.io/digiy-hub/" class="back-link">
+        <span>←</span> Retour DIGIY HUB
+      </a>
     </header>
 
-    <section class="hero" id="hero"></section>
+    <main>
+      <section class="hero">
+        <div class="hero-title">Réservation directe <span>0% commission</span></div>
+        <div class="hero-sub">
+          Choisis ton établissement, écris directement sur WhatsApp, réserve vite.
+          DIGIY ne prend pas l’argent du client : <b>contact direct</b>, <b>réponse rapide</b>, <b>terrain réel</b>.
+          <br><br>
+          Ici on met les bonnes tables en lumière, sans tunnel inutile, sans détour, sans perte de temps.
+        </div>
+        <div class="hero-tags">
+          <div class="hero-tag"><strong>Réservation directe</strong> — WhatsApp rapide</div>
+          <div class="hero-tag">Saly • Mbour • Dakar • Thiès</div>
+          <div class="hero-tag">Établissements visibles localement</div>
+          <div class="hero-tag"><strong>0% commission</strong> DIGIY</div>
+          <div class="hero-tag"><strong>Simple</strong> : choisir → écrire → réserver</div>
+        </div>
+      </section>
 
-    <section class="card">
-      <h2>Réservation simple</h2>
-      <div class="muted" id="bookingText">
-        Réserve directement depuis la fiche publique.
-      </div>
-      <div class="actions" style="margin-top:12px" id="bottomActions"></div>
-    </section>
+      <section class="cta-row">
+        <a href="https://beauville.github.io/inscription-digiy/?module=resa" class="cta-btn" target="_blank" rel="noopener noreferrer">
+          🍽️ Publier mon établissement • 0% commission
+        </a>
+        <button class="cta-btn nd" type="button" id="btnHowOpenTop">
+          📖 Comprendre DIGIY RESA
+        </button>
+        <a href="https://wa.me/221771342889" class="cta-btn secondary" target="_blank" rel="noopener noreferrer">
+          📲 Parler à l’équipe DIGIY
+        </a>
+      </section>
 
-    <div class="status" id="statusText">Chargement de la fiche…</div>
+      <section id="contact" class="digiy-contact">
+        <h3>Contacter l’établissement sur WhatsApp</h3>
+        <p id="pickedHint">Choisis un établissement dans la liste 👇</p>
 
-    <footer class="footer">
-      DIGIY RESA TABLE • Fiche publique • Saly ∞
+        <div class="pickline" id="pickLine" style="display:none">
+          <div class="picktitle" id="pickedTitle">—</div>
+          <button type="button" class="pickbtn" id="pickClear">Changer</button>
+        </div>
+
+        <form id="resaLeadForm" class="digiy-form">
+          <input type="hidden" name="picked_slug" id="pickedSlug" />
+          <input type="hidden" name="picked_phone" id="pickedPhone" />
+          <input type="hidden" name="picked_title" id="pickedTitleInput" />
+
+          <label>Votre prénom
+            <input name="name" type="text" placeholder="Ex: Awa" autocomplete="given-name" required />
+          </label>
+
+          <label>Date de réservation
+            <input name="date" type="text" placeholder="Ex: 12/03/2026" required />
+          </label>
+
+          <label>Heure souhaitée
+            <input name="time" type="text" placeholder="Ex: 20h30" required />
+          </label>
+
+          <label>Nombre de personnes
+            <input name="people" type="number" min="1" placeholder="Ex: 2" required />
+          </label>
+
+          <label>Message complémentaire (facultatif)
+            <textarea name="note" placeholder="Ex: table calme, anniversaire, terrasse, enfant..."></textarea>
+          </label>
+
+          <button type="submit">Ouvrir WhatsApp (au bon établissement)</button>
+          <small>Message prêt — tu n’as plus qu’à envoyer.</small>
+        </form>
+      </section>
+
+      <section class="filters">
+        <input id="q" placeholder="Zone ou nom (Saly, Dakar, plage, resto...)" autocomplete="off" />
+        <select id="kind">
+          <option value="">Cuisine : Tout</option>
+          <option value="senegalaise">Sénégalaise</option>
+          <option value="grillades">Grillades</option>
+          <option value="poisson">Poisson / fruits de mer</option>
+          <option value="fast-food">Fast-food</option>
+          <option value="cafe">Café / brunch</option>
+          <option value="internationale">Internationale</option>
+          <option value="pizza">Pizza</option>
+        </select>
+        <button id="btnSearch">🔎 Chercher</button>
+        <button id="btnReset" class="ghost" type="button">↩︎ Reset</button>
+      </section>
+
+      <section id="grid" class="grid"></section>
+    </main>
+
+    <footer>
+      <div>DIGIY RESA TABLE • <span>Super App DIGIYLYFE</span> — Sénégal → Afrique</div>
+      <div>0% commission • Réservation directe • Visibilité locale</div>
     </footer>
   </div>
 
+  <div class="overlay" id="howOverlay" aria-hidden="true">
+    <div class="panel" role="dialog" aria-modal="true" aria-label="Comprendre DIGIY RESA">
+      <div class="panelTop">
+        <div>
+          <div class="panelTitle">🍽️ DIGIY RESA — comment ça marche</div>
+          <div class="panelSub">
+            DIGIY met l’établissement en lumière et facilite le contact.
+            Le client choisit, écrit directement, et l’établissement gère sa réservation sans usine à gaz.
+          </div>
+        </div>
+        <button class="panelClose" type="button" id="howClose">✕ Fermer</button>
+      </div>
+
+      <div class="panelBody">
+        <div class="box">
+          <div class="kicker">PARCOURS CLIENT</div>
+          <div class="big">Choisir → écrire → réserver</div>
+          <div class="txt">
+            L’idée est simple : on raccourcit la route. Pas de plateforme qui encaisse, pas de détour inutile,
+            pas de client perdu dans un tunnel.
+          </div>
+
+          <div class="bul">
+            <div>1) Le client choisit un établissement dans la vitrine.</div>
+            <div>2) Il envoie un message WhatsApp déjà préparé.</div>
+            <div>3) L’établissement confirme directement la réservation.</div>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="kicker">POUR LE TERRAIN</div>
+          <div class="txt">
+            DIGIY apporte de la visibilité locale, un accès rapide, et une présence digitale propre
+            pour les établissements qui veulent avancer sans se faire manger.
+          </div>
+          <div class="bul">
+            <div>✅ Contact direct avec le client</div>
+            <div>✅ Réponse plus rapide</div>
+            <div>✅ 0% commission DIGIY</div>
+            <div>✅ Structure simple, claire, locale</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panelActions">
+        <button class="pbtn gold" type="button" id="howClose2">✅ J’ai compris</button>
+        <button class="pbtn green" type="button" id="howTalk">📲 Parler à DIGIY</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script>
-    const FALLBACK_PHOTO = "https://orange-pig-270004.hostingersite.com/wp-content/uploads/2026/03/chatgpt-image-4-mars-2026-23_40_53.png";
-    const SUPPORT_WA = "221771342889";
-
     const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJIUzI1NiIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false,
-        detectSessionInUrl: false,
-        storage: {
-          getItem: () => null,
-          setItem: () => {},
-          removeItem: () => {}
-        }
+    const TEAM_WA = "+221771342889";
+    const grid = document.getElementById("grid");
+
+    const DEFAULT_COVER = "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80";
+    const DEFAULT_FICHE_BASE = "https://resa-table-resto.digiylyfe.com/fiche.html?slug=";
+
+    const SOURCE_CANDIDATES = [
+      "digiy_resa_businesses",
+      "digiy_resto_businesses",
+      "digiy_resa_public_catalog",
+      "digiy_resto_public_catalog",
+      "digiy_restaurants",
+      "digiy_resto_places"
+    ];
+
+    const PLACEHOLDERS = [
+      {
+        title:"Saly — établissements partenaires en ouverture",
+        slug:"saly-etablissements-ouverture",
+        quartier:"Saly",
+        cuisine:"Cuisine variée",
+        phone:TEAM_WA,
+        callPhone:TEAM_WA,
+        cover:DEFAULT_COVER,
+        public_url:"",
+        desc:"La vitrine démarre. Dis-nous ton quartier, ton heure et le nombre de personnes : on te guide vite.",
+        services:["Déjeuner","Dîner","WhatsApp direct"],
+        heroBadges:["0% commission","Réservation directe"],
+        is_featured:true,
+        is_open_now:null,
+        is_public:true,
+        status:"active"
+      },
+      {
+        title:"Ngaparou / Somone — bonnes tables à activer",
+        slug:"ngaparou-somone-bonnes-tables",
+        quartier:"Ngaparou / Somone",
+        cuisine:"Poisson / grillades",
+        phone:TEAM_WA,
+        callPhone:TEAM_WA,
+        cover:"https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1400&q=80",
+        public_url:"",
+        desc:"Tu veux une table dans le coin ? Envoie heure + personnes, l’équipe te répond rapidement.",
+        services:["Déjeuner","Dîner","Terrasse"],
+        heroBadges:["Contact rapide","Terrain local"],
+        is_featured:false,
+        is_open_now:null,
+        is_public:true,
+        status:"active"
+      },
+      {
+        title:"Dakar — ouverture progressive",
+        slug:"dakar-ouverture-progressive",
+        quartier:"Dakar",
+        cuisine:"Cuisine internationale",
+        phone:TEAM_WA,
+        callPhone:TEAM_WA,
+        cover:"https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1400&q=80",
+        public_url:"",
+        desc:"Le réseau s’étend. Dis ta zone et ton style de table, on te branche au bon endroit.",
+        services:["Déjeuner","Dîner","Réservation groupe"],
+        heroBadges:["Visibilité locale","Sans détour"],
+        is_featured:false,
+        is_open_now:null,
+        is_public:true,
+        status:"active"
       }
-    });
+    ];
 
-    function esc(s){
-      return String(s ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+    function norm(s){
+      return String(s || "").trim().toLowerCase();
     }
 
-    function qs(name){
-      return new URL(location.href).searchParams.get(name) || "";
+    function firstFilled(...vals){
+      for (const v of vals){
+        if (v === 0) return v;
+        if (v !== null && v !== undefined && String(v).trim() !== "") return v;
+      }
+      return "";
+    }
+
+    function asArray(v){
+      if (Array.isArray(v)) return v.filter(Boolean).map(x => String(x));
+
+      if (typeof v === "string") {
+        try{
+          const parsed = JSON.parse(v);
+          if (Array.isArray(parsed)) return parsed.filter(Boolean).map(x => String(x));
+        }catch(_){}
+
+        return v.split(",").map(s => s.trim()).filter(Boolean);
+      }
+
+      return [];
+    }
+
+    function slugify(value){
+      return String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "") || "resa-place";
     }
 
     function normalizePhone(v){
-      return String(v || "").replace(/[^\d]/g, "");
+      const digits = String(v || "").replace(/\D/g, "");
+      if (!digits) return TEAM_WA;
+      return "+" + digits;
     }
 
-    function renderPlaceholder(slot = ""){
-      const hero = document.getElementById("hero");
-      const bottom = document.getElementById("bottomActions");
-      const status = document.getElementById("statusText");
+    function escapeHtml(str){
+      return String(str ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
 
-      hero.innerHTML = `
-        <div class="photo">
-          <img src="${FALLBACK_PHOTO}" alt="Fiche placeholder"/>
-          <div class="badgeTop">
-            <span class="chip gold">🪑 SLOT DISPONIBLE</span>
-            <span class="chip green">🍽️ RESA TABLE</span>
+    function escapeAttr(str){
+      return escapeHtml(str).replace(/`/g, "&#096;");
+    }
+
+    function encodePayload(obj){
+      return escapeAttr(encodeURIComponent(JSON.stringify(obj)));
+    }
+
+    function decodePayload(str){
+      try{
+        return JSON.parse(decodeURIComponent(str));
+      }catch(_){
+        return null;
+      }
+    }
+
+    function openWa(phone, message){
+      const digits = String(phone || "").replace(/\D/g, "");
+      if (!digits) return;
+      const url = "https://wa.me/" + digits + (message ? ("?text=" + encodeURIComponent(message)) : "");
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+
+    function openCall(phone){
+      const digits = String(phone || "").replace(/\D/g, "");
+      if (!digits) return;
+      window.location.href = "tel:+" + digits;
+    }
+
+    function mergeNoDup(baseList, fillers, targetCount){
+      const merged = [...baseList];
+      const seen = new Set(baseList.map(x => String(x.slug || "").toLowerCase()).filter(Boolean));
+
+      for (const f of fillers){
+        if (merged.length >= targetCount) break;
+        const s = String(f.slug || "").toLowerCase();
+        if (s && seen.has(s)) continue;
+        merged.push(f);
+        if (s) seen.add(s);
+      }
+
+      return merged;
+    }
+
+    function cuisineLabel(v){
+      const x = norm(v);
+      if (!x) return "Cuisine";
+      if (x.includes("seneg")) return "Sénégalaise";
+      if (x.includes("grill")) return "Grillades";
+      if (x.includes("poisson") || x.includes("seafood") || x.includes("fruit de mer")) return "Poisson / fruits de mer";
+      if (x.includes("fast")) return "Fast-food";
+      if (x.includes("cafe") || x.includes("brunch")) return "Café / brunch";
+      if (x.includes("pizza")) return "Pizza";
+      if (x.includes("internationale") || x.includes("international")) return "Internationale";
+      return String(v);
+    }
+
+    function mapRow(row){
+      const title = firstFilled(
+        row.nom,
+        row.title,
+        row.name,
+        row.business_name,
+        row.restaurant_name,
+        row.label
+      );
+
+      const slugRaw = firstFilled(
+        row.slug,
+        row.business_code,
+        row.code,
+        title,
+        row.id
+      );
+
+      const quartier = firstFilled(
+        row.quartier,
+        row.zone,
+        row.city,
+        row.adresse,
+        row.address_label,
+        row.address,
+        "Saly"
+      );
+
+      const cuisine = firstFilled(
+        row.cuisine,
+        row.type_cuisine,
+        row.category,
+        row.style,
+        row.kind,
+        "Cuisine locale"
+      );
+
+      const phone = normalizePhone(
+        firstFilled(
+          row.whatsapp_phone,
+          row.whatsapp,
+          row.call_phone,
+          row.phone,
+          row.contact_phone,
+          TEAM_WA
+        )
+      );
+
+      const callPhone = normalizePhone(
+        firstFilled(
+          row.call_phone,
+          row.phone,
+          row.whatsapp_phone,
+          row.whatsapp,
+          TEAM_WA
+        )
+      );
+
+      const cover = firstFilled(
+        row.cover,
+        row.cover_url,
+        row.photo_url,
+        row.image_url,
+        row.hero_image,
+        row.banner_url,
+        DEFAULT_COVER
+      );
+
+      const publicUrl = firstFilled(
+        row.public_url,
+        row.fiche_url,
+        row.site_url,
+        row.url
+      );
+
+      const desc = firstFilled(
+        row.tagline,
+        row.description,
+        row.desc,
+        row.about,
+        "Réservation directe avec l’établissement. WhatsApp rapide. 0% commission DIGIY."
+      );
+
+      const services = asArray(firstFilled(row.services, row.service_tags, row.tags));
+      const heroBadges = asArray(firstFilled(row.hero_badges, row.badges));
+
+      const status = norm(firstFilled(row.status, row.state, row.visibility, "active"));
+      const isPublic = row.is_public === undefined ? true : !!row.is_public;
+      const featured = !!(row.is_featured ?? row.featured ?? row.pinned ?? false);
+
+      const openNowRaw = firstFilled(row.is_open_now, row.open_now, row.open_today, "");
+      const openNow = openNowRaw === "" ? null : !!openNowRaw;
+
+      return {
+        title: String(title || "").trim(),
+        slug: slugify(slugRaw),
+        quartier: String(quartier || "").trim(),
+        cuisine: String(cuisine || "").trim(),
+        phone,
+        callPhone,
+        cover: String(cover || "").trim(),
+        public_url: String(publicUrl || "").trim(),
+        desc: String(desc || "").trim(),
+        services,
+        heroBadges,
+        is_featured: featured,
+        is_open_now: openNow,
+        is_public: isPublic,
+        status,
+        source_row: row
+      };
+    }
+
+    function keepRow(p){
+      if (!p.title || !p.slug) return false;
+      if (p.is_public === false) return false;
+
+      if (["draft","hidden","archive","archived","inactive","disabled"].includes(p.status)) {
+        return false;
+      }
+
+      return true;
+    }
+
+    async function fetchFromCandidate(sourceName){
+      try{
+        const { data, error } = await sb
+          .from(sourceName)
+          .select("*")
+          .limit(60);
+
+        if (error) return { ok:false, source:sourceName, rows:[], error:error.message };
+
+        let rows = (data || []).map(mapRow).filter(keepRow);
+
+        rows.sort((a, b) => {
+          const aF = a.is_featured ? 1 : 0;
+          const bF = b.is_featured ? 1 : 0;
+          return bF - aF;
+        });
+
+        return { ok:true, source:sourceName, rows, error:null };
+      }catch(e){
+        return { ok:false, source:sourceName, rows:[], error:e?.message || "Erreur inconnue" };
+      }
+    }
+
+    async function fetchPlaces(){
+      let firstEmptySuccess = null;
+
+      for (const sourceName of SOURCE_CANDIDATES){
+        const res = await fetchFromCandidate(sourceName);
+
+        if (res.ok && res.rows.length > 0) return res;
+        if (res.ok && !firstEmptySuccess) firstEmptySuccess = res;
+      }
+
+      return firstEmptySuccess || { ok:false, source:null, rows:[], error:"Aucune source exploitable trouvée." };
+    }
+
+    function ficheLinkFor(p){
+      if (p.public_url) return String(p.public_url);
+      return DEFAULT_FICHE_BASE + encodeURIComponent(p.slug || "");
+    }
+
+    function applyFilters(list){
+      const q = norm(document.getElementById("q").value);
+      const kind = norm(document.getElementById("kind").value);
+
+      return list.filter(p => {
+        const title = norm(p.title || "");
+        const city = norm(p.quartier || "");
+        const cuisine = norm(p.cuisine || "");
+        const desc = norm(p.desc || "");
+
+        if (q && !(title.includes(q) || city.includes(q) || cuisine.includes(q) || desc.includes(q))) {
+          return false;
+        }
+
+        if (kind && !cuisine.includes(kind)) {
+          return false;
+        }
+
+        return true;
+      });
+    }
+
+    function cardTemplate(p){
+      const payload = encodePayload({
+        slug: p.slug,
+        title: p.title,
+        phone: p.phone,
+        callPhone: p.callPhone,
+        quartier: p.quartier,
+        cuisine: p.cuisine,
+        public_url: p.public_url
+      });
+
+      const badges = [];
+      badges.push(`<div class="badge">Réservation directe</div>`);
+
+      if (p.is_open_now === true) {
+        badges.push(`<div class="badge free">✅ Ouvert maintenant</div>`);
+      } else if (p.is_open_now === false) {
+        badges.push(`<div class="badge busy">⏸️ Fermé maintenant</div>`);
+      }
+
+      if (p.is_featured) badges.push(`<div class="badge gold">⭐ Mis en avant</div>`);
+      if (p.cuisine) badges.push(`<div class="badge">${escapeHtml(cuisineLabel(p.cuisine))}</div>`);
+
+      (p.heroBadges || []).slice(0, 2).forEach(tag => {
+        badges.push(`<div class="badge gold">${escapeHtml(tag)}</div>`);
+      });
+
+      const ficheUrl = ficheLinkFor(p);
+
+      return `
+        <article class="card ${p.is_featured ? "pinned" : ""}">
+          ${p.is_featured ? `
+            <div class="pinnedTop">
+              <div class="left">🏆 <span>Établissement mis en avant</span></div>
+              <div class="pill">Fiche officielle</div>
+            </div>
+          ` : ``}
+
+          <div class="photo">
+            <img
+              loading="lazy"
+              alt="${escapeHtml(p.title)}"
+              src="${escapeAttr(p.cover || DEFAULT_COVER)}"
+              onerror="this.onerror=null;this.src='${DEFAULT_COVER}'"
+            />
           </div>
-        </div>
 
-        <div class="body">
-          <h1>Votre établissement ici</h1>
-          <div class="meta">
-            <span>🏷️ Place vitrine</span>
-            <span>📍 Saly${slot ? " • emplacement " + esc(slot) : ""}</span>
-          </div>
+          <div class="name">${escapeHtml(p.title)}</div>
+          <div class="type">${escapeHtml(cuisineLabel(p.cuisine))} • ${escapeHtml(p.quartier || "Sénégal")}</div>
 
-          <div class="bio">
-            Ceci est une fiche type publique. Quand un établissement actif entre dans la vitrine,
-            sa vraie carte et sa vraie fiche prennent la place naturellement.
-          </div>
+          <div class="badges">${badges.join("")}</div>
 
-          <div class="tags">
-            <span class="tag">Vitrine locale</span>
-            <span class="tag">Réservation simple</span>
-            <span class="tag">Carte publique</span>
+          <p class="desc">${escapeHtml(p.desc || "Réservation directe via WhatsApp. 0% commission DIGIY.")}</p>
+
+          <div class="meta">WhatsApp direct • Réponse terrain • Réservation rapide</div>
+
+          <div class="contact">
+            <div class="contact-title">Contact</div>
+            <div class="contact-value">${escapeHtml(p.phone || TEAM_WA)}</div>
           </div>
 
           <div class="actions">
-            <a class="btn primary" target="_blank" rel="noopener"
-               href="https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Salut DIGIY RESA TABLE, je veux poser ma carte dans la vitrine de Saly.")}">
-              🪑 Poser ma carte
-            </a>
-            <a class="btn" href="./index.html">← Retour vitrine</a>
-          </div>
-        </div>
-      `;
-
-      bottom.innerHTML = `
-        <a class="btn primary" target="_blank" rel="noopener"
-           href="https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Salut DIGIY RESA TABLE, je veux rejoindre la vitrine publique.")}">
-          💬 Rejoindre
-        </a>
-      `;
-
-      status.textContent = "Fiche placeholder affichée.";
-    }
-
-    function renderCard(r){
-      const hero = document.getElementById("hero");
-      const bottom = document.getElementById("bottomActions");
-      const status = document.getElementById("statusText");
-
-      const name = esc(r.business_name || "Établissement");
-      const city = esc(r.city || "Saly");
-      const address = esc(r.address || "");
-      const description = esc(r.description || r.tagline || "Fiche publique établissement.");
-      const openHours = esc(r.open_hours || "");
-      const photo = esc((r.photo_url || FALLBACK_PHOTO) + (((r.photo_url || FALLBACK_PHOTO).includes("?")) ? "&" : "?") + "v=5");
-      const phone = normalizePhone(r.whatsapp_phone || r.call_phone || "");
-      const reserveHref = `./reserver.html?slug=${encodeURIComponent(r.slug || "")}`;
-
-      hero.innerHTML = `
-        <div class="photo">
-          <img src="${photo}" alt="${name}" onerror="this.onerror=null;this.src='${FALLBACK_PHOTO}'" />
-          <div class="badgeTop">
-            <span class="chip gold">🍽️ ÉTABLISSEMENT</span>
-            <span class="chip green">🟢 ABO ACTIF</span>
-          </div>
-        </div>
-
-        <div class="body">
-          <h1>${name}</h1>
-
-          <div class="meta">
-            <span>📍 ${city}${address ? " • " + address : ""}</span>
-            ${openHours ? `<span>🕒 ${openHours}</span>` : ``}
-          </div>
-
-          <div class="bio">${description}</div>
-
-          <div class="tags">
-            <span class="tag">RESA TABLE</span>
-            <span class="tag">${city}</span>
-            ${openHours ? `<span class="tag">Horaires: ${openHours}</span>` : ``}
+            <a class="btn btn-primary" href="${escapeAttr(ficheUrl)}" target="_blank" rel="noopener noreferrer">👁️ Voir la fiche</a>
+            <button class="btn btn-pay" type="button" data-action="choose" data-payload="${payload}">✅ Choisir</button>
+            <button class="btn btn-wa" type="button" data-action="reserve" data-payload="${payload}">📲 Réserver</button>
           </div>
 
           <div class="actions">
-            <a class="btn primary" href="${reserveHref}">📅 Réserver</a>
-            ${phone ? `
-              <a class="btn" target="_blank" rel="noopener"
-                 href="https://wa.me/${phone}?text=${encodeURIComponent("Bonjour, je vous contacte depuis votre fiche DIGIY RESA TABLE.")}">
-                💬 WhatsApp
-              </a>
-            ` : ``}
-            <a class="btn" href="./index.html">← Retour vitrine</a>
+            <button class="btn btn-call" type="button" data-action="call" data-payload="${payload}">📞 Appeler</button>
+            <button class="btn btn-nd" type="button" id="" data-action="how">📖 Comprendre</button>
           </div>
-        </div>
+        </article>
       `;
-
-      bottom.innerHTML = `
-        <a class="btn primary" href="${reserveHref}">📅 Réserver maintenant</a>
-        ${phone ? `
-          <a class="btn" target="_blank" rel="noopener"
-             href="https://wa.me/${phone}?text=${encodeURIComponent("Bonjour, je vous contacte depuis votre fiche DIGIY RESA TABLE.")}">
-            💬 Contacter
-          </a>
-        ` : ``}
-      `;
-
-      status.textContent = "Fiche publique chargée.";
     }
 
-    async function load(){
-      const slug = (qs("slug") || "").trim().toLowerCase();
-      const demo = qs("demo");
-      const slot = qs("slot");
+    function pickPlaceForWhatsApp(place){
+      const pickedHint = document.getElementById("pickedHint");
+      const pickLine = document.getElementById("pickLine");
+      const pickedTitle = document.getElementById("pickedTitle");
+      const pickedSlug = document.getElementById("pickedSlug");
+      const pickedPhone = document.getElementById("pickedPhone");
+      const pickedTitleInput = document.getElementById("pickedTitleInput");
 
-      if(demo === "1" || !slug){
-        renderPlaceholder(slot);
+      pickedHint.textContent = "Établissement sélectionné ✅";
+      pickLine.style.display = "flex";
+      pickedTitle.textContent = place.title || "Établissement";
+
+      pickedSlug.value = place.slug || "";
+      pickedPhone.value = place.phone || TEAM_WA;
+      pickedTitleInput.value = place.title || "";
+
+      document.getElementById("contact").scrollIntoView({ behavior:"smooth", block:"start" });
+    }
+
+    function reserveNow(place){
+      const title = place.title || "cet établissement";
+      const msg = [
+        "Bonjour 👋",
+        "Je vous contacte via DIGIY RESA TABLE.",
+        `Établissement : ${title}`,
+        `Zone : ${place.quartier || "à préciser"}`,
+        `Cuisine : ${place.cuisine || "à préciser"}`,
+        "",
+        "Je souhaite réserver une table. Pouvez-vous me confirmer la disponibilité ?"
+      ].join("\n");
+
+      openWa(place.phone || TEAM_WA, msg);
+    }
+
+    document.getElementById("pickClear").addEventListener("click", () => {
+      document.getElementById("pickedHint").textContent = "Choisis un établissement dans la liste 👇";
+      document.getElementById("pickLine").style.display = "none";
+      document.getElementById("pickedTitle").textContent = "—";
+      document.getElementById("pickedSlug").value = "";
+      document.getElementById("pickedPhone").value = "";
+      document.getElementById("pickedTitleInput").value = "";
+    });
+
+    document.getElementById("resaLeadForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const form = e.currentTarget;
+      const pickedSlug = document.getElementById("pickedSlug").value.trim();
+      const pickedPhone = document.getElementById("pickedPhone").value.trim() || TEAM_WA;
+      const pickedTitle = document.getElementById("pickedTitleInput").value.trim() || "à préciser";
+
+      const name = form.name.value.trim();
+      const date = form.date.value.trim();
+      const time = form.time.value.trim();
+      const people = form.people.value.trim();
+      const note = form.note.value.trim();
+
+      const msg = [
+        "Bonjour 👋",
+        "Je vous contacte via DIGIY RESA TABLE.",
+        `Établissement : ${pickedTitle}`,
+        pickedSlug ? `Slug : ${pickedSlug}` : "Slug : à préciser",
+        `Prénom : ${name || "à préciser"}`,
+        `Date : ${date || "à préciser"}`,
+        `Heure : ${time || "à préciser"}`,
+        `Personnes : ${people || "à préciser"}`,
+        `Note : ${note || "aucune"}`
+      ].join("\n");
+
+      openWa(pickedPhone, msg);
+    });
+
+    const howOverlay = document.getElementById("howOverlay");
+    const howClose = document.getElementById("howClose");
+    const howClose2 = document.getElementById("howClose2");
+    const howTalk = document.getElementById("howTalk");
+    const btnHowOpenTop = document.getElementById("btnHowOpenTop");
+
+    function openHow(){
+      howOverlay.classList.add("show");
+      howOverlay.setAttribute("aria-hidden", "false");
+    }
+
+    function closeHow(){
+      howOverlay.classList.remove("show");
+      howOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    btnHowOpenTop.addEventListener("click", openHow);
+    howClose.addEventListener("click", closeHow);
+    howClose2.addEventListener("click", closeHow);
+
+    howOverlay.addEventListener("click", (e) => {
+      if (e.target === howOverlay) closeHow();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeHow();
+    });
+
+    howTalk.addEventListener("click", () => {
+      openWa(TEAM_WA, "Bonjour DIGIY 👋 Je veux en savoir plus sur DIGIY RESA TABLE.");
+    });
+
+    grid.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-action]");
+      if (!btn) return;
+
+      const action = btn.getAttribute("data-action");
+      const payload = decodePayload(btn.getAttribute("data-payload") || "");
+      if (!payload) return;
+
+      if (action === "choose"){
+        pickPlaceForWhatsApp(payload);
         return;
       }
 
-      try{
-        const { data, error } = await sb.rpc("resa_get_public_card_by_slug", {
-          p_slug: slug
-        });
-
-        if(error) throw error;
-
-        if(!data || !data.slug){
-          renderPlaceholder(slot);
-          return;
-        }
-
-        renderCard(data);
-      }catch(e){
-        console.error(e);
-        renderPlaceholder(slot);
-        document.getElementById("statusText").textContent = "Erreur de chargement, fiche placeholder affichée.";
+      if (action === "reserve"){
+        reserveNow(payload);
+        return;
       }
+
+      if (action === "call"){
+        openCall(payload.callPhone || payload.phone || TEAM_WA);
+        return;
+      }
+
+      if (action === "how"){
+        openHow();
+      }
+    });
+
+    async function render(){
+      grid.innerHTML = `<div class="bigmsg">Chargement des établissements…</div>`;
+
+      const res = await fetchPlaces();
+      let places = [];
+
+      if (res.ok) {
+        places = res.rows || [];
+      }
+
+      const sourceList = places.length > 0
+        ? places
+        : mergeNoDup(places, PLACEHOLDERS, 6);
+
+      const filtered = applyFilters(sourceList);
+
+      if (!filtered.length){
+        grid.innerHTML = `<div class="bigmsg">Aucun résultat. Clique <b>Reset</b>.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(cardTemplate).join("");
     }
 
-    load();
+    document.getElementById("btnSearch").addEventListener("click", render);
+
+    document.getElementById("btnReset").addEventListener("click", () => {
+      document.getElementById("q").value = "";
+      document.getElementById("kind").value = "";
+      render();
+    });
+
+    document.getElementById("q").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") render();
+    });
+
+    document.getElementById("kind").addEventListener("change", render);
+
+    render();
   </script>
 </body>
 </html>
