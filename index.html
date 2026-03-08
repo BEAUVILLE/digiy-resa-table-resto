@@ -2,11 +2,10 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <title>DIGIY RESA TABLE — Vitrine Saly</title>
+  <title>DIGIY RESA TABLE — Fiche établissement</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="DIGIY RESA TABLE — Vitrine publique des établissements à Saly. Réservation simple, contact direct, visibilité locale." />
   <meta name="theme-color" content="#061b14" />
-  <meta name="robots" content="index,follow" />
+  <meta name="description" content="Fiche publique établissement DIGIY RESA TABLE." />
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -20,11 +19,8 @@
       --green:#22c55e;
       --orange:#f97316;
       --shadow:0 18px 55px rgba(0,0,0,.42);
-      --fs-hero: 38px;
-      --fs-sub: 16px;
-      --lh:1.55;
     }
-    *{ box-sizing:border-box; margin:0; padding:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
     body{
       min-height:100vh;
       background:
@@ -33,316 +29,117 @@
         radial-gradient(circle at top,#0b2218 0,#061b14 50%,#04110d 100%);
       color:var(--ink);
     }
-    .page{ max-width:1100px; margin:0 auto; padding:16px 14px 42px; }
-    @media(max-width:860px){ :root{ --fs-hero: 32px; } }
-    @media(max-width:600px){ :root{ --fs-hero: 28px; --fs-sub: 15px; } .page{ padding:14px 12px 38px; } }
-
+    .page{max-width:980px;margin:0 auto;padding:16px 14px 42px}
     .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; padding:10px 0 14px;
-      border-bottom:1px solid rgba(255,255,255,.06);
-      margin-bottom:14px; flex-wrap:wrap;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:10px 0 14px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:14px;flex-wrap:wrap;
     }
-    .nav-left{ display:flex; align-items:center; gap:12px; min-width:0; }
+    .logo{
+      display:flex;align-items:center;gap:12px;
+    }
     .logo-badge{
       width:42px;height:42px;border-radius:16px;
       background:radial-gradient(circle at 30% 20%,var(--gold),var(--orange));
-      display:flex; align-items:center; justify-content:center;
-      color:#04110d; font-weight:1000; font-size:18px;
-      box-shadow:0 10px 26px rgba(250,204,21,0.40);
-      flex:0 0 auto;
+      display:flex;align-items:center;justify-content:center;
+      color:#04110d;font-weight:1000;font-size:18px;
+      box-shadow:0 10px 26px rgba(250,204,21,.40);
     }
-    .logo-title{
-      font-size:16px; font-weight:950; letter-spacing:.10em;
-      text-transform:uppercase; line-height:1.1;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-      max-width:min(62vw, 520px);
-    }
-    .logo-sub{ font-size:12px; color:var(--muted); font-weight:850; margin-top:2px; }
-    .nav-right{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
-
-    .pill{
-      border-radius:999px; padding:8px 12px;
-      font-size:12px; font-weight:950;
-      border:1px solid rgba(203,213,225,0.35);
-      color:rgba(234,255,241,.92);
-      display:inline-flex; align-items:center; gap:8px;
-      background:rgba(2,6,23,.22);
-    }
-    .pill .dot{ width:8px;height:8px;border-radius:999px; background:var(--green); box-shadow:0 0 0 4px rgba(34,197,94,.12); }
-    a.btn-small{
-      border-radius:999px; padding:10px 14px;
-      font-size:13px; font-weight:950;
-      border:1px solid rgba(203,213,225,0.32);
-      background:rgba(15,23,42,0.32);
-      color:var(--ink); text-decoration:none;
-      display:inline-flex; align-items:center; gap:8px;
-      white-space:nowrap; line-height:1;
-    }
-    a.btn-small.primary{
-      border:none;
-      background:linear-gradient(135deg,var(--gold),var(--orange));
-      color:#04110d;
-      box-shadow:0 10px 26px rgba(250,204,21,0.35);
-    }
-
-    .hero{
-      margin-top:16px; border-radius:24px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(7,24,17,.55);
-      box-shadow:var(--shadow);
-      padding:18px 16px; overflow:hidden; position:relative;
-    }
-    .hero:before{
-      content:""; position:absolute; inset:-1px;
-      background:
-        radial-gradient(700px 360px at 20% -10%, rgba(34,197,94,.18), transparent 65%),
-        radial-gradient(700px 360px at 110% 0%, rgba(250,204,21,.14), transparent 60%);
-      pointer-events:none;
-    }
-    .hero-inner{ position:relative; display:grid; grid-template-columns:1.2fr 0.8fr; gap:14px; align-items:center; }
-    @media(max-width:900px){ .hero-inner{ grid-template-columns:1fr; } }
-    .hero h1{ font-size:var(--fs-hero); line-height:1.12; font-weight:1000; letter-spacing:-0.01em; margin-bottom:10px; }
-    .hero h1 .hl{ background:linear-gradient(135deg,var(--gold),var(--green)); -webkit-background-clip:text; color:transparent; }
-    .hero p{ font-size:var(--fs-sub); color:var(--muted); line-height:var(--lh); font-weight:850; max-width:70ch; }
-    .hero-badges{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
-    .hero-badge{
-      border-radius:999px; padding:8px 12px;
-      border:1px solid rgba(203,213,225,0.28);
-      color:var(--muted); font-weight:950;
-      background:rgba(2,6,23,.25);
-      font-size:12px;
-    }
-    .hero-badge b{ color:var(--green); font-weight:1000; }
-
-    .hero-box{ border-radius:18px; border:1px solid rgba(203,213,225,0.16); background:rgba(2,6,23,.28); padding:14px; }
-    .hero-box .kpi{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
-    .kpi .chip{
-      border-radius:14px; border:1px solid rgba(203,213,225,0.16);
-      background:rgba(15,23,42,.30);
-      padding:10px 10px; font-size:12px;
-      color:var(--muted); font-weight:950;
-      display:flex; justify-content:space-between; align-items:center; gap:10px;
-    }
-    .kpi .chip .v{ color:var(--gold); font-weight:1000; white-space:nowrap; }
-
-    .statsbar{
-      margin-top:12px; border-radius:18px;
-      border:1px solid rgba(203,213,225,0.14);
-      background:rgba(2,6,23,.24);
-      padding:10px 12px;
-      display:flex; gap:10px; flex-wrap:wrap;
-      align-items:center; justify-content:space-between;
-    }
-    .statsbar .left{ font-weight:1000; color:rgba(234,255,241,.92); display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-    .statsbar .left .sep{ opacity:.5; }
-    .statsbar .right{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
-    .stats-pill{
-      font-size:12px; padding:6px 10px; border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(15,23,42,.28);
-      color:var(--muted); font-weight:950;
-    }
-    .stats-pill.good{ border-color: rgba(34,197,94,.30); color:#bfffe0; }
-    .stats-pill.warn{ border-color: rgba(249,115,22,.30); color:#ffe0c2; }
-
-    .controls{ margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between; }
-    .searchRow{ display:flex; gap:10px; flex:1; min-width:260px; }
-    .input{
-      flex:1; background:rgba(2,6,23,.28);
-      border:1px solid rgba(203,213,225,0.20);
-      color:var(--ink); border-radius:14px;
-      padding:12px 12px; outline:none;
-      font-weight:900; font-size:14px;
-    }
-    .input:focus{ border-color: rgba(250,204,21,.55); box-shadow:0 0 0 3px rgba(250,204,21,.12); }
-    .select{
-      background:rgba(2,6,23,.28);
-      border:1px solid rgba(203,213,225,0.20);
-      color:var(--ink); border-radius:14px;
-      padding:12px 12px; outline:none;
-      font-weight:900; font-size:14px; min-width:190px;
-    }
-
-    .section{ margin-top:18px; }
-    .section-title{ font-size:18px; font-weight:1000; margin:12px 0 10px; letter-spacing:-0.01em; }
-    .muted{ color:var(--muted); font-weight:850; line-height:1.55; }
-
-    .grid{
-      margin-top:10px;
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:14px;
-    }
-    @media(max-width:980px){ .grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
-    @media(max-width:640px){ .grid{ grid-template-columns:1fr; } }
-
-    .card{
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(7,24,17,.55);
-      box-shadow:0 14px 40px rgba(0,0,0,.35);
-      overflow:hidden;
-      display:flex;
-      flex-direction:column;
-      min-height:100%;
-      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-      position:relative;
-    }
-    .card:hover{
-      transform:translateY(-3px);
-      border-color: rgba(250,204,21,.28);
-      box-shadow:0 18px 48px rgba(0,0,0,.45);
-    }
-
-    .card.placeholder{
-      border-style:dashed;
-      border-color:rgba(34,197,94,.22);
-      background:rgba(255,255,255,.03);
-    }
-    .card.placeholder:hover{
-      transform:none;
-      border-color:rgba(34,197,94,.32);
-      box-shadow:0 14px 40px rgba(0,0,0,.35);
-    }
-
-    .photo{
-      position:relative;
-      width:100%;
-      height:210px;
-      overflow:hidden;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      background:rgba(0,0,0,.25);
-    }
-    .photo img{
-      width:100%;
-      height:100%;
-      display:block;
-      object-fit:cover;
-      object-position:center;
-      transform:scale(1.01);
-      transition: transform .25s ease, filter .25s ease;
-      filter:saturate(1.05);
-    }
-    .card:hover .photo img{
-      transform:scale(1.04);
-      filter:saturate(1.10) contrast(1.02);
-    }
-
-    .placeholder-photo{
-      display:grid;
-      place-items:center;
-      background:
-        radial-gradient(circle at 30% 20%, rgba(250,204,21,.16), transparent 30%),
-        radial-gradient(circle at 75% 18%, rgba(34,197,94,.14), transparent 28%),
-        linear-gradient(180deg,#0b2218,#071610);
-      font-size:58px;
-      color:#fff;
-    }
-
-    .badgeTop{
-      position:absolute; top:10px; left:10px;
-      display:flex; gap:8px; flex-wrap:wrap; align-items:center;
-      max-width: calc(100% - 20px);
-    }
-    .chip{
-      border-radius:999px; padding:6px 10px;
-      font-size:11px; font-weight:1000;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(2,6,23,.55);
-      color:rgba(234,255,241,.92);
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%;
-      display:inline-flex; align-items:center; gap:6px;
-      backdrop-filter: blur(6px);
-    }
-    .chip.gold{ border-color:rgba(250,204,21,.30); }
-    .chip.green{ border-color:rgba(34,197,94,.30); }
-    .chip.new{ border-color:rgba(249,115,22,.30); }
-
-    .body{ padding:14px; display:flex; flex-direction:column; gap:10px; flex:1; }
-    .name{ font-size:18px; font-weight:1000; color:var(--gold); line-height:1.15; }
-    .meta{ display:flex; flex-wrap:wrap; gap:10px; font-size:13px; color:var(--muted); font-weight:850; }
-    .meta span{ display:inline-flex; gap:6px; align-items:center; }
-    .bio{ font-size:14px; color:rgba(234,255,241,.90); font-weight:850; line-height:1.45; }
-
-    .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:2px; }
-    .tag{
-      border-radius:999px; padding:6px 10px;
-      border:1px solid rgba(203,213,225,0.22);
-      color:var(--muted);
-      background:rgba(2,6,23,.35);
-      font-size:11px; font-weight:950;
-    }
-
-    .placeholder-note{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      font-size:11px;
-      font-weight:1000;
-      color:#bbf7d0;
-    }
-    .placeholder-note .dot{
-      width:8px;
-      height:8px;
+    .logo-title{font-size:16px;font-weight:950;letter-spacing:.10em;text-transform:uppercase}
+    .logo-sub{font-size:12px;color:var(--muted);font-weight:850;margin-top:2px}
+    .btn{
       border-radius:999px;
-      background:var(--green);
-      box-shadow:0 0 0 4px rgba(34,197,94,.12);
-    }
-
-    .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:auto; }
-    a.btn{
-      flex:1; min-width:140px;
-      border-radius:999px;
-      padding:12px 14px;
-      font-size:14px;
-      font-weight:1000;
-      border:0;
-      cursor:pointer;
+      padding:11px 14px;
+      font-size:13px;
+      font-weight:950;
       text-decoration:none;
       display:inline-flex;
       align-items:center;
       justify-content:center;
       gap:8px;
-      line-height:1;
       white-space:nowrap;
-      transition:transform .15s ease, filter .15s ease, box-shadow .15s ease;
-    }
-    .btn.primary{
-      background:linear-gradient(135deg,var(--gold),var(--orange));
-      color:#04110d;
-      box-shadow:0 10px 24px rgba(250,204,21,0.30);
-    }
-    .btn.secondary{
-      background:rgba(34,197,94,.15);
-      border:1px solid rgba(34,197,94,.30);
-      color:#bbf7d0;
-    }
-    .btn.ghost{
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid rgba(203,213,225,0.28);
+      background:rgba(15,23,42,0.28);
       color:var(--ink);
     }
-    .btn:active{ transform:scale(.99); }
-
+    .btn.primary{
+      border:none;
+      background:linear-gradient(135deg,var(--gold),var(--orange));
+      color:#04110d;
+      box-shadow:0 10px 24px rgba(250,204,21,.30);
+    }
+    .hero{
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(7,24,17,.55);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .photo{
+      width:100%;
+      height:320px;
+      background:rgba(0,0,0,.24);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      position:relative;
+    }
+    .photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .badgeTop{
+      position:absolute;top:12px;left:12px;display:flex;gap:8px;flex-wrap:wrap;
+    }
+    .chip{
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:11px;
+      font-weight:1000;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(2,6,23,.55);
+      color:rgba(234,255,241,.92);
+      display:inline-flex;align-items:center;gap:6px;
+      backdrop-filter:blur(6px);
+    }
+    .chip.gold{border-color:rgba(250,204,21,.30)}
+    .chip.green{border-color:rgba(34,197,94,.30)}
+    .body{padding:18px;display:grid;gap:14px}
+    h1{font-size:32px;line-height:1.08;font-weight:1000;color:var(--gold)}
+    .meta{display:flex;flex-wrap:wrap;gap:10px;color:var(--muted);font-size:14px;font-weight:850}
+    .bio{font-size:15px;line-height:1.6;color:rgba(234,255,241,.94);font-weight:850}
+    .tags{display:flex;flex-wrap:wrap;gap:8px}
+    .tag{
+      border-radius:999px;
+      padding:6px 10px;
+      border:1px solid rgba(203,213,225,0.22);
+      color:var(--muted);
+      background:rgba(2,6,23,.35);
+      font-size:11px;
+      font-weight:950;
+    }
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+    .card{
+      margin-top:14px;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(7,24,17,.55);
+      box-shadow:var(--shadow);
+      padding:16px;
+    }
+    .card h2{font-size:18px;margin-bottom:8px}
+    .muted{color:var(--muted);line-height:1.55;font-weight:850}
     .status{
-      margin-top:12px;
+      margin-top:14px;
       border-radius:16px;
-      border:1px solid rgba(203,213,225,0.14);
+      border:1px solid rgba(203,213,225,.14);
       background:rgba(2,6,23,.45);
       padding:12px 12px;
       font-size:13px;
       font-weight:900;
       color:var(--muted);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
     }
-
     .footer{
-      margin-top:26px;
+      margin-top:22px;
       border-top:1px solid rgba(255,255,255,.08);
       padding-top:14px;
       font-size:12px;
@@ -351,187 +148,58 @@
       font-weight:850;
       line-height:1.5;
     }
-    .footer .brand{ color:var(--gold); font-weight:1000; }
-    .footer .zero{ color:var(--green); font-weight:1000; }
-
-    .toast{
-      position:fixed;
-      left:50%;
-      bottom:18px;
-      transform:translateX(-50%);
-      background:rgba(2,6,23,.86);
-      border:1px solid rgba(255,255,255,.12);
-      color:#fff;
-      padding:10px 14px;
-      border-radius:14px;
-      font-weight:950;
-      font-size:13px;
-      display:none;
-      z-index:9999;
-      box-shadow:var(--shadow);
-      max-width:92vw;
-      text-align:center;
-    }
-    .toast.show{ display:block; }
-
-    .skeleton{
-      animation: shimmer 1.2s infinite linear;
-      background: linear-gradient(90deg,
-        rgba(255,255,255,.05) 0%,
-        rgba(255,255,255,.10) 50%,
-        rgba(255,255,255,.05) 100%);
-      background-size: 200% 100%;
-    }
-    @keyframes shimmer{ 0%{ background-position: 200% 0; } 100%{ background-position: -200% 0; } }
-    .sk-photo{ height:210px; }
-    .sk-line{ height:12px; border-radius:999px; margin-top:10px; }
   </style>
 </head>
-
 <body>
   <div class="page">
     <header class="nav">
-      <div class="nav-left">
+      <div class="logo">
         <div class="logo-badge">🍽️</div>
-        <div class="logo-text">
-          <div class="logo-title">DIGIY RESA TABLE • SALY</div>
-          <div class="logo-sub">La vitrine publique • Réservation simple • Terrain</div>
+        <div>
+          <div class="logo-title">DIGIY RESA TABLE</div>
+          <div class="logo-sub">Fiche publique établissement</div>
         </div>
       </div>
 
-      <div class="nav-right">
-        <div class="pill"><span class="dot"></span> Réservation directe</div>
-        <div class="pill">📍 Saly</div>
-        <a class="btn-small" id="btnHub" href="#" rel="noopener">🦅 DIGIY HUB</a>
-        <a class="btn-small primary" id="btnJoinTop" href="#" target="_blank" rel="noopener">🪑 Poser ma carte</a>
-      </div>
+      <a class="btn" href="./index.html">← Retour vitrine</a>
     </header>
 
-    <section class="hero">
-      <div class="hero-inner">
-        <div>
-          <h1>La vitrine <span class="hl">RESA TABLE</span><br/>de <span class="hl">Saly</span></h1>
-          <p>
-            Ici tu vois les établissements visibles publiquement.
-            Le client ouvre la fiche, regarde les infos utiles, puis
-            <b style="color:var(--gold);font-weight:1000;">réserve simplement</b>.
-          </p>
+    <section class="hero" id="hero"></section>
 
-          <div class="hero-badges">
-            <div class="hero-badge">✅ <b>Public</b> (vitrine)</div>
-            <div class="hero-badge">📅 Réservation simple</div>
-            <div class="hero-badge">🆕 Nouveaux en avant</div>
-          </div>
-
-          <div class="statsbar" id="resaStatsBar">
-            <div class="left">
-              <span>🍽️ Table <span style="color:var(--gold)">Saly</span> :</span>
-              <span><span id="msTotal">—</span> établissements</span>
-              <span class="sep">•</span>
-              <span>+<span id="ms7d">—</span>/7j</span>
-              <span class="sep">•</span>
-              <span>+<span id="ms24h">—</span>/24h</span>
-            </div>
-            <div class="right">
-              <span class="stats-pill good">Publics: <span id="msPublic">—</span></span>
-              <span class="stats-pill warn">Catégories: <span id="msCats">—</span></span>
-            </div>
-          </div>
-        </div>
-
-        <aside class="hero-box">
-          <div class="muted" style="font-weight:1000;">📊 Stats vitrine (Saly)</div>
-          <div class="kpi">
-            <div class="chip"><span>Profils</span><span class="v" id="kpiCount">—</span></div>
-            <div class="chip"><span>Nouveaux 7j</span><span class="v" id="kpiNew7d">—</span></div>
-          </div>
-
-          <div class="status" style="margin-top:12px;">
-            <span id="statusText">🔎 Chargement…</span>
-            <div class="right"><span class="muted">Source :</span><b>Supabase</b></div>
-          </div>
-
-          <div class="status" style="margin-top:10px;">
-            <span class="muted">Dernier publié :</span>
-            <b id="kpiLast">—</b>
-          </div>
-        </aside>
+    <section class="card">
+      <h2>Réservation simple</h2>
+      <div class="muted" id="bookingText">
+        Réserve directement depuis la fiche publique.
       </div>
-
-      <div class="controls">
-        <div class="searchRow">
-          <input id="q" class="input" type="search" placeholder="Rechercher (nom, catégorie, ville…)" autocomplete="off" />
-          <select id="cat" class="select" title="Filtrer par catégorie">
-            <option value="">Toutes les catégories</option>
-          </select>
-        </div>
-        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-          <a class="btn-small" id="btnRefresh" href="#">🔄 Rafraîchir</a>
-          <a class="btn-small" id="btnSupport" href="#" target="_blank" rel="noopener">💬 Support</a>
-        </div>
-      </div>
+      <div class="actions" style="margin-top:12px" id="bottomActions"></div>
     </section>
 
-    <section class="section">
-      <div class="section-title">📍 Vitrine (public)</div>
-      <div class="muted">
-        Profils affichés : <b style="color:var(--gold)">publiés</b> • Ville : <b>Saly</b>
-      </div>
-      <div id="grid" class="grid" style="margin-top:12px;"></div>
-    </section>
+    <div class="status" id="statusText">Chargement de la fiche…</div>
 
     <footer class="footer">
-      DIGIY RESA TABLE • Saly • <span class="zero">Vitrine locale</span> • <span class="brand">Réservation simple</span> ∞
+      DIGIY RESA TABLE • Fiche publique • Saly ∞
     </footer>
   </div>
 
-  <div id="toast" class="toast"></div>
-
   <script>
-    const CITY_LOCK = "Saly";
-    const NEW_DAYS = 7;
-    const EXTRA_PLACEHOLDERS = 8;
-
     const FALLBACK_PHOTO = "https://orange-pig-270004.hostingersite.com/wp-content/uploads/2026/03/chatgpt-image-4-mars-2026-23_40_53.png";
-    const HUB_URL = "https://beauville.github.io/digiy-hub/";
     const SUPPORT_WA = "221771342889";
 
     const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth: { persistSession: false },
-      global: { headers: { "X-Client-Info": "digiy-resa-public" } }
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
+        storage: {
+          getItem: () => null,
+          setItem: () => {},
+          removeItem: () => {}
+        }
+      }
     });
-
-    let ROWS = [];
-
-    (function initLinks(){
-      document.getElementById("btnHub").href = HUB_URL;
-      document.getElementById("btnSupport").href =
-        "https://wa.me/" + SUPPORT_WA + "?text=" +
-        encodeURIComponent("Salut DIGIY RESA TABLE, j'ai une question sur la vitrine de Saly.");
-      document.getElementById("btnJoinTop").href =
-        "https://wa.me/" + SUPPORT_WA + "?text=" +
-        encodeURIComponent("Salut DIGIY RESA TABLE, je veux poser ma carte dans la vitrine de Saly.");
-      document.getElementById("btnRefresh").addEventListener("click", (e) => {
-        e.preventDefault();
-        load();
-      });
-    })();
-
-    function toast(msg){
-      const t = document.getElementById("toast");
-      if(!t) return;
-      t.textContent = msg || "";
-      t.classList.add("show");
-      setTimeout(() => t.classList.remove("show"), 2200);
-    }
-
-    function setStatus(msg){
-      const el = document.getElementById("statusText");
-      if(el) el.textContent = msg || "";
-    }
 
     function esc(s){
       return String(s ?? "")
@@ -542,346 +210,160 @@
         .replaceAll("'","&#039;");
     }
 
-    function pick(arr, key){
-      const v = (arr || []).map(x => (x?.[key] ?? "")).filter(Boolean);
-      return Array.from(new Set(v)).sort((a,b)=>String(a).localeCompare(String(b)));
+    function qs(name){
+      return new URL(location.href).searchParams.get(name) || "";
     }
 
-    function tagsToArray(tags){
-      if(Array.isArray(tags)) return tags.filter(Boolean).map(String);
-      const s = String(tags || "").trim();
-      if(!s) return [];
-      return s.split(",").map(x => x.trim()).filter(Boolean);
+    function normalizePhone(v){
+      return String(v || "").replace(/[^\d]/g, "");
     }
 
-    function isNew(dateIso){
-      if(!dateIso) return false;
-      const t = Date.parse(dateIso);
-      if(!Number.isFinite(t)) return false;
-      const days = (Date.now() - t) / (1000 * 60 * 60 * 24);
-      return days <= NEW_DAYS;
-    }
+    function renderPlaceholder(slot = ""){
+      const hero = document.getElementById("hero");
+      const bottom = document.getElementById("bottomActions");
+      const status = document.getElementById("statusText");
 
-    function sameCity(a, b){
-      return String(a || "").trim().toLowerCase() === String(b || "").trim().toLowerCase();
-    }
-
-    function first(...vals){
-      for(const v of vals){
-        if(v !== null && v !== undefined && String(v).trim() !== "") return v;
-      }
-      return "";
-    }
-
-    function updateStatsBar(rows){
-      const list = Array.isArray(rows) ? rows : [];
-      const now = Date.now();
-
-      const new7d = list.filter(r => {
-        const t = Date.parse(r.created_at || "");
-        return Number.isFinite(t) && ((now - t) / (1000*60*60*24) <= 7);
-      }).length;
-
-      const new24h = list.filter(r => {
-        const t = Date.parse(r.created_at || "");
-        return Number.isFinite(t) && ((now - t) / (1000*60*60) <= 24);
-      }).length;
-
-      const cats = new Set(list.map(r => String(r.category || "").trim()).filter(Boolean)).size;
-
-      document.getElementById("msTotal").textContent = String(list.length);
-      document.getElementById("ms7d").textContent = String(new7d);
-      document.getElementById("ms24h").textContent = String(new24h);
-      document.getElementById("msPublic").textContent = String(list.length);
-      document.getElementById("msCats").textContent = String(cats);
-    }
-
-    function updateKpi(){
-      const list = ROWS || [];
-      const total = list.length;
-      const new7d = list.filter(x => isNew(x.created_at)).length;
-
-      const kCount = document.getElementById("kpiCount");
-      const kNew7d = document.getElementById("kpiNew7d");
-      const kLast  = document.getElementById("kpiLast");
-
-      if(kCount) kCount.textContent = String(total);
-      if(kNew7d) kNew7d.textContent = String(new7d);
-
-      let last = null;
-      for(const r of list){
-        if(!r?.created_at) continue;
-        if(!last) last = r;
-        else if(Date.parse(r.created_at) > Date.parse(last.created_at)) last = r;
-      }
-
-      if(kLast){
-        kLast.textContent = last
-          ? `${last.display_name || "—"} (${last.slug || ""})`
-          : "—";
-      }
-
-      setStatus(total ? `✅ ${total} profil(s) affiché(s) — ${new7d} nouveau(x) / 7j` : "⚠️ Aucun profil public (Saly)");
-    }
-
-    function fillSelects(){
-      const catSel = document.getElementById("cat");
-      const cats = pick(ROWS, "category");
-      catSel.innerHTML =
-        `<option value="">Toutes les catégories</option>` +
-        cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
-    }
-
-    function renderSkeleton(){
-      const grid = document.getElementById("grid");
-      if(!grid) return;
-      grid.innerHTML = Array.from({length:6}).map(() => `
-        <div class="card">
-          <div class="photo skeleton sk-photo"></div>
-          <div class="body">
-            <div class="skeleton sk-line" style="width:70%"></div>
-            <div class="skeleton sk-line" style="width:48%"></div>
-            <div class="skeleton sk-line" style="width:90%"></div>
-            <div class="skeleton sk-line" style="width:60%"></div>
-            <div class="actions" style="margin-top:10px;">
-              <div class="skeleton sk-line" style="height:42px; width:100%"></div>
-              <div class="skeleton sk-line" style="height:42px; width:100%"></div>
-            </div>
+      hero.innerHTML = `
+        <div class="photo">
+          <img src="${FALLBACK_PHOTO}" alt="Fiche placeholder"/>
+          <div class="badgeTop">
+            <span class="chip gold">🪑 SLOT DISPONIBLE</span>
+            <span class="chip green">🍽️ RESA TABLE</span>
           </div>
         </div>
-      `).join("");
-    }
 
-    function placeholderCardsHtml(count = EXTRA_PLACEHOLDERS){
-      return Array.from({ length: count }).map((_, i) => {
-        const rank = i + 1;
-
-        return `
-          <article class="card placeholder">
-            <div class="photo placeholder-photo">
-              🍽️
-              <div class="badgeTop">
-                <span class="chip gold">🪑 SLOT DISPONIBLE</span>
-                <span class="chip green">🍽️ RESA TABLE</span>
-              </div>
-            </div>
-
-            <div class="body">
-              <div class="name">Votre établissement ici</div>
-
-              <div class="meta">
-                <span>🏷️ Place vitrine</span>
-                <span>📍 ${esc(CITY_LOCK)} • emplacement ${rank}</span>
-              </div>
-
-              <div class="bio">
-                Carte disponible pour un établissement local prêt à être visible publiquement
-                et recevoir des réservations simplement.
-              </div>
-
-              <div class="tags">
-                <span class="tag">Vitrine locale</span>
-                <span class="tag">Réservation simple</span>
-                <span class="tag">Visibilité directe</span>
-              </div>
-
-              <div class="placeholder-note">
-                <span class="dot"></span>
-                Slot ouvert pour un établissement de ${esc(CITY_LOCK)}
-              </div>
-
-              <div class="actions">
-                <a class="btn primary" href="https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Salut DIGIY RESA TABLE, je veux poser ma carte dans la vitrine de " + CITY_LOCK + ".")}" target="_blank" rel="noopener">🪑 Poser ma carte</a>
-                <a class="btn secondary" href="https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Salut DIGIY RESA TABLE, je veux des infos pour rejoindre la vitrine de " + CITY_LOCK + ".")}" target="_blank" rel="noopener">💬 WhatsApp</a>
-              </div>
-            </div>
-          </article>
-        `;
-      }).join("");
-    }
-
-    function render(list){
-      const grid = document.getElementById("grid");
-      if(!grid) return;
-
-      const rows = Array.isArray(list) ? list : [];
-
-      const liveHtml = rows.map(r => {
-        const name = esc(r.display_name || "Établissement");
-        const category = esc(r.category || "Table locale");
-        const city = esc(r.city || CITY_LOCK);
-        const address = esc(r.address || "");
-        const bio = esc(r.bio || "");
-        const badge = esc(r.badge || "🍽️ ÉTABLISSEMENT");
-        const hub = esc(r.hub_badge || "🪑 RESA TABLE");
-        const price = esc(r.price_label || "");
-        const tags = tagsToArray(r.tags).slice(0, 6);
-        const isNewCard = isNew(r.created_at);
-
-        const rawPhoto = String(r.photo_url || "").trim();
-        const basePhoto = rawPhoto || FALLBACK_PHOTO;
-        const photoFinal = esc(basePhoto + (basePhoto.includes("?") ? "&" : "?") + "v=3");
-
-        const ficheHref = `./etablissement.html?slug=${encodeURIComponent(r.slug || "")}`;
-        const resaHref = `./reserver.html?slug=${encodeURIComponent(r.slug || "")}`;
-
-        return `
-          <article class="card" data-slug="${esc(r.slug || "")}">
-            <div class="photo">
-              <img
-                src="${photoFinal}"
-                alt="${name}"
-                loading="lazy"
-                onerror="this.onerror=null; this.src='${esc(FALLBACK_PHOTO)}';"
-              />
-              <div class="badgeTop">
-                <span class="chip gold">${badge}</span>
-                <span class="chip green">${hub}</span>
-                ${isNewCard ? `<span class="chip new">🆕 Nouveau</span>` : ``}
-              </div>
-            </div>
-
-            <div class="body">
-              <div class="name">${name}</div>
-              <div class="meta">
-                <span>🏷️ ${category}</span>
-                <span>📍 ${city}${address ? " • " + address : ""}</span>
-              </div>
-
-              ${bio
-                ? `<div class="bio">${bio}</div>`
-                : `<div class="bio" style="color:var(--muted)">Fiche publique DIGIY RESA TABLE.</div>`}
-
-              <div class="tags">
-                ${tags.map(t => `<span class="tag">${esc(t)}</span>`).join("")}
-                ${price ? `<span class="tag" style="border-color:rgba(250,204,21,.22);color:#fde68a;">${price}</span>` : ""}
-              </div>
-
-              <div class="actions">
-                <a class="btn primary" href="${esc(ficheHref)}">📄 Voir</a>
-                <a class="btn secondary" href="${esc(resaHref)}">📅 Réserver</a>
-              </div>
-            </div>
-          </article>
-        `;
-      }).join("");
-
-      const placeholdersHtml = placeholderCardsHtml(EXTRA_PLACEHOLDERS);
-
-      if(!rows.length){
-        grid.innerHTML = `
-          <div class="status" style="grid-column:1/-1;">
-            <span>⚠️ Aucun profil public pour l’instant. La vitrine reste pleine avec 8 emplacements visibles.</span>
-            <div class="right">
-              <a class="btn-small primary" href="https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Salut DIGIY RESA TABLE, je veux poser ma carte dans la vitrine de " + CITY_LOCK + ".")}" target="_blank" rel="noopener">🪑 Poser ma carte</a>
-            </div>
+        <div class="body">
+          <h1>Votre établissement ici</h1>
+          <div class="meta">
+            <span>🏷️ Place vitrine</span>
+            <span>📍 Saly${slot ? " • emplacement " + esc(slot) : ""}</span>
           </div>
-        ` + placeholdersHtml;
-        return;
-      }
 
-      grid.innerHTML = liveHtml + placeholdersHtml;
+          <div class="bio">
+            Ceci est une fiche type publique. Quand un établissement actif entre dans la vitrine,
+            sa vraie carte et sa vraie fiche prennent la place naturellement.
+          </div>
+
+          <div class="tags">
+            <span class="tag">Vitrine locale</span>
+            <span class="tag">Réservation simple</span>
+            <span class="tag">Carte publique</span>
+          </div>
+
+          <div class="actions">
+            <a class="btn primary" target="_blank" rel="noopener"
+               href="https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Salut DIGIY RESA TABLE, je veux poser ma carte dans la vitrine de Saly.")}">
+              🪑 Poser ma carte
+            </a>
+            <a class="btn" href="./index.html">← Retour vitrine</a>
+          </div>
+        </div>
+      `;
+
+      bottom.innerHTML = `
+        <a class="btn primary" target="_blank" rel="noopener"
+           href="https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Salut DIGIY RESA TABLE, je veux rejoindre la vitrine publique.")}">
+          💬 Rejoindre
+        </a>
+      `;
+
+      status.textContent = "Fiche placeholder affichée.";
     }
 
-    function applyFilters(){
-      const q = (document.getElementById("q").value || "").trim().toLowerCase();
-      const cat = (document.getElementById("cat").value || "").trim().toLowerCase();
+    function renderCard(r){
+      const hero = document.getElementById("hero");
+      const bottom = document.getElementById("bottomActions");
+      const status = document.getElementById("statusText");
 
-      const filtered = (ROWS || []).filter(r => {
-        const hay = [
-          r.display_name,
-          r.category,
-          r.city,
-          r.address,
-          r.bio,
-          r.badge,
-          r.hub_badge,
-          r.price_label,
-          ...tagsToArray(r.tags)
-        ].join(" ").toLowerCase();
+      const name = esc(r.business_name || "Établissement");
+      const city = esc(r.city || "Saly");
+      const address = esc(r.address || "");
+      const description = esc(r.description || r.tagline || "Fiche publique établissement.");
+      const openHours = esc(r.open_hours || "");
+      const photo = esc((r.photo_url || FALLBACK_PHOTO) + (((r.photo_url || FALLBACK_PHOTO).includes("?")) ? "&" : "?") + "v=5");
+      const phone = normalizePhone(r.whatsapp_phone || r.call_phone || "");
+      const reserveHref = `./reserver.html?slug=${encodeURIComponent(r.slug || "")}`;
 
-        const okQ = !q || hay.includes(q);
-        const okCat = !cat || String(r.category || "").toLowerCase() === cat;
-        return okQ && okCat;
-      });
+      hero.innerHTML = `
+        <div class="photo">
+          <img src="${photo}" alt="${name}" onerror="this.onerror=null;this.src='${FALLBACK_PHOTO}'" />
+          <div class="badgeTop">
+            <span class="chip gold">🍽️ ÉTABLISSEMENT</span>
+            <span class="chip green">🟢 ABO ACTIF</span>
+          </div>
+        </div>
 
-      render(filtered);
-      updateKpi();
+        <div class="body">
+          <h1>${name}</h1>
+
+          <div class="meta">
+            <span>📍 ${city}${address ? " • " + address : ""}</span>
+            ${openHours ? `<span>🕒 ${openHours}</span>` : ``}
+          </div>
+
+          <div class="bio">${description}</div>
+
+          <div class="tags">
+            <span class="tag">RESA TABLE</span>
+            <span class="tag">${city}</span>
+            ${openHours ? `<span class="tag">Horaires: ${openHours}</span>` : ``}
+          </div>
+
+          <div class="actions">
+            <a class="btn primary" href="${reserveHref}">📅 Réserver</a>
+            ${phone ? `
+              <a class="btn" target="_blank" rel="noopener"
+                 href="https://wa.me/${phone}?text=${encodeURIComponent("Bonjour, je vous contacte depuis votre fiche DIGIY RESA TABLE.")}">
+                💬 WhatsApp
+              </a>
+            ` : ``}
+            <a class="btn" href="./index.html">← Retour vitrine</a>
+          </div>
+        </div>
+      `;
+
+      bottom.innerHTML = `
+        <a class="btn primary" href="${reserveHref}">📅 Réserver maintenant</a>
+        ${phone ? `
+          <a class="btn" target="_blank" rel="noopener"
+             href="https://wa.me/${phone}?text=${encodeURIComponent("Bonjour, je vous contacte depuis votre fiche DIGIY RESA TABLE.")}">
+            💬 Contacter
+          </a>
+        ` : ``}
+      `;
+
+      status.textContent = "Fiche publique chargée.";
     }
 
     async function load(){
-      renderSkeleton();
-      setStatus("🔎 Chargement depuis Supabase…");
+      const slug = (qs("slug") || "").trim().toLowerCase();
+      const demo = qs("demo");
+      const slot = qs("slot");
+
+      if(demo === "1" || !slug){
+        renderPlaceholder(slot);
+        return;
+      }
 
       try{
-        const { data, error } = await sb
-          .from("digiy_resa_public_profiles_v2")
-          .select("*")
-          .order("updated_at", { ascending: false });
+        const { data, error } = await sb.rpc("resa_get_public_card_by_slug", {
+          p_slug: slug
+        });
 
         if(error) throw error;
 
-        const raw = Array.isArray(data) ? data : [];
+        if(!data || !data.slug){
+          renderPlaceholder(slot);
+          return;
+        }
 
-        ROWS = raw
-          .filter(r => sameCity(first(r.city), CITY_LOCK))
-          .map(r => ({
-            slug: first(r.slug),
-            display_name: first(r.business_name, r.restaurant_name, r.name, r.establishment_name) || "Établissement",
-            category: first(r.category, r.cuisine_type, r.cuisine, r.type_label, r.speciality) || "Table locale",
-            city: first(r.city) || "",
-            address: first(r.address_text, r.address, r.location_text) || "",
-            bio: first(r.description, r.about, r.short_description) || "",
-            badge: "🍽️ ÉTABLISSEMENT",
-            hub_badge: "🪑 RESA TABLE",
-            price_label: first(r.open_hours, r.opening_hours) ? `Horaires: ${first(r.open_hours, r.opening_hours)}` : "",
-            tags: [
-              first(r.category, r.cuisine_type, r.cuisine, r.type_label, r.speciality) || "",
-              first(r.city) || "",
-              first(r.open_hours, r.opening_hours) ? `Horaires: ${first(r.open_hours, r.opening_hours)}` : ""
-            ].filter(Boolean),
-            photo_url: first(r.cover_image_url, r.logo_url, r.image_url, r.photo_url) || "",
-            created_at: first(r.published_at, r.updated_at, r.created_at) || null
-          }));
-
-        fillSelects();
-        updateStatsBar(ROWS);
-        applyFilters();
-        toast("✅ Vitrine chargée");
+        renderCard(data);
       }catch(e){
         console.error(e);
-        setStatus("❌ Erreur chargement vitrine.");
-        const bar = document.getElementById("resaStatsBar");
-        if(bar) bar.style.display = "none";
-
-        const grid = document.getElementById("grid");
-        if(grid){
-          grid.innerHTML = `
-            <div class="status" style="grid-column:1/-1;">
-              <span>❌ Impossible de charger la vitrine. <b>Détail :</b> ${esc(e?.message || e)}</span>
-              <div class="right">
-                <a class="btn-small"
-                   href="https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Salut DIGIY RESA TABLE, la vitrine Saly ne charge pas.")}"
-                   target="_blank" rel="noopener">💬 Support</a>
-              </div>
-            </div>
-          `;
-        }
+        renderPlaceholder(slot);
+        document.getElementById("statusText").textContent = "Erreur de chargement, fiche placeholder affichée.";
       }
     }
-
-    (function bind(){
-      const q = document.getElementById("q");
-      const cat = document.getElementById("cat");
-      let t = null;
-
-      q.addEventListener("input", () => {
-        clearTimeout(t);
-        t = setTimeout(applyFilters, 120);
-      });
-
-      cat.addEventListener("change", applyFilters);
-    })();
 
     load();
   </script>
