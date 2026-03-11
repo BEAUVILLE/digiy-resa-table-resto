@@ -33,9 +33,44 @@
         radial-gradient(circle at top,#0b2218 0,#061b14 50%,#04110d 100%);
       color:var(--ink);
     }
+
+    .floating-back{
+      position:fixed;
+      top:calc(env(safe-area-inset-top, 0px) + 12px);
+      left:calc(env(safe-area-inset-left, 0px) + 12px);
+      z-index:99999;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:12px 16px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.24);
+      background:linear-gradient(135deg,var(--gold),var(--orange));
+      color:#04110d;
+      text-decoration:none;
+      font-size:14px;
+      font-weight:1000;
+      line-height:1;
+      box-shadow:0 16px 40px rgba(0,0,0,.28);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .floating-back:hover{
+      transform:translateY(-1px);
+      box-shadow:0 20px 46px rgba(0,0,0,.34);
+    }
+    .floating-back:active{
+      transform:translateY(0);
+    }
+
     .page{ max-width:1100px; margin:0 auto; padding:16px 14px 42px; }
     @media(max-width:860px){ :root{ --fs-hero: 32px; } }
-    @media(max-width:600px){ :root{ --fs-hero: 28px; --fs-sub: 15px; } .page{ padding:14px 12px 38px; } }
+    @media(max-width:600px){
+      :root{ --fs-hero: 28px; --fs-sub: 15px; }
+      .page{ padding:14px 12px 38px; }
+    }
 
     .nav{
       display:flex; align-items:center; justify-content:space-between;
@@ -367,10 +402,23 @@
     @keyframes shimmer{ 0%{ background-position: 200% 0; } 100%{ background-position: -200% 0; } }
     .sk-photo{ height:210px; }
     .sk-line{ height:12px; border-radius:999px; margin-top:10px; }
+
+    @media(max-width:768px){
+      .floating-back{
+        top:calc(env(safe-area-inset-top, 0px) + 10px);
+        left:calc(env(safe-area-inset-left, 0px) + 10px);
+        padding:11px 14px;
+        font-size:13px;
+      }
+    }
   </style>
 </head>
 
 <body>
+  <a class="floating-back" id="floatingSiteBtn" href="https://digiylyfe.com/" aria-label="Retour au site DIGIYLYFE">
+    ↩️ Retour site
+  </a>
+
   <div class="page">
     <header class="nav">
       <div class="nav-left">
@@ -416,7 +464,7 @@
             </div>
             <div class="right">
               <span class="stats-pill good">Réelles: <span id="msPublic">—</span></span>
-              <span class="stats-pill warn">Catégories: <span id="msCats">—</span></span>
+              <span class="stats-pill.warn">Catégories: <span id="msCats">—</span></span>
             </div>
           </div>
         </div>
@@ -478,6 +526,7 @@
     const HUB_URL = "https://beauville.github.io/digiy-hub/";
     const SUPPORT_WA = "221771342889";
     const JOIN_MODULE_URL = "https://commencer-a-payer.digiylyfe.com/";
+    const SITE_URL = "https://digiylyfe.com/";
 
     const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
@@ -610,6 +659,9 @@
     }
 
     (function initLinks(){
+      const floatingBtn = document.getElementById("floatingSiteBtn");
+      if (floatingBtn) floatingBtn.href = SITE_URL;
+
       document.getElementById("btnHub").href = HUB_URL;
       document.getElementById("btnSupport").href =
         "https://wa.me/" + SUPPORT_WA + "?text=" +
