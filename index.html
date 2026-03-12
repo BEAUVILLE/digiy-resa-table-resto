@@ -2,9 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <title>DIGIY RESA TABLE — Vitrine Saly</title>
+  <title>DIGIY RESA — Multi Business Saly</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="DIGIY RESA TABLE — Vitrine publique des établissements à Saly. Réservation simple, contact direct, visibilité locale." />
+  <meta name="description" content="DIGIY RESA — Vitrine publique multi business à Saly. Réservation simple pour restaurant, coiffure, garage, beauté, consultation et services de quartier." />
   <meta name="theme-color" content="#061b14" />
   <meta name="robots" content="index,follow" />
 
@@ -19,6 +19,7 @@
       --gold:#facc15;
       --green:#22c55e;
       --orange:#f97316;
+      --blue:#60a5fa;
       --shadow:0 18px 55px rgba(0,0,0,.42);
       --fs-hero: 38px;
       --fs-sub: 16px;
@@ -30,6 +31,7 @@
       background:
         radial-gradient(circle at top, rgba(250,204,21,.10) 0, transparent 55%),
         radial-gradient(circle at 18% 10%, rgba(34,197,94,.10) 0, transparent 55%),
+        radial-gradient(circle at 85% 12%, rgba(96,165,250,.08) 0, transparent 45%),
         radial-gradient(circle at top,#0b2218 0,#061b14 50%,#04110d 100%);
       color:var(--ink);
     }
@@ -133,7 +135,8 @@
       content:""; position:absolute; inset:-1px;
       background:
         radial-gradient(700px 360px at 20% -10%, rgba(34,197,94,.18), transparent 65%),
-        radial-gradient(700px 360px at 110% 0%, rgba(250,204,21,.14), transparent 60%);
+        radial-gradient(700px 360px at 110% 0%, rgba(250,204,21,.14), transparent 60%),
+        radial-gradient(600px 300px at 60% 10%, rgba(96,165,250,.10), transparent 50%);
       pointer-events:none;
     }
     .hero-inner{ position:relative; display:grid; grid-template-columns:1.2fr 0.8fr; gap:14px; align-items:center; }
@@ -291,6 +294,7 @@
     .chip.gold{ border-color:rgba(250,204,21,.30); }
     .chip.green{ border-color:rgba(34,197,94,.30); }
     .chip.new{ border-color:rgba(249,115,22,.30); }
+    .chip.blue{ border-color:rgba(96,165,250,.30); }
 
     .body{ padding:14px; display:flex; flex-direction:column; gap:10px; flex:1; }
     .name{ font-size:18px; font-weight:1000; color:var(--gold); line-height:1.15; }
@@ -422,10 +426,10 @@
   <div class="page">
     <header class="nav">
       <div class="nav-left">
-        <div class="logo-badge">🍽️</div>
+        <div class="logo-badge">📅</div>
         <div class="logo-text">
-          <div class="logo-title">DIGIY RESA TABLE • SALY</div>
-          <div class="logo-sub">La vitrine publique • Réservation simple • Terrain</div>
+          <div class="logo-title">DIGIY RESA • MULTI BUSINESS • SALY</div>
+          <div class="logo-sub">La vitrine publique • Réservation simple • Services du terrain</div>
         </div>
       </div>
 
@@ -433,30 +437,32 @@
         <div class="pill"><span class="dot"></span> Réservation directe</div>
         <div class="pill">📍 Saly</div>
         <a class="btn-small" id="btnHub" href="#" rel="noopener">🦅 DIGIY HUB</a>
-        <a class="btn-small primary" id="btnJoinTop" href="#" rel="noopener">🪑 Poser ma carte</a>
+        <a class="btn-small primary" id="btnJoinTop" href="#" rel="noopener">📌 Poser ma fiche</a>
       </div>
     </header>
 
     <section class="hero">
       <div class="hero-inner">
         <div>
-          <h1>La vitrine <span class="hl">RESA TABLE</span><br/>de <span class="hl">Saly</span></h1>
+          <h1>La vitrine <span class="hl">DIGIY RESA</span><br/>de <span class="hl">Saly</span> en mode <span class="hl">multi business</span></h1>
           <p>
-            Ici tu vois les établissements visibles publiquement.
-            Le client ouvre la fiche, regarde les infos utiles, puis
+            Ici le client découvre des activités et services du terrain :
+            <b style="color:var(--gold);font-weight:1000;">restaurant, coiffure, garage, beauté, consultation, atelier</b>.
+            Il ouvre la fiche, regarde les infos utiles, puis
             <b style="color:var(--gold);font-weight:1000;">réserve simplement</b>.
           </p>
 
           <div class="hero-badges">
             <div class="hero-badge">✅ <b>Public</b> (vitrine)</div>
             <div class="hero-badge">📅 Réservation simple</div>
+            <div class="hero-badge">🧩 Multi business</div>
             <div class="hero-badge">🆕 Nouveaux en avant</div>
           </div>
 
           <div class="statsbar" id="resaStatsBar">
             <div class="left">
-              <span>🍽️ Table <span style="color:var(--gold)">Saly</span> :</span>
-              <span><span id="msTotal">—</span> cartes visibles</span>
+              <span>📍 <span style="color:var(--gold)">Saly</span> :</span>
+              <span><span id="msTotal">—</span> fiches visibles</span>
               <span class="sep">•</span>
               <span>+<span id="ms7d">—</span>/7j</span>
               <span class="sep">•</span>
@@ -464,7 +470,7 @@
             </div>
             <div class="right">
               <span class="stats-pill good">Réelles: <span id="msPublic">—</span></span>
-              <span class="stats-pill.warn">Catégories: <span id="msCats">—</span></span>
+              <span class="stats-pill warn">Catégories: <span id="msCats">—</span></span>
             </div>
           </div>
         </div>
@@ -472,7 +478,7 @@
         <aside class="hero-box">
           <div class="muted" style="font-weight:1000;">📊 Stats vitrine (Saly)</div>
           <div class="kpi">
-            <div class="chip"><span>Profils visibles</span><span class="v" id="kpiCount">—</span></div>
+            <div class="chip"><span>Fiches visibles</span><span class="v" id="kpiCount">—</span></div>
             <div class="chip"><span>Nouveaux 7j</span><span class="v" id="kpiNew7d">—</span></div>
           </div>
 
@@ -482,7 +488,7 @@
           </div>
 
           <div class="status" style="margin-top:10px;">
-            <span class="muted">Dernière carte :</span>
+            <span class="muted">Dernière fiche :</span>
             <b id="kpiLast">—</b>
           </div>
         </aside>
@@ -490,9 +496,9 @@
 
       <div class="controls">
         <div class="searchRow">
-          <input id="q" class="input" type="search" placeholder="Rechercher (nom, catégorie, ville…)" autocomplete="off" />
-          <select id="cat" class="select" title="Filtrer par catégorie">
-            <option value="">Toutes les catégories</option>
+          <input id="q" class="input" type="search" placeholder="Rechercher (nom, activité, ville…)" autocomplete="off" />
+          <select id="cat" class="select" title="Filtrer par activité">
+            <option value="">Toutes les activités</option>
           </select>
         </div>
         <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
@@ -503,7 +509,7 @@
     </section>
 
     <section class="section">
-      <div class="section-title">📍 Vitrine (public)</div>
+      <div class="section-title">📍 Vitrine multi business (public)</div>
       <div class="muted">
         Fiches visibles : <b style="color:var(--gold)">réelles + vitrine d’ambiance</b> • Ville : <b>Saly</b>
       </div>
@@ -511,7 +517,7 @@
     </section>
 
     <footer class="footer">
-      DIGIY RESA TABLE • Saly • <span class="zero">Vitrine locale</span> • <span class="brand">Réservation simple</span> ∞
+      DIGIY RESA • Saly • <span class="zero">Vitrine locale</span> • <span class="brand">Réservation multi business</span> ∞
     </footer>
   </div>
 
@@ -529,7 +535,7 @@
     const SITE_URL = "https://digiylyfe.com/";
 
     const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBaYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
       auth: {
@@ -542,104 +548,104 @@
           removeItem: () => {}
         }
       },
-      global: { headers: { "X-Client-Info": "digiy-resa-public-vitrine" } }
+      global: { headers: { "X-Client-Info": "digiy-resa-multi-business-vitrine" } }
     });
 
     const DEMO_CARDS = [
       {
         kind: "demo",
-        demo_id: "terrasse-lagune",
+        demo_id: "atelier-brushing-saly",
         slug: "",
-        display_name: "Terrasse Lagune",
-        category: "Cuisine sunset",
+        display_name: "Atelier Brushing Saly",
+        category: "Coiffure",
         city: "Saly",
-        address: "Près plage • ambiance coucher de soleil",
-        bio: "Une table d’ambiance pensée pour les fins d’après-midi, les dîners détendus et les rendez-vous en bord de mer.",
+        address: "Quartier central • rendez-vous beauté",
+        bio: "Coupe, brushing, teinture et soins. Une fiche pensée pour réserver simplement selon le service choisi.",
         badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🌅 AMBIANCE SALY",
-        price_label: "Horaires: 12:00 - 23:00",
-        tags: ["Cuisine sunset", "Terrasse", "Cocktails", "Saly"],
-        photo_url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
+        hub_badge: "💇 BEAUTÉ",
+        price_label: "Services sur rendez-vous",
+        tags: ["Coiffure", "Brushing", "Teinture", "Saly"],
+        photo_url: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80",
         created_at: new Date().toISOString()
       },
       {
         kind: "demo",
-        demo_id: "braise-ocean",
+        demo_id: "garage-diagnostic-saly",
         slug: "",
-        display_name: "Braise Océan",
-        category: "Grillades & poisson",
+        display_name: "Garage Diagnostic Saly",
+        category: "Garage",
         city: "Saly",
-        address: "Zone résidentielle • service du soir",
-        bio: "Un esprit grillades, poisson braisé et table généreuse pour les repas simples, efficaces et chaleureux.",
+        address: "Axe principal • mécanique légère",
+        bio: "Diagnostic, vidange, freins et petites interventions avec créneaux clairs pour gagner du temps.",
         badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🔥 TABLE CHALEUREUSE",
-        price_label: "Horaires: 19:00 - 00:00",
-        tags: ["Poisson", "Braises", "Dîner", "Saly"],
-        photo_url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
+        hub_badge: "🔧 GARAGE",
+        price_label: "Diagnostic • Vidange • Freins",
+        tags: ["Garage", "Diagnostic", "Vidange", "Saly"],
+        photo_url: "https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=1200&q=80",
         created_at: new Date(Date.now() - 86400000).toISOString()
       },
       {
         kind: "demo",
-        demo_id: "jardin-brunch",
+        demo_id: "terrasse-saveurs-saly",
         slug: "",
-        display_name: "Jardin Brunch",
-        category: "Brunch & famille",
+        display_name: "Terrasse Saveurs Saly",
+        category: "Restaurant",
         city: "Saly",
-        address: "Coin calme • terrasse verte",
-        bio: "Un format doux pour brunch, famille, café prolongé et rendez-vous du midi dans une atmosphère végétale.",
+        address: "Terrasse • déjeuner & soirée",
+        bio: "Une table d’ambiance pour déjeuner tranquille, dîner simple ou recevoir des amis dans un cadre détendu.",
         badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🌿 ESPRIT JARDIN",
-        price_label: "Horaires: 09:00 - 18:00",
-        tags: ["Brunch", "Famille", "Terrasse", "Saly"],
-        photo_url: "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1200&q=80",
+        hub_badge: "🍽️ RESTAURANT",
+        price_label: "Horaires: 12:00 - 23:00",
+        tags: ["Restaurant", "Terrasse", "Déjeuner", "Saly"],
+        photo_url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
         created_at: new Date(Date.now() - 2 * 86400000).toISOString()
       },
       {
         kind: "demo",
-        demo_id: "table-nuit-doree",
+        demo_id: "studio-onglerie-saly",
         slug: "",
-        display_name: "Table Nuit Dorée",
-        category: "Dîner signature",
+        display_name: "Studio Onglerie Saly",
+        category: "Beauté",
         city: "Saly",
-        address: "Ambiance chic • soirée",
-        bio: "Une table pensée pour sortir le soir, dîner à deux, célébrer un moment ou recevoir dans une ambiance plus habillée.",
+        address: "Zone calme • soins esthétiques",
+        bio: "Pose, entretien, manucure et rendez-vous beauté avec créneaux simples à lire pour la cliente.",
         badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🌙 SOIRÉE",
-        price_label: "Horaires: 18:30 - 23:30",
-        tags: ["Dîner", "Soirée", "Signature", "Saly"],
-        photo_url: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80",
+        hub_badge: "💅 BEAUTÉ",
+        price_label: "Pose • Entretien • Manucure",
+        tags: ["Beauté", "Onglerie", "Soin", "Saly"],
+        photo_url: "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=80",
         created_at: new Date(Date.now() - 3 * 86400000).toISOString()
       },
       {
         kind: "demo",
-        demo_id: "cour-des-amis",
+        demo_id: "cabinet-conseil-saly",
         slug: "",
-        display_name: "Cour des Amis",
-        category: "Table conviviale",
+        display_name: "Cabinet Conseil Saly",
+        category: "Consultation",
         city: "Saly",
-        address: "Cour intérieure • groupe & partage",
-        bio: "Un esprit grande table, partage, plats à plusieurs et accueil simple pour repas entre amis ou en petit groupe.",
+        address: "Bureau calme • rendez-vous pro",
+        bio: "Consultations, échanges posés et rendez-vous organisés sur des créneaux nets pour éviter les confusions.",
         badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🤝 CONVIVIAL",
-        price_label: "Horaires: 12:00 - 22:30",
-        tags: ["Convivial", "Groupe", "Déjeuner", "Saly"],
-        photo_url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
+        hub_badge: "🩺 CONSULTATION",
+        price_label: "Rendez-vous sur créneau",
+        tags: ["Consultation", "Conseil", "Bureau", "Saly"],
+        photo_url: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
         created_at: new Date(Date.now() - 4 * 86400000).toISOString()
       },
       {
         kind: "demo",
-        demo_id: "saveurs-sable",
+        demo_id: "atelier-service-saly",
         slug: "",
-        display_name: "Saveurs Sable",
-        category: "Cuisine locale revisitée",
+        display_name: "Atelier Service Saly",
+        category: "Atelier",
         city: "Saly",
-        address: "Esprit petite côte • service fluide",
-        bio: "Une proposition ancrée localement, simple à comprendre, rassurante pour le client et parfaite pour une réservation rapide.",
+        address: "Service de quartier • rendez-vous utiles",
+        bio: "Un atelier pensé pour les rendez-vous techniques, petits dépannages et services du quotidien avec planning clair.",
         badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🏝️ PETITE CÔTE",
-        price_label: "Horaires: 12:00 - 22:00",
-        tags: ["Local", "Petite côte", "Cuisine", "Saly"],
-        photo_url: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1200&q=80",
+        hub_badge: "🛠️ ATELIER",
+        price_label: "Service sur rendez-vous",
+        tags: ["Atelier", "Service", "Quartier", "Saly"],
+        photo_url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
         created_at: new Date(Date.now() - 5 * 86400000).toISOString()
       }
     ];
@@ -649,12 +655,10 @@
 
     function buildJoinUrl(){
       const u = new URL(JOIN_MODULE_URL);
-      u.searchParams.set("module", "RESA_TABLE");
-      u.searchParams.set("base_module", "RESA_TABLE");
-      u.searchParams.set("plan", "RESA_4A");
-      u.searchParams.set("code", "4A");
-      u.searchParams.set("amount", "12900");
-      u.searchParams.set("from", "resa-table-vitrine-saly");
+      u.searchParams.set("module", "RESA");
+      u.searchParams.set("base_module", "RESA");
+      u.searchParams.set("plan", "standard");
+      u.searchParams.set("from", "resa-multi-business-vitrine-saly");
       return u.toString();
     }
 
@@ -665,7 +669,7 @@
       document.getElementById("btnHub").href = HUB_URL;
       document.getElementById("btnSupport").href =
         "https://wa.me/" + SUPPORT_WA + "?text=" +
-        encodeURIComponent("Salut DIGIY RESA TABLE, j'ai une question sur la vitrine de Saly.");
+        encodeURIComponent("Salut DIGIY RESA, j'ai une question sur la vitrine multi business de Saly.");
       document.getElementById("btnJoinTop").href = buildJoinUrl();
       document.getElementById("btnRefresh").addEventListener("click", (e) => {
         e.preventDefault();
@@ -777,7 +781,7 @@
 
       setStatus(
         reals.length
-          ? `✅ ${reals.length} carte(s) réelle(s) • vitrine présentable immédiatement`
+          ? `✅ ${reals.length} fiche(s) réelle(s) • vitrine multi business présentable immédiatement`
           : "✨ Vitrine meublée intelligemment • prête pour les premiers clients"
       );
     }
@@ -786,7 +790,7 @@
       const catSel = document.getElementById("cat");
       const cats = pick(ROWS, "category");
       catSel.innerHTML =
-        `<option value="">Toutes les catégories</option>` +
+        `<option value="">Toutes les activités</option>` +
         cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
     }
 
@@ -815,21 +819,21 @@
         kind: "live",
         demo_id: "",
         slug: first(r.slug),
-        display_name: first(r.business_name, r.restaurant_name, r.name, r.establishment_name) || "Établissement",
-        category: first(r.category, r.cuisine_type, r.cuisine, r.type_label, r.speciality) || "Table locale",
+        display_name: first(r.display_name, r.business_name, r.name, r.establishment_name) || "Commerce",
+        category: first(r.business_type, r.category, r.type_label) || "Service local",
         city: first(r.city) || "",
         address: first(r.address_text, r.address, r.location_text) || "",
-        bio: first(r.description, r.about, r.short_description) || "",
-        badge: "🍽️ ÉTABLISSEMENT",
-        hub_badge: "🟢 RÉSERVABLE",
-        price_label: first(r.open_hours, r.opening_hours) ? `Horaires: ${first(r.open_hours, r.opening_hours)}` : "",
+        bio: first(r.bio, r.description, r.about, r.short_description) || "",
+        badge: "📅 RÉSERVABLE",
+        hub_badge: "🟢 MULTI BUSINESS",
+        price_label: first(r.opening_hours_text, r.open_hours, r.opening_hours) ? `Horaires: ${first(r.opening_hours_text, r.open_hours, r.opening_hours)}` : "",
         tags: [
-          first(r.category, r.cuisine_type, r.cuisine, r.type_label, r.speciality) || "",
+          first(r.business_type, r.category, r.type_label) || "",
           first(r.city) || "",
-          first(r.open_hours, r.opening_hours) ? `Horaires: ${first(r.open_hours, r.opening_hours)}` : ""
+          first(r.opening_hours_text, r.open_hours, r.opening_hours) ? `Horaires: ${first(r.opening_hours_text, r.open_hours, r.opening_hours)}` : ""
         ].filter(Boolean),
-        photo_url: first(r.cover_image_url, r.logo_url, r.image_url, r.photo_url) || "",
-        created_at: first(r.published_at, r.updated_at, r.created_at) || null
+        photo_url: first(r.cover_url, r.cover_image_url, r.logo_url, r.image_url, r.photo_url) || "",
+        created_at: first(r.updated_at, r.created_at) || null
       };
     }
 
@@ -851,27 +855,27 @@
       if(!rows.length){
         grid.innerHTML = `
           <div class="status" style="grid-column:1/-1;">
-            <span>⚠️ Aucune carte à afficher pour le moment.</span>
+            <span>⚠️ Aucune fiche à afficher pour le moment.</span>
           </div>
         `;
         return;
       }
 
       grid.innerHTML = rows.map(r => {
-        const name = esc(r.display_name || "Établissement");
-        const category = esc(r.category || "Table locale");
+        const name = esc(r.display_name || "Commerce");
+        const category = esc(r.category || "Service local");
         const city = esc(r.city || CITY_LOCK);
         const address = esc(r.address || "");
         const bio = esc(r.bio || "");
-        const badge = esc(r.badge || "🍽️ ÉTABLISSEMENT");
-        const hub = esc(r.hub_badge || "📍 SALY");
+        const badge = esc(r.badge || "📅 RÉSERVABLE");
+        const hub = esc(r.hub_badge || "🟢 MULTI BUSINESS");
         const price = esc(r.price_label || "");
         const tags = tagsToArray(r.tags).slice(0, 6);
         const isNewCard = isNew(r.created_at);
 
         const rawPhoto = String(r.photo_url || "").trim();
         const basePhoto = rawPhoto || FALLBACK_PHOTO;
-        const photoFinal = esc(basePhoto + (basePhoto.includes("?") ? "&" : "?") + "v=9");
+        const photoFinal = esc(basePhoto + (basePhoto.includes("?") ? "&" : "?") + "v=11");
 
         const ficheHref = r.kind === "live"
           ? `./fiche.html?slug=${encodeURIComponent(r.slug || "")}`
@@ -890,7 +894,7 @@
               />
               <div class="badgeTop">
                 <span class="chip gold">${badge}</span>
-                <span class="chip green">${hub}</span>
+                <span class="chip blue">${hub}</span>
                 ${isNewCard ? `<span class="chip new">🆕 Nouveau</span>` : ``}
               </div>
             </div>
@@ -904,7 +908,7 @@
 
               ${bio
                 ? `<div class="bio">${bio}</div>`
-                : `<div class="bio" style="color:var(--muted)">Fiche publique DIGIY RESA TABLE.</div>`}
+                : `<div class="bio" style="color:var(--muted)">Fiche publique DIGIY RESA MULTI BUSINESS.</div>`}
 
               <div class="tags">
                 ${tags.map(t => `<span class="tag">${esc(t)}</span>`).join("")}
