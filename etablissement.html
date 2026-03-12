@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>DIGIY RESA — Établissement</title>
+  <title>DIGIY RESA — Fiche multi business</title>
   <meta name="theme-color" content="#07140f"/>
-  <meta name="description" content="Fiche publique établissement DIGIY RESA. Réservation simple, contact direct, accueil sérieux."/>
+  <meta name="description" content="Fiche publique DIGIY RESA. Réservation simple, contact direct, services multi business."/>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -22,6 +22,7 @@
       --primary-2:#16a34a;
       --gold:#facc15;
       --gold-soft:rgba(250,204,21,.12);
+      --blue:#60a5fa;
       --shadow:0 20px 60px rgba(0,0,0,.38);
       --r:24px;
       --max:1120px;
@@ -361,6 +362,53 @@
       font-weight:900;
     }
 
+    .services{
+      display:grid;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .service{
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.09);
+      background:rgba(0,0,0,.16);
+    }
+
+    .service-top{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:flex-start;
+    }
+
+    .service-name{
+      font-size:16px;
+      font-weight:1000;
+      color:var(--gold);
+      line-height:1.2;
+    }
+
+    .service-meta{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .service-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      color:var(--muted);
+      font-size:11px;
+      font-weight:950;
+    }
+
     .footer{
       margin-top:16px;
       text-align:center;
@@ -378,10 +426,10 @@
     <section class="hero">
       <div class="hero-grid-main">
         <div class="hero-media" id="heroMedia">
-          <div class="hero-media-fallback">🍽️</div>
+          <div class="hero-media-fallback">📅</div>
           <div class="hero-badge" id="heroBadge">
             <span class="dot"></span>
-            Établissement public
+            Commerce public
           </div>
         </div>
 
@@ -391,13 +439,13 @@
               <div class="avatar" id="avatar">RE</div>
 
               <div>
-                <div class="badge" id="pubBadge"><span class="dot"></span> Établissement publié</div>
+                <div class="badge" id="pubBadge"><span class="dot"></span> Fiche publiée</div>
                 <h1 id="name">Chargement…</h1>
                 <div class="subtitle" id="subtitle">Fiche publique DIGIY RESA</div>
 
                 <div class="hero-meta">
                   <div class="pill" id="cityPill">Ville : —</div>
-                  <div class="pill" id="typePill">Type : —</div>
+                  <div class="pill" id="typePill">Activité : —</div>
                   <div class="pill slug-pill" id="slugPill">slug : —</div>
                 </div>
               </div>
@@ -427,7 +475,7 @@
             </div>
 
             <div class="fact">
-              <div class="k">Capacité</div>
+              <div class="k">Capacité / accueil</div>
               <div class="v" id="capacity">—</div>
             </div>
           </div>
@@ -438,7 +486,7 @@
     <section class="grid">
       <div class="card">
         <h2>Zones & repères</h2>
-        <div class="muted">Zones, quartier ou mots-clés utiles pour situer l’établissement.</div>
+        <div class="muted">Zones, quartier ou mots-clés utiles pour situer le commerce.</div>
         <div class="chips" id="zonesChips">
           <div class="chip">Zone non précisée</div>
         </div>
@@ -453,14 +501,24 @@
           </div>
           <div class="fact">
             <div class="k">Réservation</div>
-            <div class="v">Demande simple et confirmation côté établissement</div>
+            <div class="v" id="bookingHelp">Demande simple et confirmation côté commerce</div>
           </div>
         </div>
       </div>
     </section>
 
+    <section class="card" style="margin-top:14px">
+      <h2>Services / prestations</h2>
+      <div class="muted">Lecture simple des services proposés sur ce rail RESA.</div>
+      <div class="services" id="servicesBox">
+        <div class="service">
+          <div class="muted">Chargement des services…</div>
+        </div>
+      </div>
+    </section>
+
     <div class="footer">
-      DIGIY RESA • Réserver simplement • Accueillir sérieusement
+      DIGIY RESA • Réserver simplement • Multi business • Terrain
     </div>
   </div>
 
@@ -472,7 +530,14 @@
     if (!supabaseLib || typeof supabaseLib.createClient !== "function") {
       console.error("Supabase JS non chargé.");
     }
-    const sb = supabaseLib.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const sb = supabaseLib.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth:{
+        persistSession:false,
+        autoRefreshToken:false,
+        detectSessionInUrl:false
+      }
+    });
 
     const qs = new URLSearchParams(location.search);
     const slug = (qs.get("slug") || "").trim();
@@ -513,17 +578,23 @@
       const candidates = [
         p?.cover_url,
         p?.photo_url,
-        p?.image_url
+        p?.image_url,
+        p?.cover_image_url
       ].filter(Boolean);
 
       if (candidates.length) return candidates[0];
-
       return "";
     }
 
-    function setHeroImage(profile, displayName, city){
+    function setHeroImage(profile, displayName, city, activity){
       const heroMedia = document.getElementById("heroMedia");
       const imageUrl = pickMainImage(profile);
+
+      const badgeText = city && activity
+        ? `${activity} public • ${city}`
+        : city
+          ? `Commerce public • ${city}`
+          : "Commerce public";
 
       if(imageUrl){
         heroMedia.innerHTML = `
@@ -531,19 +602,19 @@
             src="${escapeHtml(imageUrl)}"
             alt="${escapeHtml(displayName)}"
             loading="eager"
-            onerror="this.outerHTML='<div class=&quot;hero-media-fallback&quot;>🍽️</div>';"
+            onerror="this.outerHTML='<div class=&quot;hero-media-fallback&quot;>📅</div>';"
           />
           <div class="hero-badge" id="heroBadge">
             <span class="dot"></span>
-            ${escapeHtml(city ? `Établissement public • ${city}` : "Établissement public")}
+            ${escapeHtml(badgeText)}
           </div>
         `;
       }else{
         heroMedia.innerHTML = `
-          <div class="hero-media-fallback">🍽️</div>
+          <div class="hero-media-fallback">📅</div>
           <div class="hero-badge" id="heroBadge">
             <span class="dot"></span>
-            ${escapeHtml(city ? `Établissement public • ${city}` : "Établissement public")}
+            ${escapeHtml(badgeText)}
           </div>
         `;
       }
@@ -551,7 +622,7 @@
 
     function setAvatar(profile, displayName){
       const avatar = document.getElementById("avatar");
-      const photo = profile?.photo_url || "";
+      const photo = profile?.photo_url || profile?.logo_url || "";
 
       if(photo){
         avatar.innerHTML = `<img src="${escapeHtml(photo)}" alt="${escapeHtml(displayName)}" onerror="this.parentNode.textContent='${escapeHtml(initials(displayName))}'">`;
@@ -569,15 +640,73 @@
       box.innerHTML = zones.map(z => `<div class="chip">${escapeHtml(z)}</div>`).join("");
     }
 
+    function money(v){
+      const n = Number(v);
+      if(!Number.isFinite(n)) return "";
+      return n.toLocaleString("fr-FR") + " FCFA";
+    }
+
+    async function loadServices(slug){
+      if(!slug) return [];
+
+      try{
+        const { data, error } = await sb
+          .from("digiy_resa_services")
+          .select("id, service_name, duration_minutes, price_fcfa, is_active")
+          .eq("slug", slug)
+          .eq("is_active", true)
+          .order("service_name", { ascending:true });
+
+        if(error) throw error;
+        return Array.isArray(data) ? data : [];
+      }catch(e){
+        console.error(e);
+        return [];
+      }
+    }
+
+    function renderServices(services, businessType){
+      const box = document.getElementById("servicesBox");
+
+      if(!services.length){
+        box.innerHTML = `
+          <div class="service">
+            <div class="muted">
+              Aucun service détaillé n’est affiché pour l’instant. Le client peut passer par WhatsApp pour préciser son besoin.
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      box.innerHTML = services.map(s => `
+        <article class="service">
+          <div class="service-top">
+            <div class="service-name">${escapeHtml(s.service_name || "Service")}</div>
+            <div class="service-meta">
+              ${s.duration_minutes ? `<span class="service-pill">⏱️ ${escapeHtml(String(s.duration_minutes))} min</span>` : ``}
+              ${money(s.price_fcfa) ? `<span class="service-pill">💰 ${escapeHtml(money(s.price_fcfa))}</span>` : ``}
+            </div>
+          </div>
+          <div class="muted" style="margin-top:8px">
+            ${businessType ? `Prestation ${escapeHtml(String(businessType).toLowerCase())} disponible sur réservation.` : `Prestation disponible sur réservation.`}
+          </div>
+        </article>
+      `).join("");
+    }
+
     async function boot(){
       document.getElementById("slugPill").textContent = "slug : " + (slug || "—");
       document.getElementById("btnReserve").href = reserverLink(slug);
 
       if(!slug){
         document.getElementById("name").textContent = "Slug manquant";
-        document.getElementById("subtitle").textContent = "Impossible d’ouvrir cette fiche sans identifiant établissement.";
+        document.getElementById("subtitle").textContent = "Impossible d’ouvrir cette fiche sans identifiant commerce.";
         document.getElementById("btnReserve").classList.add("hidden");
         document.getElementById("btnWhatsApp").classList.add("hidden");
+        document.getElementById("servicesBox").innerHTML = `
+          <div class="service"><div class="muted">Aucun service à afficher.</div></div>
+        `;
         return;
       }
 
@@ -587,27 +716,29 @@
         if(!data?.ok) throw new Error(data?.error || "not_found");
 
         const p = data.profile || {};
-        const name = safe(p.display_name, "Établissement DIGIY");
+        const name = safe(p.display_name, "Commerce DIGIY");
         const city = safe(p.city);
-        const businessType = safe(p.business_type, "Établissement");
+        const businessType = safe(p.business_type, "Service local");
+
         const zones = Array.isArray(p.zones)
           ? p.zones
           : String(p.zones_text || "").split(",").map(s => s.trim()).filter(Boolean);
 
         document.title = `${name} — DIGIY RESA`;
 
-        setHeroImage(p, name, city);
+        setHeroImage(p, name, city, businessType);
         setAvatar(p, name);
 
         document.getElementById("name").textContent = name;
         document.getElementById("subtitle").textContent = `${city} • ${businessType}`;
         document.getElementById("cityPill").textContent = "Ville : " + city;
-        document.getElementById("typePill").textContent = "Type : " + businessType;
+        document.getElementById("typePill").textContent = "Activité : " + businessType;
         document.getElementById("bio").textContent = safe(p.bio, "Présentation à découvrir.");
         document.getElementById("address").textContent = safe(p.address_text, "Adresse à préciser");
         document.getElementById("hours").textContent = safe(p.opening_hours_text, "Horaires à préciser");
-        document.getElementById("capacity").textContent = p.capacity ? `${p.capacity} places` : "Capacité à préciser";
+        document.getElementById("capacity").textContent = p.capacity ? `${p.capacity} places / accueil` : "Capacité à préciser";
         document.getElementById("contactWhatsapp").textContent = safe(p.whatsapp, "WhatsApp à préciser");
+        document.getElementById("bookingHelp").textContent = `Réservation simple pour ${businessType.toLowerCase()}`;
 
         renderZones(zones);
 
@@ -620,15 +751,22 @@
           wa.classList.remove("gold");
           wa.textContent = "WhatsApp indisponible";
         }
+
+        const services = await loadServices(slug);
+        renderServices(services, businessType);
+
       }catch(e){
         console.error(e);
-        document.getElementById("name").textContent = "Établissement indisponible";
+        document.getElementById("name").textContent = "Commerce indisponible";
         document.getElementById("subtitle").textContent = "Cette fiche n’est pas disponible publiquement.";
         document.getElementById("btnReserve").classList.add("hidden");
         document.getElementById("btnWhatsApp").classList.add("hidden");
         document.getElementById("heroMedia").innerHTML = `
-          <div class="hero-media-fallback">🍽️</div>
-          <div class="hero-badge"><span class="dot"></span> Établissement public</div>
+          <div class="hero-media-fallback">📅</div>
+          <div class="hero-badge"><span class="dot"></span> Commerce public</div>
+        `;
+        document.getElementById("servicesBox").innerHTML = `
+          <div class="service"><div class="muted">Services indisponibles.</div></div>
         `;
       }
     }
