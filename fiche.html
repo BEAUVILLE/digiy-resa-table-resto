@@ -2,9 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <title>DIGIY RESA TABLE — Fiche établissement</title>
+  <title>DIGIY RESA — Fiche multi business</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="Fiche publique établissement DIGIY RESA TABLE." />
+  <meta name="description" content="Fiche publique commerce DIGIY RESA — réservation multi business." />
   <meta name="theme-color" content="#061b14" />
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -21,6 +21,7 @@
       --gold:#facc15;
       --green:#22c55e;
       --orange:#f97316;
+      --blue:#60a5fa;
       --shadow:0 18px 55px rgba(0,0,0,.42);
       --radius:24px;
     }
@@ -32,6 +33,7 @@
       background:
         radial-gradient(circle at top, rgba(250,204,21,.10) 0, transparent 55%),
         radial-gradient(circle at 18% 10%, rgba(34,197,94,.10) 0, transparent 55%),
+        radial-gradient(circle at 85% 12%, rgba(96,165,250,.08) 0, transparent 45%),
         radial-gradient(circle at top,#0b2218 0,#061b14 50%,#04110d 100%);
       color:var(--ink);
     }
@@ -157,7 +159,8 @@
       inset:-1px;
       background:
         radial-gradient(720px 380px at 15% -10%, rgba(34,197,94,.16), transparent 60%),
-        radial-gradient(620px 340px at 110% 0%, rgba(250,204,21,.12), transparent 60%);
+        radial-gradient(620px 340px at 110% 0%, rgba(250,204,21,.12), transparent 60%),
+        radial-gradient(520px 260px at 55% 8%, rgba(96,165,250,.08), transparent 55%);
       pointer-events:none;
     }
 
@@ -204,6 +207,7 @@
 
     .chip.gold{ border-color:rgba(250,204,21,.30); }
     .chip.green{ border-color:rgba(34,197,94,.30); }
+    .chip.blue{ border-color:rgba(96,165,250,.30); }
 
     .heroBody{
       position:relative;
@@ -376,6 +380,51 @@
       line-height:1.5;
     }
 
+    .servicesGrid{
+      display:grid;
+      gap:10px;
+    }
+
+    .serviceCard{
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(2,6,23,.28);
+      padding:12px;
+      display:grid;
+      gap:8px;
+    }
+
+    .serviceTop{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+
+    .serviceName{
+      font-size:15px;
+      font-weight:1000;
+      color:var(--gold);
+      line-height:1.2;
+    }
+
+    .serviceMeta{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .serviceChip{
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:11px;
+      font-weight:1000;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      color:var(--muted);
+    }
+
     .status{
       margin-top:14px;
       border-radius:16px;
@@ -403,10 +452,10 @@
   <div class="page">
     <header class="nav">
       <div class="nav-left">
-        <div class="logo-badge">🍽️</div>
+        <div class="logo-badge">📅</div>
         <div>
-          <div class="logo-title">DIGIY RESA TABLE</div>
-          <div class="logo-sub">Fiche publique établissement</div>
+          <div class="logo-title">DIGIY RESA</div>
+          <div class="logo-sub">Fiche publique multi business</div>
         </div>
       </div>
 
@@ -422,10 +471,29 @@
       <section class="panel">
         <div class="panelHead">
           <h2>Ambiance & expérience</h2>
-          <span class="muted">Ce que le client doit sentir</span>
+          <span class="muted">Ce que le client doit comprendre vite</span>
         </div>
         <div class="panelBody">
           <div class="muted" id="ambianceText">Chargement…</div>
+
+          <div class="infoList">
+            <div class="infoItem">
+              <div class="infoK">Ville</div>
+              <div class="infoV" id="cityInfo">—</div>
+            </div>
+            <div class="infoItem">
+              <div class="infoK">Adresse / zone</div>
+              <div class="infoV" id="addressInfo">—</div>
+            </div>
+            <div class="infoItem">
+              <div class="infoK">Horaires</div>
+              <div class="infoV" id="hoursInfo">—</div>
+            </div>
+            <div class="infoItem">
+              <div class="infoK">Contact</div>
+              <div class="infoV" id="contactInfo">—</div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -447,8 +515,8 @@
               <div class="infoV">Manuelle, humaine, rapide</div>
             </div>
             <div class="infoItem">
-              <div class="infoK">Pour les premières réservations</div>
-              <div class="infoV">Tout passe sur ton numéro : 221771342889</div>
+              <div class="infoK">Usage</div>
+              <div class="infoV" id="usageInfo">Réservation simple</div>
             </div>
           </div>
 
@@ -457,10 +525,22 @@
       </section>
     </section>
 
+    <section class="panel" style="margin-top:14px;">
+      <div class="panelHead">
+        <h2>Services / prestations</h2>
+        <span class="muted">Lecture simple pour le client</span>
+      </div>
+      <div class="panelBody">
+        <div class="servicesGrid" id="servicesBox">
+          <div class="muted">Chargement des services…</div>
+        </div>
+      </div>
+    </section>
+
     <div class="status" id="statusText">Chargement de la fiche…</div>
 
     <footer class="footer">
-      DIGIY RESA TABLE • Fiche publique • Saly • Réservation simple ∞
+      DIGIY RESA • Fiche publique • Multi business • Réservation simple ∞
     </footer>
   </div>
 
@@ -469,7 +549,7 @@
     const SUPPORT_WA = "221771342889";
 
     const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBaYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
       auth: {
@@ -485,77 +565,109 @@
     });
 
     const DEMO_MAP = {
-      "terrasse-lagune": {
-        display_name: "Terrasse Lagune",
-        category: "Cuisine sunset",
+      "atelier-brushing-saly": {
+        display_name: "Atelier Brushing Saly",
+        business_type: "Coiffure",
         city: "Saly",
-        address: "Près plage • ambiance coucher de soleil",
-        description: "Une table d’ambiance pensée pour les fins d’après-midi, les dîners détendus et les rendez-vous en bord de mer. Service simple, cadre propre, atmosphère légère.",
+        address_text: "Quartier central • rendez-vous beauté",
+        bio: "Coupe, brushing, teinture et soins. Une fiche pensée pour réserver simplement selon le service choisi.",
         badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🌅 AMBIANCE SALY",
-        open_hours: "12:00 - 23:00",
+        hub_badge: "💇 BEAUTÉ",
+        opening_hours_text: "09:00 - 19:00",
+        photo_url: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80",
+        tags: ["Coiffure", "Brushing", "Teinture", "Saly"],
+        whatsapp: SUPPORT_WA,
+        services: [
+          { service_name: "Coupe homme", duration_minutes: 20, price_fcfa: 3000 },
+          { service_name: "Brushing", duration_minutes: 45, price_fcfa: 6000 },
+          { service_name: "Teinture", duration_minutes: 90, price_fcfa: 15000 }
+        ]
+      },
+      "garage-diagnostic-saly": {
+        display_name: "Garage Diagnostic Saly",
+        business_type: "Garage",
+        city: "Saly",
+        address_text: "Axe principal • mécanique légère",
+        bio: "Diagnostic, vidange, freins et petites interventions avec créneaux clairs pour gagner du temps.",
+        badge: "✨ SÉLECTION DIGIY",
+        hub_badge: "🔧 GARAGE",
+        opening_hours_text: "08:00 - 18:00",
+        photo_url: "https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=1200&q=80",
+        tags: ["Garage", "Diagnostic", "Vidange", "Saly"],
+        whatsapp: SUPPORT_WA,
+        services: [
+          { service_name: "Diagnostic", duration_minutes: 15, price_fcfa: 5000 },
+          { service_name: "Vidange", duration_minutes: 30, price_fcfa: 10000 },
+          { service_name: "Freins", duration_minutes: 60, price_fcfa: 20000 }
+        ]
+      },
+      "terrasse-saveurs-saly": {
+        display_name: "Terrasse Saveurs Saly",
+        business_type: "Restaurant",
+        city: "Saly",
+        address_text: "Terrasse • déjeuner & soirée",
+        bio: "Une table d’ambiance pour déjeuner tranquille, dîner simple ou recevoir des amis dans un cadre détendu.",
+        badge: "✨ SÉLECTION DIGIY",
+        hub_badge: "🍽️ RESTAURANT",
+        opening_hours_text: "12:00 - 23:00",
         photo_url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
-        tags: ["Cuisine sunset", "Terrasse", "Cocktails", "Saly"]
+        tags: ["Restaurant", "Terrasse", "Déjeuner", "Saly"],
+        whatsapp: SUPPORT_WA,
+        services: [
+          { service_name: "Table midi", duration_minutes: 60, price_fcfa: null },
+          { service_name: "Table soirée", duration_minutes: 90, price_fcfa: null }
+        ]
       },
-      "braise-ocean": {
-        display_name: "Braise Océan",
-        category: "Grillades & poisson",
+      "studio-onglerie-saly": {
+        display_name: "Studio Onglerie Saly",
+        business_type: "Beauté",
         city: "Saly",
-        address: "Zone résidentielle • service du soir",
-        description: "Un esprit grillades, poisson braisé et table généreuse pour les repas simples, efficaces et chaleureux. Bonne accroche pour une clientèle dîner.",
+        address_text: "Zone calme • soins esthétiques",
+        bio: "Pose, entretien, manucure et rendez-vous beauté avec créneaux simples à lire pour la cliente.",
         badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🔥 TABLE CHALEUREUSE",
-        open_hours: "19:00 - 00:00",
-        photo_url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
-        tags: ["Poisson", "Braises", "Dîner", "Saly"]
+        hub_badge: "💅 BEAUTÉ",
+        opening_hours_text: "10:00 - 19:00",
+        photo_url: "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=80",
+        tags: ["Beauté", "Onglerie", "Soin", "Saly"],
+        whatsapp: SUPPORT_WA,
+        services: [
+          { service_name: "Pose", duration_minutes: 60, price_fcfa: 10000 },
+          { service_name: "Entretien", duration_minutes: 45, price_fcfa: 7000 }
+        ]
       },
-      "jardin-brunch": {
-        display_name: "Jardin Brunch",
-        category: "Brunch & famille",
+      "cabinet-conseil-saly": {
+        display_name: "Cabinet Conseil Saly",
+        business_type: "Consultation",
         city: "Saly",
-        address: "Coin calme • terrasse verte",
-        description: "Un format doux pour brunch, famille, café prolongé et rendez-vous du midi dans une atmosphère végétale. Idéal pour meubler une vitrine client avec douceur.",
+        address_text: "Bureau calme • rendez-vous pro",
+        bio: "Consultations, échanges posés et rendez-vous organisés sur des créneaux nets pour éviter les confusions.",
         badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🌿 ESPRIT JARDIN",
-        open_hours: "09:00 - 18:00",
-        photo_url: "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1200&q=80",
-        tags: ["Brunch", "Famille", "Terrasse", "Saly"]
+        hub_badge: "🩺 CONSULTATION",
+        opening_hours_text: "09:00 - 17:00",
+        photo_url: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
+        tags: ["Consultation", "Conseil", "Bureau", "Saly"],
+        whatsapp: SUPPORT_WA,
+        services: [
+          { service_name: "Consultation simple", duration_minutes: 30, price_fcfa: 10000 },
+          { service_name: "Consultation longue", duration_minutes: 60, price_fcfa: 20000 }
+        ]
       },
-      "table-nuit-doree": {
-        display_name: "Table Nuit Dorée",
-        category: "Dîner signature",
+      "atelier-service-saly": {
+        display_name: "Atelier Service Saly",
+        business_type: "Atelier",
         city: "Saly",
-        address: "Ambiance chic • soirée",
-        description: "Une table pensée pour sortir le soir, dîner à deux, célébrer un moment ou recevoir dans une ambiance plus habillée. Présentation premium, lecture simple.",
+        address_text: "Service de quartier • rendez-vous utiles",
+        bio: "Un atelier pensé pour les rendez-vous techniques, petits dépannages et services du quotidien avec planning clair.",
         badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🌙 SOIRÉE",
-        open_hours: "18:30 - 23:30",
-        photo_url: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80",
-        tags: ["Dîner", "Soirée", "Signature", "Saly"]
-      },
-      "cour-des-amis": {
-        display_name: "Cour des Amis",
-        category: "Table conviviale",
-        city: "Saly",
-        address: "Cour intérieure • groupe & partage",
-        description: "Un esprit grande table, partage, plats à plusieurs et accueil simple pour repas entre amis ou en petit groupe.",
-        badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🤝 CONVIVIAL",
-        open_hours: "12:00 - 22:30",
-        photo_url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
-        tags: ["Convivial", "Groupe", "Déjeuner", "Saly"]
-      },
-      "saveurs-sable": {
-        display_name: "Saveurs Sable",
-        category: "Cuisine locale revisitée",
-        city: "Saly",
-        address: "Esprit petite côte • service fluide",
-        description: "Une proposition ancrée localement, simple à comprendre, rassurante pour le client et parfaite pour une réservation rapide.",
-        badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🏝️ PETITE CÔTE",
-        open_hours: "12:00 - 22:00",
-        photo_url: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1200&q=80",
-        tags: ["Local", "Petite côte", "Cuisine", "Saly"]
+        hub_badge: "🛠️ ATELIER",
+        opening_hours_text: "08:30 - 18:30",
+        photo_url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
+        tags: ["Atelier", "Service", "Quartier", "Saly"],
+        whatsapp: SUPPORT_WA,
+        services: [
+          { service_name: "Diagnostic atelier", duration_minutes: 30, price_fcfa: 5000 },
+          { service_name: "Intervention", duration_minutes: 60, price_fcfa: 12000 }
+        ]
       }
     };
 
@@ -583,25 +695,85 @@
       return String(v || "").replace(/[^\d]/g, "");
     }
 
+    function money(v){
+      const n = Number(v);
+      if(!Number.isFinite(n)) return "";
+      return `${n.toLocaleString("fr-FR")} FCFA`;
+    }
+
+    function tagsToArray(tags){
+      if(Array.isArray(tags)) return tags.filter(Boolean).map(String);
+      const s = String(tags || "").trim();
+      if(!s) return [];
+      return s.split(",").map(x => x.trim()).filter(Boolean);
+    }
+
     function mapLiveRow(r){
       return {
-        display_name: first(r.business_name, r.restaurant_name, r.name, r.establishment_name) || "Établissement",
-        category: first(r.category, r.cuisine_type, r.cuisine, r.type_label, r.speciality) || "Table locale",
+        display_name: first(r.display_name, r.business_name, r.name, r.establishment_name) || "Commerce",
+        business_type: first(r.business_type, r.category, r.type_label) || "Service local",
         city: first(r.city) || "Saly",
-        address: first(r.address_text, r.address, r.location_text) || "",
-        description: first(r.description, r.about, r.short_description) || "Fiche publique DIGIY RESA TABLE.",
-        badge: "🍽️ ÉTABLISSEMENT",
-        hub_badge: "🟢 RÉSERVABLE",
-        open_hours: first(r.open_hours, r.opening_hours) || "",
-        photo_url: first(r.cover_image_url, r.logo_url, r.image_url, r.photo_url) || "",
+        address_text: first(r.address_text, r.address, r.location_text) || "",
+        bio: first(r.bio, r.description, r.about, r.short_description) || "Fiche publique DIGIY RESA.",
+        badge: "📅 RÉSERVABLE",
+        hub_badge: "🟢 MULTI BUSINESS",
+        opening_hours_text: first(r.opening_hours_text, r.open_hours, r.opening_hours) || "",
+        photo_url: first(r.cover_url, r.cover_image_url, r.logo_url, r.image_url, r.photo_url) || "",
         tags: [
-          first(r.category, r.cuisine_type, r.cuisine, r.type_label, r.speciality) || "",
+          first(r.business_type, r.category, r.type_label) || "",
           first(r.city) || "",
-          first(r.open_hours, r.opening_hours) ? `Horaires: ${first(r.open_hours, r.opening_hours)}` : ""
+          first(r.opening_hours_text, r.open_hours, r.opening_hours) ? `Horaires: ${first(r.opening_hours_text, r.open_hours, r.opening_hours)}` : ""
         ].filter(Boolean),
-        whatsapp_phone: normalizePhone(first(r.whatsapp_phone, r.call_phone) || SUPPORT_WA),
+        whatsapp: normalizePhone(first(r.whatsapp) || SUPPORT_WA),
         slug: first(r.slug) || ""
       };
+    }
+
+    async function loadServices(slug){
+      if(!slug) return [];
+
+      try{
+        const { data, error } = await sb
+          .from("digiy_resa_services")
+          .select("id, service_name, duration_minutes, price_fcfa, is_active")
+          .eq("slug", slug)
+          .eq("is_active", true)
+          .order("service_name", { ascending: true });
+
+        if(error) throw error;
+        return Array.isArray(data) ? data : [];
+      }catch(e){
+        console.error(e);
+        return [];
+      }
+    }
+
+    function renderServices(services, businessType){
+      const box = document.getElementById("servicesBox");
+
+      if(!Array.isArray(services) || !services.length){
+        box.innerHTML = `
+          <div class="muted">
+            Aucun service détaillé n’est affiché pour l’instant. Le client peut passer par WhatsApp pour préciser son besoin.
+          </div>
+        `;
+        return;
+      }
+
+      box.innerHTML = services.map(s => `
+        <article class="serviceCard">
+          <div class="serviceTop">
+            <div class="serviceName">${esc(s.service_name || "Service")}</div>
+            <div class="serviceMeta">
+              ${s.duration_minutes ? `<span class="serviceChip">⏱️ ${esc(String(s.duration_minutes))} min</span>` : ``}
+              ${money(s.price_fcfa) ? `<span class="serviceChip">💰 ${esc(money(s.price_fcfa))}</span>` : ``}
+            </div>
+          </div>
+          <div class="muted">
+            ${businessType ? `Prestation ${esc(businessType.toLowerCase())} disponible sur réservation.` : `Prestation disponible sur réservation.`}
+          </div>
+        </article>
+      `).join("");
     }
 
     function renderCard(item){
@@ -611,13 +783,21 @@
       const ambiance = document.getElementById("ambianceText");
       const reserveText = document.getElementById("reserveText");
 
+      const cityInfo = document.getElementById("cityInfo");
+      const addressInfo = document.getElementById("addressInfo");
+      const hoursInfo = document.getElementById("hoursInfo");
+      const contactInfo = document.getElementById("contactInfo");
+      const usageInfo = document.getElementById("usageInfo");
+
       const photoBase = item.photo_url || FALLBACK_PHOTO;
-      const photo = photoBase + (photoBase.includes("?") ? "&" : "?") + "v=12";
-      const phone = normalizePhone(item.whatsapp_phone || SUPPORT_WA);
+      const photo = photoBase + (photoBase.includes("?") ? "&" : "?") + "v=13";
+      const phone = normalizePhone(item.whatsapp || item.whatsapp_phone || SUPPORT_WA);
+      const businessType = item.business_type || "service local";
+
       const reserveMessage = encodeURIComponent(
         "Bonjour, je souhaite réserver / avoir des informations pour " +
-        (item.display_name || "cet établissement") +
-        " via DIGIY RESA TABLE."
+        (item.display_name || "ce commerce") +
+        " via DIGIY RESA."
       );
       const waHref = "https://wa.me/" + phone + "?text=" + reserveMessage;
 
@@ -625,21 +805,21 @@
         <div class="photo">
           <img src="${esc(photo)}" alt="${esc(item.display_name)}" onerror="this.onerror=null;this.src='${FALLBACK_PHOTO}'" />
           <div class="badgeTop">
-            <span class="chip gold">${esc(item.badge || "🍽️ ÉTABLISSEMENT")}</span>
-            <span class="chip green">${esc(item.hub_badge || "🟢 RÉSERVABLE")}</span>
+            <span class="chip gold">${esc(item.badge || "📅 RÉSERVABLE")}</span>
+            <span class="chip blue">${esc(item.hub_badge || "🟢 MULTI BUSINESS")}</span>
           </div>
         </div>
 
         <div class="heroBody">
-          <h1>${esc(item.display_name || "Établissement")}</h1>
+          <h1>${esc(item.display_name || "Commerce")}</h1>
 
           <div class="meta">
-            <span>🏷️ ${esc(item.category || "Table locale")}</span>
-            <span>📍 ${esc(item.city || "Saly")}${item.address ? " • " + esc(item.address) : ""}</span>
-            ${item.open_hours ? `<span>🕒 ${esc(item.open_hours)}</span>` : ``}
+            <span>🏷️ ${esc(businessType)}</span>
+            <span>📍 ${esc(item.city || "Saly")}${item.address_text ? " • " + esc(item.address_text) : ""}</span>
+            ${item.opening_hours_text ? `<span>🕒 ${esc(item.opening_hours_text)}</span>` : ``}
           </div>
 
-          <div class="heroIntro">${esc(item.description || "Fiche publique établissement.")}</div>
+          <div class="heroIntro">${esc(item.bio || "Fiche publique commerce.")}</div>
 
           <div class="tags">
             ${(item.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")}
@@ -647,15 +827,24 @@
 
           <div class="actions">
             <a class="btn primary" href="${waHref}">📅 Réserver sur WhatsApp</a>
+            <a class="btn secondary" href="#servicesBox">🧾 Voir les services</a>
             <a class="btn ghost" href="./index.html">← Retour vitrine</a>
           </div>
         </div>
       `;
 
-      ambiance.textContent = item.description || "Fiche publique établissement.";
-      reserveText.textContent = "Le client peut passer par WhatsApp pour réserver, demander les horaires, confirmer une table ou poser une question rapide. Pour les premiers clients, tout arrive directement sur ton téléphone.";
+      ambiance.textContent = item.bio || "Fiche publique commerce.";
+      reserveText.textContent = `Le client peut réserver simplement pour ${businessType.toLowerCase()}, demander un créneau, préciser un service ou confirmer un besoin sur WhatsApp. Parcours court, humain et terrain.`;
+
+      cityInfo.textContent = item.city || "Saly";
+      addressInfo.textContent = item.address_text || "Adresse à confirmer";
+      hoursInfo.textContent = item.opening_hours_text || "Horaires à confirmer";
+      contactInfo.textContent = phone ? "+" + phone : "+221771342889";
+      usageInfo.textContent = `Réservation simple pour ${businessType.toLowerCase()}`;
+
       bottom.innerHTML = `
         <a class="btn primary" href="${waHref}">💬 Écrire sur WhatsApp</a>
+        <a class="btn ghost" href="./index.html">← Retour vitrine</a>
       `;
 
       status.textContent = "Fiche publique chargée.";
@@ -668,24 +857,33 @@
       const ambiance = document.getElementById("ambianceText");
       const reserveText = document.getElementById("reserveText");
 
-      const waHref = "https://wa.me/" + SUPPORT_WA + "?text=" + encodeURIComponent("Bonjour, je souhaite des informations sur une table à Saly via DIGIY RESA TABLE.");
+      document.getElementById("cityInfo").textContent = "Saly";
+      document.getElementById("addressInfo").textContent = "À confirmer";
+      document.getElementById("hoursInfo").textContent = "À confirmer";
+      document.getElementById("contactInfo").textContent = "+221" + SUPPORT_WA;
+      document.getElementById("usageInfo").textContent = "Réservation simple";
+
+      renderServices([], "");
+
+      const waHref = "https://wa.me/" + SUPPORT_WA + "?text=" + encodeURIComponent("Bonjour, je souhaite des informations sur un commerce via DIGIY RESA.");
 
       hero.innerHTML = `
         <div class="photo">
-          <img src="${FALLBACK_PHOTO}" alt="Fiche établissement" />
+          <img src="${FALLBACK_PHOTO}" alt="Fiche commerce" />
           <div class="badgeTop">
-            <span class="chip gold">🍽️ DIGIY RESA TABLE</span>
-            <span class="chip green">📍 SALY</span>
+            <span class="chip gold">📅 DIGIY RESA</span>
+            <span class="chip blue">📍 SALY</span>
           </div>
         </div>
 
         <div class="heroBody">
-          <h1>Fiche établissement indisponible</h1>
+          <h1>Fiche commerce indisponible</h1>
           <div class="meta">
             <span>📍 Saly</span>
+            <span>🧩 Multi business</span>
           </div>
           <div class="heroIntro">
-            Cette fiche n’est pas disponible pour l’instant. Tu peux revenir à la vitrine ou écrire directement pour être orienté vers une table.
+            Cette fiche n’est pas disponible pour l’instant. Tu peux revenir à la vitrine ou écrire directement pour être orienté vers un commerce.
           </div>
           <div class="actions">
             <a class="btn primary" href="${waHref}">💬 WhatsApp</a>
@@ -694,7 +892,7 @@
         </div>
       `;
 
-      ambiance.textContent = "Retourne à la vitrine pour voir les autres tables visibles à Saly.";
+      ambiance.textContent = "Retourne à la vitrine pour voir les autres commerces visibles à Saly.";
       reserveText.textContent = "En cas de doute, le parcours court reste WhatsApp.";
       bottom.innerHTML = `<a class="btn primary" href="${waHref}">💬 Contacter</a>`;
       status.textContent = "Fiche indisponible.";
@@ -705,7 +903,9 @@
       const slug = (qs("slug") || "").trim();
 
       if(demo && DEMO_MAP[demo]){
-        renderCard(DEMO_MAP[demo]);
+        const item = DEMO_MAP[demo];
+        renderCard(item);
+        renderServices(item.services || [], item.business_type || "");
         return;
       }
 
@@ -728,7 +928,11 @@
           return;
         }
 
-        renderCard(mapLiveRow(data));
+        const mapped = mapLiveRow(data);
+        renderCard(mapped);
+
+        const services = await loadServices(slug);
+        renderServices(services, mapped.business_type || "");
       }catch(e){
         console.error(e);
         renderFallback();
