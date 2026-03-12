@@ -103,6 +103,7 @@
       align-items:center;
       justify-content:center;
       gap:8px;
+      transition:.16s ease;
     }
 
     .btn:hover{transform:translateY(-1px)}
@@ -153,6 +154,12 @@
       border-color:rgba(34,197,94,.24);
       background:rgba(34,197,94,.10);
       color:#b8ffd0;
+    }
+
+    .mode.bad{
+      border-color:rgba(239,68,68,.24);
+      background:rgba(239,68,68,.10);
+      color:#ffb4b4;
     }
 
     .hero-meta{
@@ -430,12 +437,12 @@
 
       <div class="actions-top">
         <a class="btn secondary" id="btnBackFiche" href="./fiche.html">Retour fiche</a>
-        <a class="btn gold" id="btnWhatsApp" href="#" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn gold ghost" id="btnWhatsApp" href="#" target="_blank" rel="noopener" aria-disabled="true">WhatsApp indisponible</a>
       </div>
     </div>
 
     <section class="hero">
-      <div class="mode" id="modeBadge">Mode aperçu</div>
+      <div class="mode" id="modeBadge">Chargement</div>
       <h2 id="heroName">DIGIY RESA</h2>
       <p id="heroDesc">Choisir un service, choisir un créneau, envoyer une réservation propre.</p>
 
@@ -545,7 +552,7 @@
       let SERVICES = [];
       let ACTIVE_SERVICE = null;
       let ACTIVE_SLOT = "";
-      let IS_PREVIEW = true;
+      let PAGE_STATE = "loading"; // loading | empty | live | not_found | error
 
       function todayISO(){
         const d = new Date();
@@ -584,7 +591,35 @@
         box.textContent = text;
       }
 
-      function setHero(profile, preview){
+      function setActionState(enabled){
+        $("customerName").disabled = !enabled;
+        $("customerPhone").disabled = !enabled;
+        $("guestsCount").disabled = !enabled;
+        $("noteText").disabled = !enabled;
+        $("bookingDate").disabled = !enabled;
+        $("btnBook").disabled = !enabled;
+      }
+
+      function setWhatsApp(profile){
+        const btn = $("btnWhatsApp");
+        const wa = normalizePhone(profile?.whatsapp || profile?.phone_whatsapp || profile?.phone || "");
+        const text = `Bonjour, je souhaite réserver via DIGIY RESA${profile?.display_name ? ` chez ${profile.display_name}` : ""}.`;
+        const waHref = wa ? `https://wa.me/${wa}?text=${encodeURIComponent(text)}` : "";
+
+        if(waHref){
+          btn.href = waHref;
+          btn.textContent = "WhatsApp";
+          btn.classList.remove("ghost");
+          btn.removeAttribute("aria-disabled");
+        }else{
+          btn.href = "#";
+          btn.textContent = "WhatsApp indisponible";
+          btn.classList.add("ghost");
+          btn.setAttribute("aria-disabled", "true");
+        }
+      }
+
+      function setHero(profile, state){
         PROFILE = profile || null;
         const slug = profile?.slug || QUERY_SLUG || "—";
         const city = profile?.city || "—";
@@ -597,26 +632,30 @@
         $("heroSlug").textContent = "Slug : " + slug;
         $("heroCity").textContent = "Ville : " + city;
         $("heroType").textContent = "Activité : " + type;
-        $("btnBackFiche").href = slug && slug !== "—" ? `./fiche.html?slug=${encodeURIComponent(slug)}` : "./fiche.html";
+        $("btnBackFiche").href = slug && slug !== "—"
+          ? `./fiche.html?slug=${encodeURIComponent(slug)}`
+          : "./fiche.html";
 
-        const wa = normalizePhone(profile?.whatsapp || "");
-        const waHref = wa
-          ? `https://wa.me/${wa}?text=${encodeURIComponent("Bonjour, je souhaite réserver via DIGIY RESA.")}`
-          : "";
+        setWhatsApp(profile);
 
-        if(waHref){
-          $("btnWhatsApp").href = waHref;
-          $("btnWhatsApp").classList.remove("ghost");
+        const badge = $("modeBadge");
+        badge.className = "mode";
+
+        if(state === "live"){
+          badge.classList.add("live");
+          badge.textContent = "Mode vivant";
+          $("topSub").textContent = `Réservation ouverte pour ${name}.`;
+        }else if(state === "not_found"){
+          badge.classList.add("bad");
+          badge.textContent = "Slug introuvable";
+          $("topSub").textContent = "Ce commerce est introuvable ou indisponible.";
+        }else if(state === "empty"){
+          badge.textContent = "Mode attente";
+          $("topSub").textContent = "Ajoute un slug actif pour ouvrir la vraie réservation.";
         }else{
-          $("btnWhatsApp").removeAttribute("href");
-          $("btnWhatsApp").classList.add("ghost");
+          badge.textContent = "Indisponible";
+          $("topSub").textContent = "La réservation n’est pas accessible pour le moment.";
         }
-
-        $("modeBadge").className = preview ? "mode" : "mode live";
-        $("modeBadge").textContent = preview ? "Mode aperçu" : "Mode vivant";
-        $("topSub").textContent = preview
-          ? "Aperçu affiché. Les vraies réservations s’ouvrent avec un slug vivant."
-          : `Réservation ouverte pour ${name}.`;
 
         $("recapShop").textContent = name;
       }
@@ -627,6 +666,13 @@
         $("recapPrice").textContent = ACTIVE_SERVICE ? money(ACTIVE_SERVICE.price_fcfa) : "—";
         $("recapDate").textContent = $("bookingDate").value || "—";
         $("recapTime").textContent = ACTIVE_SLOT || "—";
+      }
+
+      function resetSelection(){
+        ACTIVE_SERVICE = null;
+        ACTIVE_SLOT = "";
+        SERVICES = [];
+        refreshRecap();
       }
 
       function initClient(){
@@ -676,6 +722,11 @@
       function renderServices(){
         const box = $("servicesBox");
 
+        if(PAGE_STATE !== "live"){
+          box.innerHTML = `<div class="empty">Aucun service affichable pour le moment.</div>`;
+          return;
+        }
+
         if(!SERVICES.length){
           box.innerHTML = `<div class="empty">Aucun service disponible pour l’instant.</div>`;
           return;
@@ -707,6 +758,12 @@
 
       async function loadSlots(){
         const box = $("slotsBox");
+
+        if(PAGE_STATE !== "live"){
+          box.innerHTML = `<div class="empty" style="grid-column:1/-1">Ajoute un slug actif pour afficher les créneaux réels.</div>`;
+          $("slotsLead").textContent = "Les créneaux réels apparaissent seulement en mode vivant.";
+          return;
+        }
 
         if(!ACTIVE_SERVICE){
           box.innerHTML = `<div class="empty" style="grid-column:1/-1">Choisis d’abord un service.</div>`;
@@ -755,6 +812,7 @@
         }catch(err){
           console.error(err);
           box.innerHTML = `<div class="empty" style="grid-column:1/-1">Impossible de charger les créneaux.</div>`;
+          setMsg("Les créneaux n’ont pas pu être chargés.", "bad");
         }
       }
 
@@ -764,9 +822,69 @@
         });
       }
 
+      function buildEmptyState(){
+        PAGE_STATE = "empty";
+        resetSelection();
+
+        setHero({
+          slug: "—",
+          city: "—",
+          business_type: "Multi business",
+          display_name: "DIGIY RESA",
+          bio: "Choisir un service, choisir un créneau, envoyer une réservation propre."
+        }, "empty");
+
+        $("servicesLead").textContent = "Ajoute un slug actif dans l’URL pour ouvrir un commerce réel.";
+        $("servicesBox").innerHTML = `<div class="empty">Aucun service à afficher sans slug actif.</div>`;
+        $("slotsLead").textContent = "Les créneaux seront chargés quand un commerce réel sera ouvert.";
+        $("slotsBox").innerHTML = `<div class="empty" style="grid-column:1/-1">Aucun créneau affichable sans slug actif.</div>`;
+        setActionState(false);
+        setMsg("Aucun slug détecté. Ouvre cette page avec ?slug=... pour activer la vraie réservation.", "warn");
+      }
+
+      function buildNotFoundState(slug){
+        PAGE_STATE = "not_found";
+        resetSelection();
+
+        setHero({
+          slug: slug || "—",
+          city: "—",
+          business_type: "Multi business",
+          display_name: "Commerce indisponible",
+          bio: "Ce parcours réservation ne peut pas être ouvert avec ce slug."
+        }, "not_found");
+
+        $("servicesLead").textContent = "Le commerce demandé est introuvable ou momentanément indisponible.";
+        $("servicesBox").innerHTML = `<div class="empty">Aucun service disponible pour ce slug.</div>`;
+        $("slotsLead").textContent = "Impossible d’afficher les créneaux pour ce slug.";
+        $("slotsBox").innerHTML = `<div class="empty" style="grid-column:1/-1">Aucun créneau disponible.</div>`;
+        setActionState(false);
+        setMsg("Ce slug est introuvable ou inactif. Vérifie le lien puis réessaie.", "bad");
+      }
+
+      function buildErrorState(slug){
+        PAGE_STATE = "error";
+        resetSelection();
+
+        setHero({
+          slug: slug || "—",
+          city: "—",
+          business_type: "Multi business",
+          display_name: "DIGIY RESA",
+          bio: "Le parcours réservation n’est pas disponible pour le moment."
+        }, "error");
+
+        $("servicesLead").textContent = "Le service rencontre un souci temporaire.";
+        $("servicesBox").innerHTML = `<div class="empty">Impossible de charger les services pour le moment.</div>`;
+        $("slotsLead").textContent = "Les créneaux sont momentanément indisponibles.";
+        $("slotsBox").innerHTML = `<div class="empty" style="grid-column:1/-1">Impossible d’afficher les créneaux.</div>`;
+        setActionState(false);
+        setMsg("Le service réservation est momentanément indisponible.", "bad");
+      }
+
       async function submitBooking(){
-        if(IS_PREVIEW){
-          setMsg("Mode aperçu. Ouvre un slug vivant pour créer une vraie réservation.", "warn");
+        if(PAGE_STATE !== "live"){
+          setMsg("La réservation réelle n’est pas active sur cette page.", "warn");
           return;
         }
 
@@ -838,60 +956,58 @@
         }
       }
 
-      function buildPreview(){
-        IS_PREVIEW = true;
-        setHero({
-          slug: QUERY_SLUG || "demo-resa",
-          city: "Saly",
-          business_type: "Multi business",
-          display_name: "DIGIY RESA",
-          bio: "Choisir un service, choisir un créneau, envoyer une réservation propre."
-        }, true);
+      async function bootLive(slug){
+        const profile = await loadProfile(slug);
+        const services = await loadServices(slug);
 
-        SERVICES = [
-          { id:"demo-1", service_name:"Brushing", duration_minutes:45, price_fcfa:6000 },
-          { id:"demo-2", service_name:"Diagnostic", duration_minutes:15, price_fcfa:5000 },
-          { id:"demo-3", service_name:"Table midi", duration_minutes:60, price_fcfa:null }
-        ];
+        PAGE_STATE = "live";
+        PROFILE = { ...profile, slug };
+        SERVICES = services;
 
-        PROFILE = { slug: QUERY_SLUG || "demo-resa" };
+        setHero(PROFILE, "live");
+        setActionState(true);
         renderServices();
-        loadSlots();
+        refreshRecap();
+        await loadSlots();
+
+        $("servicesLead").textContent = "Sélectionne la prestation qui correspond à ton besoin.";
+
+        if(!SERVICES.length){
+          setMsg("Aucun service actif pour ce commerce.", "warn");
+        }else{
+          setMsg("Choisis un service puis un créneau.", "warn");
+        }
       }
 
       async function boot(){
         document.body.classList.add("loading");
         $("bookingDate").value = $("bookingDate").value || todayISO();
+        refreshRecap();
 
         try{
           initClient();
 
           const slug = normalizeSlug(QUERY_SLUG);
           if(!slug){
-            buildPreview();
+            buildEmptyState();
             return;
           }
 
-          const profile = await loadProfile(slug);
-          const services = await loadServices(slug);
-
-          PROFILE = { ...profile, slug };
-          SERVICES = services;
-          IS_PREVIEW = false;
-
-          setHero(PROFILE, false);
-          renderServices();
-          refreshRecap();
-          await loadSlots();
-
-          if(!SERVICES.length){
-            setMsg("Aucun service actif pour ce commerce.", "warn");
-          }else{
-            setMsg("Choisis un service puis un créneau.", "warn");
-          }
+          await bootLive(slug);
         }catch(err){
           console.error(err);
-          buildPreview();
+          const slug = normalizeSlug(QUERY_SLUG);
+
+          const msg = String(err?.message || err || "").toLowerCase();
+          if(
+            msg.includes("profile_not_found") ||
+            msg.includes("not_found") ||
+            msg.includes("introuvable")
+          ){
+            buildNotFoundState(slug);
+          }else{
+            buildErrorState(slug);
+          }
         }finally{
           document.body.classList.remove("loading");
         }
