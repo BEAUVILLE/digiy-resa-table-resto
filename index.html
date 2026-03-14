@@ -8,11 +8,12 @@
   <meta name="theme-color" content="#061b14" />
   <meta name="robots" content="index,follow" />
 
-<script>
-  window.DIGIY_SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-  window.DIGIY_SUPABASE_ANON_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
-</script>  
+  <script>
+    window.DIGIY_SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+    window.DIGIY_SUPABASE_ANON_KEY = "sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3";
+    window.DIGIY_SUPABASE_ANON = window.DIGIY_SUPABASE_ANON_KEY;
+    window.DIGIY_MODULE = "RESA";
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -529,488 +530,519 @@
   <div id="toast" class="toast"></div>
 
   <script>
-    const CITY_LOCK = "Saly";
-    const NEW_DAYS = 7;
-    const MIN_VISIBLE_CARDS = 6;
+    (() => {
+      "use strict";
 
-    const FALLBACK_PHOTO = "https://orange-pig-270004.hostingersite.com/wp-content/uploads/2026/03/chatgpt-image-4-mars-2026-23_40_53.png";
-    const HUB_URL = "https://beauville.github.io/digiy-hub/";
-    const SUPPORT_WA = "221771342889";
-    const JOIN_MODULE_URL = "https://commencer-a-payer.digiylyfe.com/";
-    const SITE_URL = "https://digiylyfe.com/";
+      const CITY_LOCK = "Saly";
+      const NEW_DAYS = 7;
+      const MIN_VISIBLE_CARDS = 6;
 
-     const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-const SUPABASE_ANON_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+      const FALLBACK_PHOTO = "https://orange-pig-270004.hostingersite.com/wp-content/uploads/2026/03/chatgpt-image-4-mars-2026-23_40_53.png";
+      const HUB_URL = "https://beauville.github.io/digiy-hub/";
+      const SUPPORT_WA = "221771342889";
+      const JOIN_MODULE_URL = "https://commencer-a-payer.digiylyfe.com/";
+      const SITE_URL = "https://digiylyfe.com/";
 
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false,
-        detectSessionInUrl: false,
-        storage: {
-          getItem: () => null,
-          setItem: () => {},
-          removeItem: () => {}
+      const SUPABASE_URL = window.DIGIY_SUPABASE_URL;
+      const SUPABASE_ANON_KEY = window.DIGIY_SUPABASE_ANON_KEY || window.DIGIY_SUPABASE_ANON;
+
+      let sb = null;
+      let LIVE_ROWS = [];
+      let ROWS = [];
+
+      const DEMO_CARDS = [
+        {
+          kind: "demo",
+          demo_id: "atelier-brushing-saly",
+          slug: "",
+          display_name: "Atelier Brushing Saly",
+          category: "Coiffure",
+          city: "Saly",
+          address: "Quartier central • rendez-vous beauté",
+          bio: "Coupe, brushing, teinture et soins. Une fiche pensée pour réserver simplement selon le service choisi.",
+          badge: "✨ SÉLECTION DIGIY",
+          hub_badge: "💇 BEAUTÉ",
+          price_label: "Services sur rendez-vous",
+          tags: ["Coiffure", "Brushing", "Teinture", "Saly"],
+          photo_url: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80",
+          created_at: new Date().toISOString()
+        },
+        {
+          kind: "demo",
+          demo_id: "garage-diagnostic-saly",
+          slug: "",
+          display_name: "Garage Diagnostic Saly",
+          category: "Garage",
+          city: "Saly",
+          address: "Axe principal • mécanique légère",
+          bio: "Diagnostic, vidange, freins et petites interventions avec créneaux clairs pour gagner du temps.",
+          badge: "✨ SÉLECTION DIGIY",
+          hub_badge: "🔧 GARAGE",
+          price_label: "Diagnostic • Vidange • Freins",
+          tags: ["Garage", "Diagnostic", "Vidange", "Saly"],
+          photo_url: "https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=1200&q=80",
+          created_at: new Date(Date.now() - 86400000).toISOString()
+        },
+        {
+          kind: "demo",
+          demo_id: "terrasse-saveurs-saly",
+          slug: "",
+          display_name: "Terrasse Saveurs Saly",
+          category: "Restaurant",
+          city: "Saly",
+          address: "Terrasse • déjeuner & soirée",
+          bio: "Une table d’ambiance pour déjeuner tranquille, dîner simple ou recevoir des amis dans un cadre détendu.",
+          badge: "✨ SÉLECTION DIGIY",
+          hub_badge: "🍽️ RESTAURANT",
+          price_label: "Horaires: 12:00 - 23:00",
+          tags: ["Restaurant", "Terrasse", "Déjeuner", "Saly"],
+          photo_url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
+          created_at: new Date(Date.now() - 2 * 86400000).toISOString()
+        },
+        {
+          kind: "demo",
+          demo_id: "studio-onglerie-saly",
+          slug: "",
+          display_name: "Studio Onglerie Saly",
+          category: "Beauté",
+          city: "Saly",
+          address: "Zone calme • soins esthétiques",
+          bio: "Pose, entretien, manucure et rendez-vous beauté avec créneaux simples à lire pour la cliente.",
+          badge: "✨ SÉLECTION DIGIY",
+          hub_badge: "💅 BEAUTÉ",
+          price_label: "Pose • Entretien • Manucure",
+          tags: ["Beauté", "Onglerie", "Soin", "Saly"],
+          photo_url: "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=80",
+          created_at: new Date(Date.now() - 3 * 86400000).toISOString()
+        },
+        {
+          kind: "demo",
+          demo_id: "cabinet-conseil-saly",
+          slug: "",
+          display_name: "Cabinet Conseil Saly",
+          category: "Consultation",
+          city: "Saly",
+          address: "Bureau calme • rendez-vous pro",
+          bio: "Consultations, échanges posés et rendez-vous organisés sur des créneaux nets pour éviter les confusions.",
+          badge: "✨ SÉLECTION DIGIY",
+          hub_badge: "🩺 CONSULTATION",
+          price_label: "Rendez-vous sur créneau",
+          tags: ["Consultation", "Conseil", "Bureau", "Saly"],
+          photo_url: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
+          created_at: new Date(Date.now() - 4 * 86400000).toISOString()
+        },
+        {
+          kind: "demo",
+          demo_id: "atelier-service-saly",
+          slug: "",
+          display_name: "Atelier Service Saly",
+          category: "Atelier",
+          city: "Saly",
+          address: "Service de quartier • rendez-vous utiles",
+          bio: "Un atelier pensé pour les rendez-vous techniques, petits dépannages et services du quotidien avec planning clair.",
+          badge: "✨ SÉLECTION DIGIY",
+          hub_badge: "🛠️ ATELIER",
+          price_label: "Service sur rendez-vous",
+          tags: ["Atelier", "Service", "Quartier", "Saly"],
+          photo_url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
+          created_at: new Date(Date.now() - 5 * 86400000).toISOString()
         }
-      },
-      global: { headers: { "X-Client-Info": "digiy-resa-multi-business-vitrine" } }
-    });
+      ];
 
-    const DEMO_CARDS = [
-      {
-        kind: "demo",
-        demo_id: "atelier-brushing-saly",
-        slug: "",
-        display_name: "Atelier Brushing Saly",
-        category: "Coiffure",
-        city: "Saly",
-        address: "Quartier central • rendez-vous beauté",
-        bio: "Coupe, brushing, teinture et soins. Une fiche pensée pour réserver simplement selon le service choisi.",
-        badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "💇 BEAUTÉ",
-        price_label: "Services sur rendez-vous",
-        tags: ["Coiffure", "Brushing", "Teinture", "Saly"],
-        photo_url: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80",
-        created_at: new Date().toISOString()
-      },
-      {
-        kind: "demo",
-        demo_id: "garage-diagnostic-saly",
-        slug: "",
-        display_name: "Garage Diagnostic Saly",
-        category: "Garage",
-        city: "Saly",
-        address: "Axe principal • mécanique légère",
-        bio: "Diagnostic, vidange, freins et petites interventions avec créneaux clairs pour gagner du temps.",
-        badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🔧 GARAGE",
-        price_label: "Diagnostic • Vidange • Freins",
-        tags: ["Garage", "Diagnostic", "Vidange", "Saly"],
-        photo_url: "https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=1200&q=80",
-        created_at: new Date(Date.now() - 86400000).toISOString()
-      },
-      {
-        kind: "demo",
-        demo_id: "terrasse-saveurs-saly",
-        slug: "",
-        display_name: "Terrasse Saveurs Saly",
-        category: "Restaurant",
-        city: "Saly",
-        address: "Terrasse • déjeuner & soirée",
-        bio: "Une table d’ambiance pour déjeuner tranquille, dîner simple ou recevoir des amis dans un cadre détendu.",
-        badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🍽️ RESTAURANT",
-        price_label: "Horaires: 12:00 - 23:00",
-        tags: ["Restaurant", "Terrasse", "Déjeuner", "Saly"],
-        photo_url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
-        created_at: new Date(Date.now() - 2 * 86400000).toISOString()
-      },
-      {
-        kind: "demo",
-        demo_id: "studio-onglerie-saly",
-        slug: "",
-        display_name: "Studio Onglerie Saly",
-        category: "Beauté",
-        city: "Saly",
-        address: "Zone calme • soins esthétiques",
-        bio: "Pose, entretien, manucure et rendez-vous beauté avec créneaux simples à lire pour la cliente.",
-        badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "💅 BEAUTÉ",
-        price_label: "Pose • Entretien • Manucure",
-        tags: ["Beauté", "Onglerie", "Soin", "Saly"],
-        photo_url: "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=80",
-        created_at: new Date(Date.now() - 3 * 86400000).toISOString()
-      },
-      {
-        kind: "demo",
-        demo_id: "cabinet-conseil-saly",
-        slug: "",
-        display_name: "Cabinet Conseil Saly",
-        category: "Consultation",
-        city: "Saly",
-        address: "Bureau calme • rendez-vous pro",
-        bio: "Consultations, échanges posés et rendez-vous organisés sur des créneaux nets pour éviter les confusions.",
-        badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🩺 CONSULTATION",
-        price_label: "Rendez-vous sur créneau",
-        tags: ["Consultation", "Conseil", "Bureau", "Saly"],
-        photo_url: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
-        created_at: new Date(Date.now() - 4 * 86400000).toISOString()
-      },
-      {
-        kind: "demo",
-        demo_id: "atelier-service-saly",
-        slug: "",
-        display_name: "Atelier Service Saly",
-        category: "Atelier",
-        city: "Saly",
-        address: "Service de quartier • rendez-vous utiles",
-        bio: "Un atelier pensé pour les rendez-vous techniques, petits dépannages et services du quotidien avec planning clair.",
-        badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🛠️ ATELIER",
-        price_label: "Service sur rendez-vous",
-        tags: ["Atelier", "Service", "Quartier", "Saly"],
-        photo_url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
-        created_at: new Date(Date.now() - 5 * 86400000).toISOString()
-      }
-    ];
+      function initSupabase() {
+        if (!window.supabase || typeof window.supabase.createClient !== "function") {
+          return null;
+        }
 
-    let LIVE_ROWS = [];
-    let ROWS = [];
+        if (window.DIGIY_SB) return window.DIGIY_SB;
 
-    function buildJoinUrl(){
-      const u = new URL(JOIN_MODULE_URL);
-      u.searchParams.set("module", "RESA");
-      u.searchParams.set("base_module", "RESA");
-      u.searchParams.set("plan", "standard");
-      u.searchParams.set("from", "resa-multi-business-vitrine-saly");
-      return u.toString();
-    }
+        window.DIGIY_SB = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+          auth: {
+            persistSession: false,
+            autoRefreshToken: false,
+            detectSessionInUrl: false,
+            storage: {
+              getItem: () => null,
+              setItem: () => {},
+              removeItem: () => {}
+            }
+          },
+          global: { headers: { "X-Client-Info": "digiy-resa-multi-business-vitrine" } }
+        });
 
-    (function initLinks(){
-      const floatingBtn = document.getElementById("floatingSiteBtn");
-      if (floatingBtn) floatingBtn.href = SITE_URL;
-
-      document.getElementById("btnHub").href = HUB_URL;
-      document.getElementById("btnSupport").href =
-        "https://wa.me/" + SUPPORT_WA + "?text=" +
-        encodeURIComponent("Salut DIGIY RESA, j'ai une question sur la vitrine multi business de Saly.");
-      document.getElementById("btnJoinTop").href = buildJoinUrl();
-      document.getElementById("btnRefresh").addEventListener("click", (e) => {
-        e.preventDefault();
-        load();
-      });
-    })();
-
-    function toast(msg){
-      const t = document.getElementById("toast");
-      if(!t) return;
-      t.textContent = msg || "";
-      t.classList.add("show");
-      setTimeout(() => t.classList.remove("show"), 2200);
-    }
-
-    function setStatus(msg){
-      const el = document.getElementById("statusText");
-      if(el) el.textContent = msg || "";
-    }
-
-    function esc(s){
-      return String(s ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
-    function pick(arr, key){
-      const v = (arr || []).map(x => (x?.[key] ?? "")).filter(Boolean);
-      return Array.from(new Set(v)).sort((a,b)=>String(a).localeCompare(String(b)));
-    }
-
-    function tagsToArray(tags){
-      if(Array.isArray(tags)) return tags.filter(Boolean).map(String);
-      const s = String(tags || "").trim();
-      if(!s) return [];
-      return s.split(",").map(x => x.trim()).filter(Boolean);
-    }
-
-    function isNew(dateIso){
-      if(!dateIso) return false;
-      const t = Date.parse(dateIso);
-      if(!Number.isFinite(t)) return false;
-      const days = (Date.now() - t) / (1000 * 60 * 60 * 24);
-      return days <= NEW_DAYS;
-    }
-
-    function sameCity(a, b){
-      return String(a || "").trim().toLowerCase() === String(b || "").trim().toLowerCase();
-    }
-
-    function first(...vals){
-      for(const v of vals){
-        if(v !== null && v !== undefined && String(v).trim() !== "") return v;
-      }
-      return "";
-    }
-
-    function updateStatsBar(visibleRows, liveRows){
-      const list = Array.isArray(visibleRows) ? visibleRows : [];
-      const reals = Array.isArray(liveRows) ? liveRows : [];
-      const now = Date.now();
-
-      const new7d = reals.filter(r => {
-        const t = Date.parse(r.created_at || "");
-        return Number.isFinite(t) && ((now - t) / (1000*60*60*24) <= 7);
-      }).length;
-
-      const new24h = reals.filter(r => {
-        const t = Date.parse(r.created_at || "");
-        return Number.isFinite(t) && ((now - t) / (1000*60*60) <= 24);
-      }).length;
-
-      const cats = new Set(list.map(r => String(r.category || "").trim()).filter(Boolean)).size;
-
-      document.getElementById("msTotal").textContent = String(list.length);
-      document.getElementById("ms7d").textContent = String(new7d);
-      document.getElementById("ms24h").textContent = String(new24h);
-      document.getElementById("msPublic").textContent = String(reals.length);
-      document.getElementById("msCats").textContent = String(cats);
-    }
-
-    function updateKpi(){
-      const visible = ROWS || [];
-      const reals = LIVE_ROWS || [];
-      const total = visible.length;
-      const new7d = reals.filter(x => isNew(x.created_at)).length;
-
-      const kCount = document.getElementById("kpiCount");
-      const kNew7d = document.getElementById("kpiNew7d");
-      const kLast  = document.getElementById("kpiLast");
-
-      if(kCount) kCount.textContent = String(total);
-      if(kNew7d) kNew7d.textContent = String(new7d);
-
-      const last = [...visible].sort((a,b) => {
-        const ta = Date.parse(a.created_at || "") || 0;
-        const tb = Date.parse(b.created_at || "") || 0;
-        return tb - ta;
-      })[0] || null;
-
-      if(kLast){
-        kLast.textContent = last
-          ? `${last.display_name || "—"}${last.kind === "demo" ? " • vitrine" : ""}`
-          : "—";
+        return window.DIGIY_SB;
       }
 
-      setStatus(
-        reals.length
-          ? `✅ ${reals.length} fiche(s) réelle(s) • vitrine multi business présentable immédiatement`
-          : "✨ Vitrine meublée intelligemment • prête pour les premiers clients"
-      );
-    }
-
-    function fillSelects(){
-      const catSel = document.getElementById("cat");
-      const cats = pick(ROWS, "category");
-      catSel.innerHTML =
-        `<option value="">Toutes les activités</option>` +
-        cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
-    }
-
-    function renderSkeleton(){
-      const grid = document.getElementById("grid");
-      if(!grid) return;
-      grid.innerHTML = Array.from({length:6}).map(() => `
-        <div class="card">
-          <div class="photo skeleton sk-photo"></div>
-          <div class="body">
-            <div class="skeleton sk-line" style="width:70%"></div>
-            <div class="skeleton sk-line" style="width:48%"></div>
-            <div class="skeleton sk-line" style="width:90%"></div>
-            <div class="skeleton sk-line" style="width:60%"></div>
-            <div class="actions" style="margin-top:10px;">
-              <div class="skeleton sk-line" style="height:42px; width:100%"></div>
-              <div class="skeleton sk-line" style="height:42px; width:100%"></div>
-            </div>
-          </div>
-        </div>
-      `).join("");
-    }
-
-    function mapLiveRow(r){
-      return {
-        kind: "live",
-        demo_id: "",
-        slug: first(r.slug),
-        display_name: first(r.display_name, r.business_name, r.name, r.establishment_name) || "Commerce",
-        category: first(r.business_type, r.category, r.type_label) || "Service local",
-        city: first(r.city) || "",
-        address: first(r.address_text, r.address, r.location_text) || "",
-        bio: first(r.bio, r.description, r.about, r.short_description) || "",
-        badge: "📅 RÉSERVABLE",
-        hub_badge: "🟢 MULTI BUSINESS",
-        price_label: first(r.opening_hours_text, r.open_hours, r.opening_hours) ? `Horaires: ${first(r.opening_hours_text, r.open_hours, r.opening_hours)}` : "",
-        tags: [
-          first(r.business_type, r.category, r.type_label) || "",
-          first(r.city) || "",
-          first(r.opening_hours_text, r.open_hours, r.opening_hours) ? `Horaires: ${first(r.opening_hours_text, r.open_hours, r.opening_hours)}` : ""
-        ].filter(Boolean),
-        photo_url: first(r.cover_url, r.cover_image_url, r.logo_url, r.image_url, r.photo_url) || "",
-        created_at: first(r.updated_at, r.created_at) || null
-      };
-    }
-
-    function buildVisibleRows(liveRows){
-      const rows = [...liveRows];
-      const needed = Math.max(0, MIN_VISIBLE_CARDS - rows.length);
-      if(needed > 0){
-        rows.push(...DEMO_CARDS.slice(0, needed));
-      }
-      return rows;
-    }
-
-    function render(list){
-      const grid = document.getElementById("grid");
-      if(!grid) return;
-
-      const rows = Array.isArray(list) ? list : [];
-
-      if(!rows.length){
-        grid.innerHTML = `
-          <div class="status" style="grid-column:1/-1;">
-            <span>⚠️ Aucune fiche à afficher pour le moment.</span>
-          </div>
-        `;
-        return;
+      function buildJoinUrl(){
+        const u = new URL(JOIN_MODULE_URL);
+        u.searchParams.set("module", "RESA");
+        u.searchParams.set("base_module", "RESA");
+        u.searchParams.set("plan", "standard");
+        u.searchParams.set("from", "resa-multi-business-vitrine-saly");
+        return u.toString();
       }
 
-      grid.innerHTML = rows.map(r => {
-        const name = esc(r.display_name || "Commerce");
-        const category = esc(r.category || "Service local");
-        const city = esc(r.city || CITY_LOCK);
-        const address = esc(r.address || "");
-        const bio = esc(r.bio || "");
-        const badge = esc(r.badge || "📅 RÉSERVABLE");
-        const hub = esc(r.hub_badge || "🟢 MULTI BUSINESS");
-        const price = esc(r.price_label || "");
-        const tags = tagsToArray(r.tags).slice(0, 6);
-        const isNewCard = isNew(r.created_at);
+      (function initLinks(){
+        const floatingBtn = document.getElementById("floatingSiteBtn");
+        if (floatingBtn) floatingBtn.href = SITE_URL;
 
-        const rawPhoto = String(r.photo_url || "").trim();
-        const basePhoto = rawPhoto || FALLBACK_PHOTO;
-        const photoFinal = esc(basePhoto + (basePhoto.includes("?") ? "&" : "?") + "v=11");
+        document.getElementById("btnHub").href = HUB_URL;
+        document.getElementById("btnSupport").href =
+          "https://wa.me/" + SUPPORT_WA + "?text=" +
+          encodeURIComponent("Salut DIGIY RESA, j'ai une question sur la vitrine multi business de Saly.");
+        document.getElementById("btnJoinTop").href = buildJoinUrl();
+        document.getElementById("btnRefresh").addEventListener("click", (e) => {
+          e.preventDefault();
+          load();
+        });
+      })();
 
-        const ficheHref = r.kind === "live"
-          ? `./fiche.html?slug=${encodeURIComponent(r.slug || "")}`
-          : `./fiche.html?demo=${encodeURIComponent(r.demo_id || "")}`;
+      function toast(msg){
+        const t = document.getElementById("toast");
+        if(!t) return;
+        t.textContent = msg || "";
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 2200);
+      }
 
-        const resaHref = ficheHref + "#reserver";
+      function setStatus(msg){
+        const el = document.getElementById("statusText");
+        if(el) el.textContent = msg || "";
+      }
 
-        return `
-          <article class="card" data-kind="${esc(r.kind || "")}" data-slug="${esc(r.slug || "")}">
-            <div class="photo">
-              <img
-                src="${photoFinal}"
-                alt="${name}"
-                loading="lazy"
-                onerror="this.onerror=null; this.src='${esc(FALLBACK_PHOTO)}';"
-              />
-              <div class="badgeTop">
-                <span class="chip gold">${badge}</span>
-                <span class="chip blue">${hub}</span>
-                ${isNewCard ? `<span class="chip new">🆕 Nouveau</span>` : ``}
-              </div>
-            </div>
+      function esc(s){
+        return String(s ?? "")
+          .replaceAll("&","&amp;")
+          .replaceAll("<","&lt;")
+          .replaceAll(">","&gt;")
+          .replaceAll('"',"&quot;")
+          .replaceAll("'","&#039;");
+      }
 
+      function pick(arr, key){
+        const v = (arr || []).map(x => (x?.[key] ?? "")).filter(Boolean);
+        return Array.from(new Set(v)).sort((a,b)=>String(a).localeCompare(String(b)));
+      }
+
+      function tagsToArray(tags){
+        if(Array.isArray(tags)) return tags.filter(Boolean).map(String);
+        const s = String(tags || "").trim();
+        if(!s) return [];
+        return s.split(",").map(x => x.trim()).filter(Boolean);
+      }
+
+      function isNew(dateIso){
+        if(!dateIso) return false;
+        const t = Date.parse(dateIso);
+        if(!Number.isFinite(t)) return false;
+        const days = (Date.now() - t) / (1000 * 60 * 60 * 24);
+        return days <= NEW_DAYS;
+      }
+
+      function sameCity(a, b){
+        return String(a || "").trim().toLowerCase() === String(b || "").trim().toLowerCase();
+      }
+
+      function first(...vals){
+        for(const v of vals){
+          if(v !== null && v !== undefined && String(v).trim() !== "") return v;
+        }
+        return "";
+      }
+
+      function updateStatsBar(visibleRows, liveRows){
+        const list = Array.isArray(visibleRows) ? visibleRows : [];
+        const reals = Array.isArray(liveRows) ? liveRows : [];
+        const now = Date.now();
+
+        const new7d = reals.filter(r => {
+          const t = Date.parse(r.created_at || "");
+          return Number.isFinite(t) && ((now - t) / (1000*60*60*24) <= 7);
+        }).length;
+
+        const new24h = reals.filter(r => {
+          const t = Date.parse(r.created_at || "");
+          return Number.isFinite(t) && ((now - t) / (1000*60*60) <= 24);
+        }).length;
+
+        const cats = new Set(list.map(r => String(r.category || "").trim()).filter(Boolean)).size;
+
+        document.getElementById("msTotal").textContent = String(list.length);
+        document.getElementById("ms7d").textContent = String(new7d);
+        document.getElementById("ms24h").textContent = String(new24h);
+        document.getElementById("msPublic").textContent = String(reals.length);
+        document.getElementById("msCats").textContent = String(cats);
+      }
+
+      function updateKpi(){
+        const visible = ROWS || [];
+        const reals = LIVE_ROWS || [];
+        const total = visible.length;
+        const new7d = reals.filter(x => isNew(x.created_at)).length;
+
+        const kCount = document.getElementById("kpiCount");
+        const kNew7d = document.getElementById("kpiNew7d");
+        const kLast  = document.getElementById("kpiLast");
+
+        if(kCount) kCount.textContent = String(total);
+        if(kNew7d) kNew7d.textContent = String(new7d);
+
+        const last = [...visible].sort((a,b) => {
+          const ta = Date.parse(a.created_at || "") || 0;
+          const tb = Date.parse(b.created_at || "") || 0;
+          return tb - ta;
+        })[0] || null;
+
+        if(kLast){
+          kLast.textContent = last
+            ? `${last.display_name || "—"}${last.kind === "demo" ? " • vitrine" : ""}`
+            : "—";
+        }
+
+        setStatus(
+          reals.length
+            ? `✅ ${reals.length} fiche(s) réelle(s) • vitrine multi business présentable immédiatement`
+            : "✨ Vitrine meublée intelligemment • prête pour les premiers clients"
+        );
+      }
+
+      function fillSelects(){
+        const catSel = document.getElementById("cat");
+        const cats = pick(ROWS, "category");
+        catSel.innerHTML =
+          `<option value="">Toutes les activités</option>` +
+          cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
+      }
+
+      function renderSkeleton(){
+        const grid = document.getElementById("grid");
+        if(!grid) return;
+        grid.innerHTML = Array.from({length:6}).map(() => `
+          <div class="card">
+            <div class="photo skeleton sk-photo"></div>
             <div class="body">
-              <div class="name">${name}</div>
-              <div class="meta">
-                <span>🏷️ ${category}</span>
-                <span>📍 ${city}${address ? " • " + address : ""}</span>
-              </div>
-
-              ${bio
-                ? `<div class="bio">${bio}</div>`
-                : `<div class="bio" style="color:var(--muted)">Fiche publique DIGIY RESA MULTI BUSINESS.</div>`}
-
-              <div class="tags">
-                ${tags.map(t => `<span class="tag">${esc(t)}</span>`).join("")}
-                ${price ? `<span class="tag" style="border-color:rgba(250,204,21,.22);color:#fde68a;">${price}</span>` : ""}
-              </div>
-
-              <div class="actions">
-                <a class="btn primary" href="${esc(ficheHref)}">📄 Voir la fiche</a>
-                <a class="btn secondary" href="${esc(resaHref)}">📅 Réserver</a>
+              <div class="skeleton sk-line" style="width:70%"></div>
+              <div class="skeleton sk-line" style="width:48%"></div>
+              <div class="skeleton sk-line" style="width:90%"></div>
+              <div class="skeleton sk-line" style="width:60%"></div>
+              <div class="actions" style="margin-top:10px;">
+                <div class="skeleton sk-line" style="height:42px; width:100%"></div>
+                <div class="skeleton sk-line" style="height:42px; width:100%"></div>
               </div>
             </div>
-          </article>
-        `;
-      }).join("");
-    }
-
-    function applyFilters(){
-      const q = (document.getElementById("q").value || "").trim().toLowerCase();
-      const cat = (document.getElementById("cat").value || "").trim().toLowerCase();
-
-      const filtered = (ROWS || []).filter(r => {
-        const hay = [
-          r.display_name,
-          r.category,
-          r.city,
-          r.address,
-          r.bio,
-          r.badge,
-          r.hub_badge,
-          r.price_label,
-          ...tagsToArray(r.tags)
-        ].join(" ").toLowerCase();
-
-        const okQ = !q || hay.includes(q);
-        const okCat = !cat || String(r.category || "").toLowerCase() === cat;
-        return okQ && okCat;
-      });
-
-      render(filtered);
-      updateKpi();
-    }
-
-    async function load(){
-      renderSkeleton();
-      setStatus("🔎 Chargement depuis Supabase…");
-
-      try{
-        const { data, error } = await sb
-          .from("digiy_resa_public_profiles_v2")
-          .select("*")
-          .order("updated_at", { ascending: false });
-
-        if(error) throw error;
-
-        const raw = Array.isArray(data) ? data : [];
-
-        LIVE_ROWS = raw
-          .filter(r => sameCity(first(r.city), CITY_LOCK))
-          .map(mapLiveRow);
-
-        ROWS = buildVisibleRows(LIVE_ROWS);
-
-        fillSelects();
-        updateStatsBar(ROWS, LIVE_ROWS);
-        applyFilters();
-        toast("✅ Vitrine prête");
-      }catch(e){
-        console.error(e);
-
-        LIVE_ROWS = [];
-        ROWS = buildVisibleRows([]);
-
-        fillSelects();
-        updateStatsBar(ROWS, LIVE_ROWS);
-        render(ROWS);
-        updateKpi();
-
-        setStatus("⚠️ Source live indisponible — vitrine d’ambiance affichée.");
-        toast("⚠️ Mode vitrine d’ambiance");
+          </div>
+        `).join("");
       }
-    }
 
-    (function bind(){
-      const q = document.getElementById("q");
-      const cat = document.getElementById("cat");
-      let t = null;
+      function mapLiveRow(r){
+        return {
+          kind: "live",
+          demo_id: "",
+          slug: first(r.slug),
+          display_name: first(r.display_name, r.business_name, r.name, r.establishment_name) || "Commerce",
+          category: first(r.business_type, r.category, r.type_label) || "Service local",
+          city: first(r.city) || "",
+          address: first(r.address_text, r.address, r.location_text) || "",
+          bio: first(r.bio, r.description, r.about, r.short_description) || "",
+          badge: "📅 RÉSERVABLE",
+          hub_badge: "🟢 MULTI BUSINESS",
+          price_label: first(r.opening_hours_text, r.open_hours, r.opening_hours) ? `Horaires: ${first(r.opening_hours_text, r.open_hours, r.opening_hours)}` : "",
+          tags: [
+            first(r.business_type, r.category, r.type_label) || "",
+            first(r.city) || "",
+            first(r.opening_hours_text, r.open_hours, r.opening_hours) ? `Horaires: ${first(r.opening_hours_text, r.open_hours, r.opening_hours)}` : ""
+          ].filter(Boolean),
+          photo_url: first(r.cover_url, r.cover_image_url, r.logo_url, r.image_url, r.photo_url) || "",
+          created_at: first(r.updated_at, r.created_at) || null
+        };
+      }
 
-      q.addEventListener("input", () => {
-        clearTimeout(t);
-        t = setTimeout(applyFilters, 120);
-      });
+      function buildVisibleRows(liveRows){
+        const rows = [...liveRows];
+        const needed = Math.max(0, MIN_VISIBLE_CARDS - rows.length);
+        if(needed > 0){
+          rows.push(...DEMO_CARDS.slice(0, needed));
+        }
+        return rows;
+      }
 
-      cat.addEventListener("change", applyFilters);
+      function buildFicheHref(row){
+        if (row.kind === "live" && row.slug) {
+          return `./fiche.html?slug=${encodeURIComponent(row.slug)}`;
+        }
+        return `./fiche.html?demo=${encodeURIComponent(row.demo_id || "")}`;
+      }
+
+      function buildReserveHref(row){
+        if (row.kind === "live" && row.slug) {
+          return `./reserver.html?slug=${encodeURIComponent(row.slug)}`;
+        }
+        return `./fiche.html?demo=${encodeURIComponent(row.demo_id || "")}#reserver`;
+      }
+
+      function render(list){
+        const grid = document.getElementById("grid");
+        if(!grid) return;
+
+        const rows = Array.isArray(list) ? list : [];
+
+        if(!rows.length){
+          grid.innerHTML = `
+            <div class="status" style="grid-column:1/-1;">
+              <span>⚠️ Aucune fiche à afficher pour le moment.</span>
+            </div>
+          `;
+          return;
+        }
+
+        grid.innerHTML = rows.map(r => {
+          const name = esc(r.display_name || "Commerce");
+          const category = esc(r.category || "Service local");
+          const city = esc(r.city || CITY_LOCK);
+          const address = esc(r.address || "");
+          const bio = esc(r.bio || "");
+          const badge = esc(r.badge || "📅 RÉSERVABLE");
+          const hub = esc(r.hub_badge || "🟢 MULTI BUSINESS");
+          const price = esc(r.price_label || "");
+          const tags = tagsToArray(r.tags).slice(0, 6);
+          const isNewCard = isNew(r.created_at);
+
+          const rawPhoto = String(r.photo_url || "").trim();
+          const basePhoto = rawPhoto || FALLBACK_PHOTO;
+          const photoFinal = esc(basePhoto + (basePhoto.includes("?") ? "&" : "?") + "v=11");
+
+          const ficheHref = buildFicheHref(r);
+          const resaHref = buildReserveHref(r);
+
+          return `
+            <article class="card" data-kind="${esc(r.kind || "")}" data-slug="${esc(r.slug || "")}">
+              <div class="photo">
+                <img
+                  src="${photoFinal}"
+                  alt="${name}"
+                  loading="lazy"
+                  onerror="this.onerror=null; this.src='${esc(FALLBACK_PHOTO)}';"
+                />
+                <div class="badgeTop">
+                  <span class="chip gold">${badge}</span>
+                  <span class="chip blue">${hub}</span>
+                  ${isNewCard ? `<span class="chip new">🆕 Nouveau</span>` : ``}
+                </div>
+              </div>
+
+              <div class="body">
+                <div class="name">${name}</div>
+                <div class="meta">
+                  <span>🏷️ ${category}</span>
+                  <span>📍 ${city}${address ? " • " + address : ""}</span>
+                </div>
+
+                ${bio
+                  ? `<div class="bio">${bio}</div>`
+                  : `<div class="bio" style="color:var(--muted)">Fiche publique DIGIY RESA MULTI BUSINESS.</div>`}
+
+                <div class="tags">
+                  ${tags.map(t => `<span class="tag">${esc(t)}</span>`).join("")}
+                  ${price ? `<span class="tag" style="border-color:rgba(250,204,21,.22);color:#fde68a;">${price}</span>` : ""}
+                </div>
+
+                <div class="actions">
+                  <a class="btn primary" href="${esc(ficheHref)}">📄 Voir la fiche</a>
+                  <a class="btn secondary" href="${esc(resaHref)}">📅 Réserver</a>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join("");
+      }
+
+      function applyFilters(){
+        const q = (document.getElementById("q").value || "").trim().toLowerCase();
+        const cat = (document.getElementById("cat").value || "").trim().toLowerCase();
+
+        const filtered = (ROWS || []).filter(r => {
+          const hay = [
+            r.display_name,
+            r.category,
+            r.city,
+            r.address,
+            r.bio,
+            r.badge,
+            r.hub_badge,
+            r.price_label,
+            ...tagsToArray(r.tags)
+          ].join(" ").toLowerCase();
+
+          const okQ = !q || hay.includes(q);
+          const okCat = !cat || String(r.category || "").toLowerCase() === cat;
+          return okQ && okCat;
+        });
+
+        render(filtered);
+        updateKpi();
+      }
+
+      async function load(){
+        renderSkeleton();
+        setStatus("🔎 Chargement depuis Supabase…");
+
+        try{
+          sb = initSupabase();
+
+          if (!sb) {
+            throw new Error("supabase_unavailable");
+          }
+
+          const { data, error } = await sb
+            .from("digiy_resa_public_profiles_v2")
+            .select("*")
+            .order("updated_at", { ascending: false });
+
+          if(error) throw error;
+
+          const raw = Array.isArray(data) ? data : [];
+
+          LIVE_ROWS = raw
+            .filter(r => sameCity(first(r.city), CITY_LOCK))
+            .map(mapLiveRow);
+
+          ROWS = buildVisibleRows(LIVE_ROWS);
+
+          fillSelects();
+          updateStatsBar(ROWS, LIVE_ROWS);
+          applyFilters();
+          toast("✅ Vitrine prête");
+        }catch(e){
+          console.error(e);
+
+          LIVE_ROWS = [];
+          ROWS = buildVisibleRows([]);
+
+          fillSelects();
+          updateStatsBar(ROWS, LIVE_ROWS);
+          render(ROWS);
+          updateKpi();
+
+          setStatus("⚠️ Source live indisponible — vitrine d’ambiance affichée.");
+          toast("⚠️ Mode vitrine d’ambiance");
+        }
+      }
+
+      (function bind(){
+        const q = document.getElementById("q");
+        const cat = document.getElementById("cat");
+        let t = null;
+
+        q.addEventListener("input", () => {
+          clearTimeout(t);
+          t = setTimeout(applyFilters, 120);
+        });
+
+        cat.addEventListener("change", applyFilters);
+      })();
+
+      load();
     })();
-
-    load();
   </script>
 </body>
 </html>
