@@ -629,7 +629,6 @@
     (() => {
       "use strict";
 
-      const MODULE = "RESA";
       const SUPABASE_URL = window.DIGIY_SUPABASE_URL;
       const SUPABASE_ANON_KEY = window.DIGIY_SUPABASE_ANON_KEY || window.DIGIY_SUPABASE_ANON;
 
@@ -763,8 +762,9 @@
       }
 
       function setBusy(isBusy){
-        $("btnSubmit").disabled = isBusy;
+        $("btnSubmit").disabled = isBusy || !SERVICES.length;
         $("btnReloadSlots").disabled = isBusy;
+        $("serviceSelect").disabled = isBusy || !SERVICES.length;
       }
 
       function initClient(){
@@ -896,10 +896,13 @@
         const current = select.value || "";
 
         if(!SERVICES.length){
-          select.innerHTML = `<option value="">Demande simple</option>`;
+          select.innerHTML = `<option value="">Aucun service disponible</option>`;
+          select.disabled = true;
+          $("btnSubmit").disabled = true;
           return;
         }
 
+        select.disabled = false;
         select.innerHTML = `<option value="">Choisir un service</option>` + SERVICES.map((s) => {
           const price = money(s.price_fcfa);
           const duration = s.duration_minutes ? `${s.duration_minutes} min` : "";
@@ -917,7 +920,7 @@
           box.innerHTML = `
             <div class="service">
               <div class="muted">
-                Aucun service détaillé n’est affiché pour l’instant. Tu peux tout de même envoyer une demande simple.
+                Aucun service détaillé n’est affiché pour l’instant.
               </div>
             </div>
           `;
@@ -996,24 +999,6 @@
               p_date: date
             }
           });
-
-          attempts.push({
-            fn: "digiy_resa_get_slots_by_service",
-            args: {
-              p_slug: slug,
-              p_service_id: service.id,
-              p_day: date
-            }
-          });
-
-          attempts.push({
-            fn: "digiy_resa_get_slots_by_service",
-            args: {
-              slug: slug,
-              service_id: service.id,
-              date: date
-            }
-          });
         }
 
         attempts.push({
@@ -1021,22 +1006,6 @@
           args: {
             p_slug: slug,
             p_date: date
-          }
-        });
-
-        attempts.push({
-          fn: "digiy_resa_get_available_slots",
-          args: {
-            p_slug: slug,
-            p_day: date
-          }
-        });
-
-        attempts.push({
-          fn: "digiy_resa_get_available_slots",
-          args: {
-            slug: slug,
-            date: date
           }
         });
 
@@ -1080,80 +1049,28 @@
       }
 
       async function createBooking(payload){
-        const service = getSelectedService();
-
-        const tries = [
-          {
-            p_slug: slug,
-            p_service_id: service?.id || null,
-            p_service_name: payload.service_name,
-            p_booking_date: payload.booking_date,
-            p_booking_time: payload.booking_time,
-            p_customer_name: payload.customer_name,
-            p_customer_phone: payload.customer_phone,
-            p_guests_count: payload.guests_count,
-            p_note: payload.note
-          },
-          {
-            p_slug: slug,
-            p_service_id: service?.id || null,
-            p_service_name: payload.service_name,
-            p_date: payload.booking_date,
-            p_time: payload.booking_time,
-            p_name: payload.customer_name,
-            p_phone: payload.customer_phone,
-            p_guests_count: payload.guests_count,
-            p_note: payload.note
-          },
-          {
-            slug: slug,
-            service_id: service?.id || null,
-            service_name: payload.service_name,
-            booking_date: payload.booking_date,
-            booking_time: payload.booking_time,
-            customer_name: payload.customer_name,
-            customer_phone: payload.customer_phone,
-            guests_count: payload.guests_count,
-            note: payload.note
-          },
-          {
-            p_slug: slug,
-            p_service_name: payload.service_name,
-            p_booking_date: payload.booking_date,
-            p_booking_time: payload.booking_time,
-            p_customer_name: payload.customer_name,
-            p_customer_phone: payload.customer_phone,
-            p_guests_count: payload.guests_count,
-            p_note: payload.note
-          }
-        ];
-
-        let lastError = null;
-
-        for (const args of tries) {
-          try {
-            const data = await rpc("digiy_resa_create_booking", args);
-            const parsed = safeJsonParse(data) || data || {};
-
-            if (parsed?.ok === true || parsed?.booking_id || parsed?.tracking_code || parsed?.id) {
-              return parsed;
-            }
-
-            if (parsed?.ok === false) {
-              lastError = new Error(parsed.error || parsed.reason || "booking_refused");
-              continue;
-            }
-
-            if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
-              return parsed;
-            }
-
-          } catch (e) {
-            lastError = e;
-          }
+        if (!payload.service_id) {
+          throw new Error("missing_service_id");
         }
 
-        throw lastError || new Error("booking_create_failed");
+        const data = await rpc("digiy_resa_create_booking", {
+          p_slug: slug,
+          p_customer_name: payload.customer_name,
+          p_customer_phone: payload.customer_phone,
+          p_booking_date: payload.booking_date,
+          p_booking_time: payload.booking_time,
+          p_guests_count: payload.guests_count,
+          p_note_text: payload.note || null,
+          p_service_id: payload.service_id
+        });
+
+        const parsed = safeJsonParse(data) || data || {};
+
+        if (parsed?.ok === false) {
+          throw new Error(parsed.error || parsed.reason || "booking_refused");
+        }
+
+        return parsed;
       }
 
       async function submit(){
@@ -1167,6 +1084,11 @@
 
         if (!slug) {
           setStatus("Slug manquant. Impossible d’envoyer une réservation.", "err");
+          return;
+        }
+
+        if (!service?.id) {
+          setStatus("Choisis un service avant d’envoyer la réservation.", "err");
           return;
         }
 
@@ -1191,11 +1113,11 @@
         }
 
         setBusy(true);
-        setStatus("Envoi de la réservation…", "warn");
+        setStatus("Envoi de la réservation sur le rail réel RESA…", "warn");
 
         try {
           const result = await createBooking({
-            service_name: service?.service_name || "Demande simple",
+            service_id: service.id,
             booking_date: bookingDate,
             booking_time: bookingTime,
             customer_name: customerName,
@@ -1205,8 +1127,7 @@
           });
 
           const tracking =
-            result?.tracking_code ||
-            result?.booking_code ||
+            result?.booking?.id ||
             result?.booking_id ||
             result?.id ||
             "";
@@ -1228,7 +1149,7 @@
         } catch (e) {
           console.error(e);
           setStatus(
-            "❌ Impossible d’envoyer la réservation via le rail automatique.\nPasse par WhatsApp pour finaliser la demande.",
+            "❌ Impossible d’envoyer la réservation sur le rail réel.\nPasse par WhatsApp si besoin immédiat.",
             "err"
           );
         } finally {
@@ -1248,7 +1169,6 @@
         $("customerPhone").disabled = true;
         $("guestsCount").disabled = true;
         $("noteInput").disabled = true;
-        $("btnReserve").classList.add("hidden");
       }
 
       async function boot(){
@@ -1278,7 +1198,12 @@
           updatePriceHint();
           await loadSlots();
 
-          setStatus("Prêt. Choisis ton créneau et envoie la demande.", "");
+          if (!SERVICES.length) {
+            setStatus("Aucun service actif sur ce commerce. La réservation automatique reste fermée.", "warn");
+            return;
+          }
+
+          setStatus("Prêt. Choisis ton service, ton créneau puis envoie la demande.", "");
 
         }catch(e){
           console.error(e);
