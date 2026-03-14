@@ -4,285 +4,375 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <title>DIGIY RESA — Réserver</title>
-  <meta name="theme-color" content="#061b14"/>
-  <meta name="description" content="DIGIY RESA — réservation simple multi business."/>
+  <meta name="theme-color" content="#07140f"/>
+  <meta name="description" content="Réservation simple DIGIY RESA — multi business, contact direct, créneaux et demande rapide."/>
 
   <script>
     window.DIGIY_SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-    window.DIGIY_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+    window.DIGIY_SUPABASE_ANON_KEY = "sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3";
+    window.DIGIY_SUPABASE_ANON = window.DIGIY_SUPABASE_ANON_KEY;
+    window.DIGIY_MODULE = "RESA";
   </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root{
-      --bg:#061b14;
-      --card:#0b2a1f;
-      --card2:#103428;
-      --soft:rgba(255,255,255,.04);
-      --line:rgba(255,255,255,.12);
-      --text:#eafff1;
-      --muted:rgba(234,255,241,.72);
+      --bg:#07140f;
+      --bg2:#0b1d15;
+      --card:#10241b;
+      --card2:#0d2018;
+      --line:rgba(255,255,255,.10);
+      --text:#ecfff4;
+      --muted:rgba(236,255,244,.72);
+      --primary:#22c55e;
+      --primary-2:#16a34a;
       --gold:#facc15;
-      --ok:#22c55e;
-      --warn:#f59e0b;
+      --gold-soft:rgba(250,204,21,.12);
       --danger:#ef4444;
-      --shadow:0 18px 55px rgba(0,0,0,.35);
+      --blue:#60a5fa;
+      --shadow:0 20px 60px rgba(0,0,0,.38);
+      --r:24px;
+      --max:1120px;
     }
 
     *{box-sizing:border-box}
-    html,body{
+    html{scroll-behavior:smooth}
+
+    body{
       margin:0;
-      padding:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      min-height:100vh;
       background:
         radial-gradient(900px 520px at 10% -10%, rgba(34,197,94,.14), transparent 60%),
         radial-gradient(900px 520px at 110% 0%, rgba(250,204,21,.10), transparent 55%),
-        linear-gradient(180deg, #061b14, #04140d 55%, #030c08 100%);
+        linear-gradient(180deg, #07140f, #05100c 55%, #040b08 100%);
       color:var(--text);
-      min-height:100vh;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      padding:16px;
     }
 
     a{color:inherit;text-decoration:none}
 
     .wrap{
-      width:min(1100px,92vw);
-      margin:0 auto;
-      padding:18px 0 46px;
-    }
-
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:18px;
-    }
-
-    .brand{
-      display:grid;
-      gap:4px;
-    }
-
-    .eyebrow{
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color:var(--gold);
-      font-weight:900;
-    }
-
-    h1{
-      margin:0;
-      font-size:clamp(1.6rem,3.8vw,2.5rem);
-      line-height:1.03;
-    }
-
-    .sub{
-      color:var(--muted);
-      font-size:.96rem;
-    }
-
-    .actions-top{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .btn{
-      appearance:none;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg,#103428,#0c271e);
-      color:var(--text);
-      border-radius:14px;
-      padding:12px 16px;
-      font-weight:800;
-      cursor:pointer;
-      box-shadow:var(--shadow);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      transition:.16s ease;
-    }
-
-    .btn:hover{transform:translateY(-1px)}
-    .btn.secondary{background:#0c241b}
-    .btn.gold{background:linear-gradient(180deg,#5a3d10,#3a2608)}
-    .btn.primary{
-      background:linear-gradient(135deg,#22c55e,#16a34a);
-      color:#041b12;
-      border-color:transparent;
-    }
-    .btn.ghost{
-      background:rgba(255,255,255,.04);
-      border-style:dashed;
-      color:var(--muted);
-    }
-    .btn:disabled{
-      opacity:.55;
-      cursor:not-allowed;
-      transform:none;
-    }
-
-    .hero{
-      background:linear-gradient(180deg,rgba(250,204,21,.12),rgba(34,197,94,.08));
-      border:1px solid var(--line);
-      border-radius:24px;
-      padding:18px;
-      box-shadow:var(--shadow);
-      margin-bottom:18px;
+      max-width:var(--max);
+      margin:auto;
       display:grid;
       gap:14px;
     }
 
-    .mode{
+    .hero,
+    .card{
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.018));
+      box-shadow:var(--shadow);
+    }
+
+    .hero{
+      overflow:hidden;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:420px 1fr;
+      min-height:420px;
+    }
+
+    @media(max-width:940px){
+      .hero-grid{ grid-template-columns:1fr; }
+    }
+
+    .hero-media{
+      position:relative;
+      min-height:300px;
+      background:#0a1712;
+      overflow:hidden;
+    }
+
+    .hero-media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      background:#0f1d17;
+    }
+
+    .hero-media-fallback{
+      width:100%;
+      height:100%;
+      min-height:300px;
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(250,204,21,.18), transparent 30%),
+        radial-gradient(circle at 75% 15%, rgba(34,197,94,.14), transparent 28%),
+        linear-gradient(180deg, #111827, #0b1120);
+      color:#fff;
+      font-size:54px;
+      font-weight:1000;
+    }
+
+    .hero-badge{
+      position:absolute;
+      left:16px;
+      bottom:16px;
+      z-index:2;
       display:inline-flex;
       align-items:center;
       gap:8px;
-      padding:8px 12px;
+      padding:10px 14px;
       border-radius:999px;
-      border:1px solid rgba(250,204,21,.24);
-      background:rgba(250,204,21,.10);
-      color:#fff1a8;
-      font-size:.9rem;
-      font-weight:900;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(7,20,15,.72);
+      color:#fff6c9;
+      font-size:12px;
+      font-weight:950;
+      backdrop-filter:blur(8px);
+    }
+
+    .hero-badge .dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--primary);
+      box-shadow:0 0 0 4px rgba(34,197,94,.14);
+    }
+
+    .hero-body{
+      padding:24px;
+      display:grid;
+      gap:18px;
+      align-content:start;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 13px;
+      border-radius:999px;
+      border:1px solid rgba(34,197,94,.28);
+      background:rgba(34,197,94,.12);
+      color:#bbf7d0;
+      font-size:12px;
+      font-weight:950;
       width:max-content;
     }
 
-    .mode.live{
-      border-color:rgba(34,197,94,.24);
-      background:rgba(34,197,94,.10);
-      color:#b8ffd0;
+    .badge .dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--primary);
+      box-shadow:0 0 0 4px rgba(34,197,94,.14);
     }
 
-    .mode.bad{
-      border-color:rgba(239,68,68,.24);
-      background:rgba(239,68,68,.10);
-      color:#ffb4b4;
+    h1{
+      margin:0;
+      font-size:clamp(30px, 4vw, 42px);
+      line-height:1.04;
+      letter-spacing:-.02em;
+    }
+
+    .subtitle{
+      color:var(--muted);
+      font-size:16px;
+      font-weight:800;
+      line-height:1.55;
+      margin-top:8px;
     }
 
     .hero-meta{
       display:flex;
-      gap:8px;
+      gap:10px;
       flex-wrap:wrap;
+      margin-top:12px;
     }
 
     .pill{
       display:inline-flex;
       align-items:center;
       gap:8px;
-      padding:8px 12px;
+      padding:9px 12px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.14);
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.18);
       color:var(--muted);
-      font-size:.84rem;
+      font-size:12px;
       font-weight:900;
+      max-width:100%;
+    }
+
+    .slug-pill{
+      color:var(--gold);
+      border-color:rgba(250,204,21,.22);
+      background:var(--gold-soft);
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:4px;
+    }
+
+    .btn{
+      min-height:48px;
+      padding:12px 16px;
+      border-radius:14px;
+      font-weight:950;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .btn:hover{ transform:translateY(-1px); }
+
+    .btn.primary{
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      color:#041b12;
+      border-color:transparent;
+      box-shadow:0 12px 28px rgba(34,197,94,.22);
+    }
+
+    .btn.gold{
+      background:rgba(250,204,21,.12);
+      color:var(--gold);
+      border-color:rgba(250,204,21,.22);
+    }
+
+    .btn.ghost{
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      border-style:dashed;
     }
 
     .grid{
       display:grid;
+      gap:14px;
       grid-template-columns:1.05fr .95fr;
-      gap:16px;
     }
 
-    @media (max-width:940px){
-      .grid{grid-template-columns:1fr}
+    @media(max-width:980px){
+      .grid{ grid-template-columns:1fr; }
     }
 
     .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:22px;
-      box-shadow:var(--shadow);
-      overflow:hidden;
-    }
-
-    .card-head{
-      padding:16px 18px;
-      border-bottom:1px solid var(--line);
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-
-    .card-head h2{
-      margin:0;
-      font-size:1.08rem;
-    }
-
-    .card-body{
       padding:18px;
-      display:grid;
-      gap:14px;
+    }
+
+    h2{
+      margin:0 0 10px;
+      font-size:21px;
     }
 
     .muted{
       color:var(--muted);
+      font-size:14px;
+      font-weight:800;
       line-height:1.55;
-      font-size:.95rem;
     }
 
     .field{
       display:grid;
       gap:8px;
+      margin-top:14px;
     }
 
-    .label{
-      font-size:.9rem;
-      font-weight:900;
+    label{
+      font-size:13px;
       color:var(--muted);
+      font-weight:900;
     }
 
-    .input,
-    .select,
-    .textarea{
+    input, textarea, select{
       width:100%;
-      min-height:48px;
+      min-height:52px;
       border-radius:14px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.16);
       color:var(--text);
       padding:12px 14px;
-      font-weight:800;
       outline:none;
+      font:inherit;
     }
 
-    .textarea{
+    textarea{
       min-height:110px;
       resize:vertical;
     }
 
-    .input:focus,
-    .select:focus,
-    .textarea:focus{
-      border-color:rgba(250,204,21,.35);
-      box-shadow:0 0 0 3px rgba(250,204,21,.10);
+    input::placeholder, textarea::placeholder{
+      color:rgba(236,255,244,.38);
+    }
+
+    .inline2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    @media(max-width:720px){
+      .inline2{ grid-template-columns:1fr; }
+    }
+
+    .slots{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:10px;
+      margin-top:14px;
+    }
+
+    @media(max-width:900px){
+      .slots{ grid-template-columns:repeat(3,minmax(0,1fr)); }
+    }
+
+    @media(max-width:620px){
+      .slots{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+
+    .slot{
+      min-height:48px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      font-weight:950;
+      cursor:pointer;
+      padding:10px 12px;
+    }
+
+    .slot:hover{
+      transform:translateY(-1px);
+    }
+
+    .slot.active{
+      border-color:rgba(34,197,94,.34);
+      background:rgba(34,197,94,.14);
+      color:#bbf7d0;
+    }
+
+    .slot.off{
+      opacity:.45;
+      cursor:not-allowed;
     }
 
     .services{
       display:grid;
       gap:10px;
+      margin-top:14px;
     }
 
     .service{
-      border:1px solid var(--line);
-      background:var(--card2);
-      border-radius:16px;
       padding:14px;
-      cursor:pointer;
-      transition:.16s ease;
-      display:grid;
-      gap:8px;
-    }
-
-    .service:hover{transform:translateY(-1px)}
-    .service.active{
-      border-color:rgba(250,204,21,.4);
-      box-shadow:0 0 0 2px rgba(250,204,21,.10) inset;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.09);
+      background:rgba(0,0,0,.16);
     }
 
     .service-top{
@@ -294,9 +384,10 @@
     }
 
     .service-name{
-      font-size:1rem;
-      font-weight:900;
+      font-size:16px;
+      font-weight:1000;
       color:var(--gold);
+      line-height:1.2;
     }
 
     .service-meta{
@@ -314,227 +405,223 @@
       border:1px solid rgba(255,255,255,.12);
       background:rgba(255,255,255,.05);
       color:var(--muted);
-      font-size:.8rem;
-      font-weight:900;
+      font-size:11px;
+      font-weight:950;
     }
 
-    .slots{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:10px;
-    }
-
-    @media (max-width:640px){
-      .slots{grid-template-columns:repeat(2,minmax(0,1fr))}
-    }
-
-    .slot{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.04);
-      color:var(--text);
-      border-radius:14px;
-      padding:12px;
-      text-align:center;
-      font-weight:900;
-      cursor:pointer;
-      transition:.16s ease;
-    }
-
-    .slot:hover{transform:translateY(-1px)}
-    .slot.active{
-      border-color:rgba(34,197,94,.45);
-      background:rgba(34,197,94,.12);
-      color:#b8ffd0;
-    }
-    .slot.off{
-      opacity:.38;
-      cursor:not-allowed;
-      text-decoration:line-through;
-    }
-
-    .recap{
+    .summary{
       display:grid;
       gap:10px;
-      border:1px solid var(--line);
-      background:var(--card2);
-      border-radius:16px;
-      padding:14px;
-    }
-
-    .recap-line{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:flex-start;
-    }
-
-    .recap-line .k{
-      color:var(--muted);
-      font-weight:800;
-    }
-
-    .recap-line .v{
-      font-weight:900;
-      text-align:right;
-    }
-
-    .msg{
-      padding:12px 14px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      font-weight:800;
-      line-height:1.5;
-    }
-
-    .msg.ok{
-      background:rgba(34,197,94,.12);
-      color:#b8ffd0;
-      border-color:rgba(34,197,94,.25);
-    }
-
-    .msg.warn{
-      background:rgba(245,158,11,.12);
-      color:#ffe1a6;
-      border-color:rgba(245,158,11,.25);
-    }
-
-    .msg.bad{
-      background:rgba(239,68,68,.12);
-      color:#ffb4b4;
-      border-color:rgba(239,68,68,.25);
-    }
-
-    .empty{
-      padding:26px 18px;
-      border:1px dashed rgba(255,255,255,.14);
-      background:rgba(255,255,255,.03);
-      border-radius:18px;
-      text-align:center;
-      color:var(--muted);
-    }
-
-    .footer-note{
       margin-top:14px;
-      color:var(--muted);
-      font-size:.92rem;
-      text-align:center;
     }
 
-    .loading{
-      opacity:.72;
-      pointer-events:none;
+    .fact{
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.09);
+      background:rgba(0,0,0,.16);
     }
+
+    .fact .k{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:800;
+      margin-bottom:6px;
+    }
+
+    .fact .v{
+      font-size:15px;
+      font-weight:900;
+      line-height:1.5;
+      word-break:break-word;
+    }
+
+    .status{
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.16);
+      font-weight:900;
+      color:var(--muted);
+      min-height:48px;
+      display:flex;
+      align-items:center;
+      line-height:1.45;
+      white-space:pre-wrap;
+    }
+
+    .status.ok{
+      color:#bbf7d0;
+      border-color:rgba(34,197,94,.22);
+      background:rgba(34,197,94,.10);
+    }
+
+    .status.warn{
+      color:#fde68a;
+      border-color:rgba(250,204,21,.22);
+      background:rgba(250,204,21,.08);
+    }
+
+    .status.err{
+      color:#fecaca;
+      border-color:rgba(239,68,68,.22);
+      background:rgba(239,68,68,.08);
+    }
+
+    .footer{
+      margin-top:16px;
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .hidden{display:none !important}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <div class="eyebrow">DIGIY RESA</div>
-        <h1>Réserver simplement</h1>
-        <div class="sub" id="topSub">Chargement du parcours réservation…</div>
-      </div>
-
-      <div class="actions-top">
-        <a class="btn secondary" id="btnBackFiche" href="./fiche.html">Retour fiche</a>
-        <a class="btn gold ghost" id="btnWhatsApp" href="#" target="_blank" rel="noopener" aria-disabled="true">WhatsApp indisponible</a>
-      </div>
-    </div>
 
     <section class="hero">
-      <div class="mode" id="modeBadge">Chargement</div>
-      <h2 id="heroName">DIGIY RESA</h2>
-      <p id="heroDesc">Choisir un service, choisir un créneau, envoyer une réservation propre.</p>
+      <div class="hero-grid">
+        <div class="hero-media" id="heroMedia">
+          <div class="hero-media-fallback">📅</div>
+          <div class="hero-badge" id="heroBadge">
+            <span class="dot"></span>
+            Réservation publique
+          </div>
+        </div>
 
-      <div class="hero-meta">
-        <div class="pill" id="heroSlug">Slug : —</div>
-        <div class="pill" id="heroCity">Ville : —</div>
-        <div class="pill" id="heroType">Activité : —</div>
+        <div class="hero-body">
+          <div class="badge"><span class="dot"></span> DIGIY RESA</div>
+
+          <div>
+            <h1 id="name">Chargement…</h1>
+            <div class="subtitle" id="subtitle">Réservation simple et directe.</div>
+          </div>
+
+          <div class="hero-meta">
+            <div class="pill" id="cityPill">Ville : —</div>
+            <div class="pill" id="typePill">Activité : —</div>
+            <div class="pill slug-pill" id="slugPill">slug : —</div>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn gold" id="btnWhatsApp" href="#" target="_blank" rel="noopener">💬 WhatsApp</a>
+            <a class="btn ghost" id="btnBackFiche" href="./fiche.html">👁️ Retour fiche</a>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="grid">
       <section class="card">
-        <div class="card-head">
-          <h2>1. Choisir un service</h2>
+        <h2>Réserver maintenant</h2>
+        <div class="muted">
+          Choisis ton service, la date, ton heure, puis envoie ta demande. Le commerce reçoit la réservation sur le rail RESA.
         </div>
-        <div class="card-body">
-          <div class="muted" id="servicesLead">Sélectionne la prestation qui correspond à ton besoin.</div>
-          <div class="services" id="servicesBox">
-            <div class="empty">Chargement des services…</div>
-          </div>
-        </div>
-      </section>
 
-      <section class="card">
-        <div class="card-head">
-          <h2>2. Choisir date & créneau</h2>
+        <div class="field">
+          <label for="serviceSelect">Service / prestation</label>
+          <select id="serviceSelect">
+            <option value="">Choisir un service</option>
+          </select>
         </div>
-        <div class="card-body">
+
+        <div class="inline2">
           <div class="field">
-            <label class="label" for="bookingDate">Date</label>
-            <input class="input" id="bookingDate" type="date"/>
+            <label for="dateInput">Date</label>
+            <input id="dateInput" type="date"/>
           </div>
 
-          <div class="muted" id="slotsLead">Choisis d’abord un service pour voir les créneaux.</div>
+          <div class="field">
+            <label for="timeInput">Heure</label>
+            <input id="timeInput" type="time"/>
+          </div>
+        </div>
 
+        <div class="field">
+          <label>Créneaux proposés</label>
           <div class="slots" id="slotsBox">
-            <div class="empty" style="grid-column:1/-1">Aucun créneau à afficher pour l’instant.</div>
+            <button class="slot off" type="button" disabled>Choisis un service et une date</button>
+          </div>
+        </div>
+
+        <div class="inline2">
+          <div class="field">
+            <label for="customerName">Ton nom</label>
+            <input id="customerName" type="text" placeholder="Ex : Awa Ndiaye" autocomplete="name"/>
+          </div>
+
+          <div class="field">
+            <label for="customerPhone">Ton téléphone</label>
+            <input id="customerPhone" type="tel" inputmode="tel" placeholder="Ex : 221771234567" autocomplete="tel"/>
+          </div>
+        </div>
+
+        <div class="inline2">
+          <div class="field">
+            <label for="guestsCount">Nombre de personnes</label>
+            <input id="guestsCount" type="number" min="1" step="1" value="1"/>
+          </div>
+
+          <div class="field">
+            <label for="priceHint">Prix indicatif</label>
+            <input id="priceHint" type="text" value="—" readonly/>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="noteInput">Note / précision</label>
+          <textarea id="noteInput" placeholder="Ex : sans attente si possible, anniversaire, besoin particulier…"></textarea>
+        </div>
+
+        <div class="hero-actions" style="margin-top:14px">
+          <button class="btn primary" id="btnSubmit" type="button">📅 Envoyer ma réservation</button>
+          <button class="btn" id="btnReloadSlots" type="button">↻ Recharger les créneaux</button>
+        </div>
+
+        <div class="status" id="statusBox">Prêt.</div>
+      </section>
+
+      <section class="card">
+        <h2>Repères du commerce</h2>
+        <div class="summary">
+          <div class="fact">
+            <div class="k">Présentation</div>
+            <div class="v" id="bio">—</div>
+          </div>
+
+          <div class="fact">
+            <div class="k">Adresse</div>
+            <div class="v" id="address">—</div>
+          </div>
+
+          <div class="fact">
+            <div class="k">Horaires</div>
+            <div class="v" id="hours">—</div>
+          </div>
+
+          <div class="fact">
+            <div class="k">WhatsApp</div>
+            <div class="v" id="contactWhatsapp">—</div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px">
+          <h2 style="font-size:18px;margin-bottom:8px">Services</h2>
+          <div class="services" id="servicesBox">
+            <div class="service">
+              <div class="muted">Chargement des services…</div>
+            </div>
           </div>
         </div>
       </section>
     </section>
 
-    <section class="grid" style="margin-top:16px;">
-      <section class="card">
-        <div class="card-head">
-          <h2>3. Tes informations</h2>
-        </div>
-        <div class="card-body">
-          <div class="field">
-            <label class="label" for="customerName">Nom</label>
-            <input class="input" id="customerName" type="text" placeholder="Ex : Awa Ndiaye"/>
-          </div>
-
-          <div class="field">
-            <label class="label" for="customerPhone">Téléphone</label>
-            <input class="input" id="customerPhone" type="tel" placeholder="Ex : 221770000001"/>
-          </div>
-
-          <div class="field">
-            <label class="label" for="guestsCount">Nombre de personnes</label>
-            <input class="input" id="guestsCount" type="number" min="1" step="1" value="1"/>
-          </div>
-
-          <div class="field">
-            <label class="label" for="noteText">Note</label>
-            <textarea class="textarea" id="noteText" placeholder="Ex : brushing sans attente, table au calme, diagnostic rapide..."></textarea>
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="card-head">
-          <h2>4. Récapitulatif</h2>
-        </div>
-        <div class="card-body">
-          <div class="recap">
-            <div class="recap-line"><div class="k">Commerce</div><div class="v" id="recapShop">—</div></div>
-            <div class="recap-line"><div class="k">Service</div><div class="v" id="recapService">—</div></div>
-            <div class="recap-line"><div class="k">Durée</div><div class="v" id="recapDuration">—</div></div>
-            <div class="recap-line"><div class="k">Prix</div><div class="v" id="recapPrice">—</div></div>
-            <div class="recap-line"><div class="k">Date</div><div class="v" id="recapDate">—</div></div>
-            <div class="recap-line"><div class="k">Heure</div><div class="v" id="recapTime">—</div></div>
-          </div>
-
-          <button class="btn primary" id="btnBook" type="button">Envoyer ma réservation</button>
-          <div class="msg warn" id="msgBox">Choisis un service et un créneau pour continuer.</div>
-        </div>
-      </section>
-    </section>
-
-    <div class="footer-note" id="footerNote">
-      DIGIY RESA — parcours client simple, propre et terrain.
+    <div class="footer">
+      DIGIY RESA • Réserver simplement • Multi business • Terrain
     </div>
   </div>
 
@@ -542,17 +629,70 @@
     (() => {
       "use strict";
 
-      const qs = new URL(location.href).searchParams;
-      const QUERY_SLUG = (qs.get("slug") || "").trim();
+      const MODULE = "RESA";
+      const SUPABASE_URL = window.DIGIY_SUPABASE_URL;
+      const SUPABASE_ANON_KEY = window.DIGIY_SUPABASE_ANON_KEY || window.DIGIY_SUPABASE_ANON;
+
+      const qs = new URLSearchParams(location.search);
 
       const $ = (id) => document.getElementById(id);
 
       let sb = null;
       let PROFILE = null;
       let SERVICES = [];
-      let ACTIVE_SERVICE = null;
-      let ACTIVE_SLOT = "";
-      let PAGE_STATE = "loading"; // loading | empty | live | not_found | error
+      let ACTIVE_SLOTS = [];
+      let SELECTED_SLOT = "";
+
+      function storageGet(key){
+        try{
+          const s = sessionStorage.getItem(key);
+          if (s) return s;
+        }catch{}
+        try{
+          const l = localStorage.getItem(key);
+          if (l) return l;
+        }catch{}
+        return "";
+      }
+
+      function storageSet(key, value){
+        try { sessionStorage.setItem(key, String(value ?? "")); } catch {}
+        try { localStorage.setItem(key, String(value ?? "")); } catch {}
+      }
+
+      function normalizeSlug(v){
+        return String(v || "")
+          .trim()
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[^a-z0-9-]/g, "")
+          .replace(/-+/g, "-")
+          .replace(/^-|-$/g, "");
+      }
+
+      function normalizePhone(v){
+        return String(v || "").replace(/[^\d]/g, "");
+      }
+
+      function escapeHtml(str){
+        return String(str ?? "")
+          .replaceAll("&","&amp;")
+          .replaceAll("<","&lt;")
+          .replaceAll(">","&gt;")
+          .replaceAll('"',"&quot;")
+          .replaceAll("'","&#39;");
+      }
+
+      function safe(v, fallback="—"){
+        const s = String(v || "").trim();
+        return s || fallback;
+      }
+
+      function money(v){
+        const n = Number(v);
+        if(!Number.isFinite(n)) return "";
+        return n.toLocaleString("fr-FR") + " FCFA";
+      }
 
       function todayISO(){
         const d = new Date();
@@ -562,152 +702,181 @@
         return `${y}-${m}-${da}`;
       }
 
-      function normalizeSlug(v){
-        return String(v || "").trim().toLowerCase();
+      function addDaysISO(days){
+        const d = new Date();
+        d.setDate(d.getDate() + Number(days || 0));
+        const y = d.getFullYear();
+        const m = String(d.getMonth()+1).padStart(2,"0");
+        const da = String(d.getDate()).padStart(2,"0");
+        return `${y}-${m}-${da}`;
       }
 
-      function money(v){
-        const n = Number(v);
-        if(!Number.isFinite(n)) return "À préciser";
-        return n.toLocaleString("fr-FR") + " FCFA";
+      function pickMainImage(p){
+        const candidates = [
+          p?.cover_url,
+          p?.photo_url,
+          p?.image_url,
+          p?.cover_image_url
+        ].filter(Boolean);
+
+        return candidates[0] || "";
       }
 
-      function escapeHtml(v){
-        return String(v ?? "")
-          .replaceAll("&","&amp;")
-          .replaceAll("<","&lt;")
-          .replaceAll(">","&gt;")
-          .replaceAll('"',"&quot;")
-          .replaceAll("'","&#039;");
+      function waLink(phone, name){
+        const clean = String(phone || "").replace(/[^\d]/g, "");
+        if(!clean) return "";
+        const msg = `Bonjour ${name || ""}, je vous contacte via votre fiche DIGIY RESA.`;
+        return "https://wa.me/" + clean + "?text=" + encodeURIComponent(msg);
       }
 
-      function normalizePhone(v){
-        return String(v || "").replace(/[^\d]/g, "");
+      function ficheLink(slugValue){
+        const u = new URL("./fiche.html", location.href);
+        if (slugValue) u.searchParams.set("slug", slugValue);
+        return u.pathname + u.search;
       }
 
-      function setMsg(text, kind="warn"){
-        const box = $("msgBox");
-        box.className = "msg " + kind;
-        box.textContent = text;
-      }
-
-      function setActionState(enabled){
-        $("customerName").disabled = !enabled;
-        $("customerPhone").disabled = !enabled;
-        $("guestsCount").disabled = !enabled;
-        $("noteText").disabled = !enabled;
-        $("bookingDate").disabled = !enabled;
-        $("btnBook").disabled = !enabled;
-      }
-
-      function setWhatsApp(profile){
-        const btn = $("btnWhatsApp");
-        const wa = normalizePhone(profile?.whatsapp || profile?.phone_whatsapp || profile?.phone || "");
-        const text = `Bonjour, je souhaite réserver via DIGIY RESA${profile?.display_name ? ` chez ${profile.display_name}` : ""}.`;
-        const waHref = wa ? `https://wa.me/${wa}?text=${encodeURIComponent(text)}` : "";
-
-        if(waHref){
-          btn.href = waHref;
-          btn.textContent = "WhatsApp";
-          btn.classList.remove("ghost");
-          btn.removeAttribute("aria-disabled");
-        }else{
-          btn.href = "#";
-          btn.textContent = "WhatsApp indisponible";
-          btn.classList.add("ghost");
-          btn.setAttribute("aria-disabled", "true");
+      function safeJsonParse(value){
+        try{
+          return typeof value === "string" ? JSON.parse(value) : value;
+        }catch{
+          return null;
         }
       }
 
-      function setHero(profile, state){
-        PROFILE = profile || null;
-        const slug = profile?.slug || QUERY_SLUG || "—";
-        const city = profile?.city || "—";
-        const type = profile?.business_type || profile?.category || "Multi business";
-        const name = profile?.display_name || "DIGIY RESA";
-        const desc = profile?.bio || "Choisir un service, choisir un créneau, envoyer une réservation propre.";
-
-        $("heroName").textContent = name;
-        $("heroDesc").textContent = desc;
-        $("heroSlug").textContent = "Slug : " + slug;
-        $("heroCity").textContent = "Ville : " + city;
-        $("heroType").textContent = "Activité : " + type;
-        $("btnBackFiche").href = slug && slug !== "—"
-          ? `./fiche.html?slug=${encodeURIComponent(slug)}`
-          : "./fiche.html";
-
-        setWhatsApp(profile);
-
-        const badge = $("modeBadge");
-        badge.className = "mode";
-
-        if(state === "live"){
-          badge.classList.add("live");
-          badge.textContent = "Mode vivant";
-          $("topSub").textContent = `Réservation ouverte pour ${name}.`;
-        }else if(state === "not_found"){
-          badge.classList.add("bad");
-          badge.textContent = "Slug introuvable";
-          $("topSub").textContent = "Ce commerce est introuvable ou indisponible.";
-        }else if(state === "empty"){
-          badge.textContent = "Mode attente";
-          $("topSub").textContent = "Ajoute un slug actif pour ouvrir la vraie réservation.";
-        }else{
-          badge.textContent = "Indisponible";
-          $("topSub").textContent = "La réservation n’est pas accessible pour le moment.";
-        }
-
-        $("recapShop").textContent = name;
-      }
-
-      function refreshRecap(){
-        $("recapService").textContent = ACTIVE_SERVICE?.service_name || "—";
-        $("recapDuration").textContent = ACTIVE_SERVICE?.duration_minutes ? `${ACTIVE_SERVICE.duration_minutes} min` : "—";
-        $("recapPrice").textContent = ACTIVE_SERVICE ? money(ACTIVE_SERVICE.price_fcfa) : "—";
-        $("recapDate").textContent = $("bookingDate").value || "—";
-        $("recapTime").textContent = ACTIVE_SLOT || "—";
-      }
-
-      function resetSelection(){
-        ACTIVE_SERVICE = null;
-        ACTIVE_SLOT = "";
-        SERVICES = [];
-        refreshRecap();
-      }
-
-      function initClient(){
-        if (!window.supabase?.createClient) throw new Error("Supabase JS non chargé.");
-        sb = window.supabase.createClient(
-          window.DIGIY_SUPABASE_URL,
-          window.DIGIY_SUPABASE_ANON_KEY,
-          {
-            auth:{
-              persistSession:false,
-              autoRefreshToken:false,
-              detectSessionInUrl:false,
-              storage:{
-                getItem:() => null,
-                setItem:() => {},
-                removeItem:() => {}
-              }
-            }
-          }
+      function getSlug(){
+        return normalizeSlug(
+          qs.get("slug") ||
+          storageGet("digiy_resa_slug") ||
+          storageGet("digiy_resa_last_slug") ||
+          storageGet("digiy_last_slug") ||
+          storageGet("DIGIY_SLUG") ||
+          ""
         );
       }
 
+      const slug = getSlug();
+
+      function setStatus(msg, tone = ""){
+        const box = $("statusBox");
+        box.className = "status" + (tone ? " " + tone : "");
+        box.textContent = msg;
+      }
+
+      function setBusy(isBusy){
+        $("btnSubmit").disabled = isBusy;
+        $("btnReloadSlots").disabled = isBusy;
+      }
+
+      function initClient(){
+        if (!window.supabase || typeof window.supabase.createClient !== "function") {
+          throw new Error("Supabase JS non chargé.");
+        }
+
+        if (window.DIGIY_SB) {
+          sb = window.DIGIY_SB;
+          return;
+        }
+
+        sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+          auth:{
+            persistSession:false,
+            autoRefreshToken:false,
+            detectSessionInUrl:false,
+            storage:{
+              getItem:() => null,
+              setItem:() => {},
+              removeItem:() => {}
+            }
+          }
+        });
+
+        window.DIGIY_SB = sb;
+      }
+
       async function rpc(name, args){
-        const { data, error } = await sb.rpc(name, args);
+        const { data, error } = await sb.rpc(name, args || {});
         if(error) throw error;
-        return data;
+        return typeof data === "string" ? (safeJsonParse(data) ?? data) : data;
       }
 
-      async function loadProfile(slug){
+      function setHeroImage(profile, displayName, city, activity){
+        const heroMedia = $("heroMedia");
+        const imageUrl = pickMainImage(profile);
+
+        const badgeText = city && activity
+          ? `${activity} • ${city}`
+          : city
+            ? `Commerce public • ${city}`
+            : "Réservation publique";
+
+        if(imageUrl){
+          heroMedia.innerHTML = `
+            <img
+              src="${escapeHtml(imageUrl)}"
+              alt="${escapeHtml(displayName)}"
+              loading="eager"
+              onerror="this.outerHTML='<div class=&quot;hero-media-fallback&quot;>📅</div>';"
+            />
+            <div class="hero-badge">
+              <span class="dot"></span>
+              ${escapeHtml(badgeText)}
+            </div>
+          `;
+        }else{
+          heroMedia.innerHTML = `
+            <div class="hero-media-fallback">📅</div>
+            <div class="hero-badge">
+              <span class="dot"></span>
+              ${escapeHtml(badgeText)}
+            </div>
+          `;
+        }
+      }
+
+      function renderProfile(profile){
+        const p = profile || {};
+        const name = safe(p.display_name, "Commerce DIGIY");
+        const city = safe(p.city);
+        const businessType = safe(p.business_type || p.category, "Service local");
+
+        document.title = `${name} — Réserver | DIGIY RESA`;
+
+        setHeroImage(p, name, city, businessType);
+
+        $("name").textContent = name;
+        $("subtitle").textContent = `${city} • ${businessType}`;
+        $("cityPill").textContent = "Ville : " + city;
+        $("typePill").textContent = "Activité : " + businessType;
+        $("slugPill").textContent = "slug : " + (slug || "—");
+
+        $("bio").textContent = safe(p.bio, "Présentation à découvrir.");
+        $("address").textContent = safe(p.address_text || p.address, "Adresse à préciser");
+        $("hours").textContent = safe(p.opening_hours_text || p.hours_text, "Horaires à préciser");
+        $("contactWhatsapp").textContent = safe(p.whatsapp, "WhatsApp à préciser");
+
+        $("btnBackFiche").href = ficheLink(slug);
+
+        const wa = $("btnWhatsApp");
+        const waHref = waLink(p.whatsapp, name);
+        if (waHref) {
+          wa.href = waHref;
+        } else {
+          wa.removeAttribute("href");
+          wa.classList.remove("gold");
+          wa.textContent = "WhatsApp indisponible";
+        }
+      }
+
+      async function loadProfile(){
         const data = await rpc("resa_public_profile_by_slug", { p_slug: slug });
-        if(!data?.ok) throw new Error(data?.error || "profile_not_found");
-        return data.profile || {};
+        if(!data?.ok){
+          throw new Error(data?.error || "profile_not_found");
+        }
+        PROFILE = data.profile || {};
+        renderProfile(PROFILE);
       }
 
-      async function loadServices(slug){
+      async function loadServices(){
         const { data, error } = await sb
           .from("digiy_resa_services")
           .select("id, service_name, duration_minutes, price_fcfa, is_active")
@@ -716,310 +885,426 @@
           .order("service_name", { ascending:true });
 
         if(error) throw error;
-        return Array.isArray(data) ? data : [];
+
+        SERVICES = Array.isArray(data) ? data : [];
+        renderServiceSelect();
+        renderServicesCards();
       }
 
-      function renderServices(){
-        const box = $("servicesBox");
+      function renderServiceSelect(){
+        const select = $("serviceSelect");
+        const current = select.value || "";
 
-        if(PAGE_STATE !== "live"){
-          box.innerHTML = `<div class="empty">Aucun service affichable pour le moment.</div>`;
+        if(!SERVICES.length){
+          select.innerHTML = `<option value="">Demande simple</option>`;
           return;
         }
 
+        select.innerHTML = `<option value="">Choisir un service</option>` + SERVICES.map((s) => {
+          const price = money(s.price_fcfa);
+          const duration = s.duration_minutes ? `${s.duration_minutes} min` : "";
+          const meta = [duration, price].filter(Boolean).join(" • ");
+          return `<option value="${escapeHtml(String(s.id || ""))}">${escapeHtml(s.service_name || "Service")}${meta ? " — " + escapeHtml(meta) : ""}</option>`;
+        }).join("");
+
+        if(current) select.value = current;
+      }
+
+      function renderServicesCards(){
+        const box = $("servicesBox");
+
         if(!SERVICES.length){
-          box.innerHTML = `<div class="empty">Aucun service disponible pour l’instant.</div>`;
+          box.innerHTML = `
+            <div class="service">
+              <div class="muted">
+                Aucun service détaillé n’est affiché pour l’instant. Tu peux tout de même envoyer une demande simple.
+              </div>
+            </div>
+          `;
           return;
         }
 
         box.innerHTML = SERVICES.map((s) => `
-          <article class="service ${ACTIVE_SERVICE?.id === s.id ? "active" : ""}" data-service-id="${escapeHtml(s.id)}">
+          <article class="service">
             <div class="service-top">
               <div class="service-name">${escapeHtml(s.service_name || "Service")}</div>
               <div class="service-meta">
-                ${s.duration_minutes ? `<span class="service-pill">⏱️ ${escapeHtml(String(s.duration_minutes))} min</span>` : ""}
-                <span class="service-pill">💰 ${escapeHtml(money(s.price_fcfa))}</span>
+                ${s.duration_minutes ? `<span class="service-pill">⏱️ ${escapeHtml(String(s.duration_minutes))} min</span>` : ``}
+                ${money(s.price_fcfa) ? `<span class="service-pill">💰 ${escapeHtml(money(s.price_fcfa))}</span>` : ``}
               </div>
             </div>
           </article>
         `).join("");
+      }
 
-        box.querySelectorAll("[data-service-id]").forEach((el) => {
-          el.addEventListener("click", async () => {
-            const id = el.getAttribute("data-service-id");
-            ACTIVE_SERVICE = SERVICES.find(s => String(s.id) === String(id)) || null;
-            ACTIVE_SLOT = "";
-            renderServices();
-            refreshRecap();
-            await loadSlots();
-          });
-        });
+      function getSelectedService(){
+        const id = String($("serviceSelect").value || "");
+        return SERVICES.find(s => String(s.id) === id) || null;
+      }
+
+      function updatePriceHint(){
+        const service = getSelectedService();
+        $("priceHint").value = service ? (money(service.price_fcfa) || "—") : "—";
+      }
+
+      function normalizeSlotResult(raw){
+        const rows = Array.isArray(raw)
+          ? raw
+          : Array.isArray(raw?.slots)
+            ? raw.slots
+            : Array.isArray(raw?.data)
+              ? raw.data
+              : [];
+
+        return rows.map((row) => {
+          if (typeof row === "string") {
+            return { time: row.slice(0,5), available: true };
+          }
+
+          const time =
+            String(
+              row?.time ||
+              row?.slot ||
+              row?.booking_time ||
+              row?.start_time ||
+              ""
+            ).slice(0,5);
+
+          return {
+            time,
+            available: row?.available !== false && row?.is_available !== false
+          };
+        }).filter(x => x.time);
       }
 
       async function loadSlots(){
-        const box = $("slotsBox");
+        const service = getSelectedService();
+        const date = $("dateInput").value || todayISO();
 
-        if(PAGE_STATE !== "live"){
-          box.innerHTML = `<div class="empty" style="grid-column:1/-1">Ajoute un slug actif pour afficher les créneaux réels.</div>`;
-          $("slotsLead").textContent = "Les créneaux réels apparaissent seulement en mode vivant.";
-          return;
-        }
+        $("slotsBox").innerHTML = `<button class="slot off" type="button" disabled>Chargement…</button>`;
+        ACTIVE_SLOTS = [];
+        SELECTED_SLOT = "";
 
-        if(!ACTIVE_SERVICE){
-          box.innerHTML = `<div class="empty" style="grid-column:1/-1">Choisis d’abord un service.</div>`;
-          $("slotsLead").textContent = "Choisis d’abord un service pour voir les créneaux.";
-          return;
-        }
+        const attempts = [];
 
-        const date = $("bookingDate").value || todayISO();
-        $("slotsLead").textContent = `Créneaux disponibles pour ${ACTIVE_SERVICE.service_name} le ${date}.`;
-
-        try{
-          const data = await rpc("digiy_resa_get_slots_by_service", {
-            p_slug: PROFILE.slug,
-            p_date: date,
-            p_service_id: ACTIVE_SERVICE.id
+        if (service?.id) {
+          attempts.push({
+            fn: "digiy_resa_get_slots_by_service",
+            args: {
+              p_slug: slug,
+              p_service_id: service.id,
+              p_date: date
+            }
           });
 
-          const slots = Array.isArray(data?.slots) ? data.slots : [];
-          if(!slots.length){
-            box.innerHTML = `<div class="empty" style="grid-column:1/-1">Aucun créneau trouvé pour cette date.</div>`;
-            return;
+          attempts.push({
+            fn: "digiy_resa_get_slots_by_service",
+            args: {
+              p_slug: slug,
+              p_service_id: service.id,
+              p_day: date
+            }
+          });
+
+          attempts.push({
+            fn: "digiy_resa_get_slots_by_service",
+            args: {
+              slug: slug,
+              service_id: service.id,
+              date: date
+            }
+          });
+        }
+
+        attempts.push({
+          fn: "digiy_resa_get_available_slots",
+          args: {
+            p_slug: slug,
+            p_date: date
           }
+        });
 
-          box.innerHTML = slots.map((s) => {
-            const time = String(s.time || "").slice(0,5);
-            const available = !!s.available;
-            const isActive = ACTIVE_SLOT === time;
-            return `
-              <button
-                class="slot ${available ? "" : "off"} ${isActive ? "active" : ""}"
-                type="button"
-                data-time="${escapeHtml(time)}"
-                ${available ? "" : "disabled"}
-              >${escapeHtml(time)}</button>
-            `;
-          }).join("");
+        attempts.push({
+          fn: "digiy_resa_get_available_slots",
+          args: {
+            p_slug: slug,
+            p_day: date
+          }
+        });
 
-          box.querySelectorAll("[data-time]").forEach((el) => {
-            el.addEventListener("click", () => {
-              ACTIVE_SLOT = el.getAttribute("data-time") || "";
-              renderSlotsSelection();
-              refreshRecap();
-              setMsg("Créneau sélectionné. Tu peux envoyer la réservation.", "ok");
-            });
-          });
-        }catch(err){
-          console.error(err);
-          box.innerHTML = `<div class="empty" style="grid-column:1/-1">Impossible de charger les créneaux.</div>`;
-          setMsg("Les créneaux n’ont pas pu être chargés.", "bad");
+        attempts.push({
+          fn: "digiy_resa_get_available_slots",
+          args: {
+            slug: slug,
+            date: date
+          }
+        });
+
+        let slots = [];
+        for (const a of attempts) {
+          try {
+            const data = await rpc(a.fn, a.args);
+            slots = normalizeSlotResult(data);
+            if (slots.length) break;
+          } catch (_) {}
         }
+
+        ACTIVE_SLOTS = slots;
+        renderSlots();
       }
 
-      function renderSlotsSelection(){
-        $("slotsBox").querySelectorAll("[data-time]").forEach((el) => {
-          el.classList.toggle("active", el.getAttribute("data-time") === ACTIVE_SLOT);
+      function renderSlots(){
+        const box = $("slotsBox");
+
+        if(!ACTIVE_SLOTS.length){
+          box.innerHTML = `<button class="slot off" type="button" disabled>Aucun créneau remonté. Tu peux saisir l’heure manuellement.</button>`;
+          return;
+        }
+
+        box.innerHTML = ACTIVE_SLOTS.map((slot) => `
+          <button
+            class="slot ${slot.time === SELECTED_SLOT ? "active" : ""} ${slot.available ? "" : "off"}"
+            type="button"
+            data-time="${escapeHtml(slot.time)}"
+            ${slot.available ? "" : "disabled"}
+          >${escapeHtml(slot.time)}</button>
+        `).join("");
+
+        box.querySelectorAll("[data-time]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            SELECTED_SLOT = String(btn.getAttribute("data-time") || "");
+            $("timeInput").value = SELECTED_SLOT;
+            renderSlots();
+          });
         });
       }
 
-      function buildEmptyState(){
-        PAGE_STATE = "empty";
-        resetSelection();
+      async function createBooking(payload){
+        const service = getSelectedService();
 
-        setHero({
-          slug: "—",
-          city: "—",
-          business_type: "Multi business",
-          display_name: "DIGIY RESA",
-          bio: "Choisir un service, choisir un créneau, envoyer une réservation propre."
-        }, "empty");
+        const tries = [
+          {
+            p_slug: slug,
+            p_service_id: service?.id || null,
+            p_service_name: payload.service_name,
+            p_booking_date: payload.booking_date,
+            p_booking_time: payload.booking_time,
+            p_customer_name: payload.customer_name,
+            p_customer_phone: payload.customer_phone,
+            p_guests_count: payload.guests_count,
+            p_note: payload.note
+          },
+          {
+            p_slug: slug,
+            p_service_id: service?.id || null,
+            p_service_name: payload.service_name,
+            p_date: payload.booking_date,
+            p_time: payload.booking_time,
+            p_name: payload.customer_name,
+            p_phone: payload.customer_phone,
+            p_guests_count: payload.guests_count,
+            p_note: payload.note
+          },
+          {
+            slug: slug,
+            service_id: service?.id || null,
+            service_name: payload.service_name,
+            booking_date: payload.booking_date,
+            booking_time: payload.booking_time,
+            customer_name: payload.customer_name,
+            customer_phone: payload.customer_phone,
+            guests_count: payload.guests_count,
+            note: payload.note
+          },
+          {
+            p_slug: slug,
+            p_service_name: payload.service_name,
+            p_booking_date: payload.booking_date,
+            p_booking_time: payload.booking_time,
+            p_customer_name: payload.customer_name,
+            p_customer_phone: payload.customer_phone,
+            p_guests_count: payload.guests_count,
+            p_note: payload.note
+          }
+        ];
 
-        $("servicesLead").textContent = "Ajoute un slug actif dans l’URL pour ouvrir un commerce réel.";
-        $("servicesBox").innerHTML = `<div class="empty">Aucun service à afficher sans slug actif.</div>`;
-        $("slotsLead").textContent = "Les créneaux seront chargés quand un commerce réel sera ouvert.";
-        $("slotsBox").innerHTML = `<div class="empty" style="grid-column:1/-1">Aucun créneau affichable sans slug actif.</div>`;
-        setActionState(false);
-        setMsg("Aucun slug détecté. Ouvre cette page avec ?slug=... pour activer la vraie réservation.", "warn");
+        let lastError = null;
+
+        for (const args of tries) {
+          try {
+            const data = await rpc("digiy_resa_create_booking", args);
+            const parsed = safeJsonParse(data) || data || {};
+
+            if (parsed?.ok === true || parsed?.booking_id || parsed?.tracking_code || parsed?.id) {
+              return parsed;
+            }
+
+            if (parsed?.ok === false) {
+              lastError = new Error(parsed.error || parsed.reason || "booking_refused");
+              continue;
+            }
+
+            if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+              return parsed;
+            }
+
+          } catch (e) {
+            lastError = e;
+          }
+        }
+
+        throw lastError || new Error("booking_create_failed");
       }
 
-      function buildNotFoundState(slug){
-        PAGE_STATE = "not_found";
-        resetSelection();
-
-        setHero({
-          slug: slug || "—",
-          city: "—",
-          business_type: "Multi business",
-          display_name: "Commerce indisponible",
-          bio: "Ce parcours réservation ne peut pas être ouvert avec ce slug."
-        }, "not_found");
-
-        $("servicesLead").textContent = "Le commerce demandé est introuvable ou momentanément indisponible.";
-        $("servicesBox").innerHTML = `<div class="empty">Aucun service disponible pour ce slug.</div>`;
-        $("slotsLead").textContent = "Impossible d’afficher les créneaux pour ce slug.";
-        $("slotsBox").innerHTML = `<div class="empty" style="grid-column:1/-1">Aucun créneau disponible.</div>`;
-        setActionState(false);
-        setMsg("Ce slug est introuvable ou inactif. Vérifie le lien puis réessaie.", "bad");
-      }
-
-      function buildErrorState(slug){
-        PAGE_STATE = "error";
-        resetSelection();
-
-        setHero({
-          slug: slug || "—",
-          city: "—",
-          business_type: "Multi business",
-          display_name: "DIGIY RESA",
-          bio: "Le parcours réservation n’est pas disponible pour le moment."
-        }, "error");
-
-        $("servicesLead").textContent = "Le service rencontre un souci temporaire.";
-        $("servicesBox").innerHTML = `<div class="empty">Impossible de charger les services pour le moment.</div>`;
-        $("slotsLead").textContent = "Les créneaux sont momentanément indisponibles.";
-        $("slotsBox").innerHTML = `<div class="empty" style="grid-column:1/-1">Impossible d’afficher les créneaux.</div>`;
-        setActionState(false);
-        setMsg("Le service réservation est momentanément indisponible.", "bad");
-      }
-
-      async function submitBooking(){
-        if(PAGE_STATE !== "live"){
-          setMsg("La réservation réelle n’est pas active sur cette page.", "warn");
-          return;
-        }
-
-        if(!PROFILE?.slug){
-          setMsg("Slug manquant.", "bad");
-          return;
-        }
-
-        if(!ACTIVE_SERVICE){
-          setMsg("Choisis un service.", "warn");
-          return;
-        }
-
-        if(!ACTIVE_SLOT){
-          setMsg("Choisis un créneau.", "warn");
-          return;
-        }
-
-        const customerName = $("customerName").value.trim();
-        const customerPhone = normalizePhone($("customerPhone").value);
+      async function submit(){
+        const service = getSelectedService();
+        const bookingDate = $("dateInput").value || "";
+        const bookingTime = $("timeInput").value || "";
+        const customerName = String($("customerName").value || "").trim();
+        const customerPhone = normalizePhone($("customerPhone").value || "");
         const guestsCount = Math.max(1, Number($("guestsCount").value || 1));
-        const noteText = $("noteText").value.trim();
-        const bookingDate = $("bookingDate").value || todayISO();
+        const note = String($("noteInput").value || "").trim();
 
-        if(!customerName){
-          setMsg("Entre ton nom.", "warn");
-          $("customerName").focus();
+        if (!slug) {
+          setStatus("Slug manquant. Impossible d’envoyer une réservation.", "err");
           return;
         }
 
-        if(!customerPhone){
-          setMsg("Entre un téléphone.", "warn");
-          $("customerPhone").focus();
+        if (!bookingDate) {
+          setStatus("Choisis une date.", "err");
           return;
         }
 
-        const btn = $("btnBook");
-        const old = btn.textContent;
-        btn.disabled = true;
-        btn.textContent = "Envoi…";
+        if (!bookingTime) {
+          setStatus("Choisis ou saisis une heure.", "err");
+          return;
+        }
 
-        try{
-          const data = await rpc("digiy_resa_create_booking", {
-            p_slug: PROFILE.slug,
-            p_customer_name: customerName,
-            p_customer_phone: customerPhone,
-            p_booking_date: bookingDate,
-            p_booking_time: ACTIVE_SLOT,
-            p_guests_count: guestsCount,
-            p_note_text: noteText,
-            p_service_id: ACTIVE_SERVICE.id
+        if (!customerName) {
+          setStatus("Ton nom est requis.", "err");
+          return;
+        }
+
+        if (!customerPhone || customerPhone.length < 9) {
+          setStatus("Ton téléphone est requis.", "err");
+          return;
+        }
+
+        setBusy(true);
+        setStatus("Envoi de la réservation…", "warn");
+
+        try {
+          const result = await createBooking({
+            service_name: service?.service_name || "Demande simple",
+            booking_date: bookingDate,
+            booking_time: bookingTime,
+            customer_name: customerName,
+            customer_phone: customerPhone,
+            guests_count: guestsCount,
+            note
           });
 
-          if(!data?.ok){
-            throw new Error(data?.error || "booking_failed");
-          }
+          const tracking =
+            result?.tracking_code ||
+            result?.booking_code ||
+            result?.booking_id ||
+            result?.id ||
+            "";
 
-          setMsg("Réservation envoyée avec succès. Le commerce pourra la confirmer.", "ok");
-          $("noteText").value = "";
-          ACTIVE_SLOT = "";
-          refreshRecap();
+          setStatus(
+            tracking
+              ? `✅ Réservation envoyée.\nRéférence : ${tracking}`
+              : "✅ Réservation envoyée.",
+            "ok"
+          );
+
+          $("customerName").value = "";
+          $("customerPhone").value = "";
+          $("guestsCount").value = "1";
+          $("noteInput").value = "";
+          SELECTED_SLOT = "";
           await loadSlots();
-        }catch(err){
-          console.error(err);
-          setMsg("Impossible d’envoyer la réservation. Essaie un autre créneau.", "bad");
-        }finally{
-          btn.disabled = false;
-          btn.textContent = old;
+
+        } catch (e) {
+          console.error(e);
+          setStatus(
+            "❌ Impossible d’envoyer la réservation via le rail automatique.\nPasse par WhatsApp pour finaliser la demande.",
+            "err"
+          );
+        } finally {
+          setBusy(false);
         }
       }
 
-      async function bootLive(slug){
-        const profile = await loadProfile(slug);
-        const services = await loadServices(slug);
-
-        PAGE_STATE = "live";
-        PROFILE = { ...profile, slug };
-        SERVICES = services;
-
-        setHero(PROFILE, "live");
-        setActionState(true);
-        renderServices();
-        refreshRecap();
-        await loadSlots();
-
-        $("servicesLead").textContent = "Sélectionne la prestation qui correspond à ton besoin.";
-
-        if(!SERVICES.length){
-          setMsg("Aucun service actif pour ce commerce.", "warn");
-        }else{
-          setMsg("Choisis un service puis un créneau.", "warn");
-        }
+      function setUnavailableState(title, subtitle){
+        $("name").textContent = title;
+        $("subtitle").textContent = subtitle;
+        $("btnSubmit").disabled = true;
+        $("btnReloadSlots").disabled = true;
+        $("serviceSelect").disabled = true;
+        $("dateInput").disabled = true;
+        $("timeInput").disabled = true;
+        $("customerName").disabled = true;
+        $("customerPhone").disabled = true;
+        $("guestsCount").disabled = true;
+        $("noteInput").disabled = true;
+        $("btnReserve").classList.add("hidden");
       }
 
       async function boot(){
-        document.body.classList.add("loading");
-        $("bookingDate").value = $("bookingDate").value || todayISO();
-        refreshRecap();
+        $("slugPill").textContent = "slug : " + (slug || "—");
+        $("btnBackFiche").href = ficheLink(slug);
+        $("dateInput").value = todayISO();
+        $("dateInput").min = todayISO();
+        $("dateInput").max = addDaysISO(60);
+
+        if(!slug){
+          setUnavailableState("Slug manquant", "Impossible d’ouvrir cette réservation sans identifiant commerce.");
+          setStatus("Slug manquant.", "err");
+          $("servicesBox").innerHTML = `<div class="service"><div class="muted">Aucun service à afficher.</div></div>`;
+          return;
+        }
 
         try{
           initClient();
 
-          const slug = normalizeSlug(QUERY_SLUG);
-          if(!slug){
-            buildEmptyState();
-            return;
-          }
+          storageSet("digiy_resa_last_slug", slug);
+          storageSet("digiy_resa_slug", slug);
+          storageSet("digiy_last_slug", slug);
+          storageSet("DIGIY_SLUG", slug);
 
-          await bootLive(slug);
-        }catch(err){
-          console.error(err);
-          const slug = normalizeSlug(QUERY_SLUG);
+          await loadProfile();
+          await loadServices();
+          updatePriceHint();
+          await loadSlots();
 
-          const msg = String(err?.message || err || "").toLowerCase();
-          if(
-            msg.includes("profile_not_found") ||
-            msg.includes("not_found") ||
-            msg.includes("introuvable")
-          ){
-            buildNotFoundState(slug);
-          }else{
-            buildErrorState(slug);
-          }
-        }finally{
-          document.body.classList.remove("loading");
+          setStatus("Prêt. Choisis ton créneau et envoie la demande.", "");
+
+        }catch(e){
+          console.error(e);
+          setUnavailableState("Commerce indisponible", "Cette réservation n’est pas disponible publiquement.");
+          setStatus("Impossible de charger le rail RESA public.", "err");
+          $("servicesBox").innerHTML = `<div class="service"><div class="muted">Services indisponibles.</div></div>`;
         }
       }
 
-      $("bookingDate").addEventListener("change", async () => {
-        ACTIVE_SLOT = "";
-        refreshRecap();
+      $("serviceSelect").addEventListener("change", async () => {
+        updatePriceHint();
         await loadSlots();
       });
 
-      $("btnBook").addEventListener("click", submitBooking);
+      $("dateInput").addEventListener("change", async () => {
+        SELECTED_SLOT = "";
+        await loadSlots();
+      });
+
+      $("timeInput").addEventListener("input", () => {
+        SELECTED_SLOT = $("timeInput").value || "";
+        renderSlots();
+      });
+
+      $("btnReloadSlots").addEventListener("click", loadSlots);
+      $("btnSubmit").addEventListener("click", submit);
 
       boot();
     })();
