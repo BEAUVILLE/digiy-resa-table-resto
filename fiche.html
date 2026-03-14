@@ -7,6 +7,12 @@
   <meta name="description" content="Fiche publique commerce DIGIY RESA — réservation multi business." />
   <meta name="theme-color" content="#061b14" />
 
+  <script>
+    window.DIGIY_SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+    window.DIGIY_SUPABASE_ANON_KEY = "sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3";
+    window.DIGIY_SUPABASE_ANON = window.DIGIY_SUPABASE_ANON_KEY;
+    window.DIGIY_MODULE = "RESA";
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -285,6 +291,7 @@
       line-height:1;
       white-space:nowrap;
       border:0;
+      cursor:pointer;
     }
 
     .btn.primary{
@@ -434,6 +441,7 @@
       font-size:13px;
       font-weight:900;
       color:var(--muted);
+      white-space:pre-wrap;
     }
 
     .footer{
@@ -507,8 +515,8 @@
 
           <div class="infoList">
             <div class="infoItem">
-              <div class="infoK">Canal</div>
-              <div class="infoV">WhatsApp direct</div>
+              <div class="infoK">Canal principal</div>
+              <div class="infoV" id="channelInfo">Formulaire DIGIY RESA</div>
             </div>
             <div class="infoItem">
               <div class="infoK">Réponse</div>
@@ -545,402 +553,473 @@
   </div>
 
   <script>
-    const FALLBACK_PHOTO = "https://orange-pig-270004.hostingersite.com/wp-content/uploads/2026/03/chatgpt-image-4-mars-2026-23_40_53.png";
-    const SUPPORT_WA = "221771342889";
+    (() => {
+      "use strict";
 
-     const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-const SUPABASE_ANON_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+      const FALLBACK_PHOTO = "https://orange-pig-270004.hostingersite.com/wp-content/uploads/2026/03/chatgpt-image-4-mars-2026-23_40_53.png";
+      const SUPPORT_WA = "221771342889";
 
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false,
-        detectSessionInUrl: false,
-        storage: {
-          getItem: () => null,
-          setItem: () => {},
-          removeItem: () => {}
+      const SUPABASE_URL = window.DIGIY_SUPABASE_URL;
+      const SUPABASE_ANON_KEY = window.DIGIY_SUPABASE_ANON_KEY || window.DIGIY_SUPABASE_ANON;
+
+      let sb = null;
+
+      const DEMO_MAP = {
+        "atelier-brushing-saly": {
+          display_name: "Atelier Brushing Saly",
+          business_type: "Coiffure",
+          city: "Saly",
+          address_text: "Quartier central • rendez-vous beauté",
+          bio: "Coupe, brushing, teinture et soins. Une fiche pensée pour réserver simplement selon le service choisi.",
+          badge: "✨ SÉLECTION DIGIY",
+          hub_badge: "💇 BEAUTÉ",
+          opening_hours_text: "09:00 - 19:00",
+          photo_url: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80",
+          tags: ["Coiffure", "Brushing", "Teinture", "Saly"],
+          whatsapp: SUPPORT_WA,
+          slug: "",
+          services: [
+            { service_name: "Coupe homme", duration_minutes: 20, price_fcfa: 3000 },
+            { service_name: "Brushing", duration_minutes: 45, price_fcfa: 6000 },
+            { service_name: "Teinture", duration_minutes: 90, price_fcfa: 15000 }
+          ]
+        },
+        "garage-diagnostic-saly": {
+          display_name: "Garage Diagnostic Saly",
+          business_type: "Garage",
+          city: "Saly",
+          address_text: "Axe principal • mécanique légère",
+          bio: "Diagnostic, vidange, freins et petites interventions avec créneaux clairs pour gagner du temps.",
+          badge: "✨ SÉLECTION DIGIY",
+          hub_badge: "🔧 GARAGE",
+          opening_hours_text: "08:00 - 18:00",
+          photo_url: "https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=1200&q=80",
+          tags: ["Garage", "Diagnostic", "Vidange", "Saly"],
+          whatsapp: SUPPORT_WA,
+          slug: "",
+          services: [
+            { service_name: "Diagnostic", duration_minutes: 15, price_fcfa: 5000 },
+            { service_name: "Vidange", duration_minutes: 30, price_fcfa: 10000 },
+            { service_name: "Freins", duration_minutes: 60, price_fcfa: 20000 }
+          ]
+        },
+        "terrasse-saveurs-saly": {
+          display_name: "Terrasse Saveurs Saly",
+          business_type: "Restaurant",
+          city: "Saly",
+          address_text: "Terrasse • déjeuner & soirée",
+          bio: "Une table d’ambiance pour déjeuner tranquille, dîner simple ou recevoir des amis dans un cadre détendu.",
+          badge: "✨ SÉLECTION DIGIY",
+          hub_badge: "🍽️ RESTAURANT",
+          opening_hours_text: "12:00 - 23:00",
+          photo_url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
+          tags: ["Restaurant", "Terrasse", "Déjeuner", "Saly"],
+          whatsapp: SUPPORT_WA,
+          slug: "",
+          services: [
+            { service_name: "Table midi", duration_minutes: 60, price_fcfa: null },
+            { service_name: "Table soirée", duration_minutes: 90, price_fcfa: null }
+          ]
+        },
+        "studio-onglerie-saly": {
+          display_name: "Studio Onglerie Saly",
+          business_type: "Beauté",
+          city: "Saly",
+          address_text: "Zone calme • soins esthétiques",
+          bio: "Pose, entretien, manucure et rendez-vous beauté avec créneaux simples à lire pour la cliente.",
+          badge: "✨ SÉLECTION DIGIY",
+          hub_badge: "💅 BEAUTÉ",
+          opening_hours_text: "10:00 - 19:00",
+          photo_url: "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=80",
+          tags: ["Beauté", "Onglerie", "Soin", "Saly"],
+          whatsapp: SUPPORT_WA,
+          slug: "",
+          services: [
+            { service_name: "Pose", duration_minutes: 60, price_fcfa: 10000 },
+            { service_name: "Entretien", duration_minutes: 45, price_fcfa: 7000 }
+          ]
+        },
+        "cabinet-conseil-saly": {
+          display_name: "Cabinet Conseil Saly",
+          business_type: "Consultation",
+          city: "Saly",
+          address_text: "Bureau calme • rendez-vous pro",
+          bio: "Consultations, échanges posés et rendez-vous organisés sur des créneaux nets pour éviter les confusions.",
+          badge: "✨ SÉLECTION DIGIY",
+          hub_badge: "🩺 CONSULTATION",
+          opening_hours_text: "09:00 - 17:00",
+          photo_url: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
+          tags: ["Consultation", "Conseil", "Bureau", "Saly"],
+          whatsapp: SUPPORT_WA,
+          slug: "",
+          services: [
+            { service_name: "Consultation simple", duration_minutes: 30, price_fcfa: 10000 },
+            { service_name: "Consultation longue", duration_minutes: 60, price_fcfa: 20000 }
+          ]
+        },
+        "atelier-service-saly": {
+          display_name: "Atelier Service Saly",
+          business_type: "Atelier",
+          city: "Saly",
+          address_text: "Service de quartier • rendez-vous utiles",
+          bio: "Un atelier pensé pour les rendez-vous techniques, petits dépannages et services du quotidien avec planning clair.",
+          badge: "✨ SÉLECTION DIGIY",
+          hub_badge: "🛠️ ATELIER",
+          opening_hours_text: "08:30 - 18:30",
+          photo_url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
+          tags: ["Atelier", "Service", "Quartier", "Saly"],
+          whatsapp: SUPPORT_WA,
+          slug: "",
+          services: [
+            { service_name: "Diagnostic atelier", duration_minutes: 30, price_fcfa: 5000 },
+            { service_name: "Intervention", duration_minutes: 60, price_fcfa: 12000 }
+          ]
+        }
+      };
+
+      function initSupabase() {
+        if (!window.supabase || typeof window.supabase.createClient !== "function") {
+          return null;
+        }
+
+        if (window.DIGIY_SB) return window.DIGIY_SB;
+
+        window.DIGIY_SB = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+          auth: {
+            persistSession: false,
+            autoRefreshToken: false,
+            detectSessionInUrl: false,
+            storage: {
+              getItem: () => null,
+              setItem: () => {},
+              removeItem: () => {}
+            }
+          }
+        });
+
+        return window.DIGIY_SB;
+      }
+
+      function esc(s){
+        return String(s ?? "")
+          .replaceAll("&","&amp;")
+          .replaceAll("<","&lt;")
+          .replaceAll(">","&gt;")
+          .replaceAll('"',"&quot;")
+          .replaceAll("'","&#039;");
+      }
+
+      function qs(name){
+        return new URL(location.href).searchParams.get(name) || "";
+      }
+
+      function first(...vals){
+        for(const v of vals){
+          if(v !== null && v !== undefined && String(v).trim() !== "") return v;
+        }
+        return "";
+      }
+
+      function normalizePhone(v){
+        return String(v || "").replace(/[^\d]/g, "");
+      }
+
+      function normalizeSlug(v){
+        return String(v || "")
+          .trim()
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[^a-z0-9-]/g, "")
+          .replace(/-+/g, "-")
+          .replace(/^-|-$/g, "");
+      }
+
+      function money(v){
+        const n = Number(v);
+        if(!Number.isFinite(n)) return "";
+        return `${n.toLocaleString("fr-FR")} FCFA`;
+      }
+
+      function tagsToArray(tags){
+        if(Array.isArray(tags)) return tags.filter(Boolean).map(String);
+        const s = String(tags || "").trim();
+        if(!s) return [];
+        return s.split(",").map(x => x.trim()).filter(Boolean);
+      }
+
+      function safeJsonParse(value){
+        try{
+          return typeof value === "string" ? JSON.parse(value) : value;
+        }catch{
+          return null;
         }
       }
-    });
 
-    const DEMO_MAP = {
-      "atelier-brushing-saly": {
-        display_name: "Atelier Brushing Saly",
-        business_type: "Coiffure",
-        city: "Saly",
-        address_text: "Quartier central • rendez-vous beauté",
-        bio: "Coupe, brushing, teinture et soins. Une fiche pensée pour réserver simplement selon le service choisi.",
-        badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "💇 BEAUTÉ",
-        opening_hours_text: "09:00 - 19:00",
-        photo_url: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80",
-        tags: ["Coiffure", "Brushing", "Teinture", "Saly"],
-        whatsapp: SUPPORT_WA,
-        services: [
-          { service_name: "Coupe homme", duration_minutes: 20, price_fcfa: 3000 },
-          { service_name: "Brushing", duration_minutes: 45, price_fcfa: 6000 },
-          { service_name: "Teinture", duration_minutes: 90, price_fcfa: 15000 }
-        ]
-      },
-      "garage-diagnostic-saly": {
-        display_name: "Garage Diagnostic Saly",
-        business_type: "Garage",
-        city: "Saly",
-        address_text: "Axe principal • mécanique légère",
-        bio: "Diagnostic, vidange, freins et petites interventions avec créneaux clairs pour gagner du temps.",
-        badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🔧 GARAGE",
-        opening_hours_text: "08:00 - 18:00",
-        photo_url: "https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=1200&q=80",
-        tags: ["Garage", "Diagnostic", "Vidange", "Saly"],
-        whatsapp: SUPPORT_WA,
-        services: [
-          { service_name: "Diagnostic", duration_minutes: 15, price_fcfa: 5000 },
-          { service_name: "Vidange", duration_minutes: 30, price_fcfa: 10000 },
-          { service_name: "Freins", duration_minutes: 60, price_fcfa: 20000 }
-        ]
-      },
-      "terrasse-saveurs-saly": {
-        display_name: "Terrasse Saveurs Saly",
-        business_type: "Restaurant",
-        city: "Saly",
-        address_text: "Terrasse • déjeuner & soirée",
-        bio: "Une table d’ambiance pour déjeuner tranquille, dîner simple ou recevoir des amis dans un cadre détendu.",
-        badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🍽️ RESTAURANT",
-        opening_hours_text: "12:00 - 23:00",
-        photo_url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
-        tags: ["Restaurant", "Terrasse", "Déjeuner", "Saly"],
-        whatsapp: SUPPORT_WA,
-        services: [
-          { service_name: "Table midi", duration_minutes: 60, price_fcfa: null },
-          { service_name: "Table soirée", duration_minutes: 90, price_fcfa: null }
-        ]
-      },
-      "studio-onglerie-saly": {
-        display_name: "Studio Onglerie Saly",
-        business_type: "Beauté",
-        city: "Saly",
-        address_text: "Zone calme • soins esthétiques",
-        bio: "Pose, entretien, manucure et rendez-vous beauté avec créneaux simples à lire pour la cliente.",
-        badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "💅 BEAUTÉ",
-        opening_hours_text: "10:00 - 19:00",
-        photo_url: "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=80",
-        tags: ["Beauté", "Onglerie", "Soin", "Saly"],
-        whatsapp: SUPPORT_WA,
-        services: [
-          { service_name: "Pose", duration_minutes: 60, price_fcfa: 10000 },
-          { service_name: "Entretien", duration_minutes: 45, price_fcfa: 7000 }
-        ]
-      },
-      "cabinet-conseil-saly": {
-        display_name: "Cabinet Conseil Saly",
-        business_type: "Consultation",
-        city: "Saly",
-        address_text: "Bureau calme • rendez-vous pro",
-        bio: "Consultations, échanges posés et rendez-vous organisés sur des créneaux nets pour éviter les confusions.",
-        badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🩺 CONSULTATION",
-        opening_hours_text: "09:00 - 17:00",
-        photo_url: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
-        tags: ["Consultation", "Conseil", "Bureau", "Saly"],
-        whatsapp: SUPPORT_WA,
-        services: [
-          { service_name: "Consultation simple", duration_minutes: 30, price_fcfa: 10000 },
-          { service_name: "Consultation longue", duration_minutes: 60, price_fcfa: 20000 }
-        ]
-      },
-      "atelier-service-saly": {
-        display_name: "Atelier Service Saly",
-        business_type: "Atelier",
-        city: "Saly",
-        address_text: "Service de quartier • rendez-vous utiles",
-        bio: "Un atelier pensé pour les rendez-vous techniques, petits dépannages et services du quotidien avec planning clair.",
-        badge: "✨ SÉLECTION DIGIY",
-        hub_badge: "🛠️ ATELIER",
-        opening_hours_text: "08:30 - 18:30",
-        photo_url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
-        tags: ["Atelier", "Service", "Quartier", "Saly"],
-        whatsapp: SUPPORT_WA,
-        services: [
-          { service_name: "Diagnostic atelier", duration_minutes: 30, price_fcfa: 5000 },
-          { service_name: "Intervention", duration_minutes: 60, price_fcfa: 12000 }
-        ]
-      }
-    };
-
-    function esc(s){
-      return String(s ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
-    function qs(name){
-      return new URL(location.href).searchParams.get(name) || "";
-    }
-
-    function first(...vals){
-      for(const v of vals){
-        if(v !== null && v !== undefined && String(v).trim() !== "") return v;
-      }
-      return "";
-    }
-
-    function normalizePhone(v){
-      return String(v || "").replace(/[^\d]/g, "");
-    }
-
-    function money(v){
-      const n = Number(v);
-      if(!Number.isFinite(n)) return "";
-      return `${n.toLocaleString("fr-FR")} FCFA`;
-    }
-
-    function tagsToArray(tags){
-      if(Array.isArray(tags)) return tags.filter(Boolean).map(String);
-      const s = String(tags || "").trim();
-      if(!s) return [];
-      return s.split(",").map(x => x.trim()).filter(Boolean);
-    }
-
-    function mapLiveRow(r){
-      return {
-        display_name: first(r.display_name, r.business_name, r.name, r.establishment_name) || "Commerce",
-        business_type: first(r.business_type, r.category, r.type_label) || "Service local",
-        city: first(r.city) || "Saly",
-        address_text: first(r.address_text, r.address, r.location_text) || "",
-        bio: first(r.bio, r.description, r.about, r.short_description) || "Fiche publique DIGIY RESA.",
-        badge: "📅 RÉSERVABLE",
-        hub_badge: "🟢 MULTI BUSINESS",
-        opening_hours_text: first(r.opening_hours_text, r.open_hours, r.opening_hours) || "",
-        photo_url: first(r.cover_url, r.cover_image_url, r.logo_url, r.image_url, r.photo_url) || "",
-        tags: [
-          first(r.business_type, r.category, r.type_label) || "",
-          first(r.city) || "",
-          first(r.opening_hours_text, r.open_hours, r.opening_hours) ? `Horaires: ${first(r.opening_hours_text, r.open_hours, r.opening_hours)}` : ""
-        ].filter(Boolean),
-        whatsapp: normalizePhone(first(r.whatsapp) || SUPPORT_WA),
-        slug: first(r.slug) || ""
-      };
-    }
-
-    async function loadServices(slug){
-      if(!slug) return [];
-
-      try{
-        const { data, error } = await sb
-          .from("digiy_resa_services")
-          .select("id, service_name, duration_minutes, price_fcfa, is_active")
-          .eq("slug", slug)
-          .eq("is_active", true)
-          .order("service_name", { ascending: true });
-
-        if(error) throw error;
-        return Array.isArray(data) ? data : [];
-      }catch(e){
-        console.error(e);
-        return [];
-      }
-    }
-
-    function renderServices(services, businessType){
-      const box = document.getElementById("servicesBox");
-
-      if(!Array.isArray(services) || !services.length){
-        box.innerHTML = `
-          <div class="muted">
-            Aucun service détaillé n’est affiché pour l’instant. Le client peut passer par WhatsApp pour préciser son besoin.
-          </div>
-        `;
-        return;
+      function buildReserveHref(slug, demo){
+        if (slug) return `./reserver.html?slug=${encodeURIComponent(slug)}`;
+        if (demo) return `https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Bonjour, je souhaite réserver via DIGIY RESA.")}`;
+        return "./index.html";
       }
 
-      box.innerHTML = services.map(s => `
-        <article class="serviceCard">
-          <div class="serviceTop">
-            <div class="serviceName">${esc(s.service_name || "Service")}</div>
-            <div class="serviceMeta">
-              ${s.duration_minutes ? `<span class="serviceChip">⏱️ ${esc(String(s.duration_minutes))} min</span>` : ``}
-              ${money(s.price_fcfa) ? `<span class="serviceChip">💰 ${esc(money(s.price_fcfa))}</span>` : ``}
+      function buildWhatsAppHref(phone, displayName){
+        const clean = normalizePhone(phone || SUPPORT_WA);
+        const msg = `Bonjour ${displayName || ""}, je vous contacte via votre fiche DIGIY RESA.`;
+        return "https://wa.me/" + clean + "?text=" + encodeURIComponent(msg);
+      }
+
+      function mapLiveRow(profile){
+        return {
+          display_name: first(profile?.display_name, profile?.business_name, profile?.name, profile?.establishment_name) || "Commerce",
+          business_type: first(profile?.business_type, profile?.category, profile?.type_label) || "Service local",
+          city: first(profile?.city) || "Saly",
+          address_text: first(profile?.address_text, profile?.address, profile?.location_text) || "",
+          bio: first(profile?.bio, profile?.description, profile?.about, profile?.short_description) || "Fiche publique DIGIY RESA.",
+          badge: "📅 RÉSERVABLE",
+          hub_badge: "🟢 MULTI BUSINESS",
+          opening_hours_text: first(profile?.opening_hours_text, profile?.open_hours, profile?.opening_hours) || "",
+          photo_url: first(profile?.cover_url, profile?.cover_image_url, profile?.logo_url, profile?.image_url, profile?.photo_url) || "",
+          tags: [
+            first(profile?.business_type, profile?.category, profile?.type_label) || "",
+            first(profile?.city) || "",
+            first(profile?.opening_hours_text, profile?.open_hours, profile?.opening_hours) ? `Horaires: ${first(profile?.opening_hours_text, profile?.open_hours, profile?.opening_hours)}` : ""
+          ].filter(Boolean),
+          whatsapp: normalizePhone(first(profile?.whatsapp) || SUPPORT_WA),
+          slug: normalizeSlug(first(profile?.slug) || "")
+        };
+      }
+
+      async function loadServices(slug){
+        if(!slug || !sb) return [];
+
+        try{
+          const { data, error } = await sb
+            .from("digiy_resa_services")
+            .select("id, service_name, duration_minutes, price_fcfa, is_active")
+            .eq("slug", slug)
+            .eq("is_active", true)
+            .order("service_name", { ascending: true });
+
+          if(error) throw error;
+          return Array.isArray(data) ? data : [];
+        }catch(e){
+          console.error(e);
+          return [];
+        }
+      }
+
+      async function loadPublicProfileBySlug(slug){
+        if(!slug || !sb) return null;
+
+        try{
+          const { data, error } = await sb.rpc("resa_public_profile_by_slug", { p_slug: slug });
+          if(error) throw error;
+
+          const parsed = safeJsonParse(data) || data || {};
+          if (!parsed?.ok) return null;
+
+          return parsed.profile || null;
+        }catch(e){
+          console.error(e);
+          return null;
+        }
+      }
+
+      function renderServices(services, businessType){
+        const box = document.getElementById("servicesBox");
+
+        if(!Array.isArray(services) || !services.length){
+          box.innerHTML = `
+            <div class="muted">
+              Aucun service détaillé n’est affiché pour l’instant. Le client peut passer par le bouton de réservation ou WhatsApp pour préciser son besoin.
+            </div>
+          `;
+          return;
+        }
+
+        box.innerHTML = services.map(s => `
+          <article class="serviceCard">
+            <div class="serviceTop">
+              <div class="serviceName">${esc(s.service_name || "Service")}</div>
+              <div class="serviceMeta">
+                ${s.duration_minutes ? `<span class="serviceChip">⏱️ ${esc(String(s.duration_minutes))} min</span>` : ``}
+                ${money(s.price_fcfa) ? `<span class="serviceChip">💰 ${esc(money(s.price_fcfa))}</span>` : ``}
+              </div>
+            </div>
+            <div class="muted">
+              ${businessType ? `Prestation ${esc(String(businessType).toLowerCase())} disponible sur réservation.` : `Prestation disponible sur réservation.`}
+            </div>
+          </article>
+        `).join("");
+      }
+
+      function renderCard(item, opts = {}){
+        const hero = document.getElementById("hero");
+        const bottom = document.getElementById("bottomActions");
+        const status = document.getElementById("statusText");
+        const ambiance = document.getElementById("ambianceText");
+        const reserveText = document.getElementById("reserveText");
+
+        const cityInfo = document.getElementById("cityInfo");
+        const addressInfo = document.getElementById("addressInfo");
+        const hoursInfo = document.getElementById("hoursInfo");
+        const contactInfo = document.getElementById("contactInfo");
+        const usageInfo = document.getElementById("usageInfo");
+        const channelInfo = document.getElementById("channelInfo");
+
+        const photoBase = item.photo_url || FALLBACK_PHOTO;
+        const photo = photoBase + (photoBase.includes("?") ? "&" : "?") + "v=13";
+        const phone = normalizePhone(item.whatsapp || SUPPORT_WA);
+        const businessType = item.business_type || "service local";
+        const reserveHref = buildReserveHref(item.slug || "", opts.demoId || "");
+        const waHref = buildWhatsAppHref(phone, item.display_name || "");
+        const isLive = !!item.slug;
+
+        hero.innerHTML = `
+          <div class="photo">
+            <img src="${esc(photo)}" alt="${esc(item.display_name)}" onerror="this.onerror=null;this.src='${FALLBACK_PHOTO}'" />
+            <div class="badgeTop">
+              <span class="chip gold">${esc(item.badge || "📅 RÉSERVABLE")}</span>
+              <span class="chip blue">${esc(item.hub_badge || "🟢 MULTI BUSINESS")}</span>
+              ${isLive ? `<span class="chip green">slug : ${esc(item.slug)}</span>` : ``}
             </div>
           </div>
-          <div class="muted">
-            ${businessType ? `Prestation ${esc(businessType.toLowerCase())} disponible sur réservation.` : `Prestation disponible sur réservation.`}
+
+          <div class="heroBody">
+            <h1>${esc(item.display_name || "Commerce")}</h1>
+
+            <div class="meta">
+              <span>🏷️ ${esc(businessType)}</span>
+              <span>📍 ${esc(item.city || "Saly")}${item.address_text ? " • " + esc(item.address_text) : ""}</span>
+              ${item.opening_hours_text ? `<span>🕒 ${esc(item.opening_hours_text)}</span>` : ``}
+            </div>
+
+            <div class="heroIntro">${esc(item.bio || "Fiche publique commerce.")}</div>
+
+            <div class="tags">
+              ${tagsToArray(item.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")}
+            </div>
+
+            <div class="actions">
+              <a class="btn primary" href="${esc(reserveHref)}">${isLive ? "📅 Ouvrir la réservation" : "💬 Réserver / demander"}</a>
+              <a class="btn secondary" href="${esc(waHref)}">💬 WhatsApp direct</a>
+              <a class="btn ghost" href="./index.html">← Retour vitrine</a>
+            </div>
           </div>
-        </article>
-      `).join("");
-    }
+        `;
 
-    function renderCard(item){
-      const hero = document.getElementById("hero");
-      const bottom = document.getElementById("bottomActions");
-      const status = document.getElementById("statusText");
-      const ambiance = document.getElementById("ambianceText");
-      const reserveText = document.getElementById("reserveText");
+        ambiance.textContent = item.bio || "Fiche publique commerce.";
+        reserveText.textContent = isLive
+          ? `Le client peut ouvrir le formulaire DIGIY RESA, choisir un service, une date, une heure, puis envoyer sa demande proprement.`
+          : `Le client peut demander un créneau, poser une question ou confirmer son besoin directement sur WhatsApp. Parcours court, humain et terrain.`;
 
-      const cityInfo = document.getElementById("cityInfo");
-      const addressInfo = document.getElementById("addressInfo");
-      const hoursInfo = document.getElementById("hoursInfo");
-      const contactInfo = document.getElementById("contactInfo");
-      const usageInfo = document.getElementById("usageInfo");
+        cityInfo.textContent = item.city || "Saly";
+        addressInfo.textContent = item.address_text || "Adresse à confirmer";
+        hoursInfo.textContent = item.opening_hours_text || "Horaires à confirmer";
+        contactInfo.textContent = phone ? "+" + phone : "+221" + SUPPORT_WA;
+        usageInfo.textContent = `Réservation simple pour ${businessType.toLowerCase()}`;
+        channelInfo.textContent = isLive ? "Formulaire DIGIY RESA + WhatsApp" : "WhatsApp direct";
 
-      const photoBase = item.photo_url || FALLBACK_PHOTO;
-      const photo = photoBase + (photoBase.includes("?") ? "&" : "?") + "v=13";
-      const phone = normalizePhone(item.whatsapp || item.whatsapp_phone || SUPPORT_WA);
-      const businessType = item.business_type || "service local";
+        bottom.innerHTML = `
+          <a class="btn primary" href="${esc(reserveHref)}">${isLive ? "📅 Réserver maintenant" : "💬 Demander un créneau"}</a>
+          <a class="btn secondary" href="${esc(waHref)}">💬 Écrire sur WhatsApp</a>
+          <a class="btn ghost" href="./index.html">← Retour vitrine</a>
+        `;
 
-      const reserveMessage = encodeURIComponent(
-        "Bonjour, je souhaite réserver / avoir des informations pour " +
-        (item.display_name || "ce commerce") +
-        " via DIGIY RESA."
-      );
-      const waHref = "https://wa.me/" + phone + "?text=" + reserveMessage;
-
-      hero.innerHTML = `
-        <div class="photo">
-          <img src="${esc(photo)}" alt="${esc(item.display_name)}" onerror="this.onerror=null;this.src='${FALLBACK_PHOTO}'" />
-          <div class="badgeTop">
-            <span class="chip gold">${esc(item.badge || "📅 RÉSERVABLE")}</span>
-            <span class="chip blue">${esc(item.hub_badge || "🟢 MULTI BUSINESS")}</span>
-          </div>
-        </div>
-
-        <div class="heroBody">
-          <h1>${esc(item.display_name || "Commerce")}</h1>
-
-          <div class="meta">
-            <span>🏷️ ${esc(businessType)}</span>
-            <span>📍 ${esc(item.city || "Saly")}${item.address_text ? " • " + esc(item.address_text) : ""}</span>
-            ${item.opening_hours_text ? `<span>🕒 ${esc(item.opening_hours_text)}</span>` : ``}
-          </div>
-
-          <div class="heroIntro">${esc(item.bio || "Fiche publique commerce.")}</div>
-
-          <div class="tags">
-            ${(item.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")}
-          </div>
-
-          <div class="actions">
-            <a class="btn primary" href="${waHref}">📅 Réserver sur WhatsApp</a>
-            <a class="btn secondary" href="#servicesBox">🧾 Voir les services</a>
-            <a class="btn ghost" href="./index.html">← Retour vitrine</a>
-          </div>
-        </div>
-      `;
-
-      ambiance.textContent = item.bio || "Fiche publique commerce.";
-      reserveText.textContent = `Le client peut réserver simplement pour ${businessType.toLowerCase()}, demander un créneau, préciser un service ou confirmer un besoin sur WhatsApp. Parcours court, humain et terrain.`;
-
-      cityInfo.textContent = item.city || "Saly";
-      addressInfo.textContent = item.address_text || "Adresse à confirmer";
-      hoursInfo.textContent = item.opening_hours_text || "Horaires à confirmer";
-      contactInfo.textContent = phone ? "+" + phone : "+221771342889";
-      usageInfo.textContent = `Réservation simple pour ${businessType.toLowerCase()}`;
-
-      bottom.innerHTML = `
-        <a class="btn primary" href="${waHref}">💬 Écrire sur WhatsApp</a>
-        <a class="btn ghost" href="./index.html">← Retour vitrine</a>
-      `;
-
-      status.textContent = "Fiche publique chargée.";
-    }
-
-    function renderFallback(){
-      const hero = document.getElementById("hero");
-      const bottom = document.getElementById("bottomActions");
-      const status = document.getElementById("statusText");
-      const ambiance = document.getElementById("ambianceText");
-      const reserveText = document.getElementById("reserveText");
-
-      document.getElementById("cityInfo").textContent = "Saly";
-      document.getElementById("addressInfo").textContent = "À confirmer";
-      document.getElementById("hoursInfo").textContent = "À confirmer";
-      document.getElementById("contactInfo").textContent = "+221" + SUPPORT_WA;
-      document.getElementById("usageInfo").textContent = "Réservation simple";
-
-      renderServices([], "");
-
-      const waHref = "https://wa.me/" + SUPPORT_WA + "?text=" + encodeURIComponent("Bonjour, je souhaite des informations sur un commerce via DIGIY RESA.");
-
-      hero.innerHTML = `
-        <div class="photo">
-          <img src="${FALLBACK_PHOTO}" alt="Fiche commerce" />
-          <div class="badgeTop">
-            <span class="chip gold">📅 DIGIY RESA</span>
-            <span class="chip blue">📍 SALY</span>
-          </div>
-        </div>
-
-        <div class="heroBody">
-          <h1>Fiche commerce indisponible</h1>
-          <div class="meta">
-            <span>📍 Saly</span>
-            <span>🧩 Multi business</span>
-          </div>
-          <div class="heroIntro">
-            Cette fiche n’est pas disponible pour l’instant. Tu peux revenir à la vitrine ou écrire directement pour être orienté vers un commerce.
-          </div>
-          <div class="actions">
-            <a class="btn primary" href="${waHref}">💬 WhatsApp</a>
-            <a class="btn ghost" href="./index.html">← Retour vitrine</a>
-          </div>
-        </div>
-      `;
-
-      ambiance.textContent = "Retourne à la vitrine pour voir les autres commerces visibles à Saly.";
-      reserveText.textContent = "En cas de doute, le parcours court reste WhatsApp.";
-      bottom.innerHTML = `<a class="btn primary" href="${waHref}">💬 Contacter</a>`;
-      status.textContent = "Fiche indisponible.";
-    }
-
-    async function load(){
-      const demo = (qs("demo") || "").trim();
-      const slug = (qs("slug") || "").trim();
-
-      if(demo && DEMO_MAP[demo]){
-        const item = DEMO_MAP[demo];
-        renderCard(item);
-        renderServices(item.services || [], item.business_type || "");
-        return;
+        status.textContent = isLive
+          ? "Fiche publique chargée sur le rail réel."
+          : "Fiche démo chargée.";
       }
 
-      if(!slug){
-        renderFallback();
-        return;
+      function renderFallback(){
+        const hero = document.getElementById("hero");
+        const bottom = document.getElementById("bottomActions");
+        const status = document.getElementById("statusText");
+        const ambiance = document.getElementById("ambianceText");
+        const reserveText = document.getElementById("reserveText");
+
+        document.getElementById("cityInfo").textContent = "Saly";
+        document.getElementById("addressInfo").textContent = "À confirmer";
+        document.getElementById("hoursInfo").textContent = "À confirmer";
+        document.getElementById("contactInfo").textContent = "+221" + SUPPORT_WA;
+        document.getElementById("usageInfo").textContent = "Réservation simple";
+        document.getElementById("channelInfo").textContent = "WhatsApp direct";
+
+        renderServices([], "");
+
+        const waHref = "https://wa.me/" + SUPPORT_WA + "?text=" + encodeURIComponent("Bonjour, je souhaite des informations sur un commerce via DIGIY RESA.");
+
+        hero.innerHTML = `
+          <div class="photo">
+            <img src="${FALLBACK_PHOTO}" alt="Fiche commerce" />
+            <div class="badgeTop">
+              <span class="chip gold">📅 DIGIY RESA</span>
+              <span class="chip blue">📍 SALY</span>
+            </div>
+          </div>
+
+          <div class="heroBody">
+            <h1>Fiche commerce indisponible</h1>
+            <div class="meta">
+              <span>📍 Saly</span>
+              <span>🧩 Multi business</span>
+            </div>
+            <div class="heroIntro">
+              Cette fiche n’est pas disponible pour l’instant. Tu peux revenir à la vitrine ou écrire directement pour être orienté vers un commerce.
+            </div>
+            <div class="actions">
+              <a class="btn primary" href="${waHref}">💬 WhatsApp</a>
+              <a class="btn ghost" href="./index.html">← Retour vitrine</a>
+            </div>
+          </div>
+        `;
+
+        ambiance.textContent = "Retourne à la vitrine pour voir les autres commerces visibles à Saly.";
+        reserveText.textContent = "En cas de doute, le parcours court reste WhatsApp.";
+        bottom.innerHTML = `<a class="btn primary" href="${waHref}">💬 Contacter</a>`;
+        status.textContent = "Fiche indisponible.";
       }
 
-      try{
-        const { data, error } = await sb
-          .from("digiy_resa_public_profiles_v2")
-          .select("*")
-          .eq("slug", slug)
-          .limit(1)
-          .maybeSingle();
+      async function load(){
+        const demo = (qs("demo") || "").trim();
+        const slug = normalizeSlug(qs("slug") || "");
 
-        if(error) throw error;
-        if(!data){
+        sb = initSupabase();
+
+        if(demo && DEMO_MAP[demo]){
+          const item = DEMO_MAP[demo];
+          renderCard(item, { demoId: demo });
+          renderServices(item.services || [], item.business_type || "");
+          return;
+        }
+
+        if(!slug || !sb){
           renderFallback();
           return;
         }
 
-        const mapped = mapLiveRow(data);
-        renderCard(mapped);
+        try{
+          const profile = await loadPublicProfileBySlug(slug);
 
-        const services = await loadServices(slug);
-        renderServices(services, mapped.business_type || "");
-      }catch(e){
-        console.error(e);
-        renderFallback();
+          if(!profile){
+            renderFallback();
+            return;
+          }
+
+          const mapped = mapLiveRow(profile);
+          mapped.slug = slug;
+
+          renderCard(mapped, { demoId: "" });
+
+          const services = await loadServices(slug);
+          renderServices(services, mapped.business_type || "");
+        }catch(e){
+          console.error(e);
+          renderFallback();
+        }
       }
-    }
 
-    load();
+      load();
+    })();
   </script>
 </body>
 </html>
