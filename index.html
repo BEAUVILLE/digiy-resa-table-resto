@@ -368,6 +368,19 @@
       flex-wrap:wrap;
     }
 
+    .signature{
+      margin-top:24px;
+      text-align:center;
+      font-weight:900;
+      color:var(--muted);
+      line-height:1.6;
+      padding:0 10px;
+    }
+    .signature strong{
+      color:var(--gold);
+      font-weight:1000;
+    }
+
     .footer{
       margin-top:26px;
       border-top:1px solid rgba(255,255,255,.08);
@@ -454,8 +467,9 @@
           <p>
             Ici le client découvre des activités et services du terrain :
             <b style="color:var(--gold);font-weight:1000;">restaurant, coiffure, garage, beauté, consultation, atelier</b>.
-            Il ouvre la fiche, regarde les infos utiles, puis
-            <b style="color:var(--gold);font-weight:1000;">réserve simplement</b>.
+            Il découvre, il comprend, puis
+            <b style="color:var(--gold);font-weight:1000;">il choisit avec clarté</b>.
+            Ici, on respecte le client <b style="color:var(--gold);font-weight:1000;">et</b> le travail du professionnel.
           </p>
 
           <div class="hero-badges">
@@ -522,6 +536,11 @@
       <div id="grid" class="grid" style="margin-top:12px;"></div>
     </section>
 
+    <div class="signature">
+      Ici, chaque fiche représente un vrai travail.<br/>
+      <strong>DIGIY ne pousse pas la masse. DIGIY révèle ce qui est solide.</strong>
+    </div>
+
     <footer class="footer">
       DIGIY RESA • Saly • <span class="zero">Vitrine locale</span> • <span class="brand">Réservation multi business</span> ∞
     </footer>
@@ -559,8 +578,8 @@
           category: "Coiffure",
           city: "Saly",
           address: "Quartier central • rendez-vous beauté",
-          bio: "Coupe, brushing, teinture et soins. Une fiche pensée pour réserver simplement selon le service choisi.",
-          badge: "✨ SÉLECTION DIGIY",
+          bio: "Coupe, brushing, teinture et soins. Une fiche pensée pour comprendre l’activité, voir l’ambiance et ensuite choisir sereinement.",
+          badge: "✨ VITRINE DIGIY",
           hub_badge: "💇 BEAUTÉ",
           price_label: "Services sur rendez-vous",
           tags: ["Coiffure", "Brushing", "Teinture", "Saly"],
@@ -575,8 +594,8 @@
           category: "Garage",
           city: "Saly",
           address: "Axe principal • mécanique légère",
-          bio: "Diagnostic, vidange, freins et petites interventions avec créneaux clairs pour gagner du temps.",
-          badge: "✨ SÉLECTION DIGIY",
+          bio: "Diagnostic, vidange, freins et petites interventions avec une lecture propre du service proposé.",
+          badge: "✨ VITRINE DIGIY",
           hub_badge: "🔧 GARAGE",
           price_label: "Diagnostic • Vidange • Freins",
           tags: ["Garage", "Diagnostic", "Vidange", "Saly"],
@@ -592,7 +611,7 @@
           city: "Saly",
           address: "Terrasse • déjeuner & soirée",
           bio: "Une table d’ambiance pour déjeuner tranquille, dîner simple ou recevoir des amis dans un cadre détendu.",
-          badge: "✨ SÉLECTION DIGIY",
+          badge: "✨ VITRINE DIGIY",
           hub_badge: "🍽️ RESTAURANT",
           price_label: "Horaires: 12:00 - 23:00",
           tags: ["Restaurant", "Terrasse", "Déjeuner", "Saly"],
@@ -607,8 +626,8 @@
           category: "Beauté",
           city: "Saly",
           address: "Zone calme • soins esthétiques",
-          bio: "Pose, entretien, manucure et rendez-vous beauté avec créneaux simples à lire pour la cliente.",
-          badge: "✨ SÉLECTION DIGIY",
+          bio: "Pose, entretien, manucure et rendez-vous beauté avec présentation claire et rassurante.",
+          badge: "✨ VITRINE DIGIY",
           hub_badge: "💅 BEAUTÉ",
           price_label: "Pose • Entretien • Manucure",
           tags: ["Beauté", "Onglerie", "Soin", "Saly"],
@@ -624,7 +643,7 @@
           city: "Saly",
           address: "Bureau calme • rendez-vous pro",
           bio: "Consultations, échanges posés et rendez-vous organisés sur des créneaux nets pour éviter les confusions.",
-          badge: "✨ SÉLECTION DIGIY",
+          badge: "✨ VITRINE DIGIY",
           hub_badge: "🩺 CONSULTATION",
           price_label: "Rendez-vous sur créneau",
           tags: ["Consultation", "Conseil", "Bureau", "Saly"],
@@ -639,8 +658,8 @@
           category: "Atelier",
           city: "Saly",
           address: "Service de quartier • rendez-vous utiles",
-          bio: "Un atelier pensé pour les rendez-vous techniques, petits dépannages et services du quotidien avec planning clair.",
-          badge: "✨ SÉLECTION DIGIY",
+          bio: "Un atelier pensé pour les rendez-vous techniques, petits dépannages et services du quotidien avec lecture simple.",
+          badge: "✨ VITRINE DIGIY",
           hub_badge: "🛠️ ATELIER",
           price_label: "Service sur rendez-vous",
           tags: ["Atelier", "Service", "Quartier", "Saly"],
@@ -774,36 +793,24 @@
         document.getElementById("msCats").textContent = String(cats);
       }
 
-      function updateKpi(){
-        const visible = ROWS || [];
-        const reals = LIVE_ROWS || [];
+      function updateKpiFiltered(list){
+        const visible = Array.isArray(list) ? list : [];
+
         const total = visible.length;
+        const reals = visible.filter(x => x.kind === "live");
         const new7d = reals.filter(x => isNew(x.created_at)).length;
 
-        const kCount = document.getElementById("kpiCount");
-        const kNew7d = document.getElementById("kpiNew7d");
-        const kLast  = document.getElementById("kpiLast");
-
-        if(kCount) kCount.textContent = String(total);
-        if(kNew7d) kNew7d.textContent = String(new7d);
+        document.getElementById("kpiCount").textContent = String(total);
+        document.getElementById("kpiNew7d").textContent = String(new7d);
 
         const last = [...visible].sort((a,b) => {
           const ta = Date.parse(a.created_at || "") || 0;
           const tb = Date.parse(b.created_at || "") || 0;
           return tb - ta;
-        })[0] || null;
+        })[0];
 
-        if(kLast){
-          kLast.textContent = last
-            ? `${last.display_name || "—"}${last.kind === "demo" ? " • vitrine" : ""}`
-            : "—";
-        }
-
-        setStatus(
-          reals.length
-            ? `✅ ${reals.length} fiche(s) réelle(s) • vitrine multi business présentable immédiatement`
-            : "✨ Vitrine meublée intelligemment • prête pour les premiers clients"
-        );
+        document.getElementById("kpiLast").textContent =
+          last ? `${last.display_name}${last.kind==="demo" ? " • vitrine" : ""}` : "—";
       }
 
       function fillSelects(){
@@ -844,8 +851,8 @@
           city: first(r.city) || "",
           address: first(r.address_text, r.address, r.location_text) || "",
           bio: first(r.bio, r.description, r.about, r.short_description) || "",
-          badge: "📅 RÉSERVABLE",
-          hub_badge: "🟢 MULTI BUSINESS",
+          badge: "🟢 FICHE RÉELLE",
+          hub_badge: "DIGIY RESA",
           price_label: first(r.opening_hours_text, r.open_hours, r.opening_hours) ? `Horaires: ${first(r.opening_hours_text, r.open_hours, r.opening_hours)}` : "",
           tags: [
             first(r.business_type, r.category, r.type_label) || "",
@@ -877,7 +884,7 @@
         if (row.kind === "live" && row.slug) {
           return `./reserver.html?slug=${encodeURIComponent(row.slug)}`;
         }
-        return `./fiche.html?demo=${encodeURIComponent(row.demo_id || "")}#reserver`;
+        return null;
       }
 
       function render(list){
@@ -948,7 +955,11 @@
 
                 <div class="actions">
                   <a class="btn primary" href="${esc(ficheHref)}">📄 Voir la fiche</a>
-                  <a class="btn secondary" href="${esc(resaHref)}">📅 Réserver</a>
+                  ${
+                    resaHref
+                      ? `<a class="btn secondary" href="${esc(resaHref)}">📅 Réserver</a>`
+                      : `<a class="btn ghost" href="${esc(ficheHref)}">👁️ Voir</a>`
+                  }
                 </div>
               </div>
             </article>
@@ -979,7 +990,7 @@
         });
 
         render(filtered);
-        updateKpi();
+        updateKpiFiltered(filtered);
       }
 
       async function load(){
@@ -1021,7 +1032,7 @@
           fillSelects();
           updateStatsBar(ROWS, LIVE_ROWS);
           render(ROWS);
-          updateKpi();
+          updateKpiFiltered(ROWS);
 
           setStatus("⚠️ Source live indisponible — vitrine d’ambiance affichée.");
           toast("⚠️ Mode vitrine d’ambiance");
