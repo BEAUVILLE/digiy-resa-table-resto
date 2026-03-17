@@ -32,7 +32,7 @@
       --blue:#60a5fa;
       --shadow:0 20px 60px rgba(0,0,0,.38);
       --r:24px;
-      --max:1120px;
+      --max:1160px;
     }
 
     *{box-sizing:border-box}
@@ -67,9 +67,7 @@
       box-shadow:var(--shadow);
     }
 
-    .hero{
-      overflow:hidden;
-    }
+    .hero{ overflow:hidden; }
 
     .hero-grid{
       display:grid;
@@ -255,16 +253,14 @@
     .grid{
       display:grid;
       gap:14px;
-      grid-template-columns:1.05fr .95fr;
+      grid-template-columns:1.08fr .92fr;
     }
 
     @media(max-width:980px){
       .grid{ grid-template-columns:1fr; }
     }
 
-    .card{
-      padding:18px;
-    }
+    .card{ padding:18px; }
 
     h2{
       margin:0 0 10px;
@@ -300,6 +296,11 @@
       padding:12px 14px;
       outline:none;
       font:inherit;
+    }
+
+    input:focus, textarea:focus, select:focus{
+      border-color:rgba(34,197,94,.36);
+      box-shadow:0 0 0 3px rgba(34,197,94,.10);
     }
 
     textarea{
@@ -347,9 +348,7 @@
       padding:10px 12px;
     }
 
-    .slot:hover{
-      transform:translateY(-1px);
-    }
+    .slot:hover{ transform:translateY(-1px); }
 
     .slot.active{
       border-color:rgba(34,197,94,.34);
@@ -373,6 +372,11 @@
       border-radius:18px;
       border:1px solid rgba(255,255,255,.09);
       background:rgba(0,0,0,.16);
+    }
+
+    .service.active{
+      border-color:rgba(34,197,94,.26);
+      background:rgba(34,197,94,.08);
     }
 
     .service-top{
@@ -436,6 +440,54 @@
       word-break:break-word;
     }
 
+    .summary-box{
+      padding:16px;
+      border-radius:20px;
+      border:1px solid rgba(250,204,21,.16);
+      background:rgba(250,204,21,.06);
+      display:grid;
+      gap:10px;
+      margin-top:16px;
+    }
+
+    .summary-box h3{
+      margin:0;
+      font-size:16px;
+      color:#fff2bf;
+    }
+
+    .summary-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    @media(max-width:720px){
+      .summary-grid{ grid-template-columns:1fr; }
+    }
+
+    .summary-item{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(0,0,0,.16);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .summary-item .k{
+      font-size:11px;
+      color:var(--muted);
+      font-weight:900;
+      margin-bottom:5px;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    .summary-item .v{
+      font-size:14px;
+      font-weight:950;
+      line-height:1.45;
+    }
+
     .status{
       margin-top:14px;
       padding:12px 14px;
@@ -469,6 +521,14 @@
       background:rgba(239,68,68,.08);
     }
 
+    .helper{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:800;
+      line-height:1.55;
+    }
+
     .footer{
       margin-top:16px;
       text-align:center;
@@ -487,7 +547,7 @@
       <div class="hero-grid">
         <div class="hero-media" id="heroMedia">
           <div class="hero-media-fallback">📅</div>
-          <div class="hero-badge" id="heroBadge">
+          <div class="hero-badge">
             <span class="dot"></span>
             Réservation publique
           </div>
@@ -577,9 +637,35 @@
           <textarea id="noteInput" placeholder="Ex : sans attente si possible, anniversaire, besoin particulier…"></textarea>
         </div>
 
+        <div class="summary-box">
+          <h3>Résumé avant envoi</h3>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <div class="k">Service</div>
+              <div class="v" id="sumService">—</div>
+            </div>
+            <div class="summary-item">
+              <div class="k">Créneau</div>
+              <div class="v" id="sumSlot">—</div>
+            </div>
+            <div class="summary-item">
+              <div class="k">Personnes</div>
+              <div class="v" id="sumGuests">1</div>
+            </div>
+            <div class="summary-item">
+              <div class="k">Prix indicatif</div>
+              <div class="v" id="sumPrice">—</div>
+            </div>
+          </div>
+        </div>
+
         <div class="hero-actions" style="margin-top:14px">
           <button class="btn primary" id="btnSubmit" type="button">📅 Envoyer ma réservation</button>
           <button class="btn" id="btnReloadSlots" type="button">↻ Recharger les créneaux</button>
+        </div>
+
+        <div class="helper">
+          Si aucun créneau ne remonte, tu peux saisir l’heure manuellement puis envoyer la demande. Le WhatsApp reste disponible en secours.
         </div>
 
         <div class="status" id="statusBox">Prêt.</div>
@@ -633,7 +719,6 @@
       const SUPABASE_ANON_KEY = window.DIGIY_SUPABASE_ANON_KEY || window.DIGIY_SUPABASE_ANON;
 
       const qs = new URLSearchParams(location.search);
-
       const $ = (id) => document.getElementById(id);
 
       let sb = null;
@@ -915,6 +1000,7 @@
 
       function renderServicesCards(){
         const box = $("servicesBox");
+        const selected = getSelectedService();
 
         if(!SERVICES.length){
           box.innerHTML = `
@@ -928,7 +1014,7 @@
         }
 
         box.innerHTML = SERVICES.map((s) => `
-          <article class="service">
+          <article class="service ${selected && String(selected.id) === String(s.id) ? "active" : ""}">
             <div class="service-top">
               <div class="service-name">${escapeHtml(s.service_name || "Service")}</div>
               <div class="service-meta">
@@ -947,7 +1033,20 @@
 
       function updatePriceHint(){
         const service = getSelectedService();
-        $("priceHint").value = service ? (money(service.price_fcfa) || "—") : "—";
+        const price = service ? (money(service.price_fcfa) || "—") : "—";
+        $("priceHint").value = price;
+        $("sumPrice").textContent = price;
+      }
+
+      function updateSummary(){
+        const service = getSelectedService();
+        const date = $("dateInput").value || "—";
+        const time = $("timeInput").value || "—";
+        const guests = Math.max(1, Number($("guestsCount").value || 1));
+
+        $("sumService").textContent = service ? safe(service.service_name) : "—";
+        $("sumSlot").textContent = `${date} • ${time}`;
+        $("sumGuests").textContent = String(guests);
       }
 
       function normalizeSlotResult(raw){
@@ -1043,6 +1142,7 @@
           btn.addEventListener("click", () => {
             SELECTED_SLOT = String(btn.getAttribute("data-time") || "");
             $("timeInput").value = SELECTED_SLOT;
+            updateSummary();
             renderSlots();
           });
         });
@@ -1144,6 +1244,7 @@
           $("guestsCount").value = "1";
           $("noteInput").value = "";
           SELECTED_SLOT = "";
+          updateSummary();
           await loadSlots();
 
         } catch (e) {
@@ -1177,6 +1278,8 @@
         $("dateInput").value = todayISO();
         $("dateInput").min = todayISO();
         $("dateInput").max = addDaysISO(60);
+        updateSummary();
+        updatePriceHint();
 
         if(!slug){
           setUnavailableState("Slug manquant", "Impossible d’ouvrir cette réservation sans identifiant commerce.");
@@ -1196,6 +1299,7 @@
           await loadProfile();
           await loadServices();
           updatePriceHint();
+          updateSummary();
           await loadSlots();
 
           if (!SERVICES.length) {
@@ -1215,18 +1319,24 @@
 
       $("serviceSelect").addEventListener("change", async () => {
         updatePriceHint();
+        updateSummary();
+        renderServicesCards();
         await loadSlots();
       });
 
       $("dateInput").addEventListener("change", async () => {
         SELECTED_SLOT = "";
+        updateSummary();
         await loadSlots();
       });
 
       $("timeInput").addEventListener("input", () => {
         SELECTED_SLOT = $("timeInput").value || "";
+        updateSummary();
         renderSlots();
       });
+
+      $("guestsCount").addEventListener("input", updateSummary);
 
       $("btnReloadSlots").addEventListener("click", loadSlots);
       $("btnSubmit").addEventListener("click", submit);
