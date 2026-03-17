@@ -186,6 +186,20 @@
       display:block;
     }
 
+    .photo-fallback{
+      width:100%;
+      height:100%;
+      display:grid;
+      place-items:center;
+      font-size:56px;
+      font-weight:1000;
+      color:#fff;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(250,204,21,.18), transparent 30%),
+        radial-gradient(circle at 75% 15%, rgba(34,197,94,.14), transparent 28%),
+        linear-gradient(180deg, #111827, #0b1120);
+    }
+
     .badgeTop{
       position:absolute;
       top:12px;
@@ -571,7 +585,7 @@
           city: "Saly",
           address_text: "Quartier central • rendez-vous beauté",
           bio: "Coupe, brushing, teinture et soins. Une fiche pensée pour réserver simplement selon le service choisi.",
-          badge: "✨ SÉLECTION DIGIY",
+          badge: "✨ VITRINE DIGIY",
           hub_badge: "💇 BEAUTÉ",
           opening_hours_text: "09:00 - 19:00",
           photo_url: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80",
@@ -590,7 +604,7 @@
           city: "Saly",
           address_text: "Axe principal • mécanique légère",
           bio: "Diagnostic, vidange, freins et petites interventions avec créneaux clairs pour gagner du temps.",
-          badge: "✨ SÉLECTION DIGIY",
+          badge: "✨ VITRINE DIGIY",
           hub_badge: "🔧 GARAGE",
           opening_hours_text: "08:00 - 18:00",
           photo_url: "https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=1200&q=80",
@@ -609,7 +623,7 @@
           city: "Saly",
           address_text: "Terrasse • déjeuner & soirée",
           bio: "Une table d’ambiance pour déjeuner tranquille, dîner simple ou recevoir des amis dans un cadre détendu.",
-          badge: "✨ SÉLECTION DIGIY",
+          badge: "✨ VITRINE DIGIY",
           hub_badge: "🍽️ RESTAURANT",
           opening_hours_text: "12:00 - 23:00",
           photo_url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
@@ -627,7 +641,7 @@
           city: "Saly",
           address_text: "Zone calme • soins esthétiques",
           bio: "Pose, entretien, manucure et rendez-vous beauté avec créneaux simples à lire pour la cliente.",
-          badge: "✨ SÉLECTION DIGIY",
+          badge: "✨ VITRINE DIGIY",
           hub_badge: "💅 BEAUTÉ",
           opening_hours_text: "10:00 - 19:00",
           photo_url: "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=80",
@@ -645,7 +659,7 @@
           city: "Saly",
           address_text: "Bureau calme • rendez-vous pro",
           bio: "Consultations, échanges posés et rendez-vous organisés sur des créneaux nets pour éviter les confusions.",
-          badge: "✨ SÉLECTION DIGIY",
+          badge: "✨ VITRINE DIGIY",
           hub_badge: "🩺 CONSULTATION",
           opening_hours_text: "09:00 - 17:00",
           photo_url: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
@@ -663,7 +677,7 @@
           city: "Saly",
           address_text: "Service de quartier • rendez-vous utiles",
           bio: "Un atelier pensé pour les rendez-vous techniques, petits dépannages et services du quotidien avec planning clair.",
-          badge: "✨ SÉLECTION DIGIY",
+          badge: "✨ VITRINE DIGIY",
           hub_badge: "🛠️ ATELIER",
           opening_hours_text: "08:30 - 18:30",
           photo_url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
@@ -757,7 +771,9 @@
 
       function buildReserveHref(slug, demo){
         if (slug) return `./reserver.html?slug=${encodeURIComponent(slug)}`;
-        if (demo) return `https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Bonjour, je souhaite réserver via DIGIY RESA.")}`;
+        if (demo) {
+          return `https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Bonjour, je souhaite réserver via DIGIY RESA.")}`;
+        }
         return "./index.html";
       }
 
@@ -774,8 +790,8 @@
           city: first(profile?.city) || "Saly",
           address_text: first(profile?.address_text, profile?.address, profile?.location_text) || "",
           bio: first(profile?.bio, profile?.description, profile?.about, profile?.short_description) || "Fiche publique DIGIY RESA.",
-          badge: "📅 RÉSERVABLE",
-          hub_badge: "🟢 MULTI BUSINESS",
+          badge: "🟢 FICHE RÉELLE",
+          hub_badge: "DIGIY RESA",
           opening_hours_text: first(profile?.opening_hours_text, profile?.open_hours, profile?.opening_hours) || "",
           photo_url: first(profile?.cover_url, profile?.cover_image_url, profile?.logo_url, profile?.image_url, profile?.photo_url) || "",
           tags: [
@@ -876,11 +892,11 @@
 
         hero.innerHTML = `
           <div class="photo">
-            <img src="${esc(photo)}" alt="${esc(item.display_name)}" onerror="this.onerror=null;this.src='${FALLBACK_PHOTO}'" />
+            <img src="${esc(photo)}" alt="${esc(item.display_name)}" onerror="this.outerHTML='<div class=&quot;photo-fallback&quot;>📅</div>'" />
             <div class="badgeTop">
               <span class="chip gold">${esc(item.badge || "📅 RÉSERVABLE")}</span>
               <span class="chip blue">${esc(item.hub_badge || "🟢 MULTI BUSINESS")}</span>
-              ${isLive ? `<span class="chip green">slug : ${esc(item.slug)}</span>` : ``}
+              ${isLive ? `<span class="chip green">slug : ${esc(item.slug)}</span>` : `<span class="chip">mode vitrine</span>`}
             </div>
           </div>
 
@@ -909,8 +925,8 @@
 
         ambiance.textContent = item.bio || "Fiche publique commerce.";
         reserveText.textContent = isLive
-          ? `Le client peut ouvrir le formulaire DIGIY RESA, choisir un service, une date, une heure, puis envoyer sa demande proprement.`
-          : `Le client peut demander un créneau, poser une question ou confirmer son besoin directement sur WhatsApp. Parcours court, humain et terrain.`;
+          ? "Le client peut ouvrir le formulaire DIGIY RESA, choisir un service, une date, une heure, puis envoyer sa demande proprement."
+          : "Le client peut demander un créneau, poser une question ou confirmer son besoin directement sur WhatsApp. Parcours court, humain et terrain.";
 
         cityInfo.textContent = item.city || "Saly";
         addressInfo.textContent = item.address_text || "Adresse à confirmer";
@@ -927,7 +943,7 @@
 
         status.textContent = isLive
           ? "Fiche publique chargée sur le rail réel."
-          : "Fiche démo chargée.";
+          : "Fiche vitrine chargée.";
       }
 
       function renderFallback(){
@@ -950,7 +966,7 @@
 
         hero.innerHTML = `
           <div class="photo">
-            <img src="${FALLBACK_PHOTO}" alt="Fiche commerce" />
+            <img src="${FALLBACK_PHOTO}" alt="Fiche commerce" onerror="this.outerHTML='<div class=&quot;photo-fallback&quot;>📅</div>'" />
             <div class="badgeTop">
               <span class="chip gold">📅 DIGIY RESA</span>
               <span class="chip blue">📍 SALY</span>
@@ -1022,4 +1038,5 @@
     })();
   </script>
 </body>
+</html>
 </html>
