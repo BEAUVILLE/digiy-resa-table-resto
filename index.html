@@ -4,7 +4,10 @@
   <meta charset="utf-8" />
   <title>DIGIY RESA — Multi Business Saly</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="DIGIY RESA — Vitrine publique multi business à Saly. Réservation simple pour restaurant, coiffure, garage, beauté, consultation et services de quartier." />
+  <meta
+    name="description"
+    content="DIGIY RESA — Vitrine publique multi business à Saly. Double rail clair : établissements disponibles maintenant + vitrine d’inspiration terrain."
+  />
   <meta name="theme-color" content="#061b14" />
   <meta name="robots" content="index,follow" />
 
@@ -27,11 +30,20 @@
       --orange:#f97316;
       --blue:#60a5fa;
       --shadow:0 18px 55px rgba(0,0,0,.42);
-      --fs-hero: 38px;
-      --fs-sub: 16px;
+      --fs-hero:38px;
+      --fs-sub:16px;
       --lh:1.55;
     }
-    *{ box-sizing:border-box; margin:0; padding:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    }
+
+    html{ scroll-behavior:smooth; }
+
     body{
       min-height:100vh;
       background:
@@ -69,60 +81,120 @@
       transform:translateY(-1px);
       box-shadow:0 20px 46px rgba(0,0,0,.34);
     }
-    .floating-back:active{
-      transform:translateY(0);
+    .floating-back:active{ transform:translateY(0); }
+
+    .page{
+      max-width:1140px;
+      margin:0 auto;
+      padding:16px 14px 42px;
     }
 
-    .page{ max-width:1100px; margin:0 auto; padding:16px 14px 42px; }
-    @media(max-width:860px){ :root{ --fs-hero: 32px; } }
+    @media(max-width:860px){
+      :root{ --fs-hero:32px; }
+    }
+
     @media(max-width:600px){
-      :root{ --fs-hero: 28px; --fs-sub: 15px; }
+      :root{ --fs-hero:28px; --fs-sub:15px; }
       .page{ padding:14px 12px 38px; }
     }
 
     .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; padding:10px 0 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 0 14px;
       border-bottom:1px solid rgba(255,255,255,.06);
-      margin-bottom:14px; flex-wrap:wrap;
+      margin-bottom:14px;
+      flex-wrap:wrap;
     }
-    .nav-left{ display:flex; align-items:center; gap:12px; min-width:0; }
+
+    .nav-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
     .logo-badge{
-      width:42px;height:42px;border-radius:16px;
+      width:42px;
+      height:42px;
+      border-radius:16px;
       background:radial-gradient(circle at 30% 20%,var(--gold),var(--orange));
-      display:flex; align-items:center; justify-content:center;
-      color:#04110d; font-weight:1000; font-size:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#04110d;
+      font-weight:1000;
+      font-size:18px;
       box-shadow:0 10px 26px rgba(250,204,21,0.40);
       flex:0 0 auto;
     }
+
     .logo-title{
-      font-size:16px; font-weight:950; letter-spacing:.10em;
-      text-transform:uppercase; line-height:1.1;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      font-size:16px;
+      font-weight:950;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      line-height:1.1;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
       max-width:min(62vw, 520px);
     }
-    .logo-sub{ font-size:12px; color:var(--muted); font-weight:850; margin-top:2px; }
-    .nav-right{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
+
+    .logo-sub{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:850;
+      margin-top:2px;
+    }
+
+    .nav-right{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
 
     .pill{
-      border-radius:999px; padding:8px 12px;
-      font-size:12px; font-weight:950;
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:12px;
+      font-weight:950;
       border:1px solid rgba(203,213,225,0.35);
       color:rgba(234,255,241,.92);
-      display:inline-flex; align-items:center; gap:8px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
       background:rgba(2,6,23,.22);
     }
-    .pill .dot{ width:8px;height:8px;border-radius:999px; background:var(--green); box-shadow:0 0 0 4px rgba(34,197,94,.12); }
+
+    .pill .dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--green);
+      box-shadow:0 0 0 4px rgba(34,197,94,.12);
+    }
 
     a.btn-small{
-      border-radius:999px; padding:10px 14px;
-      font-size:13px; font-weight:950;
+      border-radius:999px;
+      padding:10px 14px;
+      font-size:13px;
+      font-weight:950;
       border:1px solid rgba(203,213,225,0.32);
       background:rgba(15,23,42,0.32);
-      color:var(--ink); text-decoration:none;
-      display:inline-flex; align-items:center; gap:8px;
-      white-space:nowrap; line-height:1;
+      color:var(--ink);
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+      line-height:1;
     }
+
     a.btn-small.primary{
       border:none;
       background:linear-gradient(135deg,var(--gold),var(--orange));
@@ -131,35 +203,82 @@
     }
 
     .hero{
-      margin-top:16px; border-radius:24px;
+      margin-top:16px;
+      border-radius:24px;
       border:1px solid rgba(255,255,255,.10);
       background:rgba(7,24,17,.55);
       box-shadow:var(--shadow);
-      padding:18px 16px; overflow:hidden; position:relative;
+      padding:18px 16px;
+      overflow:hidden;
+      position:relative;
     }
+
     .hero:before{
-      content:""; position:absolute; inset:-1px;
+      content:"";
+      position:absolute;
+      inset:-1px;
       background:
         radial-gradient(700px 360px at 20% -10%, rgba(34,197,94,.18), transparent 65%),
         radial-gradient(700px 360px at 110% 0%, rgba(250,204,21,.14), transparent 60%),
         radial-gradient(600px 300px at 60% 10%, rgba(96,165,250,.10), transparent 50%);
       pointer-events:none;
     }
-    .hero-inner{ position:relative; display:grid; grid-template-columns:1.2fr 0.8fr; gap:14px; align-items:center; }
-    @media(max-width:900px){ .hero-inner{ grid-template-columns:1fr; } }
-    .hero h1{ font-size:var(--fs-hero); line-height:1.12; font-weight:1000; letter-spacing:-0.01em; margin-bottom:10px; }
-    .hero h1 .hl{ background:linear-gradient(135deg,var(--gold),var(--green)); -webkit-background-clip:text; color:transparent; }
-    .hero p{ font-size:var(--fs-sub); color:var(--muted); line-height:var(--lh); font-weight:850; max-width:70ch; }
 
-    .hero-badges{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+    .hero-inner{
+      position:relative;
+      display:grid;
+      grid-template-columns:1.2fr 0.8fr;
+      gap:14px;
+      align-items:center;
+    }
+
+    @media(max-width:900px){
+      .hero-inner{ grid-template-columns:1fr; }
+    }
+
+    .hero h1{
+      font-size:var(--fs-hero);
+      line-height:1.12;
+      font-weight:1000;
+      letter-spacing:-0.01em;
+      margin-bottom:10px;
+    }
+
+    .hero h1 .hl{
+      background:linear-gradient(135deg,var(--gold),var(--green));
+      -webkit-background-clip:text;
+      color:transparent;
+    }
+
+    .hero p{
+      font-size:var(--fs-sub);
+      color:var(--muted);
+      line-height:var(--lh);
+      font-weight:850;
+      max-width:70ch;
+    }
+
+    .hero-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:12px;
+    }
+
     .hero-badge{
-      border-radius:999px; padding:8px 12px;
+      border-radius:999px;
+      padding:8px 12px;
       border:1px solid rgba(203,213,225,0.28);
-      color:var(--muted); font-weight:950;
+      color:var(--muted);
+      font-weight:950;
       background:rgba(2,6,23,.25);
       font-size:12px;
     }
-    .hero-badge b{ color:var(--green); font-weight:1000; }
+
+    .hero-badge b{
+      color:var(--green);
+      font-weight:1000;
+    }
 
     .hero-box{
       border-radius:18px;
@@ -167,7 +286,14 @@
       background:rgba(2,6,23,.28);
       padding:14px;
     }
-    .hero-box .kpi{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
+
+    .hero-box .kpi{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+
     .kpi .chip{
       border-radius:14px;
       border:1px solid rgba(203,213,225,0.16);
@@ -181,65 +307,185 @@
       align-items:center;
       gap:10px;
     }
-    .kpi .chip .v{ color:var(--gold); font-weight:1000; white-space:nowrap; }
+
+    .kpi .chip .v{
+      color:var(--gold);
+      font-weight:1000;
+      white-space:nowrap;
+    }
 
     .statsbar{
-      margin-top:12px; border-radius:18px;
+      margin-top:12px;
+      border-radius:18px;
       border:1px solid rgba(203,213,225,0.14);
       background:rgba(2,6,23,.24);
       padding:10px 12px;
-      display:flex; gap:10px; flex-wrap:wrap;
-      align-items:center; justify-content:space-between;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
     }
+
     .statsbar .left{
-      font-weight:1000; color:rgba(234,255,241,.92);
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      font-weight:1000;
+      color:rgba(234,255,241,.92);
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
     }
+
     .statsbar .left .sep{ opacity:.5; }
-    .statsbar .right{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+
+    .statsbar .right{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
     .stats-pill{
-      font-size:12px; padding:6px 10px; border-radius:999px;
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
       border:1px solid rgba(255,255,255,.12);
       background:rgba(15,23,42,.28);
-      color:var(--muted); font-weight:950;
+      color:var(--muted);
+      font-weight:950;
     }
-    .stats-pill.good{ border-color: rgba(34,197,94,.30); color:#bfffe0; }
-    .stats-pill.warn{ border-color: rgba(249,115,22,.30); color:#ffe0c2; }
+
+    .stats-pill.good{
+      border-color:rgba(34,197,94,.30);
+      color:#bfffe0;
+    }
+
+    .stats-pill.warn{
+      border-color:rgba(249,115,22,.30);
+      color:#ffe0c2;
+    }
 
     .controls{
       margin-top:14px;
-      display:flex; gap:10px; flex-wrap:wrap;
-      align-items:center; justify-content:space-between;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
     }
-    .searchRow{ display:flex; gap:10px; flex:1; min-width:260px; }
+
+    .searchRow{
+      display:flex;
+      gap:10px;
+      flex:1;
+      min-width:260px;
+    }
+
     .input{
-      flex:1; background:rgba(2,6,23,.28);
+      flex:1;
+      background:rgba(2,6,23,.28);
       border:1px solid rgba(203,213,225,0.20);
-      color:var(--ink); border-radius:14px;
-      padding:12px 12px; outline:none;
-      font-weight:900; font-size:14px;
+      color:var(--ink);
+      border-radius:14px;
+      padding:12px 12px;
+      outline:none;
+      font-weight:900;
+      font-size:14px;
     }
-    .input:focus{ border-color: rgba(250,204,21,.55); box-shadow:0 0 0 3px rgba(250,204,21,.12); }
+
+    .input:focus{
+      border-color:rgba(250,204,21,.55);
+      box-shadow:0 0 0 3px rgba(250,204,21,.12);
+    }
+
     .select{
       background:rgba(2,6,23,.28);
       border:1px solid rgba(203,213,225,0.20);
-      color:var(--ink); border-radius:14px;
-      padding:12px 12px; outline:none;
-      font-weight:900; font-size:14px; min-width:190px;
+      color:var(--ink);
+      border-radius:14px;
+      padding:12px 12px;
+      outline:none;
+      font-weight:900;
+      font-size:14px;
+      min-width:190px;
     }
 
-    .section{ margin-top:18px; }
-    .section-title{ font-size:18px; font-weight:1000; margin:12px 0 10px; letter-spacing:-0.01em; }
-    .muted{ color:var(--muted); font-weight:850; line-height:1.55; }
+    .section{
+      margin-top:18px;
+    }
+
+    .section-card{
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(7,24,17,.50);
+      box-shadow:0 14px 40px rgba(0,0,0,.28);
+      padding:16px;
+    }
+
+    .section-head{
+      display:flex;
+      gap:12px;
+      justify-content:space-between;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+
+    .section-title{
+      font-size:20px;
+      font-weight:1000;
+      letter-spacing:-0.01em;
+    }
+
+    .section-note{
+      color:var(--muted);
+      font-weight:850;
+      line-height:1.55;
+      max-width:72ch;
+      font-size:14px;
+    }
+
+    .legend{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .legend-pill{
+      border-radius:999px;
+      padding:7px 11px;
+      font-size:12px;
+      font-weight:950;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(2,6,23,.28);
+      color:var(--muted);
+    }
+
+    .legend-pill.live{
+      border-color:rgba(34,197,94,.28);
+      color:#c7ffe1;
+    }
+
+    .legend-pill.vitrine{
+      border-color:rgba(250,204,21,.28);
+      color:#ffe8a3;
+    }
 
     .grid{
-      margin-top:10px;
+      margin-top:12px;
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
       gap:14px;
     }
-    @media(max-width:980px){ .grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
-    @media(max-width:640px){ .grid{ grid-template-columns:1fr; } }
+
+    @media(max-width:980px){
+      .grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+
+    @media(max-width:640px){
+      .grid{ grid-template-columns:1fr; }
+    }
 
     .card{
       border-radius:22px;
@@ -253,10 +499,19 @@
       transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
       position:relative;
     }
+
     .card:hover{
       transform:translateY(-3px);
-      border-color: rgba(250,204,21,.28);
+      border-color:rgba(250,204,21,.28);
       box-shadow:0 18px 48px rgba(0,0,0,.45);
+    }
+
+    .card[data-kind="live"]{
+      border-color:rgba(34,197,94,.16);
+    }
+
+    .card[data-kind="demo"]{
+      border-color:rgba(250,204,21,.16);
     }
 
     .photo{
@@ -267,6 +522,7 @@
       border-bottom:1px solid rgba(255,255,255,.08);
       background:rgba(0,0,0,.25);
     }
+
     .photo img{
       width:100%;
       height:100%;
@@ -274,52 +530,113 @@
       object-fit:cover;
       object-position:center;
       transform:scale(1.01);
-      transition: transform .25s ease, filter .25s ease;
+      transition:transform .25s ease, filter .25s ease;
       filter:saturate(1.05);
     }
+
     .card:hover .photo img{
       transform:scale(1.04);
       filter:saturate(1.10) contrast(1.02);
     }
 
     .badgeTop{
-      position:absolute; top:10px; left:10px;
-      display:flex; gap:8px; flex-wrap:wrap; align-items:center;
-      max-width: calc(100% - 20px);
+      position:absolute;
+      top:10px;
+      left:10px;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+      max-width:calc(100% - 20px);
     }
+
     .chip{
-      border-radius:999px; padding:6px 10px;
-      font-size:11px; font-weight:1000;
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:11px;
+      font-weight:1000;
       border:1px solid rgba(255,255,255,.14);
       background:rgba(2,6,23,.55);
       color:rgba(234,255,241,.92);
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%;
-      display:inline-flex; align-items:center; gap:6px;
-      backdrop-filter: blur(6px);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:100%;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      backdrop-filter:blur(6px);
     }
+
     .chip.gold{ border-color:rgba(250,204,21,.30); }
     .chip.green{ border-color:rgba(34,197,94,.30); }
     .chip.new{ border-color:rgba(249,115,22,.30); }
     .chip.blue{ border-color:rgba(96,165,250,.30); }
 
-    .body{ padding:14px; display:flex; flex-direction:column; gap:10px; flex:1; }
-    .name{ font-size:18px; font-weight:1000; color:var(--gold); line-height:1.15; }
-    .meta{ display:flex; flex-wrap:wrap; gap:10px; font-size:13px; color:var(--muted); font-weight:850; }
-    .meta span{ display:inline-flex; gap:6px; align-items:center; }
-    .bio{ font-size:14px; color:rgba(234,255,241,.90); font-weight:850; line-height:1.45; }
+    .body{
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      flex:1;
+    }
 
-    .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:2px; }
+    .name{
+      font-size:18px;
+      font-weight:1000;
+      color:var(--gold);
+      line-height:1.15;
+    }
+
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      font-size:13px;
+      color:var(--muted);
+      font-weight:850;
+    }
+
+    .meta span{
+      display:inline-flex;
+      gap:6px;
+      align-items:center;
+    }
+
+    .bio{
+      font-size:14px;
+      color:rgba(234,255,241,.90);
+      font-weight:850;
+      line-height:1.45;
+    }
+
+    .tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:2px;
+    }
+
     .tag{
-      border-radius:999px; padding:6px 10px;
+      border-radius:999px;
+      padding:6px 10px;
       border:1px solid rgba(203,213,225,0.22);
       color:var(--muted);
       background:rgba(2,6,23,.35);
-      font-size:11px; font-weight:950;
+      font-size:11px;
+      font-weight:950;
     }
 
-    .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:auto; }
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:auto;
+    }
+
     a.btn{
-      flex:1; min-width:140px;
+      flex:1;
+      min-width:140px;
       border-radius:999px;
       padding:12px 14px;
       font-size:14px;
@@ -335,21 +652,25 @@
       white-space:nowrap;
       transition:transform .15s ease, filter .15s ease, box-shadow .15s ease;
     }
+
     .btn.primary{
       background:linear-gradient(135deg,var(--gold),var(--orange));
       color:#04110d;
       box-shadow:0 10px 24px rgba(250,204,21,0.30);
     }
+
     .btn.secondary{
       background:rgba(34,197,94,.15);
       border:1px solid rgba(34,197,94,.30);
       color:#bbf7d0;
     }
+
     .btn.ghost{
       background:rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.12);
       color:var(--ink);
     }
+
     .btn:active{ transform:scale(.99); }
 
     .status{
@@ -368,6 +689,16 @@
       flex-wrap:wrap;
     }
 
+    .empty-state{
+      border-radius:18px;
+      border:1px dashed rgba(255,255,255,.16);
+      background:rgba(2,6,23,.22);
+      padding:18px;
+      color:var(--muted);
+      font-weight:900;
+      line-height:1.6;
+    }
+
     .signature{
       margin-top:24px;
       text-align:center;
@@ -376,6 +707,7 @@
       line-height:1.6;
       padding:0 10px;
     }
+
     .signature strong{
       color:var(--gold);
       font-weight:1000;
@@ -391,6 +723,7 @@
       font-weight:850;
       line-height:1.5;
     }
+
     .footer .brand{ color:var(--gold); font-weight:1000; }
     .footer .zero{ color:var(--green); font-weight:1000; }
 
@@ -412,19 +745,31 @@
       max-width:92vw;
       text-align:center;
     }
+
     .toast.show{ display:block; }
 
     .skeleton{
-      animation: shimmer 1.2s infinite linear;
-      background: linear-gradient(90deg,
+      animation:shimmer 1.2s infinite linear;
+      background:linear-gradient(
+        90deg,
         rgba(255,255,255,.05) 0%,
         rgba(255,255,255,.10) 50%,
-        rgba(255,255,255,.05) 100%);
-      background-size: 200% 100%;
+        rgba(255,255,255,.05) 100%
+      );
+      background-size:200% 100%;
     }
-    @keyframes shimmer{ 0%{ background-position: 200% 0; } 100%{ background-position: -200% 0; } }
+
+    @keyframes shimmer{
+      0%{ background-position:200% 0; }
+      100%{ background-position:-200% 0; }
+    }
+
     .sk-photo{ height:210px; }
-    .sk-line{ height:12px; border-radius:999px; margin-top:10px; }
+    .sk-line{
+      height:12px;
+      border-radius:999px;
+      margin-top:10px;
+    }
 
     @media(max-width:768px){
       .floating-back{
@@ -448,12 +793,12 @@
         <div class="logo-badge">📅</div>
         <div class="logo-text">
           <div class="logo-title">DIGIY RESA • MULTI BUSINESS • SALY</div>
-          <div class="logo-sub">La vitrine publique • Réservation simple • Services du terrain</div>
+          <div class="logo-sub">La vitrine publique • Double rail clair • Services du terrain</div>
         </div>
       </div>
 
       <div class="nav-right">
-        <div class="pill"><span class="dot"></span> Réservation directe</div>
+        <div class="pill"><span class="dot"></span> Live + vitrine</div>
         <div class="pill">📍 Saly</div>
         <a class="btn-small" id="btnHub" href="#" rel="noopener">🦅 DIGIY HUB</a>
         <a class="btn-small primary" id="btnJoinTop" href="#" rel="noopener">📌 Poser ma fiche</a>
@@ -463,52 +808,61 @@
     <section class="hero">
       <div class="hero-inner">
         <div>
-          <h1>La vitrine <span class="hl">DIGIY RESA</span><br/>de <span class="hl">Saly</span> en mode <span class="hl">multi business</span></h1>
+          <h1>
+            La vitrine <span class="hl">DIGIY RESA</span><br />
+            de <span class="hl">Saly</span> en mode <span class="hl">LIVE + VITRINE</span>
+          </h1>
+
           <p>
-            Ici le client découvre des activités et services du terrain :
-            <b style="color:var(--gold);font-weight:1000;">restaurant, coiffure, garage, beauté, consultation, atelier</b>.
-            Il découvre, il comprend, puis
-            <b style="color:var(--gold);font-weight:1000;">il choisit avec clarté</b>.
-            Ici, on respecte le client <b style="color:var(--gold);font-weight:1000;">et</b> le travail du professionnel.
+            Ici le client découvre le terrain sans confusion :
+            <b style="color:var(--green);font-weight:1000;">ce qui est réservable maintenant</b>
+            d’un côté, et
+            <b style="color:var(--gold);font-weight:1000;">ce qui inspire, attire et prépare la suite</b>
+            de l’autre. Une oasis vivante, oui. Un mirage, non.
           </p>
 
           <div class="hero-badges">
-            <div class="hero-badge">✅ <b>Public</b> (vitrine)</div>
+            <div class="hero-badge">🟢 <b>LIVE</b> • fiche réelle</div>
+            <div class="hero-badge">✨ Vitrine d’inspiration</div>
             <div class="hero-badge">📅 Réservation simple</div>
             <div class="hero-badge">🧩 Multi business</div>
-            <div class="hero-badge">🆕 Nouveaux en avant</div>
           </div>
 
           <div class="statsbar" id="resaStatsBar">
             <div class="left">
               <span>📍 <span style="color:var(--gold)">Saly</span> :</span>
-              <span><span id="msTotal">—</span> fiches visibles</span>
+              <span><span id="msTotal">—</span> cartes visibles</span>
+              <span class="sep">•</span>
+              <span><span id="msLive">—</span> live</span>
+              <span class="sep">•</span>
+              <span><span id="msVitrine">—</span> vitrine</span>
               <span class="sep">•</span>
               <span>+<span id="ms7d">—</span>/7j</span>
-              <span class="sep">•</span>
-              <span>+<span id="ms24h">—</span>/24h</span>
             </div>
             <div class="right">
-              <span class="stats-pill good">Réelles: <span id="msPublic">—</span></span>
-              <span class="stats-pill warn">Catégories: <span id="msCats">—</span></span>
+              <span class="stats-pill good">Réelles : <span id="msPublic">—</span></span>
+              <span class="stats-pill warn">Catégories : <span id="msCats">—</span></span>
             </div>
           </div>
         </div>
 
         <aside class="hero-box">
-          <div class="muted" style="font-weight:1000;">📊 Stats vitrine (Saly)</div>
+          <div class="muted" style="font-weight:1000;">📊 Lecture rapide vitrine (Saly)</div>
+
           <div class="kpi">
-            <div class="chip"><span>Fiches visibles</span><span class="v" id="kpiCount">—</span></div>
+            <div class="chip"><span>Visibles</span><span class="v" id="kpiCount">—</span></div>
             <div class="chip"><span>Nouveaux 7j</span><span class="v" id="kpiNew7d">—</span></div>
+            <div class="chip"><span>Live filtrés</span><span class="v" id="kpiLive">—</span></div>
+            <div class="chip"><span>Vitrine filtrée</span><span class="v" id="kpiVitrine">—</span></div>
           </div>
 
           <div class="status" style="margin-top:12px;">
             <span id="statusText">🔎 Chargement…</span>
-            <div class="right"><span class="muted">Source :</span><b>Supabase</b></div>
+            <div class="right"><span class="muted">Source :</span><b>Supabase + vitrine</b></div>
           </div>
 
           <div class="status" style="margin-top:10px;">
-            <span class="muted">Dernière fiche :</span>
+            <span class="muted">Dernière carte visible :</span>
             <b id="kpiLast">—</b>
           </div>
         </aside>
@@ -521,6 +875,7 @@
             <option value="">Toutes les activités</option>
           </select>
         </div>
+
         <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
           <a class="btn-small" id="btnRefresh" href="#">🔄 Rafraîchir</a>
           <a class="btn-small" id="btnSupport" href="#" rel="noopener">💬 Support</a>
@@ -529,20 +884,55 @@
     </section>
 
     <section class="section">
-      <div class="section-title">📍 Vitrine multi business (public)</div>
-      <div class="muted">
-        Fiches visibles : <b style="color:var(--gold)">réelles + vitrine d’ambiance</b> • Ville : <b>Saly</b>
+      <div class="section-card">
+        <div class="section-head">
+          <div>
+            <div class="section-title">🟢 Établissements disponibles maintenant</div>
+            <div class="section-note">
+              Ici, le client voit les vraies fiches publiées sur le rail réel. Sur ces cartes,
+              le bouton <b style="color:var(--green)">Réserver</b> reste actif.
+            </div>
+          </div>
+
+          <div class="legend">
+            <span class="legend-pill live">Réservation active</span>
+            <span class="legend-pill live">Fiche réelle</span>
+          </div>
+        </div>
+
+        <div id="gridLive" class="grid"></div>
       </div>
-      <div id="grid" class="grid" style="margin-top:12px;"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-card">
+        <div class="section-head">
+          <div>
+            <div class="section-title">✨ Vitrine d’ambiance / inspiration</div>
+            <div class="section-note">
+              Ici, on garde l’oasis vivante : ambiance, projection, désir, matière visuelle.
+              Ces cartes servent à attirer, montrer le potentiel et préparer la suite.
+              Elles n’ouvrent pas une fausse réservation.
+            </div>
+          </div>
+
+          <div class="legend">
+            <span class="legend-pill vitrine">Inspiration</span>
+            <span class="legend-pill vitrine">Pas de fausse resa</span>
+          </div>
+        </div>
+
+        <div id="gridVitrine" class="grid"></div>
+      </div>
     </section>
 
     <div class="signature">
-      Ici, chaque fiche représente un vrai travail.<br/>
-      <strong>DIGIY ne pousse pas la masse. DIGIY révèle ce qui est solide.</strong>
+      Ici, chaque fiche ne joue pas le même rôle.<br />
+      <strong>DIGIY attire avec la vitrine, puis guide vers le vrai terrain.</strong>
     </div>
 
     <footer class="footer">
-      DIGIY RESA • Saly • <span class="zero">Vitrine locale</span> • <span class="brand">Réservation multi business</span> ∞
+      DIGIY RESA • Saly • <span class="zero">Double rail clair</span> • <span class="brand">LIVE + VITRINE</span> ∞
     </footer>
   </div>
 
@@ -554,7 +944,6 @@
 
       const CITY_LOCK = "Saly";
       const NEW_DAYS = 7;
-      const MIN_VISIBLE_CARDS = 6;
 
       const FALLBACK_PHOTO = "https://orange-pig-270004.hostingersite.com/wp-content/uploads/2026/03/chatgpt-image-4-mars-2026-23_40_53.png";
       const HUB_URL = "https://beauville.github.io/digiy-hub/";
@@ -567,7 +956,9 @@
 
       let sb = null;
       let LIVE_ROWS = [];
-      let ROWS = [];
+      let VITRINE_ROWS = [];
+      let FILTERED_LIVE = [];
+      let FILTERED_VITRINE = [];
 
       const DEMO_CARDS = [
         {
@@ -613,7 +1004,7 @@
           bio: "Une table d’ambiance pour déjeuner tranquille, dîner simple ou recevoir des amis dans un cadre détendu.",
           badge: "✨ VITRINE DIGIY",
           hub_badge: "🍽️ RESTAURANT",
-          price_label: "Horaires: 12:00 - 23:00",
+          price_label: "Horaires : 12:00 - 23:00",
           tags: ["Restaurant", "Terrasse", "Déjeuner", "Saly"],
           photo_url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
           created_at: new Date(Date.now() - 2 * 86400000).toISOString()
@@ -686,7 +1077,9 @@
               removeItem: () => {}
             }
           },
-          global: { headers: { "X-Client-Info": "digiy-resa-multi-business-vitrine" } }
+          global: {
+            headers: { "X-Client-Info": "digiy-resa-multi-business-vitrine-live-vitrine" }
+          }
         });
 
         return window.DIGIY_SB;
@@ -710,6 +1103,7 @@
           "https://wa.me/" + SUPPORT_WA + "?text=" +
           encodeURIComponent("Salut DIGIY RESA, j'ai une question sur la vitrine multi business de Saly.");
         document.getElementById("btnJoinTop").href = buildJoinUrl();
+
         document.getElementById("btnRefresh").addEventListener("click", (e) => {
           e.preventDefault();
           load();
@@ -740,7 +1134,7 @@
 
       function pick(arr, key){
         const v = (arr || []).map(x => (x?.[key] ?? "")).filter(Boolean);
-        return Array.from(new Set(v)).sort((a,b)=>String(a).localeCompare(String(b)));
+        return Array.from(new Set(v)).sort((a,b) => String(a).localeCompare(String(b)));
       }
 
       function tagsToArray(tags){
@@ -769,62 +1163,100 @@
         return "";
       }
 
-      function updateStatsBar(visibleRows, liveRows){
-        const list = Array.isArray(visibleRows) ? visibleRows : [];
-        const reals = Array.isArray(liveRows) ? liveRows : [];
-        const now = Date.now();
+      function buildWhatsAppHref(phone, displayName){
+        const clean = String(phone || SUPPORT_WA).replace(/[^\d]/g, "");
+        const msg = `Bonjour ${displayName || ""}, je vous contacte via DIGIY RESA.`;
+        return "https://wa.me/" + clean + "?text=" + encodeURIComponent(msg);
+      }
 
-        const new7d = reals.filter(r => {
-          const t = Date.parse(r.created_at || "");
-          return Number.isFinite(t) && ((now - t) / (1000*60*60*24) <= 7);
-        }).length;
+      function mapLiveRow(r){
+        return {
+          kind: "live",
+          demo_id: "",
+          slug: first(r.slug),
+          display_name: first(r.display_name, r.business_name, r.name, r.establishment_name) || "Commerce",
+          category: first(r.business_type, r.category, r.type_label) || "Service local",
+          city: first(r.city) || CITY_LOCK,
+          address: first(r.address_text, r.address, r.location_text) || "",
+          bio: first(r.bio, r.description, r.about, r.short_description) || "",
+          badge: "🟢 FICHE RÉELLE",
+          hub_badge: "DIGIY RESA",
+          price_label: first(r.opening_hours_text, r.open_hours, r.opening_hours)
+            ? `Horaires : ${first(r.opening_hours_text, r.open_hours, r.opening_hours)}`
+            : "",
+          tags: [
+            first(r.business_type, r.category, r.type_label) || "",
+            first(r.city) || "",
+            first(r.opening_hours_text, r.open_hours, r.opening_hours)
+              ? `Horaires : ${first(r.opening_hours_text, r.open_hours, r.opening_hours)}`
+              : ""
+          ].filter(Boolean),
+          photo_url: first(r.cover_url, r.cover_image_url, r.logo_url, r.image_url, r.photo_url) || "",
+          whatsapp: first(r.whatsapp, r.whatsapp_phone, r.phone) || SUPPORT_WA,
+          created_at: first(r.updated_at, r.created_at) || null
+        };
+      }
 
-        const new24h = reals.filter(r => {
-          const t = Date.parse(r.created_at || "");
-          return Number.isFinite(t) && ((now - t) / (1000*60*60) <= 24);
-        }).length;
+      function buildFicheHref(row){
+        if (row.kind === "live" && row.slug) {
+          return `./fiche.html?slug=${encodeURIComponent(row.slug)}`;
+        }
+        return `./fiche.html?demo=${encodeURIComponent(row.demo_id || "")}`;
+      }
 
-        const cats = new Set(list.map(r => String(r.category || "").trim()).filter(Boolean)).size;
+      function buildReserveHref(row){
+        if (row.kind === "live" && row.slug) {
+          return `./reserver.html?slug=${encodeURIComponent(row.slug)}`;
+        }
+        return "";
+      }
 
-        document.getElementById("msTotal").textContent = String(list.length);
+      function fillSelects(){
+        const catSel = document.getElementById("cat");
+        const cats = pick([...LIVE_ROWS, ...VITRINE_ROWS], "category");
+        catSel.innerHTML =
+          `<option value="">Toutes les activités</option>` +
+          cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
+      }
+
+      function updateStatsBar(liveRows, vitrineRows){
+        const l = Array.isArray(liveRows) ? liveRows : [];
+        const v = Array.isArray(vitrineRows) ? vitrineRows : [];
+        const all = [...l, ...v];
+
+        const new7d = l.filter(r => isNew(r.created_at)).length;
+        const cats = new Set(all.map(r => String(r.category || "").trim()).filter(Boolean)).size;
+
+        document.getElementById("msTotal").textContent = String(all.length);
+        document.getElementById("msLive").textContent = String(l.length);
+        document.getElementById("msVitrine").textContent = String(v.length);
         document.getElementById("ms7d").textContent = String(new7d);
-        document.getElementById("ms24h").textContent = String(new24h);
-        document.getElementById("msPublic").textContent = String(reals.length);
+        document.getElementById("msPublic").textContent = String(l.length);
         document.getElementById("msCats").textContent = String(cats);
       }
 
-      function updateKpiFiltered(list){
-        const visible = Array.isArray(list) ? list : [];
+      function updateKpisFiltered(liveFiltered, vitrineFiltered){
+        const l = Array.isArray(liveFiltered) ? liveFiltered : [];
+        const v = Array.isArray(vitrineFiltered) ? vitrineFiltered : [];
+        const all = [...l, ...v];
 
-        const total = visible.length;
-        const reals = visible.filter(x => x.kind === "live");
-        const new7d = reals.filter(x => isNew(x.created_at)).length;
+        document.getElementById("kpiCount").textContent = String(all.length);
+        document.getElementById("kpiNew7d").textContent = String(l.filter(x => isNew(x.created_at)).length);
+        document.getElementById("kpiLive").textContent = String(l.length);
+        document.getElementById("kpiVitrine").textContent = String(v.length);
 
-        document.getElementById("kpiCount").textContent = String(total);
-        document.getElementById("kpiNew7d").textContent = String(new7d);
-
-        const last = [...visible].sort((a,b) => {
+        const last = [...all].sort((a, b) => {
           const ta = Date.parse(a.created_at || "") || 0;
           const tb = Date.parse(b.created_at || "") || 0;
           return tb - ta;
         })[0];
 
         document.getElementById("kpiLast").textContent =
-          last ? `${last.display_name}${last.kind==="demo" ? " • vitrine" : ""}` : "—";
-      }
-
-      function fillSelects(){
-        const catSel = document.getElementById("cat");
-        const cats = pick(ROWS, "category");
-        catSel.innerHTML =
-          `<option value="">Toutes les activités</option>` +
-          cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
+          last ? `${last.display_name}${last.kind === "demo" ? " • vitrine" : " • live"}` : "—";
       }
 
       function renderSkeleton(){
-        const grid = document.getElementById("grid");
-        if(!grid) return;
-        grid.innerHTML = Array.from({length:6}).map(() => `
+        const skeletonHtml = Array.from({length:3}).map(() => `
           <div class="card">
             <div class="photo skeleton sk-photo"></div>
             <div class="body">
@@ -839,87 +1271,54 @@
             </div>
           </div>
         `).join("");
+
+        document.getElementById("gridLive").innerHTML = skeletonHtml;
+        document.getElementById("gridVitrine").innerHTML = skeletonHtml;
       }
 
-      function mapLiveRow(r){
-        return {
-          kind: "live",
-          demo_id: "",
-          slug: first(r.slug),
-          display_name: first(r.display_name, r.business_name, r.name, r.establishment_name) || "Commerce",
-          category: first(r.business_type, r.category, r.type_label) || "Service local",
-          city: first(r.city) || "",
-          address: first(r.address_text, r.address, r.location_text) || "",
-          bio: first(r.bio, r.description, r.about, r.short_description) || "",
-          badge: "🟢 FICHE RÉELLE",
-          hub_badge: "DIGIY RESA",
-          price_label: first(r.opening_hours_text, r.open_hours, r.opening_hours) ? `Horaires: ${first(r.opening_hours_text, r.open_hours, r.opening_hours)}` : "",
-          tags: [
-            first(r.business_type, r.category, r.type_label) || "",
-            first(r.city) || "",
-            first(r.opening_hours_text, r.open_hours, r.opening_hours) ? `Horaires: ${first(r.opening_hours_text, r.open_hours, r.opening_hours)}` : ""
-          ].filter(Boolean),
-          photo_url: first(r.cover_url, r.cover_image_url, r.logo_url, r.image_url, r.photo_url) || "",
-          created_at: first(r.updated_at, r.created_at) || null
-        };
-      }
-
-      function buildVisibleRows(liveRows){
-        const rows = [...liveRows];
-        const needed = Math.max(0, MIN_VISIBLE_CARDS - rows.length);
-        if(needed > 0){
-          rows.push(...DEMO_CARDS.slice(0, needed));
-        }
-        return rows;
-      }
-
-      function buildFicheHref(row){
-        if (row.kind === "live" && row.slug) {
-          return `./fiche.html?slug=${encodeURIComponent(row.slug)}`;
-        }
-        return `./fiche.html?demo=${encodeURIComponent(row.demo_id || "")}`;
-      }
-
-      function buildReserveHref(row){
-        if (row.kind === "live" && row.slug) {
-          return `./reserver.html?slug=${encodeURIComponent(row.slug)}`;
-        }
-        return null;
-      }
-
-      function render(list){
-        const grid = document.getElementById("grid");
+      function renderGrid(gridId, rows, mode){
+        const grid = document.getElementById(gridId);
         if(!grid) return;
 
-        const rows = Array.isArray(list) ? list : [];
+        const list = Array.isArray(rows) ? rows : [];
 
-        if(!rows.length){
+        if(!list.length){
           grid.innerHTML = `
-            <div class="status" style="grid-column:1/-1;">
-              <span>⚠️ Aucune fiche à afficher pour le moment.</span>
+            <div class="empty-state" style="grid-column:1/-1;">
+              ${
+                mode === "live"
+                  ? "Aucune fiche live ne correspond au filtre pour l’instant. La vitrine d’inspiration reste visible pour garder le terrain vivant."
+                  : "Aucune carte vitrine ne correspond au filtre pour l’instant."
+              }
             </div>
           `;
           return;
         }
 
-        grid.innerHTML = rows.map(r => {
+        grid.innerHTML = list.map(r => {
           const name = esc(r.display_name || "Commerce");
           const category = esc(r.category || "Service local");
           const city = esc(r.city || CITY_LOCK);
           const address = esc(r.address || "");
           const bio = esc(r.bio || "");
-          const badge = esc(r.badge || "📅 RÉSERVABLE");
-          const hub = esc(r.hub_badge || "🟢 MULTI BUSINESS");
+          const badge = esc(r.badge || (mode === "live" ? "🟢 FICHE RÉELLE" : "✨ VITRINE DIGIY"));
+          const hub = esc(r.hub_badge || (mode === "live" ? "DIGIY RESA" : "VITRINE"));
           const price = esc(r.price_label || "");
           const tags = tagsToArray(r.tags).slice(0, 6);
           const isNewCard = isNew(r.created_at);
 
           const rawPhoto = String(r.photo_url || "").trim();
           const basePhoto = rawPhoto || FALLBACK_PHOTO;
-          const photoFinal = esc(basePhoto + (basePhoto.includes("?") ? "&" : "?") + "v=11");
+          const photoFinal = esc(basePhoto + (basePhoto.includes("?") ? "&" : "?") + "v=12");
 
           const ficheHref = buildFicheHref(r);
           const resaHref = buildReserveHref(r);
+          const waHref = buildWhatsAppHref(r.whatsapp, r.display_name);
+
+          const primaryLabel = mode === "live" ? "📄 Voir la fiche" : "✨ Découvrir";
+          const secondaryBtn = mode === "live"
+            ? `<a class="btn secondary" href="${esc(resaHref)}">📅 Réserver</a>`
+            : `<a class="btn ghost" href="${esc(waHref)}">💬 Nous écrire</a>`;
 
           return `
             <article class="card" data-kind="${esc(r.kind || "")}" data-slug="${esc(r.slug || "")}">
@@ -939,14 +1338,17 @@
 
               <div class="body">
                 <div class="name">${name}</div>
+
                 <div class="meta">
                   <span>🏷️ ${category}</span>
                   <span>📍 ${city}${address ? " • " + address : ""}</span>
                 </div>
 
-                ${bio
-                  ? `<div class="bio">${bio}</div>`
-                  : `<div class="bio" style="color:var(--muted)">Fiche publique DIGIY RESA MULTI BUSINESS.</div>`}
+                ${
+                  bio
+                    ? `<div class="bio">${bio}</div>`
+                    : `<div class="bio" style="color:var(--muted)">Fiche publique DIGIY RESA MULTI BUSINESS.</div>`
+                }
 
                 <div class="tags">
                   ${tags.map(t => `<span class="tag">${esc(t)}</span>`).join("")}
@@ -954,12 +1356,8 @@
                 </div>
 
                 <div class="actions">
-                  <a class="btn primary" href="${esc(ficheHref)}">📄 Voir la fiche</a>
-                  ${
-                    resaHref
-                      ? `<a class="btn secondary" href="${esc(resaHref)}">📅 Réserver</a>`
-                      : `<a class="btn ghost" href="${esc(ficheHref)}">👁️ Voir</a>`
-                  }
+                  <a class="btn primary" href="${esc(ficheHref)}">${primaryLabel}</a>
+                  ${secondaryBtn}
                 </div>
               </div>
             </article>
@@ -967,35 +1365,41 @@
         }).join("");
       }
 
+      function rowMatchesFilters(r, q, cat){
+        const hay = [
+          r.display_name,
+          r.category,
+          r.city,
+          r.address,
+          r.bio,
+          r.badge,
+          r.hub_badge,
+          r.price_label,
+          ...tagsToArray(r.tags)
+        ].join(" ").toLowerCase();
+
+        const okQ = !q || hay.includes(q);
+        const okCat = !cat || String(r.category || "").toLowerCase() === cat;
+        return okQ && okCat;
+      }
+
       function applyFilters(){
         const q = (document.getElementById("q").value || "").trim().toLowerCase();
         const cat = (document.getElementById("cat").value || "").trim().toLowerCase();
 
-        const filtered = (ROWS || []).filter(r => {
-          const hay = [
-            r.display_name,
-            r.category,
-            r.city,
-            r.address,
-            r.bio,
-            r.badge,
-            r.hub_badge,
-            r.price_label,
-            ...tagsToArray(r.tags)
-          ].join(" ").toLowerCase();
+        FILTERED_LIVE = LIVE_ROWS.filter(r => rowMatchesFilters(r, q, cat));
+        FILTERED_VITRINE = VITRINE_ROWS.filter(r => rowMatchesFilters(r, q, cat));
 
-          const okQ = !q || hay.includes(q);
-          const okCat = !cat || String(r.category || "").toLowerCase() === cat;
-          return okQ && okCat;
-        });
-
-        render(filtered);
-        updateKpiFiltered(filtered);
+        renderGrid("gridLive", FILTERED_LIVE, "live");
+        renderGrid("gridVitrine", FILTERED_VITRINE, "vitrine");
+        updateKpisFiltered(FILTERED_LIVE, FILTERED_VITRINE);
       }
 
       async function load(){
         renderSkeleton();
-        setStatus("🔎 Chargement depuis Supabase…");
+        setStatus("🔎 Chargement du LIVE + préparation de la vitrine…");
+
+        VITRINE_ROWS = [...DEMO_CARDS];
 
         try{
           sb = initSupabase();
@@ -1015,27 +1419,30 @@
 
           LIVE_ROWS = raw
             .filter(r => sameCity(first(r.city), CITY_LOCK))
-            .map(mapLiveRow);
-
-          ROWS = buildVisibleRows(LIVE_ROWS);
+            .map(mapLiveRow)
+            .filter(r => r.slug);
 
           fillSelects();
-          updateStatsBar(ROWS, LIVE_ROWS);
+          updateStatsBar(LIVE_ROWS, VITRINE_ROWS);
           applyFilters();
-          toast("✅ Vitrine prête");
+
+          if (LIVE_ROWS.length) {
+            setStatus("✅ Rail LIVE chargé. La vitrine d’inspiration complète le terrain.");
+            toast("✅ LIVE + VITRINE prêts");
+          } else {
+            setStatus("⚠️ Aucun live visible pour l’instant. La vitrine garde le terrain vivant.");
+            toast("✨ Vitrine active");
+          }
         }catch(e){
           console.error(e);
 
           LIVE_ROWS = [];
-          ROWS = buildVisibleRows([]);
-
           fillSelects();
-          updateStatsBar(ROWS, LIVE_ROWS);
-          render(ROWS);
-          updateKpiFiltered(ROWS);
+          updateStatsBar(LIVE_ROWS, VITRINE_ROWS);
+          applyFilters();
 
-          setStatus("⚠️ Source live indisponible — vitrine d’ambiance affichée.");
-          toast("⚠️ Mode vitrine d’ambiance");
+          setStatus("⚠️ Source live indisponible — vitrine d’inspiration affichée.");
+          toast("⚠️ Mode vitrine d’inspiration");
         }
       }
 
