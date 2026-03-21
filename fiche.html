@@ -4,7 +4,10 @@
   <meta charset="utf-8" />
   <title>DIGIY RESA — Fiche multi business</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="Fiche publique commerce DIGIY RESA — réservation multi business." />
+  <meta
+    name="description"
+    content="Fiche publique commerce DIGIY RESA — double rail clair : fiche réelle ou vitrine d’inspiration."
+  />
   <meta name="theme-color" content="#061b14" />
 
   <script>
@@ -32,7 +35,12 @@
       --radius:24px;
     }
 
-    *{ box-sizing:border-box; margin:0; padding:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    }
 
     body{
       min-height:100vh;
@@ -456,6 +464,7 @@
       font-weight:900;
       color:var(--muted);
       white-space:pre-wrap;
+      line-height:1.5;
     }
 
     .footer{
@@ -477,12 +486,12 @@
         <div class="logo-badge">📅</div>
         <div>
           <div class="logo-title">DIGIY RESA</div>
-          <div class="logo-sub">Fiche publique multi business</div>
+          <div class="logo-sub">Fiche publique multi business • LIVE + VITRINE</div>
         </div>
       </div>
 
       <div class="nav-right">
-        <div class="pill"><span class="dot"></span> Réservation simple</div>
+        <div class="pill"><span class="dot"></span> Lecture simple</div>
         <a class="btn-small" href="./index.html">← Retour vitrine</a>
       </div>
     </header>
@@ -562,7 +571,7 @@
     <div class="status" id="statusText">Chargement de la fiche…</div>
 
     <footer class="footer">
-      DIGIY RESA • Fiche publique • Multi business • Réservation simple ∞
+      DIGIY RESA • Fiche publique • Multi business • LIVE + VITRINE ∞
     </footer>
   </div>
 
@@ -584,7 +593,7 @@
           business_type: "Coiffure",
           city: "Saly",
           address_text: "Quartier central • rendez-vous beauté",
-          bio: "Coupe, brushing, teinture et soins. Une fiche pensée pour réserver simplement selon le service choisi.",
+          bio: "Coupe, brushing, teinture et soins. Une fiche pensée pour découvrir l’ambiance puis demander un créneau simplement.",
           badge: "✨ VITRINE DIGIY",
           hub_badge: "💇 BEAUTÉ",
           opening_hours_text: "09:00 - 19:00",
@@ -603,7 +612,7 @@
           business_type: "Garage",
           city: "Saly",
           address_text: "Axe principal • mécanique légère",
-          bio: "Diagnostic, vidange, freins et petites interventions avec créneaux clairs pour gagner du temps.",
+          bio: "Diagnostic, vidange, freins et petites interventions avec une lecture claire des besoins avant contact.",
           badge: "✨ VITRINE DIGIY",
           hub_badge: "🔧 GARAGE",
           opening_hours_text: "08:00 - 18:00",
@@ -640,7 +649,7 @@
           business_type: "Beauté",
           city: "Saly",
           address_text: "Zone calme • soins esthétiques",
-          bio: "Pose, entretien, manucure et rendez-vous beauté avec créneaux simples à lire pour la cliente.",
+          bio: "Pose, entretien, manucure et rendez-vous beauté avec lecture simple pour se projeter.",
           badge: "✨ VITRINE DIGIY",
           hub_badge: "💅 BEAUTÉ",
           opening_hours_text: "10:00 - 19:00",
@@ -676,7 +685,7 @@
           business_type: "Atelier",
           city: "Saly",
           address_text: "Service de quartier • rendez-vous utiles",
-          bio: "Un atelier pensé pour les rendez-vous techniques, petits dépannages et services du quotidien avec planning clair.",
+          bio: "Un atelier pensé pour les rendez-vous techniques, petits dépannages et services du quotidien avec lecture claire.",
           badge: "✨ VITRINE DIGIY",
           hub_badge: "🛠️ ATELIER",
           opening_hours_text: "08:30 - 18:30",
@@ -772,7 +781,7 @@
       function buildReserveHref(slug, demo){
         if (slug) return `./reserver.html?slug=${encodeURIComponent(slug)}`;
         if (demo) {
-          return `https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Bonjour, je souhaite réserver via DIGIY RESA.")}`;
+          return `https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Bonjour, je souhaite demander un créneau via DIGIY RESA.")}`;
         }
         return "./index.html";
       }
@@ -797,9 +806,11 @@
           tags: [
             first(profile?.business_type, profile?.category, profile?.type_label) || "",
             first(profile?.city) || "",
-            first(profile?.opening_hours_text, profile?.open_hours, profile?.opening_hours) ? `Horaires: ${first(profile?.opening_hours_text, profile?.open_hours, profile?.opening_hours)}` : ""
+            first(profile?.opening_hours_text, profile?.open_hours, profile?.opening_hours)
+              ? `Horaires: ${first(profile?.opening_hours_text, profile?.open_hours, profile?.opening_hours)}`
+              : ""
           ].filter(Boolean),
-          whatsapp: normalizePhone(first(profile?.whatsapp) || SUPPORT_WA),
+          whatsapp: normalizePhone(first(profile?.whatsapp, profile?.whatsapp_phone, profile?.phone) || SUPPORT_WA),
           slug: normalizeSlug(first(profile?.slug) || "")
         };
       }
@@ -846,7 +857,7 @@
         if(!Array.isArray(services) || !services.length){
           box.innerHTML = `
             <div class="muted">
-              Aucun service détaillé n’est affiché pour l’instant. Le client peut passer par le bouton de réservation ou WhatsApp pour préciser son besoin.
+              Aucun service détaillé n’est affiché pour l’instant. Le client peut passer par le bouton principal ou WhatsApp pour préciser son besoin.
             </div>
           `;
           return;
@@ -862,7 +873,7 @@
               </div>
             </div>
             <div class="muted">
-              ${businessType ? `Prestation ${esc(String(businessType).toLowerCase())} disponible sur réservation.` : `Prestation disponible sur réservation.`}
+              ${businessType ? `Prestation ${esc(String(businessType).toLowerCase())} disponible sur demande.` : `Prestation disponible sur demande.`}
             </div>
           </article>
         `).join("");
@@ -883,7 +894,7 @@
         const channelInfo = document.getElementById("channelInfo");
 
         const photoBase = item.photo_url || FALLBACK_PHOTO;
-        const photo = photoBase + (photoBase.includes("?") ? "&" : "?") + "v=13";
+        const photo = photoBase + (photoBase.includes("?") ? "&" : "?") + "v=14";
         const phone = normalizePhone(item.whatsapp || SUPPORT_WA);
         const businessType = item.business_type || "service local";
         const reserveHref = buildReserveHref(item.slug || "", opts.demoId || "");
@@ -894,9 +905,9 @@
           <div class="photo">
             <img src="${esc(photo)}" alt="${esc(item.display_name)}" onerror="this.outerHTML='<div class=&quot;photo-fallback&quot;>📅</div>'" />
             <div class="badgeTop">
-              <span class="chip gold">${esc(item.badge || "📅 RÉSERVABLE")}</span>
-              <span class="chip blue">${esc(item.hub_badge || "🟢 MULTI BUSINESS")}</span>
-              ${isLive ? `<span class="chip green">slug : ${esc(item.slug)}</span>` : `<span class="chip">mode vitrine</span>`}
+              <span class="chip gold">${esc(item.badge || "📅 DIGIY RESA")}</span>
+              <span class="chip blue">${esc(item.hub_badge || "MULTI BUSINESS")}</span>
+              ${isLive ? `<span class="chip green">LIVE • slug : ${esc(item.slug)}</span>` : `<span class="chip">VITRINE</span>`}
             </div>
           </div>
 
@@ -916,7 +927,7 @@
             </div>
 
             <div class="actions">
-              <a class="btn primary" href="${esc(reserveHref)}">${isLive ? "📅 Ouvrir la réservation" : "💬 Réserver / demander"}</a>
+              <a class="btn primary" href="${esc(reserveHref)}">${isLive ? "📅 Ouvrir la réservation" : "💬 Demander un créneau"}</a>
               <a class="btn secondary" href="${esc(waHref)}">💬 WhatsApp direct</a>
               <a class="btn ghost" href="./index.html">← Retour vitrine</a>
             </div>
@@ -925,14 +936,16 @@
 
         ambiance.textContent = item.bio || "Fiche publique commerce.";
         reserveText.textContent = isLive
-          ? "Le client peut ouvrir le formulaire DIGIY RESA, choisir un service, une date, une heure, puis envoyer sa demande proprement."
-          : "Le client peut demander un créneau, poser une question ou confirmer son besoin directement sur WhatsApp. Parcours court, humain et terrain.";
+          ? "Cette fiche est sur le rail réel. Le client peut ouvrir le formulaire DIGIY RESA, choisir un service, une date, une heure, puis envoyer sa demande proprement."
+          : "Cette fiche est une vitrine d’inspiration. Le client peut demander un créneau, poser une question ou confirmer son besoin directement sur WhatsApp.";
 
         cityInfo.textContent = item.city || "Saly";
         addressInfo.textContent = item.address_text || "Adresse à confirmer";
         hoursInfo.textContent = item.opening_hours_text || "Horaires à confirmer";
         contactInfo.textContent = phone ? "+" + phone : "+221" + SUPPORT_WA;
-        usageInfo.textContent = `Réservation simple pour ${businessType.toLowerCase()}`;
+        usageInfo.textContent = isLive
+          ? `Réservation simple pour ${String(businessType).toLowerCase()}`
+          : `Découverte / prise de contact pour ${String(businessType).toLowerCase()}`;
         channelInfo.textContent = isLive ? "Formulaire DIGIY RESA + WhatsApp" : "WhatsApp direct";
 
         bottom.innerHTML = `
@@ -943,7 +956,7 @@
 
         status.textContent = isLive
           ? "Fiche publique chargée sur le rail réel."
-          : "Fiche vitrine chargée.";
+          : "Fiche vitrine chargée. Ambiance claire, sans fausse réservation.";
       }
 
       function renderFallback(){
@@ -991,7 +1004,10 @@
 
         ambiance.textContent = "Retourne à la vitrine pour voir les autres commerces visibles à Saly.";
         reserveText.textContent = "En cas de doute, le parcours court reste WhatsApp.";
-        bottom.innerHTML = `<a class="btn primary" href="${waHref}">💬 Contacter</a>`;
+        bottom.innerHTML = `
+          <a class="btn primary" href="${waHref}">💬 Contacter</a>
+          <a class="btn ghost" href="./index.html">← Retour vitrine</a>
+        `;
         status.textContent = "Fiche indisponible.";
       }
 
@@ -1001,14 +1017,14 @@
 
         sb = initSupabase();
 
-        if(demo && DEMO_MAP[demo]){
+        if (demo && DEMO_MAP[demo]) {
           const item = DEMO_MAP[demo];
           renderCard(item, { demoId: demo });
           renderServices(item.services || [], item.business_type || "");
           return;
         }
 
-        if(!slug || !sb){
+        if (!slug || !sb) {
           renderFallback();
           return;
         }
@@ -1016,7 +1032,7 @@
         try{
           const profile = await loadPublicProfileBySlug(slug);
 
-          if(!profile){
+          if (!profile) {
             renderFallback();
             return;
           }
@@ -1038,5 +1054,4 @@
     })();
   </script>
 </body>
-</html>
 </html>
