@@ -5,11 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <title>DIGIY RESA — Réserver</title>
   <meta name="theme-color" content="#07140f"/>
-  <meta
-    name="description"
-    content="DIGIY RESA — réservation simple en mode LIVE, ou demande de créneau en mode VITRINE."
-  />
-
+  <meta name="description" content="DIGIY RESA — réservation simple en mode LIVE, ou demande de créneau en mode VITRINE."/>
   <script>
     window.DIGIY_SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
     window.DIGIY_SUPABASE_ANON_KEY = "sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3";
@@ -17,578 +13,114 @@
     window.DIGIY_MODULE = "RESA";
   </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
   <style>
     :root{
-      --bg:#07140f;
-      --bg2:#0b1d15;
-      --card:#10241b;
-      --card2:#0d2018;
-      --line:rgba(255,255,255,.10);
-      --text:#ecfff4;
-      --muted:rgba(236,255,244,.72);
-      --primary:#22c55e;
-      --primary-2:#16a34a;
-      --gold:#facc15;
-      --gold-soft:rgba(250,204,21,.12);
-      --danger:#ef4444;
-      --blue:#60a5fa;
-      --orange:#f97316;
-      --shadow:0 20px 60px rgba(0,0,0,.38);
-      --r:24px;
-      --max:1160px;
-    }
-
-    *{ box-sizing:border-box; }
-    html{ scroll-behavior:smooth; }
-
-    body{
-      margin:0;
-      min-height:100vh;
-      background:
-        radial-gradient(900px 520px at 10% -10%, rgba(34,197,94,.14), transparent 60%),
-        radial-gradient(900px 520px at 110% 0%, rgba(250,204,21,.10), transparent 55%),
-        linear-gradient(180deg, #07140f, #05100c 55%, #040b08 100%);
-      color:var(--text);
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      padding:16px;
-    }
-
-    a{ color:inherit; text-decoration:none; }
-
-    .wrap{
-      max-width:var(--max);
-      margin:auto;
-      display:grid;
-      gap:14px;
-    }
-
-    .hero,
-    .card{
-      border:1px solid var(--line);
-      border-radius:var(--r);
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.018));
-      box-shadow:var(--shadow);
-    }
-
-    .hero{ overflow:hidden; }
-
-    .hero-grid{
-      display:grid;
-      grid-template-columns:420px 1fr;
-      min-height:420px;
-    }
-
-    @media(max-width:940px){
-      .hero-grid{ grid-template-columns:1fr; }
-    }
-
-    .hero-media{
-      position:relative;
-      min-height:300px;
-      background:#0a1712;
-      overflow:hidden;
-    }
-
-    .hero-media img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      background:#0f1d17;
-    }
-
-    .hero-media-fallback{
-      width:100%;
-      height:100%;
-      min-height:300px;
-      display:grid;
-      place-items:center;
-      background:
-        radial-gradient(circle at 30% 20%, rgba(250,204,21,.18), transparent 30%),
-        radial-gradient(circle at 75% 15%, rgba(34,197,94,.14), transparent 28%),
-        linear-gradient(180deg, #111827, #0b1120);
-      color:#fff;
-      font-size:54px;
-      font-weight:1000;
-    }
-
-    .hero-badge{
-      position:absolute;
-      left:16px;
-      bottom:16px;
-      z-index:2;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 14px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(7,20,15,.72);
-      color:#fff6c9;
-      font-size:12px;
-      font-weight:950;
-      backdrop-filter:blur(8px);
-    }
-
-    .hero-badge .dot{
-      width:8px;
-      height:8px;
-      border-radius:999px;
-      background:var(--primary);
-      box-shadow:0 0 0 4px rgba(34,197,94,.14);
-    }
-
-    .hero-body{
-      padding:24px;
-      display:grid;
-      gap:18px;
-      align-content:start;
-    }
-
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:9px 13px;
-      border-radius:999px;
-      border:1px solid rgba(34,197,94,.28);
-      background:rgba(34,197,94,.12);
-      color:#bbf7d0;
-      font-size:12px;
-      font-weight:950;
-      width:max-content;
-    }
-
-    .badge.vitrine{
-      border-color:rgba(250,204,21,.26);
-      background:rgba(250,204,21,.10);
-      color:#fde68a;
-    }
-
-    .badge .dot{
-      width:8px;
-      height:8px;
-      border-radius:999px;
-      background:var(--primary);
-      box-shadow:0 0 0 4px rgba(34,197,94,.14);
-    }
-
-    .badge.vitrine .dot{
-      background:var(--gold);
-      box-shadow:0 0 0 4px rgba(250,204,21,.14);
-    }
-
-    h1{
-      margin:0;
-      font-size:clamp(30px, 4vw, 42px);
-      line-height:1.04;
-      letter-spacing:-.02em;
-    }
-
-    .subtitle{
-      color:var(--muted);
-      font-size:16px;
-      font-weight:800;
-      line-height:1.55;
-      margin-top:8px;
-    }
-
-    .hero-meta{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:12px;
-    }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.18);
-      color:var(--muted);
-      font-size:12px;
-      font-weight:900;
-      max-width:100%;
-    }
-
-    .slug-pill{
-      color:var(--gold);
-      border-color:rgba(250,204,21,.22);
-      background:var(--gold-soft);
-    }
-
-    .hero-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:4px;
-    }
-
-    .btn{
-      min-height:48px;
-      padding:12px 16px;
-      border-radius:14px;
-      font-weight:950;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      color:var(--text);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      cursor:pointer;
-      transition:.18s ease;
-    }
-
-    .btn:hover{ transform:translateY(-1px); }
-
-    .btn.primary{
-      background:linear-gradient(135deg, var(--primary), var(--primary-2));
-      color:#041b12;
-      border-color:transparent;
-      box-shadow:0 12px 28px rgba(34,197,94,.22);
-    }
-
-    .btn.gold{
-      background:rgba(250,204,21,.12);
-      color:var(--gold);
-      border-color:rgba(250,204,21,.22);
-    }
-
-    .btn.ghost{
-      background:rgba(255,255,255,.04);
-      color:var(--muted);
-      border-style:dashed;
-    }
-
-    .btn.warn{
-      background:linear-gradient(135deg, var(--gold), var(--orange));
-      color:#04110d;
-      border-color:transparent;
-      box-shadow:0 12px 28px rgba(250,204,21,.20);
-    }
-
-    .grid{
-      display:grid;
-      gap:14px;
-      grid-template-columns:1.08fr .92fr;
-    }
-
-    @media(max-width:980px){
-      .grid{ grid-template-columns:1fr; }
-    }
-
-    .card{ padding:18px; }
-
-    h2{
-      margin:0 0 10px;
-      font-size:21px;
-    }
-
-    .muted{
-      color:var(--muted);
-      font-size:14px;
-      font-weight:800;
-      line-height:1.55;
-    }
-
-    .field{
-      display:grid;
-      gap:8px;
-      margin-top:14px;
-    }
-
-    label{
-      font-size:13px;
-      color:var(--muted);
-      font-weight:900;
-    }
-
-    input, textarea, select{
-      width:100%;
-      min-height:52px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.16);
-      color:var(--text);
-      padding:12px 14px;
-      outline:none;
-      font:inherit;
-    }
-
-    input:focus, textarea:focus, select:focus{
-      border-color:rgba(34,197,94,.36);
-      box-shadow:0 0 0 3px rgba(34,197,94,.10);
-    }
-
-    textarea{
-      min-height:110px;
-      resize:vertical;
-    }
-
-    input::placeholder, textarea::placeholder{
-      color:rgba(236,255,244,.38);
-    }
-
-    .inline2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-
-    @media(max-width:720px){
-      .inline2{ grid-template-columns:1fr; }
-    }
-
-    .slots{
-      display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
-      gap:10px;
-      margin-top:14px;
-    }
-
-    @media(max-width:900px){
-      .slots{ grid-template-columns:repeat(3,minmax(0,1fr)); }
-    }
-
-    @media(max-width:620px){
-      .slots{ grid-template-columns:repeat(2,minmax(0,1fr)); }
-    }
-
-    .slot{
-      min-height:48px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.05);
-      color:var(--text);
-      font-weight:950;
-      cursor:pointer;
-      padding:10px 12px;
-    }
-
-    .slot:hover{ transform:translateY(-1px); }
-
-    .slot.active{
-      border-color:rgba(34,197,94,.34);
-      background:rgba(34,197,94,.14);
-      color:#bbf7d0;
-    }
-
-    .slot.off{
-      opacity:.45;
-      cursor:not-allowed;
-    }
-
-    .services{
-      display:grid;
-      gap:10px;
-      margin-top:14px;
-    }
-
-    .service{
-      padding:14px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.09);
-      background:rgba(0,0,0,.16);
-    }
-
-    .service.active{
-      border-color:rgba(34,197,94,.26);
-      background:rgba(34,197,94,.08);
-    }
-
-    .service-top{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:flex-start;
-    }
-
-    .service-name{
-      font-size:16px;
-      font-weight:1000;
-      color:var(--gold);
-      line-height:1.2;
-    }
-
-    .service-meta{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-
-    .service-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.05);
-      color:var(--muted);
-      font-size:11px;
-      font-weight:950;
-    }
-
-    .summary{
-      display:grid;
-      gap:10px;
-      margin-top:14px;
-    }
-
-    .fact{
-      padding:14px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.09);
-      background:rgba(0,0,0,.16);
-    }
-
-    .fact .k{
-      font-size:12px;
-      color:var(--muted);
-      font-weight:800;
-      margin-bottom:6px;
-    }
-
-    .fact .v{
-      font-size:15px;
-      font-weight:900;
-      line-height:1.5;
-      word-break:break-word;
-    }
-
-    .summary-box{
-      padding:16px;
-      border-radius:20px;
-      border:1px solid rgba(250,204,21,.16);
-      background:rgba(250,204,21,.06);
-      display:grid;
-      gap:10px;
-      margin-top:16px;
-    }
-
-    .summary-box h3{
-      margin:0;
-      font-size:16px;
-      color:#fff2bf;
-    }
-
-    .summary-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-    }
-
-    @media(max-width:720px){
-      .summary-grid{ grid-template-columns:1fr; }
-    }
-
-    .summary-item{
-      padding:12px;
-      border-radius:14px;
-      background:rgba(0,0,0,.16);
-      border:1px solid rgba(255,255,255,.08);
-    }
-
-    .summary-item .k{
-      font-size:11px;
-      color:var(--muted);
-      font-weight:900;
-      margin-bottom:5px;
-      text-transform:uppercase;
-      letter-spacing:.04em;
-    }
-
-    .summary-item .v{
-      font-size:14px;
-      font-weight:950;
-      line-height:1.45;
-    }
-
-    .status{
-      margin-top:14px;
-      padding:12px 14px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(0,0,0,.16);
-      font-weight:900;
-      color:var(--muted);
-      min-height:48px;
-      display:flex;
-      align-items:center;
-      line-height:1.45;
-      white-space:pre-wrap;
-    }
-
-    .status.ok{
-      color:#bbf7d0;
-      border-color:rgba(34,197,94,.22);
-      background:rgba(34,197,94,.10);
-    }
-
-    .status.warn{
-      color:#fde68a;
-      border-color:rgba(250,204,21,.22);
-      background:rgba(250,204,21,.08);
-    }
-
-    .status.err{
-      color:#fecaca;
-      border-color:rgba(239,68,68,.22);
-      background:rgba(239,68,68,.08);
-    }
-
-    .helper{
-      margin-top:10px;
-      color:var(--muted);
-      font-size:12px;
-      font-weight:800;
-      line-height:1.55;
-    }
-
-    .footer{
-      margin-top:16px;
-      text-align:center;
-      color:var(--muted);
-      font-size:12px;
-      font-weight:800;
-    }
-
-    .hidden{ display:none !important; }
+      --bg:#07140f;--bg2:#0b1d15;--card:#10241b;--card2:#0d2018;
+      --line:rgba(255,255,255,.10);--text:#ecfff4;--muted:rgba(236,255,244,.72);
+      --primary:#22c55e;--primary-2:#16a34a;--gold:#facc15;--gold-soft:rgba(250,204,21,.12);
+      --danger:#ef4444;--blue:#60a5fa;--orange:#f97316;
+      --shadow:0 20px 60px rgba(0,0,0,.38);--r:24px;--max:1160px;
+      /* ━━━ AVANT : system-ui seul → Outfit ━━━ */
+      --fontA:"Outfit",system-ui,-apple-system,sans-serif;
+    }
+    *{box-sizing:border-box;}html{scroll-behavior:smooth;}
+    body{margin:0;min-height:100vh;background:radial-gradient(900px 520px at 10% -10%, rgba(34,197,94,.14), transparent 60%),radial-gradient(900px 520px at 110% 0%, rgba(250,204,21,.10), transparent 55%),linear-gradient(180deg, #07140f, #05100c 55%, #040b08 100%);color:var(--text);font-family:var(--fontA);padding:16px;}
+    a{color:inherit;text-decoration:none;}
+    .wrap{max-width:var(--max);margin:auto;display:grid;gap:14px;}
+    .hero,.card{border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.018));box-shadow:var(--shadow);}
+    .hero{overflow:hidden;}
+    .hero-grid{display:grid;grid-template-columns:420px 1fr;min-height:420px;}
+    @media(max-width:940px){.hero-grid{grid-template-columns:1fr;}}
+    .hero-media{position:relative;min-height:300px;background:#0a1712;overflow:hidden;}
+    .hero-media img{width:100%;height:100%;object-fit:cover;display:block;background:#0f1d17;}
+    .hero-media-fallback{width:100%;height:100%;min-height:300px;display:grid;place-items:center;background:radial-gradient(circle at 30% 20%, rgba(250,204,21,.18), transparent 30%),radial-gradient(circle at 75% 15%, rgba(34,197,94,.14), transparent 28%),linear-gradient(180deg, #111827, #0b1120);color:#fff;font-size:54px;font-weight:1000;}
+    .hero-badge{position:absolute;left:16px;bottom:16px;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(7,20,15,.72);color:#fff6c9;font-size:12px;font-weight:950;backdrop-filter:blur(8px);}
+    .hero-badge .dot{width:8px;height:8px;border-radius:999px;background:var(--primary);box-shadow:0 0 0 4px rgba(34,197,94,.14);}
+    .hero-body{padding:24px;display:grid;gap:18px;align-content:start;}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border-radius:999px;border:1px solid rgba(34,197,94,.28);background:rgba(34,197,94,.12);color:#bbf7d0;font-size:12px;font-weight:950;width:max-content;}
+    .badge.vitrine{border-color:rgba(250,204,21,.26);background:rgba(250,204,21,.10);color:#fde68a;}
+    .badge .dot{width:8px;height:8px;border-radius:999px;background:var(--primary);box-shadow:0 0 0 4px rgba(34,197,94,.14);}
+    .badge.vitrine .dot{background:var(--gold);box-shadow:0 0 0 4px rgba(250,204,21,.14);}
+    h1{margin:0;font-size:clamp(30px, 4vw, 42px);line-height:1.04;letter-spacing:-.02em;}
+    .subtitle{color:var(--muted);font-size:16px;font-weight:800;line-height:1.55;margin-top:8px;}
+    .hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(0,0,0,.18);color:var(--muted);font-size:12px;font-weight:900;max-width:100%;}
+    .slug-pill{color:var(--gold);border-color:rgba(250,204,21,.22);background:var(--gold-soft);}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;}
+    .btn{min-height:48px;padding:12px 16px;border-radius:14px;font-weight:950;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:.18s ease;font-family:var(--fontA);}
+    .btn:hover{transform:translateY(-1px);}
+    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-2));color:#041b12;border-color:transparent;box-shadow:0 12px 28px rgba(34,197,94,.22);}
+    .btn.gold{background:rgba(250,204,21,.12);color:var(--gold);border-color:rgba(250,204,21,.22);}
+    .btn.ghost{background:rgba(255,255,255,.04);color:var(--muted);border-style:dashed;}
+    .btn.warn{background:linear-gradient(135deg, var(--gold), var(--orange));color:#04110d;border-color:transparent;box-shadow:0 12px 28px rgba(250,204,21,.20);}
+    .grid{display:grid;gap:14px;grid-template-columns:1.08fr .92fr;}
+    @media(max-width:980px){.grid{grid-template-columns:1fr;}}
+    .card{padding:18px;}
+    h2{margin:0 0 10px;font-size:21px;}
+    .muted{color:var(--muted);font-size:14px;font-weight:800;line-height:1.55;}
+    .field{display:grid;gap:8px;margin-top:14px;}
+    label{font-size:13px;color:var(--muted);font-weight:900;}
+    input, textarea, select{width:100%;min-height:52px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.16);color:var(--text);padding:12px 14px;outline:none;font-family:var(--fontA);font-size:inherit;}
+    input:focus, textarea:focus, select:focus{border-color:rgba(34,197,94,.36);box-shadow:0 0 0 3px rgba(34,197,94,.10);}
+    textarea{min-height:110px;resize:vertical;}
+    input::placeholder, textarea::placeholder{color:rgba(236,255,244,.38);}
+    .inline2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    @media(max-width:720px){.inline2{grid-template-columns:1fr;}}
+    .slots{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px;}
+    @media(max-width:900px){.slots{grid-template-columns:repeat(3,minmax(0,1fr));}}
+    @media(max-width:620px){.slots{grid-template-columns:repeat(2,minmax(0,1fr));}}
+    .slot{min-height:48px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--text);font-weight:950;cursor:pointer;padding:10px 12px;font-family:var(--fontA);}
+    .slot:hover{transform:translateY(-1px);}.slot.active{border-color:rgba(34,197,94,.34);background:rgba(34,197,94,.14);color:#bbf7d0;}.slot.off{opacity:.45;cursor:not-allowed;}
+    .services{display:grid;gap:10px;margin-top:14px;}
+    .service{padding:14px;border-radius:18px;border:1px solid rgba(255,255,255,.09);background:rgba(0,0,0,.16);}
+    .service.active{border-color:rgba(34,197,94,.26);background:rgba(34,197,94,.08);}
+    .service-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:flex-start;}
+    .service-name{font-size:16px;font-weight:1000;color:var(--gold);line-height:1.2;}
+    .service-meta{display:flex;gap:8px;flex-wrap:wrap;}
+    .service-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--muted);font-size:11px;font-weight:950;}
+    .summary{display:grid;gap:10px;margin-top:14px;}
+    .fact{padding:14px;border-radius:18px;border:1px solid rgba(255,255,255,.09);background:rgba(0,0,0,.16);}
+    .fact .k{font-size:12px;color:var(--muted);font-weight:800;margin-bottom:6px;}
+    .fact .v{font-size:15px;font-weight:900;line-height:1.5;word-break:break-word;}
+    .summary-box{padding:16px;border-radius:20px;border:1px solid rgba(250,204,21,.16);background:rgba(250,204,21,.06);display:grid;gap:10px;margin-top:16px;}
+    .summary-box h3{margin:0;font-size:16px;color:#fff2bf;}
+    .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    @media(max-width:720px){.summary-grid{grid-template-columns:1fr;}}
+    .summary-item{padding:12px;border-radius:14px;background:rgba(0,0,0,.16);border:1px solid rgba(255,255,255,.08);}
+    .summary-item .k{font-size:11px;color:var(--muted);font-weight:900;margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;}
+    .summary-item .v{font-size:14px;font-weight:950;line-height:1.45;}
+    .status{margin-top:14px;padding:12px 14px;border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.16);font-weight:900;color:var(--muted);min-height:48px;display:flex;align-items:center;line-height:1.45;white-space:pre-wrap;}
+    .status.ok{color:#bbf7d0;border-color:rgba(34,197,94,.22);background:rgba(34,197,94,.10);}
+    .status.warn{color:#fde68a;border-color:rgba(250,204,21,.22);background:rgba(250,204,21,.08);}
+    .status.err{color:#fecaca;border-color:rgba(239,68,68,.22);background:rgba(239,68,68,.08);}
+    .helper{margin-top:10px;color:var(--muted);font-size:12px;font-weight:800;line-height:1.55;}
+    .footer{margin-top:16px;text-align:center;color:var(--muted);font-size:12px;font-weight:800;}
+    .hidden{display:none !important;}
   </style>
 </head>
 <body>
   <div class="wrap">
-
     <section class="hero">
       <div class="hero-grid">
         <div class="hero-media" id="heroMedia">
           <div class="hero-media-fallback">📅</div>
-          <div class="hero-badge">
-            <span class="dot"></span>
-            Réservation publique
-          </div>
+          <div class="hero-badge"><span class="dot"></span>Réservation publique</div>
         </div>
-
         <div class="hero-body">
           <div class="badge" id="modeBadge"><span class="dot"></span> DIGIY RESA • LIVE</div>
-
           <div>
             <h1 id="name">Chargement…</h1>
             <div class="subtitle" id="subtitle">Réservation simple et directe.</div>
           </div>
-
           <div class="hero-meta">
             <div class="pill" id="cityPill">Ville : —</div>
             <div class="pill" id="typePill">Activité : —</div>
-            <div class="pill slug-pill" id="slugPill">slug : —</div>
+            <!-- ━━━ AVANT : "slug :" → "Identifiant :" ━━━ -->
+            <div class="pill slug-pill" id="slugPill">Identifiant : —</div>
           </div>
-
           <div class="hero-actions">
             <a class="btn gold" id="btnWhatsApp" href="#" target="_blank" rel="noopener">💬 WhatsApp</a>
             <a class="btn ghost" id="btnBackFiche" href="./fiche.html">👁️ Retour fiche</a>
@@ -600,27 +132,16 @@
     <section class="grid">
       <section class="card">
         <h2 id="formTitle">Réserver maintenant</h2>
-        <div class="muted" id="formIntro">
-          Choisis ton service, la date, ton heure, puis envoie ta demande. Le commerce reçoit la réservation sur le rail RESA.
-        </div>
+        <div class="muted" id="formIntro">Choisis ton service, la date, ton heure, puis envoie ta demande.</div>
 
         <div class="field">
           <label for="serviceSelect">Service / prestation</label>
-          <select id="serviceSelect">
-            <option value="">Choisir un service</option>
-          </select>
+          <select id="serviceSelect"><option value="">Choisir un service</option></select>
         </div>
 
         <div class="inline2">
-          <div class="field">
-            <label for="dateInput">Date</label>
-            <input id="dateInput" type="date"/>
-          </div>
-
-          <div class="field">
-            <label for="timeInput">Heure</label>
-            <input id="timeInput" type="time"/>
-          </div>
+          <div class="field"><label for="dateInput">Date</label><input id="dateInput" type="date"/></div>
+          <div class="field"><label for="timeInput">Heure</label><input id="timeInput" type="time"/></div>
         </div>
 
         <div class="field" id="slotsField">
@@ -631,53 +152,24 @@
         </div>
 
         <div class="inline2">
-          <div class="field">
-            <label for="customerName">Ton nom</label>
-            <input id="customerName" type="text" placeholder="Ex : Awa Ndiaye" autocomplete="name"/>
-          </div>
-
-          <div class="field">
-            <label for="customerPhone">Ton téléphone</label>
-            <input id="customerPhone" type="tel" inputmode="tel" placeholder="Ex : 221771234567" autocomplete="tel"/>
-          </div>
+          <div class="field"><label for="customerName">Ton nom</label><input id="customerName" type="text" placeholder="Ex : Awa Ndiaye" autocomplete="name"/></div>
+          <div class="field"><label for="customerPhone">Ton téléphone</label><input id="customerPhone" type="tel" inputmode="tel" placeholder="Ex : 221771234567" autocomplete="tel"/></div>
         </div>
 
         <div class="inline2">
-          <div class="field">
-            <label for="guestsCount">Nombre de personnes</label>
-            <input id="guestsCount" type="number" min="1" step="1" value="1"/>
-          </div>
-
-          <div class="field">
-            <label for="priceHint">Prix indicatif</label>
-            <input id="priceHint" type="text" value="—" readonly/>
-          </div>
+          <div class="field"><label for="guestsCount">Nombre de personnes</label><input id="guestsCount" type="number" min="1" step="1" value="1"/></div>
+          <div class="field"><label for="priceHint">Prix indicatif</label><input id="priceHint" type="text" value="—" readonly/></div>
         </div>
 
-        <div class="field">
-          <label for="noteInput">Note / précision</label>
-          <textarea id="noteInput" placeholder="Ex : sans attente si possible, anniversaire, besoin particulier…"></textarea>
-        </div>
+        <div class="field"><label for="noteInput">Note / précision</label><textarea id="noteInput" placeholder="Ex : sans attente si possible, anniversaire, besoin particulier…"></textarea></div>
 
         <div class="summary-box">
           <h3>Résumé avant envoi</h3>
           <div class="summary-grid">
-            <div class="summary-item">
-              <div class="k">Service</div>
-              <div class="v" id="sumService">—</div>
-            </div>
-            <div class="summary-item">
-              <div class="k">Créneau</div>
-              <div class="v" id="sumSlot">—</div>
-            </div>
-            <div class="summary-item">
-              <div class="k">Personnes</div>
-              <div class="v" id="sumGuests">1</div>
-            </div>
-            <div class="summary-item">
-              <div class="k">Prix indicatif</div>
-              <div class="v" id="sumPrice">—</div>
-            </div>
+            <div class="summary-item"><div class="k">Service</div><div class="v" id="sumService">—</div></div>
+            <div class="summary-item"><div class="k">Créneau</div><div class="v" id="sumSlot">—</div></div>
+            <div class="summary-item"><div class="k">Personnes</div><div class="v" id="sumGuests">1</div></div>
+            <div class="summary-item"><div class="k">Prix indicatif</div><div class="v" id="sumPrice">—</div></div>
           </div>
         </div>
 
@@ -687,9 +179,7 @@
           <a class="btn warn hidden" id="btnVitrineWhatsApp" href="#" target="_blank" rel="noopener">💬 Demander un créneau</a>
         </div>
 
-        <div class="helper" id="helperText">
-          Si aucun créneau ne remonte, tu peux saisir l’heure manuellement puis envoyer la demande. Le WhatsApp reste disponible en secours.
-        </div>
+        <div class="helper" id="helperText">Si aucun créneau ne remonte, tu peux saisir l'heure manuellement puis envoyer la demande. Le WhatsApp reste disponible en secours.</div>
 
         <div class="status" id="statusBox">Prêt.</div>
       </section>
@@ -697,41 +187,19 @@
       <section class="card">
         <h2>Repères du commerce</h2>
         <div class="summary">
-          <div class="fact">
-            <div class="k">Présentation</div>
-            <div class="v" id="bio">—</div>
-          </div>
-
-          <div class="fact">
-            <div class="k">Adresse</div>
-            <div class="v" id="address">—</div>
-          </div>
-
-          <div class="fact">
-            <div class="k">Horaires</div>
-            <div class="v" id="hours">—</div>
-          </div>
-
-          <div class="fact">
-            <div class="k">WhatsApp</div>
-            <div class="v" id="contactWhatsapp">—</div>
-          </div>
+          <div class="fact"><div class="k">Présentation</div><div class="v" id="bio">—</div></div>
+          <div class="fact"><div class="k">Adresse</div><div class="v" id="address">—</div></div>
+          <div class="fact"><div class="k">Horaires</div><div class="v" id="hours">—</div></div>
+          <div class="fact"><div class="k">WhatsApp</div><div class="v" id="contactWhatsapp">—</div></div>
         </div>
-
         <div style="margin-top:18px">
           <h2 style="font-size:18px;margin-bottom:8px">Services</h2>
-          <div class="services" id="servicesBox">
-            <div class="service">
-              <div class="muted">Chargement des services…</div>
-            </div>
-          </div>
+          <div class="services" id="servicesBox"><div class="service"><div class="muted">Chargement des services…</div></div></div>
         </div>
       </section>
     </section>
 
-    <div class="footer">
-      DIGIY RESA • LIVE + VITRINE • réservation simple et vérité terrain
-    </div>
+    <div class="footer">DIGIY RESA • LIVE + VITRINE • réservation simple et vérité terrain</div>
   </div>
 
   <script>
@@ -752,777 +220,336 @@
       let SELECTED_SLOT = "";
       let MODE = "live";
 
+      /* ━━━ DEMO_MAP PRÉSERVÉE INTACTE ━━━ */
       const DEMO_MAP = {
         "atelier-brushing-saly": {
-          display_name: "Atelier Brushing Saly",
-          business_type: "Coiffure",
-          city: "Saly",
-          address_text: "Quartier central • rendez-vous beauté",
-          bio: "Coupe, brushing, teinture et soins. Ici on inspire, puis on prend le premier contact proprement.",
-          opening_hours_text: "09:00 - 19:00",
-          photo_url: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80",
-          whatsapp: SUPPORT_WA,
-          services: [
-            { id:"demo-1", service_name:"Coupe homme", duration_minutes:20, price_fcfa:3000 },
-            { id:"demo-2", service_name:"Brushing", duration_minutes:45, price_fcfa:6000 },
-            { id:"demo-3", service_name:"Teinture", duration_minutes:90, price_fcfa:15000 }
-          ]
+          display_name:"Atelier Brushing Saly",business_type:"Coiffure",city:"Saly",
+          address_text:"Quartier central • rendez-vous beauté",
+          bio:"Coupe, brushing, teinture et soins. Ici on inspire, puis on prend le premier contact proprement.",
+          opening_hours_text:"09:00 - 19:00",
+          photo_url:"https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80",
+          whatsapp:SUPPORT_WA,
+          services:[{id:"demo-1",service_name:"Coupe homme",duration_minutes:20,price_fcfa:3000},{id:"demo-2",service_name:"Brushing",duration_minutes:45,price_fcfa:6000},{id:"demo-3",service_name:"Teinture",duration_minutes:90,price_fcfa:15000}]
         },
         "garage-diagnostic-saly": {
-          display_name: "Garage Diagnostic Saly",
-          business_type: "Garage",
-          city: "Saly",
-          address_text: "Axe principal • mécanique légère",
-          bio: "Diagnostic, vidange, freins et petites interventions. La vitrine montre le potentiel, puis le client demande son créneau.",
-          opening_hours_text: "08:00 - 18:00",
-          photo_url: "https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=1200&q=80",
-          whatsapp: SUPPORT_WA,
-          services: [
-            { id:"demo-1", service_name:"Diagnostic", duration_minutes:15, price_fcfa:5000 },
-            { id:"demo-2", service_name:"Vidange", duration_minutes:30, price_fcfa:10000 },
-            { id:"demo-3", service_name:"Freins", duration_minutes:60, price_fcfa:20000 }
-          ]
+          display_name:"Garage Diagnostic Saly",business_type:"Garage",city:"Saly",
+          address_text:"Axe principal • mécanique légère",
+          bio:"Diagnostic, vidange, freins et petites interventions. La vitrine montre le potentiel, puis le client demande son créneau.",
+          opening_hours_text:"08:00 - 18:00",
+          photo_url:"https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=1200&q=80",
+          whatsapp:SUPPORT_WA,
+          services:[{id:"demo-1",service_name:"Diagnostic",duration_minutes:15,price_fcfa:5000},{id:"demo-2",service_name:"Vidange",duration_minutes:30,price_fcfa:10000},{id:"demo-3",service_name:"Freins",duration_minutes:60,price_fcfa:20000}]
         },
         "terrasse-saveurs-saly": {
-          display_name: "Terrasse Saveurs Saly",
-          business_type: "Restaurant",
-          city: "Saly",
-          address_text: "Terrasse • déjeuner & soirée",
-          bio: "Une ambiance simple et vivante. Ici, on donne envie puis on oriente vers un contact humain direct.",
-          opening_hours_text: "12:00 - 23:00",
-          photo_url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
-          whatsapp: SUPPORT_WA,
-          services: [
-            { id:"demo-1", service_name:"Table midi", duration_minutes:60, price_fcfa:null },
-            { id:"demo-2", service_name:"Table soirée", duration_minutes:90, price_fcfa:null }
-          ]
+          display_name:"Terrasse Saveurs Saly",business_type:"Restaurant",city:"Saly",
+          address_text:"Terrasse • déjeuner & soirée",
+          bio:"Une ambiance simple et vivante. Ici, on donne envie puis on oriente vers un contact humain direct.",
+          opening_hours_text:"12:00 - 23:00",
+          photo_url:"https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
+          whatsapp:SUPPORT_WA,
+          services:[{id:"demo-1",service_name:"Table midi",duration_minutes:60,price_fcfa:null},{id:"demo-2",service_name:"Table soirée",duration_minutes:90,price_fcfa:null}]
         },
         "studio-onglerie-saly": {
-          display_name: "Studio Onglerie Saly",
-          business_type: "Beauté",
-          city: "Saly",
-          address_text: "Zone calme • soins esthétiques",
-          bio: "Une fiche vitrine pour se projeter, voir les soins et demander un créneau simplement.",
-          opening_hours_text: "10:00 - 19:00",
-          photo_url: "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=80",
-          whatsapp: SUPPORT_WA,
-          services: [
-            { id:"demo-1", service_name:"Pose", duration_minutes:60, price_fcfa:10000 },
-            { id:"demo-2", service_name:"Entretien", duration_minutes:45, price_fcfa:7000 }
-          ]
+          display_name:"Studio Onglerie Saly",business_type:"Beauté",city:"Saly",
+          address_text:"Zone calme • soins esthétiques",
+          bio:"Une fiche vitrine pour se projeter, voir les soins et demander un créneau simplement.",
+          opening_hours_text:"10:00 - 19:00",
+          photo_url:"https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=80",
+          whatsapp:SUPPORT_WA,
+          services:[{id:"demo-1",service_name:"Pose",duration_minutes:60,price_fcfa:10000},{id:"demo-2",service_name:"Entretien",duration_minutes:45,price_fcfa:7000}]
         },
         "cabinet-conseil-saly": {
-          display_name: "Cabinet Conseil Saly",
-          business_type: "Consultation",
-          city: "Saly",
-          address_text: "Bureau calme • rendez-vous pro",
-          bio: "Une présence claire, posée, rassurante. On découvre d’abord, puis on demande un rendez-vous humainement.",
-          opening_hours_text: "09:00 - 17:00",
-          photo_url: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
-          whatsapp: SUPPORT_WA,
-          services: [
-            { id:"demo-1", service_name:"Consultation simple", duration_minutes:30, price_fcfa:10000 },
-            { id:"demo-2", service_name:"Consultation longue", duration_minutes:60, price_fcfa:20000 }
-          ]
+          display_name:"Cabinet Conseil Saly",business_type:"Consultation",city:"Saly",
+          address_text:"Bureau calme • rendez-vous pro",
+          bio:"Une présence claire, posée, rassurante. On découvre d'abord, puis on demande un rendez-vous humainement.",
+          opening_hours_text:"09:00 - 17:00",
+          photo_url:"https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
+          whatsapp:SUPPORT_WA,
+          services:[{id:"demo-1",service_name:"Consultation simple",duration_minutes:30,price_fcfa:10000},{id:"demo-2",service_name:"Consultation longue",duration_minutes:60,price_fcfa:20000}]
         },
         "atelier-service-saly": {
-          display_name: "Atelier Service Saly",
-          business_type: "Atelier",
-          city: "Saly",
-          address_text: "Service de quartier • rendez-vous utiles",
-          bio: "Une vitrine terrain pour montrer l’utilité, rassurer, puis faire démarrer le contact.",
-          opening_hours_text: "08:30 - 18:30",
-          photo_url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
-          whatsapp: SUPPORT_WA,
-          services: [
-            { id:"demo-1", service_name:"Diagnostic atelier", duration_minutes:30, price_fcfa:5000 },
-            { id:"demo-2", service_name:"Intervention", duration_minutes:60, price_fcfa:12000 }
-          ]
+          display_name:"Atelier Service Saly",business_type:"Atelier",city:"Saly",
+          address_text:"Service de quartier • rendez-vous utiles",
+          bio:"Une vitrine terrain pour montrer l'utilité, rassurer, puis faire démarrer le contact.",
+          opening_hours_text:"08:30 - 18:30",
+          photo_url:"https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
+          whatsapp:SUPPORT_WA,
+          services:[{id:"demo-1",service_name:"Diagnostic atelier",duration_minutes:30,price_fcfa:5000},{id:"demo-2",service_name:"Intervention",duration_minutes:60,price_fcfa:12000}]
         }
       };
 
-      function normalizeSlug(v){
-        return String(v || "")
-          .trim()
-          .toLowerCase()
-          .replace(/\s+/g, "-")
-          .replace(/[^a-z0-9-]/g, "")
-          .replace(/-+/g, "-")
-          .replace(/^-|-$/g, "");
-      }
+      function normalizeSlug(v){ return String(v||"").trim().toLowerCase().replace(/\s+/g,"-").replace(/[^a-z0-9-]/g,"").replace(/-+/g,"-").replace(/^-|-$/g,""); }
+      function normalizePhone(v){ return String(v||"").replace(/[^\d]/g,""); }
+      function escapeHtml(str){ return String(str??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;"); }
+      function safe(v,fallback="—"){ const s=String(v||"").trim(); return s||fallback; }
+      function money(v){ const n=Number(v); if(!Number.isFinite(n))return ""; return n.toLocaleString("fr-FR")+" FCFA"; }
+      function todayISO(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
+      function addDaysISO(days){ const d=new Date(); d.setDate(d.getDate()+Number(days||0)); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
+      function pickMainImage(p){ return [p?.cover_url,p?.photo_url,p?.image_url,p?.cover_image_url].filter(Boolean)[0]||""; }
+      function waLink(phone,name,extra=""){ const clean=normalizePhone(phone||SUPPORT_WA); if(!clean)return ""; const msg=extra||`Bonjour ${name||""}, je vous contacte via votre fiche DIGIY RESA.`; return "https://wa.me/"+clean+"?text="+encodeURIComponent(msg); }
+      function ficheLink({slug="",demo=""}={}){ const u=new URL("./fiche.html",location.href); if(slug)u.searchParams.set("slug",slug); if(!slug&&demo)u.searchParams.set("demo",demo); return u.pathname+u.search; }
+      function safeJsonParse(value){ try{ return typeof value==="string"?JSON.parse(value):value; }catch{ return null; } }
 
-      function normalizePhone(v){
-        return String(v || "").replace(/[^\d]/g, "");
-      }
-
-      function escapeHtml(str){
-        return String(str ?? "")
-          .replaceAll("&","&amp;")
-          .replaceAll("<","&lt;")
-          .replaceAll(">","&gt;")
-          .replaceAll('"',"&quot;")
-          .replaceAll("'","&#39;");
-      }
-
-      function safe(v, fallback = "—"){
-        const s = String(v || "").trim();
-        return s || fallback;
-      }
-
-      function money(v){
-        const n = Number(v);
-        if(!Number.isFinite(n)) return "";
-        return n.toLocaleString("fr-FR") + " FCFA";
-      }
-
-      function todayISO(){
-        const d = new Date();
-        const y = d.getFullYear();
-        const m = String(d.getMonth()+1).padStart(2,"0");
-        const da = String(d.getDate()).padStart(2,"0");
-        return `${y}-${m}-${da}`;
-      }
-
-      function addDaysISO(days){
-        const d = new Date();
-        d.setDate(d.getDate() + Number(days || 0));
-        const y = d.getFullYear();
-        const m = String(d.getMonth()+1).padStart(2,"0");
-        const da = String(d.getDate()).padStart(2,"0");
-        return `${y}-${m}-${da}`;
-      }
-
-      function pickMainImage(p){
-        const candidates = [
-          p?.cover_url,
-          p?.photo_url,
-          p?.image_url,
-          p?.cover_image_url
-        ].filter(Boolean);
-
-        return candidates[0] || "";
-      }
-
-      function waLink(phone, name, extra = ""){
-        const clean = normalizePhone(phone || SUPPORT_WA);
-        if(!clean) return "";
-        const msg = extra || `Bonjour ${name || ""}, je vous contacte via votre fiche DIGIY RESA.`;
-        return "https://wa.me/" + clean + "?text=" + encodeURIComponent(msg);
-      }
-
-      function ficheLink({ slug = "", demo = "" } = {}){
-        const u = new URL("./fiche.html", location.href);
-        if (slug) u.searchParams.set("slug", slug);
-        if (!slug && demo) u.searchParams.set("demo", demo);
-        return u.pathname + u.search;
-      }
-
-      function safeJsonParse(value){
-        try{
-          return typeof value === "string" ? JSON.parse(value) : value;
-        }catch{
-          return null;
-        }
-      }
-
-      function setStatus(msg, tone = ""){
-        const box = $("statusBox");
-        box.className = "status" + (tone ? " " + tone : "");
-        box.textContent = msg;
-      }
-
-      function setBusy(isBusy){
-        $("btnSubmit").disabled = isBusy || !SERVICES.length || MODE !== "live";
-        $("btnReloadSlots").disabled = isBusy || MODE !== "live";
-        $("serviceSelect").disabled = isBusy || !SERVICES.length;
-      }
+      function setStatus(msg,tone=""){ const box=$("statusBox"); box.className="status"+(tone?" "+tone:""); box.textContent=msg; }
+      function setBusy(isBusy){ $("btnSubmit").disabled=isBusy||!SERVICES.length||MODE!=="live"; $("btnReloadSlots").disabled=isBusy||MODE!=="live"; $("serviceSelect").disabled=isBusy||!SERVICES.length; }
 
       function initClient(){
-        if (!window.supabase || typeof window.supabase.createClient !== "function") {
-          throw new Error("Supabase JS non chargé.");
-        }
-
-        if (window.DIGIY_SB) {
-          sb = window.DIGIY_SB;
-          return;
-        }
-
-        sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-          auth:{
-            persistSession:false,
-            autoRefreshToken:false,
-            detectSessionInUrl:false,
-            storage:{
-              getItem:() => null,
-              setItem:() => {},
-              removeItem:() => {}
-            }
-          }
-        });
-
-        window.DIGIY_SB = sb;
+        if(!window.supabase||typeof window.supabase.createClient!=="function")throw new Error("Supabase JS non chargé.");
+        if(window.DIGIY_SB){sb=window.DIGIY_SB;return;}
+        sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false,storage:{getItem:()=>null,setItem:()=>{},removeItem:()=>{}}}});
+        window.DIGIY_SB=sb;
       }
 
-      async function rpc(name, args){
-        const { data, error } = await sb.rpc(name, args || {});
-        if(error) throw error;
-        return typeof data === "string" ? (safeJsonParse(data) ?? data) : data;
-      }
+      async function rpc(name,args){ const{data,error}=await sb.rpc(name,args||{}); if(error)throw error; return typeof data==="string"?(safeJsonParse(data)??data):data; }
 
-      function setHeroImage(profile, displayName, city, activity){
-        const heroMedia = $("heroMedia");
-        const imageUrl = pickMainImage(profile);
-
-        const badgeText = city && activity
-          ? `${activity} • ${city}`
-          : city
-            ? `Commerce public • ${city}`
-            : "Réservation publique";
-
+      function setHeroImage(profile,displayName,city,activity){
+        const heroMedia=$("heroMedia");
+        const imageUrl=pickMainImage(profile);
+        const badgeText=city&&activity?`${activity} • ${city}`:city?`Commerce public • ${city}`:"Réservation publique";
         if(imageUrl){
-          heroMedia.innerHTML = `
-            <img
-              src="${escapeHtml(imageUrl)}"
-              alt="${escapeHtml(displayName)}"
-              loading="eager"
-              onerror="this.outerHTML='<div class=&quot;hero-media-fallback&quot;>📅</div>';"
-            />
-            <div class="hero-badge">
-              <span class="dot"></span>
-              ${escapeHtml(badgeText)}
-            </div>
-          `;
+          heroMedia.innerHTML=`<img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(displayName)}" loading="eager" onerror="this.outerHTML='<div class=&quot;hero-media-fallback&quot;>📅</div>';"/><div class="hero-badge"><span class="dot"></span>${escapeHtml(badgeText)}</div>`;
         }else{
-          heroMedia.innerHTML = `
-            <div class="hero-media-fallback">📅</div>
-            <div class="hero-badge">
-              <span class="dot"></span>
-              ${escapeHtml(badgeText)}
-            </div>
-          `;
+          heroMedia.innerHTML=`<div class="hero-media-fallback">📅</div><div class="hero-badge"><span class="dot"></span>${escapeHtml(badgeText)}</div>`;
         }
       }
 
       function renderServicesCards(){
-        const box = $("servicesBox");
-        const selected = getSelectedService();
-
-        if(!SERVICES.length){
-          box.innerHTML = `
-            <div class="service">
-              <div class="muted">
-                Aucun service détaillé n’est affiché pour l’instant.
-              </div>
-            </div>
-          `;
-          return;
-        }
-
-        box.innerHTML = SERVICES.map((s) => `
-          <article class="service ${selected && String(selected.id) === String(s.id) ? "active" : ""}">
+        const box=$("servicesBox"); const selected=getSelectedService();
+        if(!SERVICES.length){box.innerHTML=`<div class="service"><div class="muted">Aucun service détaillé pour l'instant.</div></div>`;return;}
+        box.innerHTML=SERVICES.map(s=>`
+          <article class="service ${selected&&String(selected.id)===String(s.id)?"active":""}">
             <div class="service-top">
-              <div class="service-name">${escapeHtml(s.service_name || "Service")}</div>
+              <div class="service-name">${escapeHtml(s.service_name||"Service")}</div>
               <div class="service-meta">
-                ${s.duration_minutes ? `<span class="service-pill">⏱️ ${escapeHtml(String(s.duration_minutes))} min</span>` : ``}
-                ${money(s.price_fcfa) ? `<span class="service-pill">💰 ${escapeHtml(money(s.price_fcfa))}</span>` : ``}
+                ${s.duration_minutes?`<span class="service-pill">⏱️ ${escapeHtml(String(s.duration_minutes))} min</span>`:""}
+                ${money(s.price_fcfa)?`<span class="service-pill">💰 ${escapeHtml(money(s.price_fcfa))}</span>`:""}
               </div>
             </div>
-          </article>
-        `).join("");
+          </article>`).join("");
       }
 
       function renderServiceSelect(){
-        const select = $("serviceSelect");
-        const current = select.value || "";
-
-        if(!SERVICES.length){
-          select.innerHTML = `<option value="">Aucun service disponible</option>`;
-          select.disabled = true;
-          $("btnSubmit").disabled = true;
-          return;
-        }
-
-        select.disabled = false;
-        select.innerHTML =
-          `<option value="">Choisir un service</option>` +
-          SERVICES.map((s) => {
-            const price = money(s.price_fcfa);
-            const duration = s.duration_minutes ? `${s.duration_minutes} min` : "";
-            const meta = [duration, price].filter(Boolean).join(" • ");
-            return `<option value="${escapeHtml(String(s.id || ""))}">${escapeHtml(s.service_name || "Service")}${meta ? " — " + escapeHtml(meta) : ""}</option>`;
-          }).join("");
-
-        if(current) select.value = current;
+        const select=$("serviceSelect"); const current=select.value||"";
+        if(!SERVICES.length){select.innerHTML=`<option value="">Aucun service disponible</option>`;select.disabled=true;$("btnSubmit").disabled=true;return;}
+        select.disabled=false;
+        select.innerHTML=`<option value="">Choisir un service</option>`+SERVICES.map(s=>{const price=money(s.price_fcfa);const dur=s.duration_minutes?`${s.duration_minutes} min`:"";const meta=[dur,price].filter(Boolean).join(" • ");return `<option value="${escapeHtml(String(s.id||""))}">${escapeHtml(s.service_name||"Service")}${meta?" — "+escapeHtml(meta):""}</option>`;}).join("");
+        if(current)select.value=current;
       }
 
-      function getSelectedService(){
-        const id = String($("serviceSelect").value || "");
-        return SERVICES.find(s => String(s.id) === id) || null;
-      }
-
-      function updatePriceHint(){
-        const service = getSelectedService();
-        const price = service ? (money(service.price_fcfa) || "—") : "—";
-        $("priceHint").value = price;
-        $("sumPrice").textContent = price;
-      }
+      function getSelectedService(){ const id=String($("serviceSelect").value||""); return SERVICES.find(s=>String(s.id)===id)||null; }
+      function updatePriceHint(){ const s=getSelectedService(); const p=s?(money(s.price_fcfa)||"—"):"—"; $("priceHint").value=p; $("sumPrice").textContent=p; }
 
       function updateSummary(){
-        const service = getSelectedService();
-        const date = $("dateInput").value || "—";
-        const time = $("timeInput").value || "—";
-        const guests = Math.max(1, Number($("guestsCount").value || 1));
-
-        $("sumService").textContent = service ? safe(service.service_name) : "—";
-        $("sumSlot").textContent = `${date} • ${time}`;
-        $("sumGuests").textContent = String(guests);
+        const s=getSelectedService(); const date=$("dateInput").value||"—"; const time=$("timeInput").value||"—"; const guests=Math.max(1,Number($("guestsCount").value||1));
+        $("sumService").textContent=s?safe(s.service_name):"—"; $("sumSlot").textContent=`${date} • ${time}`; $("sumGuests").textContent=String(guests);
       }
 
       function normalizeSlotResult(raw){
-        const rows = Array.isArray(raw)
-          ? raw
-          : Array.isArray(raw?.slots)
-            ? raw.slots
-            : Array.isArray(raw?.data)
-              ? raw.data
-              : [];
-
-        return rows.map((row) => {
-          if (typeof row === "string") {
-            return { time: row.slice(0,5), available: true };
-          }
-
-          const time = String(
-            row?.time ||
-            row?.slot ||
-            row?.booking_time ||
-            row?.start_time ||
-            ""
-          ).slice(0,5);
-
-          return {
-            time,
-            available: row?.available !== false && row?.is_available !== false
-          };
-        }).filter(x => x.time);
+        const rows=Array.isArray(raw)?raw:Array.isArray(raw?.slots)?raw.slots:Array.isArray(raw?.data)?raw.data:[];
+        return rows.map(row=>{
+          if(typeof row==="string")return{time:row.slice(0,5),available:true};
+          const time=String(row?.time||row?.slot||row?.booking_time||row?.start_time||"").slice(0,5);
+          return{time,available:row?.available!==false&&row?.is_available!==false};
+        }).filter(x=>x.time);
       }
 
       function setLiveModeUI(){
-        MODE = "live";
-        $("modeBadge").className = "badge";
-        $("modeBadge").innerHTML = `<span class="dot"></span> DIGIY RESA • LIVE`;
-        $("formTitle").textContent = "Réserver maintenant";
-        $("formIntro").textContent = "Choisis ton service, la date, ton heure, puis envoie ta demande. Le commerce reçoit la réservation sur le rail RESA.";
-        $("helperText").textContent = "Si aucun créneau ne remonte, tu peux saisir l’heure manuellement puis envoyer la demande. Le WhatsApp reste disponible en secours.";
-        $("btnSubmit").classList.remove("hidden");
-        $("btnReloadSlots").classList.remove("hidden");
-        $("btnVitrineWhatsApp").classList.add("hidden");
-        $("slotsField").classList.remove("hidden");
+        MODE="live";
+        $("modeBadge").className="badge"; $("modeBadge").innerHTML=`<span class="dot"></span> DIGIY RESA • LIVE`;
+        $("formTitle").textContent="Réserver maintenant";
+        /* ━━━ AVANT : "sur le rail RESA" → banni ━━━ */
+        $("formIntro").textContent="Choisis ton service, la date, ton heure, puis envoie ta demande. Le commerce reçoit la réservation directement.";
+        $("helperText").textContent="Si aucun créneau ne remonte, tu peux saisir l'heure manuellement puis envoyer la demande. Le WhatsApp reste disponible en secours.";
+        $("btnSubmit").classList.remove("hidden"); $("btnReloadSlots").classList.remove("hidden"); $("btnVitrineWhatsApp").classList.add("hidden"); $("slotsField").classList.remove("hidden");
       }
 
       function setVitrineModeUI(waHref){
-        MODE = "vitrine";
-        $("modeBadge").className = "badge vitrine";
-        $("modeBadge").innerHTML = `<span class="dot"></span> DIGIY RESA • VITRINE`;
-        $("formTitle").textContent = "Demander un créneau";
-        $("formIntro").textContent = "Cette fiche est une vitrine d’inspiration. Ici on ne joue pas une fausse réservation : on prépare la demande puis on passe par WhatsApp.";
-        $("helperText").textContent = "Tu peux choisir un service pour te repérer, indiquer une date souhaitée et ton besoin, puis ouvrir WhatsApp pour envoyer la demande.";
-        $("btnSubmit").classList.add("hidden");
-        $("btnReloadSlots").classList.add("hidden");
-        $("btnVitrineWhatsApp").classList.remove("hidden");
-        $("btnVitrineWhatsApp").href = waHref || "#";
-        $("slotsField").classList.add("hidden");
-        $("slotsBox").innerHTML = `<button class="slot off" type="button" disabled>Vitrine : pas de créneaux automatiques.</button>`;
+        MODE="vitrine";
+        $("modeBadge").className="badge vitrine"; $("modeBadge").innerHTML=`<span class="dot"></span> DIGIY RESA • VITRINE`;
+        $("formTitle").textContent="Demander un créneau";
+        $("formIntro").textContent="Cette fiche est une vitrine d'inspiration. Ici on ne joue pas une fausse réservation : on prépare la demande puis on passe par WhatsApp.";
+        $("helperText").textContent="Tu peux choisir un service pour te repérer, indiquer une date souhaitée et ton besoin, puis ouvrir WhatsApp pour envoyer la demande.";
+        $("btnSubmit").classList.add("hidden"); $("btnReloadSlots").classList.add("hidden"); $("btnVitrineWhatsApp").classList.remove("hidden"); $("btnVitrineWhatsApp").href=waHref||"#"; $("slotsField").classList.add("hidden");
+        $("slotsBox").innerHTML=`<button class="slot off" type="button" disabled>Vitrine : pas de créneaux automatiques.</button>`;
       }
 
-      function renderProfile(profile, { slug = "", demo = "" } = {}){
-        const p = profile || {};
-        const name = safe(p.display_name, "Commerce DIGIY");
-        const city = safe(p.city);
-        const businessType = safe(p.business_type || p.category, "Service local");
-        const phone = normalizePhone(p.whatsapp || SUPPORT_WA);
+      function renderProfile(profile,{slug="",demo=""}={}){
+        const p=profile||{};
+        const name=safe(p.display_name,"Commerce DIGIY");
+        const city=safe(p.city);
+        const businessType=safe(p.business_type||p.category,"Service local");
+        const phone=normalizePhone(p.whatsapp||SUPPORT_WA);
 
-        document.title = `${name} — Réserver | DIGIY RESA`;
+        document.title=`${name} — Réserver | DIGIY RESA`;
+        setHeroImage(p,name,city,businessType);
+        $("name").textContent=name; $("subtitle").textContent=`${city} • ${businessType}`;
+        $("cityPill").textContent="Ville : "+city; $("typePill").textContent="Activité : "+businessType;
+        /* ━━━ AVANT : "slug :" → "Identifiant :" ━━━ */
+        $("slugPill").textContent=slug?"Identifiant : "+slug:"vitrine : "+(demo||"—");
+        $("bio").textContent=safe(p.bio,"Présentation à découvrir.");
+        $("address").textContent=safe(p.address_text||p.address,"Adresse à préciser");
+        $("hours").textContent=safe(p.opening_hours_text||p.hours_text,"Horaires à préciser");
+        $("contactWhatsapp").textContent=phone?"+"+phone:"+221"+SUPPORT_WA;
+        $("btnBackFiche").href=ficheLink({slug,demo});
 
-        setHeroImage(p, name, city, businessType);
-
-        $("name").textContent = name;
-        $("subtitle").textContent = `${city} • ${businessType}`;
-        $("cityPill").textContent = "Ville : " + city;
-        $("typePill").textContent = "Activité : " + businessType;
-        $("slugPill").textContent = slug ? "slug : " + slug : "vitrine : " + (demo || "—");
-
-        $("bio").textContent = safe(p.bio, "Présentation à découvrir.");
-        $("address").textContent = safe(p.address_text || p.address, "Adresse à préciser");
-        $("hours").textContent = safe(p.opening_hours_text || p.hours_text, "Horaires à préciser");
-        $("contactWhatsapp").textContent = phone ? "+" + phone : "+221" + SUPPORT_WA;
-
-        $("btnBackFiche").href = ficheLink({ slug, demo });
-
-        const wa = $("btnWhatsApp");
-        const waHref = waLink(phone, name);
-        if (waHref) {
-          wa.href = waHref;
-        } else {
-          wa.removeAttribute("href");
-          wa.classList.remove("gold");
-          wa.textContent = "WhatsApp indisponible";
-        }
+        const wa=$("btnWhatsApp"); const waHref=waLink(phone,name);
+        if(waHref){wa.href=waHref;}else{wa.removeAttribute("href");wa.classList.remove("gold");wa.textContent="WhatsApp indisponible";}
       }
 
       async function loadLiveProfile(slug){
-        const data = await rpc("resa_public_profile_by_slug", { p_slug: slug });
-        if(!data?.ok){
-          throw new Error(data?.error || "profile_not_found");
-        }
-        PROFILE = data.profile || {};
-        return PROFILE;
+        const data=await rpc("resa_public_profile_by_slug",{p_slug:slug});
+        if(!data?.ok)throw new Error(data?.error||"profile_not_found");
+        PROFILE=data.profile||{}; return PROFILE;
       }
 
       async function loadLiveServices(slug){
-        const { data, error } = await sb
-          .from("digiy_resa_services")
-          .select("id, service_name, duration_minutes, price_fcfa, is_active")
-          .eq("slug", slug)
-          .eq("is_active", true)
-          .order("service_name", { ascending:true });
-
-        if(error) throw error;
-
-        SERVICES = Array.isArray(data) ? data : [];
-        renderServiceSelect();
-        renderServicesCards();
+        const{data,error}=await sb.from("digiy_resa_services").select("id,service_name,duration_minutes,price_fcfa,is_active").eq("slug",slug).eq("is_active",true).order("service_name",{ascending:true});
+        if(error)throw error;
+        SERVICES=Array.isArray(data)?data:[]; renderServiceSelect(); renderServicesCards();
       }
 
-      function loadDemoServices(item){
-        SERVICES = Array.isArray(item?.services) ? item.services : [];
-        renderServiceSelect();
-        renderServicesCards();
-      }
+      function loadDemoServices(item){ SERVICES=Array.isArray(item?.services)?item.services:[]; renderServiceSelect(); renderServicesCards(); }
 
       async function loadSlots(slug){
-        if (MODE !== "live") return;
-
-        const service = getSelectedService();
-        const date = $("dateInput").value || todayISO();
-
-        $("slotsBox").innerHTML = `<button class="slot off" type="button" disabled>Chargement…</button>`;
-        ACTIVE_SLOTS = [];
-        SELECTED_SLOT = "";
-
-        const attempts = [];
-
-        if (service?.id) {
-          attempts.push({
-            fn: "digiy_resa_get_slots_by_service",
-            args: {
-              p_slug: slug,
-              p_service_id: service.id,
-              p_date: date
-            }
-          });
-        }
-
-        attempts.push({
-          fn: "digiy_resa_get_available_slots",
-          args: {
-            p_slug: slug,
-            p_date: date
-          }
-        });
-
-        let slots = [];
-        for (const a of attempts) {
-          try {
-            const data = await rpc(a.fn, a.args);
-            slots = normalizeSlotResult(data);
-            if (slots.length) break;
-          } catch (_) {}
-        }
-
-        ACTIVE_SLOTS = slots;
-        renderSlots();
+        if(MODE!=="live")return;
+        const service=getSelectedService(); const date=$("dateInput").value||todayISO();
+        $("slotsBox").innerHTML=`<button class="slot off" type="button" disabled>Chargement…</button>`;
+        ACTIVE_SLOTS=[]; SELECTED_SLOT="";
+        const attempts=[];
+        if(service?.id)attempts.push({fn:"digiy_resa_get_slots_by_service",args:{p_slug:slug,p_service_id:service.id,p_date:date}});
+        attempts.push({fn:"digiy_resa_get_available_slots",args:{p_slug:slug,p_date:date}});
+        let slots=[];
+        for(const a of attempts){ try{const data=await rpc(a.fn,a.args);slots=normalizeSlotResult(data);if(slots.length)break;}catch(_){} }
+        ACTIVE_SLOTS=slots; renderSlots();
       }
 
       function renderSlots(){
-        const box = $("slotsBox");
-
-        if (MODE !== "live") {
-          box.innerHTML = `<button class="slot off" type="button" disabled>Vitrine : pas de créneaux automatiques.</button>`;
-          return;
-        }
-
-        if(!ACTIVE_SLOTS.length){
-          box.innerHTML = `<button class="slot off" type="button" disabled>Aucun créneau remonté. Tu peux saisir l’heure manuellement.</button>`;
-          return;
-        }
-
-        box.innerHTML = ACTIVE_SLOTS.map((slot) => `
-          <button
-            class="slot ${slot.time === SELECTED_SLOT ? "active" : ""} ${slot.available ? "" : "off"}"
-            type="button"
-            data-time="${escapeHtml(slot.time)}"
-            ${slot.available ? "" : "disabled"}
-          >${escapeHtml(slot.time)}</button>
-        `).join("");
-
-        box.querySelectorAll("[data-time]").forEach((btn) => {
-          btn.addEventListener("click", () => {
-            SELECTED_SLOT = String(btn.getAttribute("data-time") || "");
-            $("timeInput").value = SELECTED_SLOT;
-            updateSummary();
-            renderSlots();
-          });
+        const box=$("slotsBox");
+        if(MODE!=="live"){box.innerHTML=`<button class="slot off" type="button" disabled>Vitrine : pas de créneaux automatiques.</button>`;return;}
+        if(!ACTIVE_SLOTS.length){box.innerHTML=`<button class="slot off" type="button" disabled>Aucun créneau remonté. Tu peux saisir l'heure manuellement.</button>`;return;}
+        box.innerHTML=ACTIVE_SLOTS.map(slot=>`<button class="slot ${slot.time===SELECTED_SLOT?"active":""} ${slot.available?"":"off"}" type="button" data-time="${escapeHtml(slot.time)}" ${slot.available?"":"disabled"}>${escapeHtml(slot.time)}</button>`).join("");
+        box.querySelectorAll("[data-time]").forEach(btn=>{
+          btn.addEventListener("click",()=>{ SELECTED_SLOT=String(btn.getAttribute("data-time")||""); $("timeInput").value=SELECTED_SLOT; updateSummary(); renderSlots(); });
         });
       }
 
-      async function createBooking(slug, payload){
-        if (!payload.service_id) {
-          throw new Error("missing_service_id");
-        }
-
-        const data = await rpc("digiy_resa_create_booking", {
-          p_slug: slug,
-          p_customer_name: payload.customer_name,
-          p_customer_phone: payload.customer_phone,
-          p_booking_date: payload.booking_date,
-          p_booking_time: payload.booking_time,
-          p_guests_count: payload.guests_count,
-          p_note_text: payload.note || null,
-          p_service_id: payload.service_id
-        });
-
-        const parsed = safeJsonParse(data) || data || {};
-        if (parsed?.ok === false) {
-          throw new Error(parsed.error || parsed.reason || "booking_refused");
-        }
-
+      async function createBooking(slug,payload){
+        if(!payload.service_id)throw new Error("missing_service_id");
+        const data=await rpc("digiy_resa_create_booking",{p_slug:slug,p_customer_name:payload.customer_name,p_customer_phone:payload.customer_phone,p_booking_date:payload.booking_date,p_booking_time:payload.booking_time,p_guests_count:payload.guests_count,p_note_text:payload.note||null,p_service_id:payload.service_id});
+        const parsed=safeJsonParse(data)||data||{};
+        if(parsed?.ok===false)throw new Error(parsed.error||parsed.reason||"booking_refused");
         return parsed;
       }
 
       async function submitLive(slug){
-        const service = getSelectedService();
-        const bookingDate = $("dateInput").value || "";
-        const bookingTime = $("timeInput").value || "";
-        const customerName = String($("customerName").value || "").trim();
-        const customerPhone = normalizePhone($("customerPhone").value || "");
-        const guestsCount = Math.max(1, Number($("guestsCount").value || 1));
-        const note = String($("noteInput").value || "").trim();
+        const service=getSelectedService();
+        const bookingDate=$("dateInput").value||"";
+        const bookingTime=$("timeInput").value||"";
+        const customerName=String($("customerName").value||"").trim();
+        const customerPhone=normalizePhone($("customerPhone").value||"");
+        const guestsCount=Math.max(1,Number($("guestsCount").value||1));
+        const note=String($("noteInput").value||"").trim();
 
-        if (!slug) {
-          setStatus("Slug manquant. Impossible d’envoyer une réservation.", "err");
-          return;
-        }
-
-        if (!service?.id) {
-          setStatus("Choisis un service avant d’envoyer la réservation.", "err");
-          return;
-        }
-
-        if (!bookingDate) {
-          setStatus("Choisis une date.", "err");
-          return;
-        }
-
-        if (!bookingTime) {
-          setStatus("Choisis ou saisis une heure.", "err");
-          return;
-        }
-
-        if (!customerName) {
-          setStatus("Ton nom est requis.", "err");
-          return;
-        }
-
-        if (!customerPhone || customerPhone.length < 9) {
-          setStatus("Ton téléphone est requis.", "err");
-          return;
-        }
+        /* ━━━ AVANT : "Slug manquant." → "Identifiant manquant." ━━━ */
+        if(!slug){setStatus("Identifiant manquant. Impossible d'envoyer une réservation.","err");return;}
+        if(!service?.id){setStatus("Choisis un service avant d'envoyer la réservation.","err");return;}
+        if(!bookingDate){setStatus("Choisis une date.","err");return;}
+        if(!bookingTime){setStatus("Choisis ou saisis une heure.","err");return;}
+        if(!customerName){setStatus("Ton nom est requis.","err");return;}
+        if(!customerPhone||customerPhone.length<9){setStatus("Ton téléphone est requis.","err");return;}
 
         setBusy(true);
-        setStatus("Envoi de la réservation sur le rail réel RESA…", "warn");
+        /* ━━━ AVANT : "sur le rail réel RESA…" → banni ━━━ */
+        setStatus("Envoi de ta réservation en cours…","warn");
 
-        try {
-          const result = await createBooking(slug, {
-            service_id: service.id,
-            booking_date: bookingDate,
-            booking_time: bookingTime,
-            customer_name: customerName,
-            customer_phone: customerPhone,
-            guests_count: guestsCount,
-            note
-          });
-
-          const tracking =
-            result?.booking?.id ||
-            result?.booking_id ||
-            result?.id ||
-            "";
-
-          setStatus(
-            tracking
-              ? `✅ Réservation envoyée.\nRéférence : ${tracking}`
-              : "✅ Réservation envoyée.",
-            "ok"
-          );
-
-          $("customerName").value = "";
-          $("customerPhone").value = "";
-          $("guestsCount").value = "1";
-          $("noteInput").value = "";
-          SELECTED_SLOT = "";
-          updateSummary();
-          await loadSlots(slug);
-
-        } catch (e) {
+        try{
+          const result=await createBooking(slug,{service_id:service.id,booking_date:bookingDate,booking_time:bookingTime,customer_name:customerName,customer_phone:customerPhone,guests_count:guestsCount,note});
+          const tracking=result?.booking?.id||result?.booking_id||result?.id||"";
+          setStatus(tracking?`✅ Réservation envoyée.\nRéférence : ${tracking}`:"✅ Réservation envoyée.","ok");
+          $("customerName").value=""; $("customerPhone").value=""; $("guestsCount").value="1"; $("noteInput").value="";
+          SELECTED_SLOT=""; updateSummary(); await loadSlots(slug);
+        }catch(e){
           console.error(e);
-          setStatus(
-            "❌ Impossible d’envoyer la réservation sur le rail réel.\nPasse par WhatsApp si besoin immédiat.",
-            "err"
-          );
-        } finally {
+          /* ━━━ AVANT : "rail réel" + "rail RESA" → bannis ━━━ */
+          setStatus("❌ Impossible d'envoyer la réservation.\nPasse par WhatsApp si besoin immédiat.","err");
+        }finally{
           setBusy(false);
         }
       }
 
-      function openVitrineWhatsApp(profile, demoId){
-        const service = getSelectedService();
-        const bookingDate = $("dateInput").value || "";
-        const bookingTime = $("timeInput").value || "";
-        const customerName = String($("customerName").value || "").trim();
-        const customerPhone = normalizePhone($("customerPhone").value || "");
-        const guestsCount = Math.max(1, Number($("guestsCount").value || 1));
-        const note = String($("noteInput").value || "").trim();
-
-        const business = safe(profile?.display_name, "Commerce");
-        const lines = [
-          `Bonjour, je viens de la vitrine DIGIY RESA.`,
-          `Commerce : ${business}`,
-          demoId ? `Référence vitrine : ${demoId}` : "",
-          service?.service_name ? `Service souhaité : ${service.service_name}` : "",
-          bookingDate ? `Date souhaitée : ${bookingDate}` : "",
-          bookingTime ? `Heure souhaitée : ${bookingTime}` : "",
-          guestsCount ? `Personnes : ${guestsCount}` : "",
-          customerName ? `Nom : ${customerName}` : "",
-          customerPhone ? `Téléphone : ${customerPhone}` : "",
-          note ? `Note : ${note}` : ""
-        ].filter(Boolean).join("\n");
-
-        const href = waLink(profile?.whatsapp || SUPPORT_WA, business, lines);
-        if (href) {
-          window.open(href, "_blank", "noopener");
-        } else {
-          setStatus("WhatsApp indisponible pour cette vitrine.", "err");
-        }
+      function openVitrineWhatsApp(profile,demoId){
+        const service=getSelectedService();
+        const bookingDate=$("dateInput").value||""; const bookingTime=$("timeInput").value||"";
+        const customerName=String($("customerName").value||"").trim();
+        const customerPhone=normalizePhone($("customerPhone").value||"");
+        const guestsCount=Math.max(1,Number($("guestsCount").value||1));
+        const note=String($("noteInput").value||"").trim();
+        const business=safe(profile?.display_name,"Commerce");
+        const lines=[`Bonjour, je viens de la vitrine DIGIY RESA.`,`Commerce : ${business}`,demoId?`Référence vitrine : ${demoId}`:"",service?.service_name?`Service souhaité : ${service.service_name}`:"",bookingDate?`Date souhaitée : ${bookingDate}`:"",bookingTime?`Heure souhaitée : ${bookingTime}`:"",guestsCount?`Personnes : ${guestsCount}`:"",customerName?`Nom : ${customerName}`:"",customerPhone?`Téléphone : ${customerPhone}`:"",note?`Note : ${note}`:""].filter(Boolean).join("\n");
+        const href=waLink(profile?.whatsapp||SUPPORT_WA,business,lines);
+        if(href){window.open(href,"_blank","noopener");}else{setStatus("WhatsApp indisponible pour cette vitrine.","err");}
       }
 
-      function setUnavailableState(title, subtitle){
-        $("name").textContent = title;
-        $("subtitle").textContent = subtitle;
-        $("btnSubmit").disabled = true;
-        $("btnReloadSlots").disabled = true;
-        $("serviceSelect").disabled = true;
-        $("dateInput").disabled = true;
-        $("timeInput").disabled = true;
-        $("customerName").disabled = true;
-        $("customerPhone").disabled = true;
-        $("guestsCount").disabled = true;
-        $("noteInput").disabled = true;
+      function setUnavailableState(title,subtitle){
+        $("name").textContent=title; $("subtitle").textContent=subtitle;
+        [$("btnSubmit"),$("btnReloadSlots"),$("serviceSelect"),$("dateInput"),$("timeInput"),$("customerName"),$("customerPhone"),$("guestsCount"),$("noteInput")].forEach(el=>el.disabled=true);
       }
 
       async function boot(){
-        const slug = normalizeSlug(params.get("slug") || "");
-        const demo = String(params.get("demo") || "").trim();
+        const slug=normalizeSlug(params.get("slug")||"");
+        const demo=String(params.get("demo")||"").trim();
 
-        $("dateInput").value = todayISO();
-        $("dateInput").min = todayISO();
-        $("dateInput").max = addDaysISO(60);
-        updateSummary();
-        updatePriceHint();
+        $("dateInput").value=todayISO(); $("dateInput").min=todayISO(); $("dateInput").max=addDaysISO(60);
+        updateSummary(); updatePriceHint();
 
-        if (demo && DEMO_MAP[demo]) {
-          const item = DEMO_MAP[demo];
-          PROFILE = item;
-          renderProfile(item, { slug:"", demo });
-          loadDemoServices(item);
-          updatePriceHint();
-          updateSummary();
-
-          const href = waLink(
-            item.whatsapp || SUPPORT_WA,
-            item.display_name,
-            `Bonjour, je viens de la vitrine DIGIY RESA.\nCommerce : ${item.display_name}`
-          );
-
-          setVitrineModeUI(href);
-          setBusy(false);
-          setStatus("Mode vitrine : pas de réservation automatique. Demande de créneau via WhatsApp.", "warn");
+        if(demo&&DEMO_MAP[demo]){
+          const item=DEMO_MAP[demo]; PROFILE=item;
+          renderProfile(item,{slug:"",demo});
+          loadDemoServices(item); updatePriceHint(); updateSummary();
+          const href=waLink(item.whatsapp||SUPPORT_WA,item.display_name,`Bonjour, je viens de la vitrine DIGIY RESA.\nCommerce : ${item.display_name}`);
+          setVitrineModeUI(href); setBusy(false);
+          setStatus("Mode vitrine : pas de réservation automatique. Demande de créneau via WhatsApp.","warn");
           return;
         }
 
-        if (!slug) {
-          setUnavailableState("Slug manquant", "Impossible d’ouvrir cette réservation sans identifiant commerce.");
-          setStatus("Slug manquant.", "err");
-          $("servicesBox").innerHTML = `<div class="service"><div class="muted">Aucun service à afficher.</div></div>`;
-          $("btnBackFiche").href = "./index.html";
+        if(!slug){
+          /* ━━━ AVANT : "Slug manquant" / "Slug manquant." → bannis ━━━ */
+          setUnavailableState("Identifiant manquant","Impossible d'ouvrir cette réservation sans identifiant boutique.");
+          setStatus("Identifiant manquant.","err");
+          $("servicesBox").innerHTML=`<div class="service"><div class="muted">Aucun service à afficher.</div></div>`;
+          $("btnBackFiche").href="./index.html";
           return;
         }
 
         try{
-          initClient();
-          setLiveModeUI();
+          initClient(); setLiveModeUI();
+          PROFILE=await loadLiveProfile(slug);
+          renderProfile(PROFILE,{slug,demo:""});
+          await loadLiveServices(slug); updatePriceHint(); updateSummary(); await loadSlots(slug);
 
-          PROFILE = await loadLiveProfile(slug);
-          renderProfile(PROFILE, { slug, demo:"" });
+          if(!SERVICES.length){setStatus("Aucun service actif sur ce commerce. La réservation automatique reste fermée.","warn");return;}
 
-          await loadLiveServices(slug);
-          updatePriceHint();
-          updateSummary();
-          await loadSlots(slug);
+          setStatus("Prêt. Choisis ton service, ton créneau puis envoie la demande.","");
 
-          if (!SERVICES.length) {
-            setStatus("Aucun service actif sur ce commerce. La réservation automatique reste fermée.", "warn");
-            return;
-          }
-
-          setStatus("Prêt. Choisis ton service, ton créneau puis envoie la demande.", "");
-
-          $("serviceSelect").addEventListener("change", async () => {
-            updatePriceHint();
-            updateSummary();
-            renderServicesCards();
-            await loadSlots(slug);
-          });
-
-          $("dateInput").addEventListener("change", async () => {
-            SELECTED_SLOT = "";
-            updateSummary();
-            await loadSlots(slug);
-          });
-
-          $("timeInput").addEventListener("input", () => {
-            SELECTED_SLOT = $("timeInput").value || "";
-            updateSummary();
-            renderSlots();
-          });
-
-          $("btnReloadSlots").addEventListener("click", () => loadSlots(slug));
-          $("btnSubmit").addEventListener("click", () => submitLive(slug));
-
+          $("serviceSelect").addEventListener("change",async()=>{updatePriceHint();updateSummary();renderServicesCards();await loadSlots(slug);});
+          $("dateInput").addEventListener("change",async()=>{SELECTED_SLOT="";updateSummary();await loadSlots(slug);});
+          $("timeInput").addEventListener("input",()=>{SELECTED_SLOT=$("timeInput").value||"";updateSummary();renderSlots();});
+          $("btnReloadSlots").addEventListener("click",()=>loadSlots(slug));
+          $("btnSubmit").addEventListener("click",()=>submitLive(slug));
         }catch(e){
           console.error(e);
-          setUnavailableState("Commerce indisponible", "Cette réservation n’est pas disponible publiquement.");
-          setStatus("Impossible de charger le rail RESA public.", "err");
-          $("servicesBox").innerHTML = `<div class="service"><div class="muted">Services indisponibles.</div></div>`;
+          setUnavailableState("Commerce indisponible","Cette réservation n'est pas disponible publiquement.");
+          /* ━━━ AVANT : "rail RESA public" → banni ━━━ */
+          setStatus("Impossible de charger les informations de ce commerce.","err");
+          $("servicesBox").innerHTML=`<div class="service"><div class="muted">Services indisponibles.</div></div>`;
         }
 
-        $("guestsCount").addEventListener("input", updateSummary);
+        $("guestsCount").addEventListener("input",updateSummary);
       }
 
-      $("btnVitrineWhatsApp").addEventListener("click", (e) => {
-        if (MODE !== "vitrine") return;
-        e.preventDefault();
-        openVitrineWhatsApp(PROFILE, params.get("demo") || "");
+      $("btnVitrineWhatsApp").addEventListener("click",(e)=>{
+        if(MODE!=="vitrine")return; e.preventDefault();
+        openVitrineWhatsApp(PROFILE,params.get("demo")||"");
       });
 
       boot();
