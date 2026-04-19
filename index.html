@@ -36,7 +36,6 @@
       --fs-hero:38px;
       --fs-sub:16px;
       --lh:1.55;
-      /* ━━━ AVANT : system-ui seul → Outfit ━━━ */
       --fontA:"Outfit",system-ui,-apple-system,sans-serif;
     }
 
@@ -64,7 +63,7 @@
       z-index:99999;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;
       border-radius:999px;border:1px solid rgba(255,255,255,.24);
       background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;
-      text-decoration:none;font-size:14px;font-weight:1000;line-height:1;
+      text-decoration:none;font-size:14px;font-weight:900;line-height:1;
       box-shadow:0 16px 40px rgba(0,0,0,.28);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
       transition:transform .18s ease, box-shadow .18s ease;
     }
@@ -78,48 +77,48 @@
 
     .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0 14px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:14px;flex-wrap:wrap;}
     .nav-left{display:flex;align-items:center;gap:12px;min-width:0;}
-    .logo-badge{width:42px;height:42px;border-radius:16px;background:radial-gradient(circle at 30% 20%,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;color:#04110d;font-weight:1000;font-size:18px;box-shadow:0 10px 26px rgba(250,204,21,0.40);flex:0 0 auto;}
-    .logo-title{font-size:16px;font-weight:950;letter-spacing:.10em;text-transform:uppercase;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:min(62vw, 520px);}
-    .logo-sub{font-size:12px;color:var(--muted);font-weight:850;margin-top:2px;}
+    .logo-badge{width:42px;height:42px;border-radius:16px;background:radial-gradient(circle at 30% 20%,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;color:#04110d;font-weight:900;font-size:18px;box-shadow:0 10px 26px rgba(250,204,21,0.40);flex:0 0 auto;}
+    .logo-title{font-size:16px;font-weight:900;letter-spacing:.10em;text-transform:uppercase;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:min(62vw, 520px);}
+    .logo-sub{font-size:12px;color:var(--muted);font-weight:800;margin-top:2px;}
     .nav-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end;}
-    .pill{border-radius:999px;padding:8px 12px;font-size:12px;font-weight:950;border:1px solid rgba(203,213,225,0.35);color:rgba(234,255,241,.92);display:inline-flex;align-items:center;gap:8px;background:rgba(2,6,23,.22);}
+    .pill{border-radius:999px;padding:8px 12px;font-size:12px;font-weight:900;border:1px solid rgba(203,213,225,0.35);color:rgba(234,255,241,.92);display:inline-flex;align-items:center;gap:8px;background:rgba(2,6,23,.22);}
     .pill .dot{width:8px;height:8px;border-radius:999px;background:var(--green);box-shadow:0 0 0 4px rgba(34,197,94,.12);}
-    a.btn-small{border-radius:999px;padding:10px 14px;font-size:13px;font-weight:950;border:1px solid rgba(203,213,225,0.32);background:rgba(15,23,42,0.32);color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;line-height:1;}
+    a.btn-small{border-radius:999px;padding:10px 14px;font-size:13px;font-weight:900;border:1px solid rgba(203,213,225,0.32);background:rgba(15,23,42,0.32);color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;line-height:1;}
     a.btn-small.primary{border:none;background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;box-shadow:0 10px 26px rgba(250,204,21,0.35);}
 
     .hero{margin-top:16px;border-radius:24px;border:1px solid rgba(255,255,255,.10);background:rgba(7,24,17,.55);box-shadow:var(--shadow);padding:18px 16px;overflow:hidden;position:relative;}
     .hero:before{content:"";position:absolute;inset:-1px;background:radial-gradient(700px 360px at 20% -10%, rgba(34,197,94,.18), transparent 65%),radial-gradient(700px 360px at 110% 0%, rgba(250,204,21,.14), transparent 60%),radial-gradient(600px 300px at 60% 10%, rgba(96,165,250,.10), transparent 50%);pointer-events:none;}
     .hero-inner{position:relative;display:grid;grid-template-columns:1.2fr 0.8fr;gap:14px;align-items:center;}
     @media(max-width:900px){.hero-inner{grid-template-columns:1fr;}}
-    .hero h1{font-size:var(--fs-hero);line-height:1.12;font-weight:1000;letter-spacing:-0.01em;margin-bottom:10px;}
+    .hero h1{font-size:var(--fs-hero);line-height:1.12;font-weight:900;letter-spacing:-0.01em;margin-bottom:10px;}
     .hero h1 .hl{background:linear-gradient(135deg,var(--gold),var(--green));-webkit-background-clip:text;color:transparent;}
-    .hero p{font-size:var(--fs-sub);color:var(--muted);line-height:var(--lh);font-weight:850;max-width:70ch;}
+    .hero p{font-size:var(--fs-sub);color:var(--muted);line-height:var(--lh);font-weight:800;max-width:70ch;}
     .hero-badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
-    .hero-badge{border-radius:999px;padding:8px 12px;border:1px solid rgba(203,213,225,0.28);color:var(--muted);font-weight:950;background:rgba(2,6,23,.25);font-size:12px;}
-    .hero-badge b{color:var(--green);font-weight:1000;}
+    .hero-badge{border-radius:999px;padding:8px 12px;border:1px solid rgba(203,213,225,0.28);color:var(--muted);font-weight:900;background:rgba(2,6,23,.25);font-size:12px;}
+    .hero-badge b{color:var(--green);font-weight:900;}
     .hero-box{border-radius:18px;border:1px solid rgba(203,213,225,0.16);background:rgba(2,6,23,.28);padding:14px;}
     .hero-box .kpi{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
-    .kpi .chip{border-radius:14px;border:1px solid rgba(203,213,225,0.16);background:rgba(15,23,42,.30);padding:10px 10px;font-size:12px;color:var(--muted);font-weight:950;display:flex;justify-content:space-between;align-items:center;gap:10px;}
-    .kpi .chip .v{color:var(--gold);font-weight:1000;white-space:nowrap;}
+    .kpi .chip{border-radius:14px;border:1px solid rgba(203,213,225,0.16);background:rgba(15,23,42,.30);padding:10px 10px;font-size:12px;color:var(--muted);font-weight:900;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+    .kpi .chip .v{color:var(--gold);font-weight:900;white-space:nowrap;}
     .statsbar{margin-top:12px;border-radius:18px;border:1px solid rgba(203,213,225,0.14);background:rgba(2,6,23,.24);padding:10px 12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
-    .statsbar .left{font-weight:1000;color:rgba(234,255,241,.92);display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+    .statsbar .left{font-weight:900;color:rgba(234,255,241,.92);display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
     .statsbar .left .sep{opacity:.5;}
     .statsbar .right{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-    .stats-pill{font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(15,23,42,.28);color:var(--muted);font-weight:950;}
+    .stats-pill{font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(15,23,42,.28);color:var(--muted);font-weight:900;}
     .stats-pill.good{border-color:rgba(34,197,94,.30);color:#bfffe0;}
     .stats-pill.warn{border-color:rgba(249,115,22,.30);color:#ffe0c2;}
     .controls{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
     .searchRow{display:flex;gap:10px;flex:1;min-width:260px;}
-    .input{flex:1;background:rgba(2,6,23,.28);border:1px solid rgba(203,213,225,0.20);color:var(--ink);border-radius:14px;padding:12px 12px;outline:none;font-weight:900;font-size:14px;}
+    .input{flex:1;background:rgba(2,6,23,.28);border:1px solid rgba(203,213,225,0.20);color:var(--ink);border-radius:14px;padding:12px 12px;outline:none;font-weight:800;font-size:14px;}
     .input:focus{border-color:rgba(250,204,21,.55);box-shadow:0 0 0 3px rgba(250,204,21,.12);}
-    .select{background:rgba(2,6,23,.28);border:1px solid rgba(203,213,225,0.20);color:var(--ink);border-radius:14px;padding:12px 12px;outline:none;font-weight:900;font-size:14px;min-width:190px;font-family:var(--fontA);}
+    .select{background:rgba(2,6,23,.28);border:1px solid rgba(203,213,225,0.20);color:var(--ink);border-radius:14px;padding:12px 12px;outline:none;font-weight:800;font-size:14px;min-width:190px;font-family:var(--fontA);}
     .section{margin-top:18px;}
     .section-card{border-radius:24px;border:1px solid rgba(255,255,255,.10);background:rgba(7,24,17,.50);box-shadow:0 14px 40px rgba(0,0,0,.28);padding:16px;}
     .section-head{display:flex;gap:12px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px;}
-    .section-title{font-size:20px;font-weight:1000;letter-spacing:-0.01em;}
-    .section-note{color:var(--muted);font-weight:850;line-height:1.55;max-width:72ch;font-size:14px;}
+    .section-title{font-size:20px;font-weight:900;letter-spacing:-0.01em;}
+    .section-note{color:var(--muted);font-weight:800;line-height:1.55;max-width:72ch;font-size:14px;}
     .legend{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-    .legend-pill{border-radius:999px;padding:7px 11px;font-size:12px;font-weight:950;border:1px solid rgba(255,255,255,.12);background:rgba(2,6,23,.28);color:var(--muted);}
+    .legend-pill{border-radius:999px;padding:7px 11px;font-size:12px;font-weight:900;border:1px solid rgba(255,255,255,.12);background:rgba(2,6,23,.28);color:var(--muted);}
     .legend-pill.live{border-color:rgba(34,197,94,.28);color:#c7ffe1;}
     .legend-pill.vitrine{border-color:rgba(250,204,21,.28);color:#ffe8a3;}
     .grid{margin-top:12px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
@@ -133,28 +132,28 @@
     .photo img{width:100%;height:100%;display:block;object-fit:cover;object-position:center;transform:scale(1.01);transition:transform .25s ease, filter .25s ease;filter:saturate(1.05);}
     .card:hover .photo img{transform:scale(1.04);filter:saturate(1.10) contrast(1.02);}
     .badgeTop{position:absolute;top:10px;left:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;max-width:calc(100% - 20px);}
-    .chip{border-radius:999px;padding:6px 10px;font-size:11px;font-weight:1000;border:1px solid rgba(255,255,255,.14);background:rgba(2,6,23,.55);color:rgba(234,255,241,.92);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;display:inline-flex;align-items:center;gap:6px;backdrop-filter:blur(6px);}
+    .chip{border-radius:999px;padding:6px 10px;font-size:11px;font-weight:900;border:1px solid rgba(255,255,255,.14);background:rgba(2,6,23,.55);color:rgba(234,255,241,.92);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;display:inline-flex;align-items:center;gap:6px;backdrop-filter:blur(6px);}
     .chip.gold{border-color:rgba(250,204,21,.30);}.chip.green{border-color:rgba(34,197,94,.30);}.chip.new{border-color:rgba(249,115,22,.30);}.chip.blue{border-color:rgba(96,165,250,.30);}
     .body{padding:14px;display:flex;flex-direction:column;gap:10px;flex:1;}
-    .name{font-size:18px;font-weight:1000;color:var(--gold);line-height:1.15;}
-    .meta{display:flex;flex-wrap:wrap;gap:10px;font-size:13px;color:var(--muted);font-weight:850;}
+    .name{font-size:18px;font-weight:900;color:var(--gold);line-height:1.15;}
+    .meta{display:flex;flex-wrap:wrap;gap:10px;font-size:13px;color:var(--muted);font-weight:800;}
     .meta span{display:inline-flex;gap:6px;align-items:center;}
-    .bio{font-size:14px;color:rgba(234,255,241,.90);font-weight:850;line-height:1.45;}
+    .bio{font-size:14px;color:rgba(234,255,241,.90);font-weight:800;line-height:1.45;}
     .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px;}
-    .tag{border-radius:999px;padding:6px 10px;border:1px solid rgba(203,213,225,0.22);color:var(--muted);background:rgba(2,6,23,.35);font-size:11px;font-weight:950;}
+    .tag{border-radius:999px;padding:6px 10px;border:1px solid rgba(203,213,225,0.22);color:var(--muted);background:rgba(2,6,23,.35);font-size:11px;font-weight:900;}
     .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;}
-    a.btn{flex:1;min-width:140px;border-radius:999px;padding:12px 14px;font-size:14px;font-weight:1000;border:0;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;line-height:1;white-space:nowrap;transition:transform .15s ease, filter .15s ease, box-shadow .15s ease;}
+    a.btn{flex:1;min-width:140px;border-radius:999px;padding:12px 14px;font-size:14px;font-weight:900;border:0;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;line-height:1;white-space:nowrap;transition:transform .15s ease, filter .15s ease, box-shadow .15s ease;}
     .btn.primary{background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;box-shadow:0 10px 24px rgba(250,204,21,0.30);}
     .btn.secondary{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.30);color:#bbf7d0;}
     .btn.ghost{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--ink);}
     .btn:active{transform:scale(.99);}
-    .status{margin-top:12px;border-radius:16px;border:1px solid rgba(203,213,225,0.14);background:rgba(2,6,23,.45);padding:12px 12px;font-size:13px;font-weight:900;color:var(--muted);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+    .status{margin-top:12px;border-radius:16px;border:1px solid rgba(203,213,225,0.14);background:rgba(2,6,23,.45);padding:12px 12px;font-size:13px;font-weight:800;color:var(--muted);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
     .empty-state{border-radius:18px;border:1px dashed rgba(255,255,255,.16);background:rgba(2,6,23,.22);padding:18px;color:var(--muted);font-weight:900;line-height:1.6;}
     .signature{margin-top:24px;text-align:center;font-weight:900;color:var(--muted);line-height:1.6;padding:0 10px;}
-    .signature strong{color:var(--gold);font-weight:1000;}
-    .footer{margin-top:26px;border-top:1px solid rgba(255,255,255,.08);padding-top:14px;font-size:12px;color:var(--muted);text-align:center;font-weight:850;line-height:1.5;}
-    .footer .brand{color:var(--gold);font-weight:1000;}.footer .zero{color:var(--green);font-weight:1000;}
-    .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:rgba(2,6,23,.86);border:1px solid rgba(255,255,255,.12);color:#fff;padding:10px 14px;border-radius:14px;font-weight:950;font-size:13px;display:none;z-index:9999;box-shadow:var(--shadow);max-width:92vw;text-align:center;}
+    .signature strong{color:var(--gold);font-weight:900;}
+    .footer{margin-top:26px;border-top:1px solid rgba(255,255,255,.08);padding-top:14px;font-size:12px;color:var(--muted);text-align:center;font-weight:800;line-height:1.5;}
+    .footer .brand{color:var(--gold);font-weight:900;}.footer .zero{color:var(--green);font-weight:900;}
+    .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:rgba(2,6,23,.86);border:1px solid rgba(255,255,255,.12);color:#fff;padding:10px 14px;border-radius:14px;font-weight:900;font-size:13px;display:none;z-index:9999;box-shadow:var(--shadow);max-width:92vw;text-align:center;}
     .toast.show{display:block;}
     .skeleton{animation:shimmer 1.2s infinite linear;background:linear-gradient(90deg,rgba(255,255,255,.05) 0%,rgba(255,255,255,.10) 50%,rgba(255,255,255,.05) 100%);background-size:200% 100%;}
     @keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
@@ -174,7 +173,6 @@
         <div class="logo-badge">📅</div>
         <div class="logo-text">
           <div class="logo-title">DIGIY RESA • MULTI BUSINESS • SALY</div>
-          <!-- ━━━ AVANT : "Double rail clair" → banni ━━━ -->
           <div class="logo-sub">La vitrine publique · Live + inspiration · Services du terrain</div>
         </div>
       </div>
@@ -195,9 +193,9 @@
           </h1>
           <p>
             Ici le client découvre le terrain sans confusion :
-            <b style="color:var(--green);font-weight:1000;">ce qui est réservable maintenant</b>
+            <b style="color:var(--green);font-weight:900;">ce qui est réservable maintenant</b>
             d'un côté, et
-            <b style="color:var(--gold);font-weight:1000;">ce qui inspire, attire et prépare la suite</b>
+            <b style="color:var(--gold);font-weight:900;">ce qui inspire, attire et prépare la suite</b>
             de l'autre. Une oasis vivante, oui. Un mirage, non.
           </p>
           <div class="hero-badges">
@@ -215,7 +213,7 @@
               <span class="sep">•</span>
               <span><span id="msVitrine">—</span> vitrine</span>
               <span class="sep">•</span>
-              <span>+<span id="ms7d">—</span>/7j</span>
+              <span><span id="ms7d">—</span> live récents 7j</span>
             </div>
             <div class="right">
               <span class="stats-pill good">Réelles : <span id="msPublic">—</span></span>
@@ -225,10 +223,10 @@
         </div>
 
         <aside class="hero-box">
-          <div class="muted" style="font-weight:1000;">📊 Lecture rapide vitrine (Saly)</div>
+          <div class="muted" style="font-weight:900;">📊 Lecture rapide vitrine (Saly)</div>
           <div class="kpi">
             <div class="chip"><span>Visibles</span><span class="v" id="kpiCount">—</span></div>
-            <div class="chip"><span>Nouveaux 7j</span><span class="v" id="kpiNew7d">—</span></div>
+            <div class="chip"><span>Live récents 7j</span><span class="v" id="kpiNew7d">—</span></div>
             <div class="chip"><span>Live filtrés</span><span class="v" id="kpiLive">—</span></div>
             <div class="chip"><span>Vitrine filtrée</span><span class="v" id="kpiVitrine">—</span></div>
           </div>
@@ -262,10 +260,9 @@
         <div class="section-head">
           <div>
             <div class="section-title">🟢 Établissements disponibles maintenant</div>
-            <!-- ━━━ AVANT : "sur le rail réel" → banni ━━━ -->
             <div class="section-note">
               Ici, le client voit les vraies fiches publiées sur la plateforme. Sur ces cartes,
-              le bouton <b style="color:var(--green)">Réserver</b> reste actif.
+              le bouton <b style="color:var(--green)">Réserver</b> reste actif quand la fiche est prête.
             </div>
           </div>
           <div class="legend">
@@ -303,7 +300,6 @@
     </div>
 
     <footer class="footer">
-      <!-- ━━━ AVANT : "Double rail clair" → banni ━━━ -->
       DIGIY RESA • Saly • <span class="zero">Live + inspiration</span> • <span class="brand">LIVE + VITRINE</span> ∞
     </footer>
   </div>
@@ -332,7 +328,6 @@
       let FILTERED_LIVE = [];
       let FILTERED_VITRINE = [];
 
-      /* ━━━ DEMO_CARDS PRÉSERVÉES INTACTES — doctrine façade respectée ━━━ */
       const DEMO_CARDS = [
         {
           kind: "demo",
@@ -443,7 +438,7 @@
       }
 
       function buildJoinUrl(){
-        const u = new URL(JOIN_MODULE_URL); // absolue — sûr
+        const u = new URL(JOIN_MODULE_URL);
         u.searchParams.set("module", "RESA");
         u.searchParams.set("base_module", "RESA");
         u.searchParams.set("plan", "standard");
@@ -462,125 +457,216 @@
         document.getElementById("btnRefresh").addEventListener("click", (e) => { e.preventDefault(); load(); });
       })();
 
-      function toast(msg){ const t = document.getElementById("toast"); if(!t) return; t.textContent = msg||""; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 2200); }
-      function setStatus(msg){ const el = document.getElementById("statusText"); if(el) el.textContent = msg||""; }
+      function toast(msg){
+        const t = document.getElementById("toast");
+        if(!t) return;
+        t.textContent = msg || "";
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 2200);
+      }
 
-      function esc(s){ return String(s??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
-      function pick(arr, key){ const v=(arr||[]).map(x=>(x?.[key]??"")).filter(Boolean); return Array.from(new Set(v)).sort((a,b)=>String(a).localeCompare(String(b))); }
-      function tagsToArray(tags){ if(Array.isArray(tags))return tags.filter(Boolean).map(String); const s=String(tags||"").trim(); if(!s)return []; return s.split(",").map(x=>x.trim()).filter(Boolean); }
-      function isNew(dateIso){ if(!dateIso)return false; const t=Date.parse(dateIso); if(!Number.isFinite(t))return false; return (Date.now()-t)/(1000*60*60*24)<=NEW_DAYS; }
-      function sameCity(a,b){ return String(a||"").trim().toLowerCase()===String(b||"").trim().toLowerCase(); }
-      function first(...vals){ for(const v of vals){ if(v!==null&&v!==undefined&&String(v).trim()!=="")return v; } return ""; }
-      function buildWhatsAppHref(phone,displayName){ const clean=String(phone||SUPPORT_WA).replace(/[^\d]/g,""); const msg=`Bonjour ${displayName||""}, je vous contacte via DIGIY RESA.`; return "https://wa.me/"+clean+"?text="+encodeURIComponent(msg); }
+      function setStatus(msg){
+        const el = document.getElementById("statusText");
+        if(el) el.textContent = msg || "";
+      }
+
+      function esc(s){
+        return String(s ?? "")
+          .replaceAll("&","&amp;")
+          .replaceAll("<","&lt;")
+          .replaceAll(">","&gt;")
+          .replaceAll('"',"&quot;")
+          .replaceAll("'","&#039;");
+      }
+
+      function pick(arr, key){
+        const v = (arr || []).map(x => (x?.[key] ?? "")).filter(Boolean);
+        return Array.from(new Set(v)).sort((a,b) => String(a).localeCompare(String(b)));
+      }
+
+      function tagsToArray(tags){
+        if(Array.isArray(tags)) return tags.filter(Boolean).map(String);
+        const s = String(tags || "").trim();
+        if(!s) return [];
+        return s.split(",").map(x => x.trim()).filter(Boolean);
+      }
+
+      function isNew(dateIso){
+        if(!dateIso) return false;
+        const t = Date.parse(dateIso);
+        if(!Number.isFinite(t)) return false;
+        return (Date.now() - t) / (1000 * 60 * 60 * 24) <= NEW_DAYS;
+      }
+
+      function sameCity(a,b){
+        return String(a || "").trim().toLowerCase() === String(b || "").trim().toLowerCase();
+      }
+
+      function first(...vals){
+        for(const v of vals){
+          if(v !== null && v !== undefined && String(v).trim() !== "") return v;
+        }
+        return "";
+      }
+
+      function buildWhatsAppHref(phone,displayName){
+        const clean = String(phone || SUPPORT_WA).replace(/[^\d]/g,"");
+        const msg = `Bonjour ${displayName || ""}, je vous contacte via DIGIY RESA.`;
+        return "https://wa.me/" + clean + "?text=" + encodeURIComponent(msg);
+      }
 
       function mapLiveRow(r){
         return {
-          kind:"live", demo_id:"",
-          slug: first(r.slug),
-          display_name: first(r.display_name,r.business_name,r.name,r.establishment_name)||"Commerce",
-          category: first(r.business_type,r.category,r.type_label)||"Service local",
-          city: first(r.city)||CITY_LOCK,
-          address: first(r.address_text,r.address,r.location_text)||"",
-          bio: first(r.bio,r.description,r.about,r.short_description)||"",
-          badge:"🟢 FICHE RÉELLE", hub_badge:"DIGIY RESA",
-          price_label: first(r.opening_hours_text,r.open_hours,r.opening_hours)?`Horaires : ${first(r.opening_hours_text,r.open_hours,r.opening_hours)}`:"",
-          tags: [first(r.business_type,r.category,r.type_label)||"",first(r.city)||"",first(r.opening_hours_text,r.open_hours,r.opening_hours)?`Horaires : ${first(r.opening_hours_text,r.open_hours,r.opening_hours)}`:""].filter(Boolean),
-          photo_url: first(r.cover_url,r.cover_image_url,r.logo_url,r.image_url,r.photo_url)||"",
-          whatsapp: first(r.whatsapp,r.whatsapp_phone,r.phone)||SUPPORT_WA,
-          created_at: first(r.updated_at,r.created_at)||null
+          kind:"live",
+          demo_id:"",
+          slug:first(r.slug),
+          display_name:first(r.display_name,r.business_name,r.name,r.establishment_name) || "Commerce",
+          category:first(r.business_type,r.category,r.type_label) || "Service local",
+          city:first(r.city) || CITY_LOCK,
+          address:first(r.address_text,r.address,r.location_text) || "",
+          bio:first(r.bio,r.description,r.about,r.short_description) || "",
+          badge:"🟢 FICHE RÉELLE",
+          hub_badge:"DIGIY RESA",
+          price_label:first(r.opening_hours_text,r.open_hours,r.opening_hours) ? `Horaires : ${first(r.opening_hours_text,r.open_hours,r.opening_hours)}` : "",
+          tags:[
+            first(r.business_type,r.category,r.type_label) || "",
+            first(r.city) || "",
+            first(r.opening_hours_text,r.open_hours,r.opening_hours) ? `Horaires : ${first(r.opening_hours_text,r.open_hours,r.opening_hours)}` : ""
+          ].filter(Boolean),
+          photo_url:first(r.cover_url,r.cover_image_url,r.logo_url,r.image_url,r.photo_url) || "",
+          whatsapp:first(r.whatsapp,r.whatsapp_phone,r.phone) || SUPPORT_WA,
+          created_at:first(r.updated_at,r.created_at) || null
         };
       }
 
-      function buildFicheHref(row){ if(row.kind==="live"&&row.slug)return `./fiche.html?slug=${encodeURIComponent(row.slug)}`; return `./fiche.html?demo=${encodeURIComponent(row.demo_id||"")}`; }
-      function buildReserveHref(row){ if(row.kind==="live"&&row.slug)return `./reserver.html?slug=${encodeURIComponent(row.slug)}`; return ""; }
+      function buildFicheHref(row){
+        if(row.kind === "live" && row.slug) return `./fiche.html?slug=${encodeURIComponent(row.slug)}`;
+        return `./fiche.html?demo=${encodeURIComponent(row.demo_id || "")}`;
+      }
+
+      function buildReserveHref(row){
+        if(row.kind === "live" && row.slug) return `./reserver.html?slug=${encodeURIComponent(row.slug)}`;
+        return "";
+      }
 
       function fillSelects(){
-        const catSel=document.getElementById("cat");
-        const cats=pick([...LIVE_ROWS,...VITRINE_ROWS],"category");
-        catSel.innerHTML=`<option value="">Toutes les activités</option>`+cats.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
+        const catSel = document.getElementById("cat");
+        const cats = pick([...LIVE_ROWS, ...VITRINE_ROWS], "category");
+        catSel.innerHTML = `<option value="">Toutes les activités</option>` + cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
       }
 
       function updateStatsBar(liveRows,vitrineRows){
-        const l=Array.isArray(liveRows)?liveRows:[];
-        const v=Array.isArray(vitrineRows)?vitrineRows:[];
-        const all=[...l,...v];
-        const new7d=l.filter(r=>isNew(r.created_at)).length;
-        const cats=new Set(all.map(r=>String(r.category||"").trim()).filter(Boolean)).size;
-        document.getElementById("msTotal").textContent=String(all.length);
-        document.getElementById("msLive").textContent=String(l.length);
-        document.getElementById("msVitrine").textContent=String(v.length);
-        document.getElementById("ms7d").textContent=String(new7d);
-        document.getElementById("msPublic").textContent=String(l.length);
-        document.getElementById("msCats").textContent=String(cats);
+        const l = Array.isArray(liveRows) ? liveRows : [];
+        const v = Array.isArray(vitrineRows) ? vitrineRows : [];
+        const all = [...l, ...v];
+        const new7d = l.filter(r => isNew(r.created_at)).length;
+        const cats = new Set(all.map(r => String(r.category || "").trim()).filter(Boolean)).size;
+
+        document.getElementById("msTotal").textContent = String(all.length);
+        document.getElementById("msLive").textContent = String(l.length);
+        document.getElementById("msVitrine").textContent = String(v.length);
+        document.getElementById("ms7d").textContent = String(new7d);
+        document.getElementById("msPublic").textContent = String(l.length);
+        document.getElementById("msCats").textContent = String(cats);
       }
 
       function updateKpisFiltered(liveFiltered,vitrineFiltered){
-        const l=Array.isArray(liveFiltered)?liveFiltered:[];
-        const v=Array.isArray(vitrineFiltered)?vitrineFiltered:[];
-        const all=[...l,...v];
-        document.getElementById("kpiCount").textContent=String(all.length);
-        document.getElementById("kpiNew7d").textContent=String(l.filter(x=>isNew(x.created_at)).length);
-        document.getElementById("kpiLive").textContent=String(l.length);
-        document.getElementById("kpiVitrine").textContent=String(v.length);
-        const last=[...all].sort((a,b)=>{const ta=Date.parse(a.created_at||"")||0;const tb=Date.parse(b.created_at||"")||0;return tb-ta;})[0];
-        document.getElementById("kpiLast").textContent=last?`${last.display_name}${last.kind==="demo"?" • vitrine":" • live"}`:"—";
+        const l = Array.isArray(liveFiltered) ? liveFiltered : [];
+        const v = Array.isArray(vitrineFiltered) ? vitrineFiltered : [];
+        const all = [...l, ...v];
+
+        document.getElementById("kpiCount").textContent = String(all.length);
+        document.getElementById("kpiNew7d").textContent = String(l.filter(x => isNew(x.created_at)).length);
+        document.getElementById("kpiLive").textContent = String(l.length);
+        document.getElementById("kpiVitrine").textContent = String(v.length);
+
+        const last = [...all].sort((a,b) => {
+          const ta = Date.parse(a.created_at || "") || 0;
+          const tb = Date.parse(b.created_at || "") || 0;
+          return tb - ta;
+        })[0];
+
+        document.getElementById("kpiLast").textContent = last ? `${last.display_name}${last.kind === "demo" ? " • vitrine" : " • live"}` : "—";
       }
 
       function renderSkeleton(){
-        const skHtml=Array.from({length:3}).map(()=>`<div class="card"><div class="photo skeleton sk-photo"></div><div class="body"><div class="skeleton sk-line" style="width:70%"></div><div class="skeleton sk-line" style="width:48%"></div><div class="skeleton sk-line" style="width:90%"></div><div class="skeleton sk-line" style="width:60%"></div><div class="actions" style="margin-top:10px;"><div class="skeleton sk-line" style="height:42px;width:100%"></div><div class="skeleton sk-line" style="height:42px;width:100%"></div></div></div></div>`).join("");
-        document.getElementById("gridLive").innerHTML=skHtml;
-        document.getElementById("gridVitrine").innerHTML=skHtml;
+        const skHtml = Array.from({length:3}).map(() => `
+          <div class="card">
+            <div class="photo skeleton sk-photo"></div>
+            <div class="body">
+              <div class="skeleton sk-line" style="width:70%"></div>
+              <div class="skeleton sk-line" style="width:48%"></div>
+              <div class="skeleton sk-line" style="width:90%"></div>
+              <div class="skeleton sk-line" style="width:60%"></div>
+              <div class="actions" style="margin-top:10px;">
+                <div class="skeleton sk-line" style="height:42px;width:100%"></div>
+                <div class="skeleton sk-line" style="height:42px;width:100%"></div>
+              </div>
+            </div>
+          </div>
+        `).join("");
+
+        document.getElementById("gridLive").innerHTML = skHtml;
+        document.getElementById("gridVitrine").innerHTML = skHtml;
       }
 
       function renderGrid(gridId,rows,mode){
-        const grid=document.getElementById(gridId); if(!grid)return;
-        const list=Array.isArray(rows)?rows:[];
+        const grid = document.getElementById(gridId);
+        if(!grid) return;
+
+        const list = Array.isArray(rows) ? rows : [];
         if(!list.length){
-          grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1;">${mode==="live"?"Aucune fiche live ne correspond au filtre pour l'instant. La vitrine d'inspiration reste visible pour garder le terrain vivant.":"Aucune carte vitrine ne correspond au filtre pour l'instant."}</div>`;
+          grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">${mode === "live" ? "Aucune fiche live ne correspond au filtre pour l'instant. La vitrine d'inspiration reste visible pour garder le terrain vivant." : "Aucune carte vitrine ne correspond au filtre pour l'instant."}</div>`;
           return;
         }
-        grid.innerHTML=list.map(r=>{
-          const name=esc(r.display_name||"Commerce");
-          const category=esc(r.category||"Service local");
-          const city=esc(r.city||CITY_LOCK);
-          const address=esc(r.address||"");
-          const bio=esc(r.bio||"");
-          const badge=esc(r.badge||(mode==="live"?"🟢 FICHE RÉELLE":"✨ VITRINE DIGIY"));
-          const hub=esc(r.hub_badge||(mode==="live"?"DIGIY RESA":"VITRINE"));
-          const price=esc(r.price_label||"");
-          const tags=tagsToArray(r.tags).slice(0,6);
-          const isNewCard=isNew(r.created_at);
-          const rawPhoto=String(r.photo_url||"").trim();
-          const basePhoto=rawPhoto||FALLBACK_PHOTO;
-          const photoFinal=esc(basePhoto+(basePhoto.includes("?")?"&":"?")+"v=12");
-          const ficheHref=buildFicheHref(r);
-          const resaHref=buildReserveHref(r);
-          const waHref=buildWhatsAppHref(r.whatsapp,r.display_name);
-          const primaryLabel=mode==="live"?"📄 Voir la fiche":"✨ Découvrir";
-          const secondaryBtn=mode==="live"?`<a class="btn secondary" href="${esc(resaHref)}">📅 Réserver</a>`:`<a class="btn ghost" href="${esc(waHref)}">💬 Nous écrire</a>`;
+
+        grid.innerHTML = list.map(r => {
+          const name = esc(r.display_name || "Commerce");
+          const category = esc(r.category || "Service local");
+          const city = esc(r.city || CITY_LOCK);
+          const address = esc(r.address || "");
+          const bio = esc(r.bio || "");
+          const badge = esc(r.badge || (mode === "live" ? "🟢 FICHE RÉELLE" : "✨ VITRINE DIGIY"));
+          const hub = esc(r.hub_badge || (mode === "live" ? "DIGIY RESA" : "VITRINE"));
+          const price = esc(r.price_label || "");
+          const tags = tagsToArray(r.tags).slice(0,6);
+          const isNewCard = isNew(r.created_at);
+          const rawPhoto = String(r.photo_url || "").trim();
+          const basePhoto = rawPhoto || FALLBACK_PHOTO;
+          const photoFinal = esc(basePhoto + (basePhoto.includes("?") ? "&" : "?") + "v=12");
+          const ficheHref = buildFicheHref(r);
+          const resaHref = buildReserveHref(r);
+          const waHref = buildWhatsAppHref(r.whatsapp,r.display_name);
+          const primaryLabel = mode === "live" ? "📄 Voir la fiche" : "✨ Découvrir";
+
+          const secondaryBtn = mode === "live"
+            ? (resaHref
+                ? `<a class="btn secondary" href="${esc(resaHref)}">📅 Réserver</a>`
+                : `<a class="btn ghost" href="${esc(waHref)}">💬 Nous écrire</a>`)
+            : `<a class="btn ghost" href="${esc(waHref)}">💬 Nous écrire</a>`;
+
           return `
-            <article class="card" data-kind="${esc(r.kind||"")}" data-slug="${esc(r.slug||"")}">
+            <article class="card" data-kind="${esc(r.kind || "")}" data-slug="${esc(r.slug || "")}">
               <div class="photo">
                 <img src="${photoFinal}" alt="${name}" loading="lazy" onerror="this.onerror=null;this.src='${esc(FALLBACK_PHOTO)}';" />
                 <div class="badgeTop">
                   <span class="chip gold">${badge}</span>
                   <span class="chip blue">${hub}</span>
-                  ${isNewCard?`<span class="chip new">🆕 Nouveau</span>`:""}
+                  ${isNewCard ? `<span class="chip new">🆕 Nouveau</span>` : ""}
                 </div>
               </div>
               <div class="body">
                 <div class="name">${name}</div>
                 <div class="meta">
                   <span>🏷️ ${category}</span>
-                  <span>📍 ${city}${address?" • "+address:""}</span>
+                  <span>📍 ${city}${address ? " • " + address : ""}</span>
                 </div>
                 ${bio
                   ? `<div class="bio">${bio}</div>`
-                  /* ━━━ AVANT : "Fiche publique DIGIY RESA MULTI BUSINESS." → humain ━━━ */
                   : `<div class="bio" style="color:var(--muted)">Fiche publique DIGIY RESA.</div>`}
                 <div class="tags">
-                  ${tags.map(t=>`<span class="tag">${esc(t)}</span>`).join("")}
-                  ${price?`<span class="tag" style="border-color:rgba(250,204,21,.22);color:#fde68a;">${price}</span>`:""}
+                  ${tags.map(t => `<span class="tag">${esc(t)}</span>`).join("")}
+                  ${price ? `<span class="tag" style="border-color:rgba(250,204,21,.22);color:#fde68a;">${price}</span>` : ""}
                 </div>
                 <div class="actions">
                   <a class="btn primary" href="${esc(ficheHref)}">${primaryLabel}</a>
@@ -592,41 +678,60 @@
       }
 
       function rowMatchesFilters(r,q,cat){
-        const hay=[r.display_name,r.category,r.city,r.address,r.bio,r.badge,r.hub_badge,r.price_label,...tagsToArray(r.tags)].join(" ").toLowerCase();
-        return (!q||hay.includes(q))&&(!cat||String(r.category||"").toLowerCase()===cat);
+        const hay = [
+          r.display_name,
+          r.category,
+          r.city,
+          r.address,
+          r.bio,
+          r.badge,
+          r.hub_badge,
+          r.price_label,
+          ...tagsToArray(r.tags)
+        ].join(" ").toLowerCase();
+
+        return (!q || hay.includes(q)) && (!cat || String(r.category || "").toLowerCase() === cat);
       }
 
       function applyFilters(){
-        const q=(document.getElementById("q").value||"").trim().toLowerCase();
-        const cat=(document.getElementById("cat").value||"").trim().toLowerCase();
-        FILTERED_LIVE=LIVE_ROWS.filter(r=>rowMatchesFilters(r,q,cat));
-        FILTERED_VITRINE=VITRINE_ROWS.filter(r=>rowMatchesFilters(r,q,cat));
-        renderGrid("gridLive",FILTERED_LIVE,"live");
-        renderGrid("gridVitrine",FILTERED_VITRINE,"vitrine");
-        updateKpisFiltered(FILTERED_LIVE,FILTERED_VITRINE);
+        const q = (document.getElementById("q").value || "").trim().toLowerCase();
+        const cat = (document.getElementById("cat").value || "").trim().toLowerCase();
+
+        FILTERED_LIVE = LIVE_ROWS.filter(r => rowMatchesFilters(r,q,cat));
+        FILTERED_VITRINE = VITRINE_ROWS.filter(r => rowMatchesFilters(r,q,cat));
+
+        renderGrid("gridLive", FILTERED_LIVE, "live");
+        renderGrid("gridVitrine", FILTERED_VITRINE, "vitrine");
+        updateKpisFiltered(FILTERED_LIVE, FILTERED_VITRINE);
       }
 
       async function load(){
         renderSkeleton();
         setStatus("🔎 Chargement du live + préparation de la vitrine…");
-        VITRINE_ROWS=[...DEMO_CARDS];
+        VITRINE_ROWS = [...DEMO_CARDS];
 
         try{
-          sb=initSupabase();
-          if(!sb)throw new Error("supabase_unavailable");
+          sb = initSupabase();
+          if(!sb) throw new Error("supabase_unavailable");
 
-          const{data,error}=await sb.from("digiy_resa_public_profiles_v2").select("*").order("updated_at",{ascending:false});
-          if(error)throw error;
+          const { data, error } = await sb
+            .from("digiy_resa_public_profiles_v2")
+            .select("*")
+            .order("updated_at", { ascending:false });
 
-          const raw=Array.isArray(data)?data:[];
-          LIVE_ROWS=raw.filter(r=>sameCity(first(r.city),CITY_LOCK)).map(mapLiveRow).filter(r=>r.slug);
+          if(error) throw error;
+
+          const raw = Array.isArray(data) ? data : [];
+          LIVE_ROWS = raw
+            .filter(r => sameCity(first(r.city), CITY_LOCK))
+            .map(mapLiveRow)
+            .filter(r => r.slug);
 
           fillSelects();
-          updateStatsBar(LIVE_ROWS,VITRINE_ROWS);
+          updateStatsBar(LIVE_ROWS, VITRINE_ROWS);
           applyFilters();
 
           if(LIVE_ROWS.length){
-            /* ━━━ AVANT : "Rail LIVE chargé." → banni ━━━ */
             setStatus("✅ Fiches live chargées. La vitrine d'inspiration complète le terrain.");
             toast("✅ Live + vitrine prêts");
           }else{
@@ -635,9 +740,9 @@
           }
         }catch(e){
           console.error(e);
-          LIVE_ROWS=[];
+          LIVE_ROWS = [];
           fillSelects();
-          updateStatsBar(LIVE_ROWS,VITRINE_ROWS);
+          updateStatsBar(LIVE_ROWS, VITRINE_ROWS);
           applyFilters();
           setStatus("⚠️ Source live indisponible — vitrine d'inspiration affichée.");
           toast("⚠️ Mode vitrine d'inspiration");
@@ -645,11 +750,16 @@
       }
 
       (function bind(){
-        const q=document.getElementById("q");
-        const cat=document.getElementById("cat");
-        let t=null;
-        q.addEventListener("input",()=>{ clearTimeout(t); t=setTimeout(applyFilters,120); });
-        cat.addEventListener("change",applyFilters);
+        const q = document.getElementById("q");
+        const cat = document.getElementById("cat");
+        let t = null;
+
+        q.addEventListener("input", () => {
+          clearTimeout(t);
+          t = setTimeout(applyFilters, 120);
+        });
+
+        cat.addEventListener("change", applyFilters);
       })();
 
       load();
