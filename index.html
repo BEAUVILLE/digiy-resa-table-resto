@@ -2,11 +2,11 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <title>DIGIY RESA — Multi Business Saly</title>
+  <title>DIGIY RESA — Réserver à Saly</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta
     name="description"
-    content="DIGIY RESA — Vitrine publique multi business à Saly. Établissements disponibles maintenant et vitrine d'inspiration terrain."
+    content="DIGIY RESA — Réserver simplement à Saly. Ce qui est disponible maintenant et ce qui vaut le détour."
   />
   <meta name="theme-color" content="#061b14" />
   <meta name="robots" content="index,follow" />
@@ -172,12 +172,12 @@
       <div class="nav-left">
         <div class="logo-badge">📅</div>
         <div class="logo-text">
-          <div class="logo-title">DIGIY RESA • MULTI BUSINESS • SALY</div>
-          <div class="logo-sub">La vitrine publique · Live + inspiration · Services du terrain</div>
+          <div class="logo-title">DIGIY RESA • SALY</div>
+          <div class="logo-sub">Réserver simplement • Disponible maintenant • À découvrir</div>
         </div>
       </div>
       <div class="nav-right">
-        <div class="pill"><span class="dot"></span> Live + vitrine</div>
+        <div class="pill"><span class="dot"></span> Disponible + à découvrir</div>
         <div class="pill">📍 Saly</div>
         <a class="btn-small" id="btnHub" href="#" rel="noopener">🦅 DIGIY HUB</a>
         <a class="btn-small primary" id="btnJoinTop" href="#" rel="noopener">📌 Poser ma fiche</a>
@@ -188,51 +188,48 @@
       <div class="hero-inner">
         <div>
           <h1>
-            La vitrine <span class="hl">DIGIY RESA</span><br />
-            de <span class="hl">Saly</span> en mode <span class="hl">LIVE + VITRINE</span>
+            <span class="hl">Réserver à Saly</span><br />
+            sans se perdre
           </h1>
           <p>
-            Ici le client découvre le terrain sans confusion :
-            <b style="color:var(--green);font-weight:900;">ce qui est réservable maintenant</b>
-            d'un côté, et
-            <b style="color:var(--gold);font-weight:900;">ce qui inspire, attire et prépare la suite</b>
-            de l'autre. Une oasis vivante, oui. Un mirage, non.
+            Ici, tu vois ce qui est <b style="color:var(--green);font-weight:900;">disponible maintenant</b>
+            et ce qui <b style="color:var(--gold);font-weight:900;">vaut le détour</b>.
+            Le but est simple : t’aider à choisir plus vite, sans confusion.
           </p>
           <div class="hero-badges">
-            <div class="hero-badge">🟢 <b>LIVE</b> • fiche réelle</div>
-            <div class="hero-badge">✨ Vitrine d'inspiration</div>
+            <div class="hero-badge">🟢 <b>Disponible maintenant</b></div>
+            <div class="hero-badge">✨ À découvrir</div>
             <div class="hero-badge">📅 Réservation simple</div>
-            <div class="hero-badge">🧩 Multi business</div>
+            <div class="hero-badge">📍 Saly</div>
           </div>
           <div class="statsbar" id="resaStatsBar">
             <div class="left">
               <span>📍 <span style="color:var(--gold)">Saly</span> :</span>
               <span><span id="msTotal">—</span> cartes visibles</span>
               <span class="sep">•</span>
-              <span><span id="msLive">—</span> live</span>
+              <span><span id="msLive">—</span> disponibles</span>
               <span class="sep">•</span>
-              <span><span id="msVitrine">—</span> vitrine</span>
+              <span><span id="msVitrine">—</span> à découvrir</span>
               <span class="sep">•</span>
-              <span><span id="ms7d">—</span> live récents 7j</span>
+              <span><span id="ms7d">—</span> nouveaux 7j</span>
             </div>
             <div class="right">
-              <span class="stats-pill good">Réelles : <span id="msPublic">—</span></span>
-              <span class="stats-pill warn">Catégories : <span id="msCats">—</span></span>
+              <span class="stats-pill good">Disponibles : <span id="msPublic">—</span></span>
+              <span class="stats-pill warn">Activités : <span id="msCats">—</span></span>
             </div>
           </div>
         </div>
 
         <aside class="hero-box">
-          <div class="muted" style="font-weight:900;">📊 Lecture rapide vitrine (Saly)</div>
+          <div class="muted" style="font-weight:900;">📊 Lecture rapide à Saly</div>
           <div class="kpi">
             <div class="chip"><span>Visibles</span><span class="v" id="kpiCount">—</span></div>
-            <div class="chip"><span>Live récents 7j</span><span class="v" id="kpiNew7d">—</span></div>
-            <div class="chip"><span>Live filtrés</span><span class="v" id="kpiLive">—</span></div>
-            <div class="chip"><span>Vitrine filtrée</span><span class="v" id="kpiVitrine">—</span></div>
+            <div class="chip"><span>Nouveaux 7j</span><span class="v" id="kpiNew7d">—</span></div>
+            <div class="chip"><span>Disponibles</span><span class="v" id="kpiLive">—</span></div>
+            <div class="chip"><span>À découvrir</span><span class="v" id="kpiVitrine">—</span></div>
           </div>
           <div class="status" style="margin-top:12px;">
             <span id="statusText">🔎 Chargement…</span>
-            <div class="right"><span class="muted">Source :</span><b>Supabase + vitrine</b></div>
           </div>
           <div class="status" style="margin-top:10px;">
             <span class="muted">Dernière carte visible :</span>
@@ -259,15 +256,15 @@
       <div class="section-card">
         <div class="section-head">
           <div>
-            <div class="section-title">🟢 Établissements disponibles maintenant</div>
+            <div class="section-title">🟢 Disponible maintenant</div>
             <div class="section-note">
-              Ici, le client voit les vraies fiches publiées sur la plateforme. Sur ces cartes,
-              le bouton <b style="color:var(--green)">Réserver</b> reste actif quand la fiche est prête.
+              Ici, tu vois les vraies fiches publiées. Quand une fiche est prête,
+              le bouton <b style="color:var(--green)">Réserver</b> reste actif.
             </div>
           </div>
           <div class="legend">
-            <span class="legend-pill live">Réservation active</span>
-            <span class="legend-pill live">Fiche réelle</span>
+            <span class="legend-pill live">Réservable</span>
+            <span class="legend-pill live">Fiche vérifiée</span>
           </div>
         </div>
         <div id="gridLive" class="grid"></div>
@@ -278,16 +275,16 @@
       <div class="section-card">
         <div class="section-head">
           <div>
-            <div class="section-title">✨ Vitrine d'ambiance / inspiration</div>
+            <div class="section-title">✨ À découvrir à Saly</div>
             <div class="section-note">
-              Ici, on garde l'oasis vivante : ambiance, projection, désir, matière visuelle.
-              Ces cartes servent à attirer, montrer le potentiel et préparer la suite.
-              Elles n'ouvrent pas une fausse réservation.
+              Ici, on montre l’ambiance, les idées, les adresses qui donnent envie
+              et les activités qui peuvent attirer le regard.
+              Ces cartes n’ouvrent pas une fausse réservation.
             </div>
           </div>
           <div class="legend">
-            <span class="legend-pill vitrine">Inspiration</span>
-            <span class="legend-pill vitrine">Pas de fausse resa</span>
+            <span class="legend-pill vitrine">À découvrir</span>
+            <span class="legend-pill vitrine">Pas encore réservable</span>
           </div>
         </div>
         <div id="gridVitrine" class="grid"></div>
@@ -296,11 +293,11 @@
 
     <div class="signature">
       Ici, chaque fiche ne joue pas le même rôle.<br />
-      <strong>DIGIY attire avec la vitrine, puis guide vers le vrai terrain.</strong>
+      <strong>DIGIY attire avec ce qui donne envie, puis guide vers ce qui est vraiment disponible.</strong>
     </div>
 
     <footer class="footer">
-      DIGIY RESA • Saly • <span class="zero">Live + inspiration</span> • <span class="brand">LIVE + VITRINE</span> ∞
+      DIGIY RESA • Saly • <span class="zero">Disponible + à découvrir</span> • <span class="brand">simple, clair, humain</span> ∞
     </footer>
   </div>
 
@@ -338,7 +335,7 @@
           city: "Saly",
           address: "Quartier central • rendez-vous beauté",
           bio: "Coupe, brushing, teinture et soins. Une fiche pensée pour comprendre l'activité, voir l'ambiance et ensuite choisir sereinement.",
-          badge: "✨ VITRINE DIGIY",
+          badge: "✨ À DÉCOUVRIR",
           hub_badge: "💇 BEAUTÉ",
           price_label: "Services sur rendez-vous",
           tags: ["Coiffure", "Brushing", "Teinture", "Saly"],
@@ -354,7 +351,7 @@
           city: "Saly",
           address: "Axe principal • mécanique légère",
           bio: "Diagnostic, vidange, freins et petites interventions avec une lecture propre du service proposé.",
-          badge: "✨ VITRINE DIGIY",
+          badge: "✨ À DÉCOUVRIR",
           hub_badge: "🔧 GARAGE",
           price_label: "Diagnostic • Vidange • Freins",
           tags: ["Garage", "Diagnostic", "Vidange", "Saly"],
@@ -370,7 +367,7 @@
           city: "Saly",
           address: "Terrasse • déjeuner & soirée",
           bio: "Une table d'ambiance pour déjeuner tranquille, dîner simple ou recevoir des amis dans un cadre détendu.",
-          badge: "✨ VITRINE DIGIY",
+          badge: "✨ À DÉCOUVRIR",
           hub_badge: "🍽️ RESTAURANT",
           price_label: "Horaires : 12:00 - 23:00",
           tags: ["Restaurant", "Terrasse", "Déjeuner", "Saly"],
@@ -386,7 +383,7 @@
           city: "Saly",
           address: "Zone calme • soins esthétiques",
           bio: "Pose, entretien, manucure et rendez-vous beauté avec présentation claire et rassurante.",
-          badge: "✨ VITRINE DIGIY",
+          badge: "✨ À DÉCOUVRIR",
           hub_badge: "💅 BEAUTÉ",
           price_label: "Pose • Entretien • Manucure",
           tags: ["Beauté", "Onglerie", "Soin", "Saly"],
@@ -402,7 +399,7 @@
           city: "Saly",
           address: "Bureau calme • rendez-vous pro",
           bio: "Consultations, échanges posés et rendez-vous organisés sur des créneaux nets pour éviter les confusions.",
-          badge: "✨ VITRINE DIGIY",
+          badge: "✨ À DÉCOUVRIR",
           hub_badge: "🩺 CONSULTATION",
           price_label: "Rendez-vous sur créneau",
           tags: ["Consultation", "Conseil", "Bureau", "Saly"],
@@ -418,7 +415,7 @@
           city: "Saly",
           address: "Service de quartier • rendez-vous utiles",
           bio: "Un atelier pensé pour les rendez-vous techniques, petits dépannages et services du quotidien avec lecture simple.",
-          badge: "✨ VITRINE DIGIY",
+          badge: "✨ À DÉCOUVRIR",
           hub_badge: "🛠️ ATELIER",
           price_label: "Service sur rendez-vous",
           tags: ["Atelier", "Service", "Quartier", "Saly"],
@@ -432,7 +429,7 @@
         if (window.DIGIY_SB) return window.DIGIY_SB;
         window.DIGIY_SB = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
           auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false, storage: { getItem: () => null, setItem: () => {}, removeItem: () => {} } },
-          global: { headers: { "X-Client-Info": "digiy-resa-multi-business-vitrine-live-vitrine" } }
+          global: { headers: { "X-Client-Info": "digiy-resa-saly-facade-humaine" } }
         });
         return window.DIGIY_SB;
       }
@@ -442,7 +439,7 @@
         u.searchParams.set("module", "RESA");
         u.searchParams.set("base_module", "RESA");
         u.searchParams.set("plan", "standard");
-        u.searchParams.set("from", "resa-multi-business-vitrine-saly");
+        u.searchParams.set("from", "resa-saly-facade-humaine");
         return u.toString();
       }
 
@@ -452,7 +449,7 @@
         document.getElementById("btnHub").href = HUB_URL;
         document.getElementById("btnSupport").href =
           "https://wa.me/" + SUPPORT_WA + "?text=" +
-          encodeURIComponent("Salut DIGIY RESA, j'ai une question sur la vitrine multi business de Saly.");
+          encodeURIComponent("Salut DIGIY RESA, j'ai une question sur la page de réservation à Saly.");
         document.getElementById("btnJoinTop").href = buildJoinUrl();
         document.getElementById("btnRefresh").addEventListener("click", (e) => { e.preventDefault(); load(); });
       })();
@@ -525,7 +522,7 @@
           city:first(r.city) || CITY_LOCK,
           address:first(r.address_text,r.address,r.location_text) || "",
           bio:first(r.bio,r.description,r.about,r.short_description) || "",
-          badge:"🟢 FICHE RÉELLE",
+          badge:"🟢 DISPONIBLE",
           hub_badge:"DIGIY RESA",
           price_label:first(r.opening_hours_text,r.open_hours,r.opening_hours) ? `Horaires : ${first(r.opening_hours_text,r.open_hours,r.opening_hours)}` : "",
           tags:[
@@ -586,7 +583,7 @@
           return tb - ta;
         })[0];
 
-        document.getElementById("kpiLast").textContent = last ? `${last.display_name}${last.kind === "demo" ? " • vitrine" : " • live"}` : "—";
+        document.getElementById("kpiLast").textContent = last ? `${last.display_name}${last.kind === "demo" ? " • à découvrir" : " • disponible"}` : "—";
       }
 
       function renderSkeleton(){
@@ -616,7 +613,7 @@
 
         const list = Array.isArray(rows) ? rows : [];
         if(!list.length){
-          grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">${mode === "live" ? "Aucune fiche live ne correspond au filtre pour l'instant. La vitrine d'inspiration reste visible pour garder le terrain vivant." : "Aucune carte vitrine ne correspond au filtre pour l'instant."}</div>`;
+          grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">${mode === "live" ? "Aucune fiche disponible ne correspond au filtre pour l'instant. La partie à découvrir reste visible pour garder la page vivante." : "Aucune carte à découvrir ne correspond au filtre pour l'instant."}</div>`;
           return;
         }
 
@@ -626,8 +623,8 @@
           const city = esc(r.city || CITY_LOCK);
           const address = esc(r.address || "");
           const bio = esc(r.bio || "");
-          const badge = esc(r.badge || (mode === "live" ? "🟢 FICHE RÉELLE" : "✨ VITRINE DIGIY"));
-          const hub = esc(r.hub_badge || (mode === "live" ? "DIGIY RESA" : "VITRINE"));
+          const badge = esc(r.badge || (mode === "live" ? "🟢 DISPONIBLE" : "✨ À DÉCOUVRIR"));
+          const hub = esc(r.hub_badge || (mode === "live" ? "DIGIY RESA" : "À DÉCOUVRIR"));
           const price = esc(r.price_label || "");
           const tags = tagsToArray(r.tags).slice(0,6);
           const isNewCard = isNew(r.created_at);
@@ -707,7 +704,7 @@
 
       async function load(){
         renderSkeleton();
-        setStatus("🔎 Chargement du live + préparation de la vitrine…");
+        setStatus("🔎 Chargement…");
         VITRINE_ROWS = [...DEMO_CARDS];
 
         try{
@@ -732,11 +729,11 @@
           applyFilters();
 
           if(LIVE_ROWS.length){
-            setStatus("✅ Fiches live chargées. La vitrine d'inspiration complète le terrain.");
-            toast("✅ Live + vitrine prêts");
+            setStatus("✅ Les fiches disponibles sont chargées.");
+            toast("✅ Disponible + à découvrir prêts");
           }else{
-            setStatus("⚠️ Aucune fiche live visible pour l'instant. La vitrine garde le terrain vivant.");
-            toast("✨ Vitrine active");
+            setStatus("⚠️ Rien de disponible pour l’instant. La partie à découvrir reste visible.");
+            toast("✨ Partie à découvrir active");
           }
         }catch(e){
           console.error(e);
@@ -744,8 +741,8 @@
           fillSelects();
           updateStatsBar(LIVE_ROWS, VITRINE_ROWS);
           applyFilters();
-          setStatus("⚠️ Source live indisponible — vitrine d'inspiration affichée.");
-          toast("⚠️ Mode vitrine d'inspiration");
+          setStatus("⚠️ Les fiches disponibles sont indisponibles pour le moment.");
+          toast("⚠️ Affichage à découvrir");
         }
       }
 
