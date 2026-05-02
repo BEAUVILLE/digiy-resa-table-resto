@@ -70,6 +70,125 @@
     .floating-back:hover{transform:translateY(-1px);box-shadow:0 20px 46px rgba(0,0,0,.34);}
     .floating-back:active{transform:translateY(0);}
 
+    .floating-returns{
+      position:fixed;
+      top:calc(env(safe-area-inset-top, 0px) + 12px);
+      left:calc(env(safe-area-inset-left, 0px) + 12px);
+      z-index:99999;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .floating-returns .floating-back{
+      position:static;
+      top:auto;
+      left:auto;
+    }
+
+    .floating-back.hub{
+      background:rgba(250,204,21,.14);
+      color:#fde68a;
+      border-color:rgba(250,204,21,.28);
+      box-shadow:0 16px 40px rgba(0,0,0,.24);
+    }
+
+    .hero-actions-main{
+      margin-top:14px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+
+    .return-house{
+      margin-top:18px;
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(7,24,17,.50);
+      box-shadow:0 14px 40px rgba(0,0,0,.28);
+      padding:16px;
+    }
+
+    .return-house h2{
+      font-size:20px;
+      font-weight:900;
+      letter-spacing:-0.01em;
+      margin:0 0 8px;
+    }
+
+    .return-house p{
+      color:var(--muted);
+      font-weight:800;
+      line-height:1.55;
+      max-width:72ch;
+      font-size:14px;
+      margin:0;
+    }
+
+    .return-actions{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .bottom-nav{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:9998;
+      padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));
+      background:rgba(6,27,20,.94);
+      border-top:1px solid rgba(255,255,255,.10);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+    }
+
+    .bottom-nav-inner{
+      width:min(760px,100%);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:6px;
+    }
+
+    .bottom-nav a,.bottom-nav button{
+      min-height:54px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      align-content:center;
+      gap:2px;
+      color:rgba(234,255,241,.78);
+      font-size:11px;
+      font-weight:1000;
+      text-align:center;
+      border:1px solid transparent;
+      text-decoration:none;
+      background:transparent;
+      padding:0 4px;
+      font-family:inherit;
+      cursor:pointer;
+    }
+
+    .bottom-nav .ico{font-size:18px;line-height:1}
+
+    .bottom-nav a.active,.bottom-nav button.active{
+      background:linear-gradient(135deg,var(--gold),var(--orange));
+      color:#04110d;
+    }
+
+    body{
+      padding-bottom:calc(84px + env(safe-area-inset-bottom,0px));
+    }
+
+    #digiy-audio-btn{
+      bottom:calc(96px + env(safe-area-inset-bottom,0px)) !important;
+    }
+
     .page{max-width:1140px;margin:0 auto;padding:16px 14px 42px;}
 
     @media(max-width:860px){:root{--fs-hero:32px;}}
@@ -158,14 +277,29 @@
     .skeleton{animation:shimmer 1.2s infinite linear;background:linear-gradient(90deg,rgba(255,255,255,.05) 0%,rgba(255,255,255,.10) 50%,rgba(255,255,255,.05) 100%);background-size:200% 100%;}
     @keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
     .sk-photo{height:210px;}.sk-line{height:12px;border-radius:999px;margin-top:10px;}
-    @media(max-width:768px){.floating-back{top:calc(env(safe-area-inset-top, 0px) + 10px);left:calc(env(safe-area-inset-left, 0px) + 10px);padding:11px 14px;font-size:13px;}}
+    @media(max-width:768px){
+      .floating-returns{
+        top:calc(env(safe-area-inset-top, 0px) + 10px);
+        left:calc(env(safe-area-inset-left, 0px) + 10px);
+        right:calc(env(safe-area-inset-right, 0px) + 10px);
+      }
+      .floating-returns .floating-back{
+        padding:11px 14px;
+        font-size:13px;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <a class="floating-back" id="floatingSiteBtn" href="https://digiylyfe.com/" aria-label="Retour au site DIGIYLYFE">
-    ↩️ Retour site
-  </a>
+  <div class="floating-returns" aria-label="Retours DIGIY">
+    <a class="floating-back" id="floatingSiteBtn" href="https://digiylyfe.com/" aria-label="Retour au site DIGIYLYFE">
+      🌍 Site
+    </a>
+    <a class="floating-back hub" href="https://digiy-hub.digiylyfe.com/" aria-label="Retour au HUB DIGIY">
+      🧭 HUB
+    </a>
+  </div>
 
   <div class="page">
     <header class="nav">
@@ -179,7 +313,9 @@
       <div class="nav-right">
         <div class="pill"><span class="dot"></span> Disponible + à découvrir</div>
         <div class="pill">📍 Saly</div>
-        <a class="btn-small" id="btnHub" href="#" rel="noopener">🦅 DIGIY HUB</a>
+        <a class="btn-small" href="https://digiylyfe.com/">🌍 Site</a>
+        <a class="btn-small" id="btnHub" href="https://digiy-hub.digiylyfe.com/" rel="noopener">🧭 HUB DIGIY</a>
+        <a class="btn-small" href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer">📦 Tarifs</a>
         <a class="btn-small primary" id="btnJoinTop" href="#" rel="noopener">📌 Poser ma fiche</a>
       </div>
     </header>
@@ -201,6 +337,13 @@
             <div class="hero-badge">✨ À découvrir</div>
             <div class="hero-badge">📅 Réservation simple</div>
             <div class="hero-badge">📍 Saly</div>
+          </div>
+
+          <div class="hero-actions-main">
+            <a class="btn-small primary" href="#gridLive">🟢 Voir disponible</a>
+            <a class="btn-small" href="https://digiylyfe.com/">🌍 Site DIGIYLYFE</a>
+            <a class="btn-small" href="https://digiy-hub.digiylyfe.com/">🧭 HUB DIGIY</a>
+            <a class="btn-small" href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer">📦 Tarifs</a>
           </div>
           <div class="statsbar" id="resaStatsBar">
             <div class="left">
@@ -291,6 +434,23 @@
       </div>
     </section>
 
+
+    <section class="section" id="retours-digiy">
+      <div class="return-house">
+        <h2>Revenir dans la maison DIGIY</h2>
+        <p>
+          Cette page aide à réserver à Saly. Pour revenir à la vitrine, au HUB ou aux tarifs officiels,
+          utilise les portes ci-dessous.
+        </p>
+        <div class="return-actions">
+          <a class="btn-small" href="https://digiylyfe.com/">🌍 Site DIGIYLYFE</a>
+          <a class="btn-small primary" href="https://digiy-hub.digiylyfe.com/">🧭 HUB DIGIY</a>
+          <a class="btn-small" href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer">📦 Tarifs</a>
+          <a class="btn-small" href="https://commencer-a-payer.digiylyfe.com/">📌 Poser ma fiche</a>
+        </div>
+      </div>
+    </section>
+
     <div class="signature">
       Ici, chaque fiche ne joue pas le même rôle.<br />
       <strong>DIGIY attire avec ce qui donne envie, puis guide vers ce qui est vraiment disponible.</strong>
@@ -300,6 +460,18 @@
       DIGIY RESA • Saly • <span class="zero">Disponible + à découvrir</span> • <span class="brand">simple, clair, humain</span> ∞
     </footer>
   </div>
+
+
+  <nav class="bottom-nav" aria-label="Navigation rapide DIGIY RESA">
+    <div class="bottom-nav-inner">
+      <a href="https://digiylyfe.com/"><span class="ico">🌍</span><span>Site</span></a>
+      <a href="https://digiy-hub.digiylyfe.com/"><span class="ico">🧭</span><span>HUB</span></a>
+      <a href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer"><span class="ico">📦</span><span>Tarifs</span></a>
+      <a class="active" href="#gridLive"><span class="ico">📅</span><span>Réserver</span></a>
+      <a href="https://commencer-a-payer.digiylyfe.com/"><span class="ico">📌</span><span>Ma fiche</span></a>
+    </div>
+  </nav>
+
 
   <div id="toast" class="toast"></div>
 
@@ -311,7 +483,8 @@
       const NEW_DAYS = 7;
 
       const FALLBACK_PHOTO = "https://orange-pig-270004.hostingersite.com/wp-content/uploads/2026/03/chatgpt-image-4-mars-2026-23_40_53.png";
-      const HUB_URL = "https://beauville.github.io/digiy-hub/";
+      const HUB_URL = "https://digiy-hub.digiylyfe.com/";
+      const TARIFS_URL = "https://tarifs.digiylyfe.com/";
       const SUPPORT_WA = "221771342889";
       const JOIN_MODULE_URL = "https://commencer-a-payer.digiylyfe.com/";
       const SITE_URL = "https://digiylyfe.com/";
