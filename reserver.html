@@ -118,11 +118,9 @@
           <div class="hero-meta">
             <div class="pill" id="cityPill">Ville : —</div>
             <div class="pill" id="typePill">Activité : —</div>
-            <!-- ━━━ AVANT : "slug :" → "Identifiant :" ━━━ -->
-            <div class="pill slug-pill" id="slugPill">Identifiant : —</div>
           </div>
           <div class="hero-actions">
-            <a class="btn gold" id="btnWhatsApp" href="#" target="_blank" rel="noopener">💬 WhatsApp</a>
+            <a class="btn gold hidden" id="btnWhatsApp" href="#" target="_blank" rel="noopener">💬 WhatsApp</a>
             <a class="btn ghost" id="btnBackFiche" href="./fiche.html">👁️ Retour fiche</a>
           </div>
         </div>
@@ -179,7 +177,7 @@
           <a class="btn warn hidden" id="btnVitrineWhatsApp" href="#" target="_blank" rel="noopener">💬 Demander un créneau</a>
         </div>
 
-        <div class="helper" id="helperText">Si aucun créneau ne remonte, tu peux saisir l'heure manuellement puis envoyer la demande. Le WhatsApp reste disponible en secours.</div>
+        <div class="helper" id="helperText">Si aucun créneau ne remonte, tu peux saisir l'heure manuellement puis envoyer la demande. Le contact commercial reste disponible si le commerce l’a indiqué.</div>
 
         <div class="status" id="statusBox">Prêt.</div>
       </section>
@@ -208,7 +206,7 @@
 
       const SUPABASE_URL = window.DIGIY_SUPABASE_URL;
       const SUPABASE_ANON_KEY = window.DIGIY_SUPABASE_ANON_KEY || window.DIGIY_SUPABASE_ANON;
-      const SUPPORT_WA = "221771342889";
+      const SUPPORT_WA = "";
 
       const params = new URLSearchParams(location.search);
       const $ = (id) => document.getElementById(id);
@@ -228,7 +226,7 @@
           bio:"Coupe, brushing, teinture et soins. Ici on inspire, puis on prend le premier contact proprement.",
           opening_hours_text:"09:00 - 19:00",
           photo_url:"https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80",
-          whatsapp:SUPPORT_WA,
+          whatsapp:"",
           services:[{id:"demo-1",service_name:"Coupe homme",duration_minutes:20,price_fcfa:3000},{id:"demo-2",service_name:"Brushing",duration_minutes:45,price_fcfa:6000},{id:"demo-3",service_name:"Teinture",duration_minutes:90,price_fcfa:15000}]
         },
         "garage-diagnostic-saly": {
@@ -237,7 +235,7 @@
           bio:"Diagnostic, vidange, freins et petites interventions. La vitrine montre le potentiel, puis le client demande son créneau.",
           opening_hours_text:"08:00 - 18:00",
           photo_url:"https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=1200&q=80",
-          whatsapp:SUPPORT_WA,
+          whatsapp:"",
           services:[{id:"demo-1",service_name:"Diagnostic",duration_minutes:15,price_fcfa:5000},{id:"demo-2",service_name:"Vidange",duration_minutes:30,price_fcfa:10000},{id:"demo-3",service_name:"Freins",duration_minutes:60,price_fcfa:20000}]
         },
         "terrasse-saveurs-saly": {
@@ -246,7 +244,7 @@
           bio:"Une ambiance simple et vivante. Ici, on donne envie puis on oriente vers un contact humain direct.",
           opening_hours_text:"12:00 - 23:00",
           photo_url:"https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
-          whatsapp:SUPPORT_WA,
+          whatsapp:"",
           services:[{id:"demo-1",service_name:"Table midi",duration_minutes:60,price_fcfa:null},{id:"demo-2",service_name:"Table soirée",duration_minutes:90,price_fcfa:null}]
         },
         "studio-onglerie-saly": {
@@ -255,7 +253,7 @@
           bio:"Une fiche vitrine pour se projeter, voir les soins et demander un créneau simplement.",
           opening_hours_text:"10:00 - 19:00",
           photo_url:"https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=80",
-          whatsapp:SUPPORT_WA,
+          whatsapp:"",
           services:[{id:"demo-1",service_name:"Pose",duration_minutes:60,price_fcfa:10000},{id:"demo-2",service_name:"Entretien",duration_minutes:45,price_fcfa:7000}]
         },
         "cabinet-conseil-saly": {
@@ -264,7 +262,7 @@
           bio:"Une présence claire, posée, rassurante. On découvre d'abord, puis on demande un rendez-vous humainement.",
           opening_hours_text:"09:00 - 17:00",
           photo_url:"https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
-          whatsapp:SUPPORT_WA,
+          whatsapp:"",
           services:[{id:"demo-1",service_name:"Consultation simple",duration_minutes:30,price_fcfa:10000},{id:"demo-2",service_name:"Consultation longue",duration_minutes:60,price_fcfa:20000}]
         },
         "atelier-service-saly": {
@@ -273,7 +271,7 @@
           bio:"Une vitrine terrain pour montrer l'utilité, rassurer, puis faire démarrer le contact.",
           opening_hours_text:"08:30 - 18:30",
           photo_url:"https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
-          whatsapp:SUPPORT_WA,
+          whatsapp:"",
           services:[{id:"demo-1",service_name:"Diagnostic atelier",duration_minutes:30,price_fcfa:5000},{id:"demo-2",service_name:"Intervention",duration_minutes:60,price_fcfa:12000}]
         }
       };
@@ -286,7 +284,7 @@
       function todayISO(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
       function addDaysISO(days){ const d=new Date(); d.setDate(d.getDate()+Number(days||0)); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
       function pickMainImage(p){ return [p?.cover_url,p?.photo_url,p?.image_url,p?.cover_image_url].filter(Boolean)[0]||""; }
-      function waLink(phone,name,extra=""){ const clean=normalizePhone(phone||SUPPORT_WA); if(!clean)return ""; const msg=extra||`Bonjour ${name||""}, je vous contacte via votre fiche DIGIY RESA.`; return "https://wa.me/"+clean+"?text="+encodeURIComponent(msg); }
+      function waLink(phone,name,extra=""){ const clean=normalizePhone(phone||""); if(!clean)return ""; const msg=extra||`Bonjour ${name||""}, je vous contacte via votre fiche DIGIY RESA.`; return "https://wa.me/"+clean+"?text="+encodeURIComponent(msg); }
       function ficheLink({slug="",demo=""}={}){ const u=new URL("./fiche.html",location.href); if(slug)u.searchParams.set("slug",slug); if(!slug&&demo)u.searchParams.set("demo",demo); return u.pathname+u.search; }
       function safeJsonParse(value){ try{ return typeof value==="string"?JSON.parse(value):value; }catch{ return null; } }
 
@@ -359,7 +357,7 @@
         $("formTitle").textContent="Réserver maintenant";
         /* ━━━ AVANT : "sur le rail RESA" → banni ━━━ */
         $("formIntro").textContent="Choisis ton service, la date, ton heure, puis envoie ta demande. Le commerce reçoit la réservation directement.";
-        $("helperText").textContent="Si aucun créneau ne remonte, tu peux saisir l'heure manuellement puis envoyer la demande. Le WhatsApp reste disponible en secours.";
+        $("helperText").textContent="Si aucun créneau ne remonte, tu peux saisir l'heure manuellement puis envoyer la demande. Le contact commercial reste disponible si le commerce l’a indiqué.";
         $("btnSubmit").classList.remove("hidden"); $("btnReloadSlots").classList.remove("hidden"); $("btnVitrineWhatsApp").classList.add("hidden"); $("slotsField").classList.remove("hidden");
       }
 
@@ -369,7 +367,15 @@
         $("formTitle").textContent="Demander un créneau";
         $("formIntro").textContent="Cette fiche est une vitrine d'inspiration. Ici on ne joue pas une fausse réservation : on prépare la demande puis on passe par WhatsApp.";
         $("helperText").textContent="Tu peux choisir un service pour te repérer, indiquer une date souhaitée et ton besoin, puis ouvrir WhatsApp pour envoyer la demande.";
-        $("btnSubmit").classList.add("hidden"); $("btnReloadSlots").classList.add("hidden"); $("btnVitrineWhatsApp").classList.remove("hidden"); $("btnVitrineWhatsApp").href=waHref||"#"; $("slotsField").classList.add("hidden");
+        $("btnSubmit").classList.add("hidden"); $("btnReloadSlots").classList.add("hidden");
+        if(waHref){
+          $("btnVitrineWhatsApp").classList.remove("hidden");
+          $("btnVitrineWhatsApp").href=waHref;
+        }else{
+          $("btnVitrineWhatsApp").classList.add("hidden");
+          $("btnVitrineWhatsApp").removeAttribute("href");
+        }
+        $("slotsField").classList.add("hidden");
         $("slotsBox").innerHTML=`<button class="slot off" type="button" disabled>Vitrine : pas de créneaux automatiques.</button>`;
       }
 
@@ -384,16 +390,21 @@
         setHeroImage(p,name,city,businessType);
         $("name").textContent=name; $("subtitle").textContent=`${city} • ${businessType}`;
         $("cityPill").textContent="Ville : "+city; $("typePill").textContent="Activité : "+businessType;
-        /* ━━━ AVANT : "slug :" → "Identifiant :" ━━━ */
-        $("slugPill").textContent=slug?"Identifiant : "+slug:"vitrine : "+(demo||"—");
         $("bio").textContent=safe(p.bio,"Présentation à découvrir.");
         $("address").textContent=safe(p.address_text||p.address,"Adresse à préciser");
         $("hours").textContent=safe(p.opening_hours_text||p.hours_text,"Horaires à préciser");
-        $("contactWhatsapp").textContent=phone?"+"+phone:"+221"+SUPPORT_WA;
+        $("contactWhatsapp").textContent=phone ? "+"+phone : "Contact commercial non indiqué";
         $("btnBackFiche").href=ficheLink({slug,demo});
 
         const wa=$("btnWhatsApp"); const waHref=waLink(phone,name);
-        if(waHref){wa.href=waHref;}else{wa.removeAttribute("href");wa.classList.remove("gold");wa.textContent="WhatsApp indisponible";}
+        if(waHref){
+          wa.href=waHref;
+          wa.classList.remove("hidden");
+          wa.textContent="💬 WhatsApp";
+        }else{
+          wa.removeAttribute("href");
+          wa.classList.add("hidden");
+        }
       }
 
       async function loadLiveProfile(slug){
@@ -450,8 +461,8 @@
         const guestsCount=Math.max(1,Number($("guestsCount").value||1));
         const note=String($("noteInput").value||"").trim();
 
-        /* ━━━ AVANT : "Slug manquant." → "Identifiant manquant." ━━━ */
-        if(!slug){setStatus("Identifiant manquant. Impossible d'envoyer une réservation.","err");return;}
+        /* ━━━ AVANT : "Slug manquant." → "Fiche non choisie." ━━━ */
+        if(!slug){setStatus("Fiche non choisie. Retourne à la vitrine pour réserver chez un professionnel précis.","err");return;}
         if(!service?.id){setStatus("Choisis un service avant d'envoyer la réservation.","err");return;}
         if(!bookingDate){setStatus("Choisis une date.","err");return;}
         if(!bookingTime){setStatus("Choisis ou saisis une heure.","err");return;}
@@ -486,8 +497,47 @@
         const note=String($("noteInput").value||"").trim();
         const business=safe(profile?.display_name,"Commerce");
         const lines=[`Bonjour, je viens de la vitrine DIGIY RESA.`,`Commerce : ${business}`,demoId?`Référence vitrine : ${demoId}`:"",service?.service_name?`Service souhaité : ${service.service_name}`:"",bookingDate?`Date souhaitée : ${bookingDate}`:"",bookingTime?`Heure souhaitée : ${bookingTime}`:"",guestsCount?`Personnes : ${guestsCount}`:"",customerName?`Nom : ${customerName}`:"",customerPhone?`Téléphone : ${customerPhone}`:"",note?`Note : ${note}`:""].filter(Boolean).join("\n");
-        const href=waLink(profile?.whatsapp||SUPPORT_WA,business,lines);
-        if(href){window.open(href,"_blank","noopener");}else{setStatus("WhatsApp indisponible pour cette vitrine.","err");}
+        const href=waLink(profile?.whatsapp||"",business,lines);
+        if(href){window.open(href,"_blank","noopener");}else{setStatus("Contact commercial non indiqué pour cette vitrine.","err");}
+      }
+
+      function setPublicNoContextState(){
+        MODE = "public";
+        $("modeBadge").className = "badge vitrine";
+        $("modeBadge").innerHTML = `<span class="dot"></span> DIGIY RESA • PUBLIC`;
+        $("name").textContent = "Choisis d’abord une fiche";
+        $("subtitle").textContent = "Cette page sert à réserver chez un professionnel précis. Ouvre-la depuis une fiche ou depuis la vitrine RESA.";
+        $("cityPill").textContent = "Ville : Saly";
+        $("typePill").textContent = "Activité : à choisir";
+        $("btnWhatsApp").classList.add("hidden");
+        $("btnWhatsApp").removeAttribute("href");
+        $("btnBackFiche").href = "./index.html";
+        $("btnBackFiche").textContent = "🌍 Voir la vitrine";
+
+        $("formTitle").textContent = "Réservation publique";
+        $("formIntro").textContent = "Pour réserver, commence par choisir un commerce, un salon, un restaurant, un garage ou un service depuis la vitrine.";
+        $("helperText").textContent = "Une réservation publique doit toujours être reliée à une fiche précise. Ici, aucune fausse réservation n’est affichée.";
+        $("bio").textContent = "Aucune fiche précise n’est ouverte pour le moment.";
+        $("address").textContent = "Choisis d’abord une fiche depuis la vitrine.";
+        $("hours").textContent = "Selon le professionnel choisi.";
+        $("contactWhatsapp").textContent = "Visible sur la fiche du professionnel si le contact est public.";
+        $("servicesBox").innerHTML = `<div class="service"><div class="muted">Choisis une fiche depuis la vitrine pour voir les services disponibles.</div></div>`;
+        $("slotsBox").innerHTML = `<button class="slot off" type="button" disabled>Choisis d’abord une fiche</button>`;
+        $("serviceSelect").innerHTML = `<option value="">Choisis d’abord une fiche</option>`;
+        $("priceHint").value = "—";
+        $("sumService").textContent = "—";
+        $("sumPrice").textContent = "—";
+
+        [$("btnSubmit"),$("btnReloadSlots"),$("serviceSelect"),$("dateInput"),$("timeInput"),$("customerName"),$("customerPhone"),$("guestsCount"),$("noteInput")].forEach(el => {
+          if(el) el.disabled = true;
+        });
+
+        $("btnSubmit").classList.add("hidden");
+        $("btnReloadSlots").classList.add("hidden");
+        $("btnVitrineWhatsApp").classList.add("hidden");
+        $("btnVitrineWhatsApp").removeAttribute("href");
+
+        setStatus("Choisis une fiche depuis la vitrine pour ouvrir une réservation propre.","warn");
       }
 
       function setUnavailableState(title,subtitle){
@@ -506,18 +556,14 @@
           const item=DEMO_MAP[demo]; PROFILE=item;
           renderProfile(item,{slug:"",demo});
           loadDemoServices(item); updatePriceHint(); updateSummary();
-          const href=waLink(item.whatsapp||SUPPORT_WA,item.display_name,`Bonjour, je viens de la vitrine DIGIY RESA.\nCommerce : ${item.display_name}`);
+          const href=waLink(item.whatsapp||"",item.display_name,`Bonjour, je viens de la vitrine DIGIY RESA.\nCommerce : ${item.display_name}`);
           setVitrineModeUI(href); setBusy(false);
-          setStatus("Mode vitrine : pas de réservation automatique. Demande de créneau via WhatsApp.","warn");
+          setStatus(href ? "Mode vitrine : pas de réservation automatique. Demande de créneau via le contact commercial." : "Mode vitrine : pas de réservation automatique. Contact commercial non indiqué.","warn");
           return;
         }
 
         if(!slug){
-          /* ━━━ AVANT : "Slug manquant" / "Slug manquant." → bannis ━━━ */
-          setUnavailableState("Identifiant manquant","Impossible d'ouvrir cette réservation sans identifiant boutique.");
-          setStatus("Identifiant manquant.","err");
-          $("servicesBox").innerHTML=`<div class="service"><div class="muted">Aucun service à afficher.</div></div>`;
-          $("btnBackFiche").href="./index.html";
+          setPublicNoContextState();
           return;
         }
 
