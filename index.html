@@ -209,7 +209,7 @@
         <a class="btn-small" href="https://digiylyfe.com/">🌍 Site</a>
         <a class="btn-small" id="btnHub" href="https://digiy-hub.digiylyfe.com/" rel="noopener">🧭 HUB DIGIY</a>
         <a class="btn-small" href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer">📦 Tarifs</a>
-        <a class="btn-small primary" id="btnJoinTop" href="#" rel="noopener">📌 Poser ma fiche</a>
+        <a class="btn-small primary" id="btnJoinTop" href="#" rel="noopener">📌 Ma fiche</a>
       </div>
     </header>
 
@@ -327,7 +327,7 @@
           <a class="btn-small" href="https://digiylyfe.com/">🌍 Site DIGIYLYFE</a>
           <a class="btn-small primary" href="https://digiy-hub.digiylyfe.com/">🧭 HUB DIGIY</a>
           <a class="btn-small" href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer">📦 Tarifs</a>
-          <a class="btn-small" id="btnJoinBottom" href="https://commencer-a-payer.digiylyfe.com/">📌 Poser ma fiche</a>
+          <a class="btn-small" id="btnJoinBottom" href="https://vas-chez-digiy.digiylyfe.com/">📌 Ma fiche</a>
         </div>
       </div>
     </section>
@@ -348,7 +348,7 @@
       <a href="https://digiy-hub.digiylyfe.com/"><span class="ico">🧭</span><span>HUB</span></a>
       <a href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer"><span class="ico">📦</span><span>Tarifs</span></a>
       <a class="active" href="#gridLive"><span class="ico">📅</span><span>Réserver</span></a>
-      <a id="bottomJoin" href="https://commencer-a-payer.digiylyfe.com/"><span class="ico">📌</span><span>Ma fiche</span></a>
+      <a id="bottomJoin" href="https://vas-chez-digiy.digiylyfe.com/"><span class="ico">📌</span><span>Ma fiche</span></a>
     </div>
   </nav>
 
@@ -363,7 +363,7 @@
 
       const FALLBACK_PHOTO = "https://digiylyfe.net/wp-content/uploads/2026/03/digiylyfe_logo_qr.jpeg";
       const HUB_URL = "https://digiy-hub.digiylyfe.com/";
-      const JOIN_MODULE_URL = "https://commencer-a-payer.digiylyfe.com/";
+      const JOIN_MODULE_URL = "https://vas-chez-digiy.digiylyfe.com/";
       const SITE_URL = "https://digiylyfe.com/";
       const PUBLIC_BASE = "https://resa-table-resto.digiylyfe.com/";
 
@@ -487,12 +487,7 @@
       }
 
       function buildJoinUrl(){
-        const u = new URL(JOIN_MODULE_URL);
-        u.searchParams.set("module","RESA");
-        u.searchParams.set("base_module","RESA");
-        u.searchParams.set("plan","standard");
-        u.searchParams.set("from","resa-saly-public");
-        return u.toString();
+        return JOIN_MODULE_URL;
       }
 
       function sanitizePublicUrl(raw){
