@@ -1,13 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <title>DIGIY RESA — Fiche multi business</title>
+  <title>DIGIY RESA — Fiche vivante</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <!-- ━━━ AVANT : "double rail clair" → banni ━━━ -->
   <meta
     name="description"
-    content="Fiche publique commerce DIGIY RESA — fiche réelle ou vitrine d'inspiration."
+    content="Fiche publique DIGIY RESA — découvrir une activité, comprendre l’ambiance et choisir le bon moment."
   />
   <meta name="theme-color" content="#061b14" />
 
@@ -28,62 +27,63 @@
       --ink:#F4FFF8;--muted:#CFE9D7;--line:rgba(148,163,184,.18);
       --gold:#facc15;--green:#22c55e;--orange:#f97316;--blue:#60a5fa;
       --shadow:0 18px 55px rgba(0,0,0,.42);--radius:24px;
-      /* ━━━ AVANT : system-ui seul → Outfit ━━━ */
       --fontA:"Outfit",system-ui,-apple-system,sans-serif;
     }
-    *{box-sizing:border-box;margin:0;padding:0;font-family:var(--fontA);}
-    body{min-height:100vh;background:radial-gradient(circle at top, rgba(250,204,21,.10) 0, transparent 55%),radial-gradient(circle at 18% 10%, rgba(34,197,94,.10) 0, transparent 55%),radial-gradient(circle at 85% 12%, rgba(96,165,250,.08) 0, transparent 45%),radial-gradient(circle at top,#0b2218 0,#061b14 50%,#04110d 100%);color:var(--ink);}
-    a{color:inherit;text-decoration:none;}
-    .page{max-width:1040px;margin:0 auto;padding:16px 14px 42px;}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0 14px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:14px;flex-wrap:wrap;}
-    .nav-left{display:flex;align-items:center;gap:12px;min-width:0;}
-    .logo-badge{width:42px;height:42px;border-radius:16px;background:radial-gradient(circle at 30% 20%,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;color:#04110d;font-weight:1000;font-size:18px;box-shadow:0 10px 26px rgba(250,204,21,0.40);flex:0 0 auto;}
-    .logo-title{font-size:16px;font-weight:950;letter-spacing:.10em;text-transform:uppercase;line-height:1.1;}
-    .logo-sub{font-size:12px;color:var(--muted);font-weight:850;margin-top:2px;}
-    .nav-right{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
-    .pill{border-radius:999px;padding:8px 12px;font-size:12px;font-weight:950;border:1px solid rgba(203,213,225,0.35);color:rgba(234,255,241,.92);display:inline-flex;align-items:center;gap:8px;background:rgba(2,6,23,.22);}
-    .pill .dot{width:8px;height:8px;border-radius:999px;background:var(--green);box-shadow:0 0 0 4px rgba(34,197,94,.12);}
-    .btn-small{border-radius:999px;padding:10px 14px;font-size:13px;font-weight:950;border:1px solid rgba(203,213,225,0.32);background:rgba(15,23,42,0.32);color:var(--ink);display:inline-flex;align-items:center;gap:8px;white-space:nowrap;line-height:1;}
-    .btn-small.primary{border:none;background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;box-shadow:0 10px 26px rgba(250,204,21,0.35);}
-    .hero{border-radius:var(--radius);border:1px solid rgba(255,255,255,.10);background:var(--card);box-shadow:var(--shadow);overflow:hidden;position:relative;}
-    .hero::before{content:"";position:absolute;inset:-1px;background:radial-gradient(720px 380px at 15% -10%, rgba(34,197,94,.16), transparent 60%),radial-gradient(620px 340px at 110% 0%, rgba(250,204,21,.12), transparent 60%),radial-gradient(520px 260px at 55% 8%, rgba(96,165,250,.08), transparent 55%);pointer-events:none;}
-    .photo{position:relative;width:100%;height:360px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.08);background:#091711;}
-    .photo img{width:100%;height:100%;object-fit:cover;display:block;}
-    .photo-fallback{width:100%;height:100%;display:grid;place-items:center;font-size:56px;font-weight:1000;color:#fff;background:radial-gradient(circle at 30% 20%, rgba(250,204,21,.18), transparent 30%),radial-gradient(circle at 75% 15%, rgba(34,197,94,.14), transparent 28%),linear-gradient(180deg, #111827, #0b1120);}
-    .badgeTop{position:absolute;top:12px;left:12px;display:flex;gap:8px;flex-wrap:wrap;max-width:calc(100% - 24px);z-index:2;}
-    .chip{border-radius:999px;padding:6px 10px;font-size:11px;font-weight:1000;border:1px solid rgba(255,255,255,.14);background:rgba(2,6,23,.58);color:rgba(234,255,241,.92);display:inline-flex;align-items:center;gap:6px;backdrop-filter:blur(6px);}
-    .chip.gold{border-color:rgba(250,204,21,.30);}.chip.green{border-color:rgba(34,197,94,.30);}.chip.blue{border-color:rgba(96,165,250,.30);}
-    .heroBody{position:relative;z-index:1;padding:18px;display:grid;gap:16px;}
-    h1{font-size:clamp(30px,4vw,42px);line-height:1.08;font-weight:1000;color:var(--gold);letter-spacing:-.02em;}
-    .meta{display:flex;flex-wrap:wrap;gap:10px;color:var(--muted);font-size:14px;font-weight:850;}
-    .meta span{display:inline-flex;align-items:center;gap:6px;}
-    .heroIntro{color:rgba(234,255,241,.95);font-size:15px;line-height:1.7;font-weight:850;max-width:76ch;}
-    .tags{display:flex;flex-wrap:wrap;gap:8px;}
-    .tag{border-radius:999px;padding:7px 11px;border:1px solid rgba(203,213,225,0.22);color:var(--muted);background:rgba(2,6,23,.35);font-size:11px;font-weight:950;}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;}
-    .btn{flex:1;min-width:180px;border-radius:999px;padding:14px 16px;font-size:14px;font-weight:1000;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;line-height:1;white-space:nowrap;border:0;cursor:pointer;}
-    .btn.primary{background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;box-shadow:0 10px 24px rgba(250,204,21,0.30);}
-    .btn.secondary{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.30);color:#bbf7d0;}
-    .btn.ghost{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--ink);}
-    .contentGrid{margin-top:14px;display:grid;grid-template-columns:1.05fr .95fr;gap:14px;}
-    @media(max-width:860px){.contentGrid{grid-template-columns:1fr;}.photo{height:290px;}}
-    .panel{border-radius:22px;border:1px solid rgba(255,255,255,.10);background:var(--card);box-shadow:var(--shadow);overflow:hidden;}
-    .panelHead{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
-    .panelHead h2{font-size:18px;font-weight:1000;letter-spacing:-.01em;}
-    .panelBody{padding:16px;display:grid;gap:14px;}
-    .muted{color:var(--muted);font-weight:850;line-height:1.65;font-size:14px;}
-    .infoList{display:grid;gap:10px;}
-    .infoItem{border-radius:16px;border:1px solid var(--line);background:var(--card-2);padding:12px;}
-    .infoK{font-size:12px;color:var(--muted);font-weight:900;margin-bottom:5px;}
-    .infoV{font-size:14px;color:var(--ink);font-weight:950;line-height:1.5;}
-    .servicesGrid{display:grid;gap:10px;}
-    .serviceCard{border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(2,6,23,.28);padding:12px;display:grid;gap:8px;}
-    .serviceTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap;}
-    .serviceName{font-size:15px;font-weight:1000;color:var(--gold);line-height:1.2;}
-    .serviceMeta{display:flex;gap:8px;flex-wrap:wrap;}
-    .serviceChip{border-radius:999px;padding:6px 10px;font-size:11px;font-weight:1000;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--muted);}
-    .status{margin-top:14px;border-radius:16px;border:1px solid rgba(203,213,225,.14);background:rgba(2,6,23,.45);padding:12px 12px;font-size:13px;font-weight:900;color:var(--muted);white-space:pre-wrap;line-height:1.5;}
-    .footer{margin-top:22px;border-top:1px solid rgba(255,255,255,.08);padding-top:14px;font-size:12px;color:var(--muted);text-align:center;font-weight:850;line-height:1.5;}
+    *{box-sizing:border-box;margin:0;padding:0;font-family:var(--fontA)}
+    body{min-height:100vh;background:radial-gradient(circle at top, rgba(250,204,21,.10) 0, transparent 55%),radial-gradient(circle at 18% 10%, rgba(34,197,94,.10) 0, transparent 55%),radial-gradient(circle at 85% 12%, rgba(96,165,250,.08) 0, transparent 45%),radial-gradient(circle at top,#0b2218 0,#061b14 50%,#04110d 100%);color:var(--ink)}
+    a{color:inherit;text-decoration:none}
+    .page{max-width:1040px;margin:0 auto;padding:16px 14px 42px}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0 14px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:14px;flex-wrap:wrap}
+    .nav-left{display:flex;align-items:center;gap:12px;min-width:0}
+    .logo-badge{width:42px;height:42px;border-radius:16px;background:radial-gradient(circle at 30% 20%,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;color:#04110d;font-weight:1000;font-size:18px;box-shadow:0 10px 26px rgba(250,204,21,.40);flex:0 0 auto}
+    .logo-title{font-size:16px;font-weight:950;letter-spacing:.10em;text-transform:uppercase;line-height:1.1}
+    .logo-sub{font-size:12px;color:var(--muted);font-weight:850;margin-top:2px}
+    .nav-right{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .pill{border-radius:999px;padding:8px 12px;font-size:12px;font-weight:950;border:1px solid rgba(203,213,225,.35);color:rgba(234,255,241,.92);display:inline-flex;align-items:center;gap:8px;background:rgba(2,6,23,.22)}
+    .pill .dot{width:8px;height:8px;border-radius:999px;background:var(--green);box-shadow:0 0 0 4px rgba(34,197,94,.12)}
+    .btn-small{border-radius:999px;padding:10px 14px;font-size:13px;font-weight:950;border:1px solid rgba(203,213,225,.32);background:rgba(15,23,42,.32);color:var(--ink);display:inline-flex;align-items:center;gap:8px;white-space:nowrap;line-height:1}
+    .btn-small.primary{border:none;background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;box-shadow:0 10px 26px rgba(250,204,21,.35)}
+    .hero{border-radius:var(--radius);border:1px solid rgba(255,255,255,.10);background:var(--card);box-shadow:var(--shadow);overflow:hidden;position:relative}
+    .hero::before{content:"";position:absolute;inset:-1px;background:radial-gradient(720px 380px at 15% -10%, rgba(34,197,94,.16), transparent 60%),radial-gradient(620px 340px at 110% 0%, rgba(250,204,21,.12), transparent 60%),radial-gradient(520px 260px at 55% 8%, rgba(96,165,250,.08), transparent 55%);pointer-events:none}
+    .photo{position:relative;width:100%;height:360px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.08);background:#091711}
+    .photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .photo-fallback{width:100%;height:100%;display:grid;place-items:center;font-size:56px;font-weight:1000;color:#fff;background:radial-gradient(circle at 30% 20%, rgba(250,204,21,.18), transparent 30%),radial-gradient(circle at 75% 15%, rgba(34,197,94,.14), transparent 28%),linear-gradient(180deg,#111827,#0b1120)}
+    .badgeTop{position:absolute;top:12px;left:12px;display:flex;gap:8px;flex-wrap:wrap;max-width:calc(100% - 24px);z-index:2}
+    .chip{border-radius:999px;padding:6px 10px;font-size:11px;font-weight:1000;border:1px solid rgba(255,255,255,.14);background:rgba(2,6,23,.58);color:rgba(234,255,241,.92);display:inline-flex;align-items:center;gap:6px;backdrop-filter:blur(6px)}
+    .chip.gold{border-color:rgba(250,204,21,.30)}
+    .chip.green{border-color:rgba(34,197,94,.30)}
+    .chip.blue{border-color:rgba(96,165,250,.30)}
+    .heroBody{position:relative;z-index:1;padding:18px;display:grid;gap:16px}
+    h1{font-size:clamp(30px,4vw,42px);line-height:1.08;font-weight:1000;color:var(--gold);letter-spacing:-.02em}
+    .meta{display:flex;flex-wrap:wrap;gap:10px;color:var(--muted);font-size:14px;font-weight:850}
+    .meta span{display:inline-flex;align-items:center;gap:6px}
+    .heroIntro{color:rgba(234,255,241,.95);font-size:15px;line-height:1.7;font-weight:850;max-width:76ch}
+    .tags{display:flex;flex-wrap:wrap;gap:8px}
+    .tag{border-radius:999px;padding:7px 11px;border:1px solid rgba(203,213,225,.22);color:var(--muted);background:rgba(2,6,23,.35);font-size:11px;font-weight:950}
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{flex:1;min-width:180px;border-radius:999px;padding:14px 16px;font-size:14px;font-weight:1000;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;line-height:1;white-space:nowrap;border:0;cursor:pointer}
+    .btn.primary{background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;box-shadow:0 10px 24px rgba(250,204,21,.30)}
+    .btn.secondary{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.30);color:#bbf7d0}
+    .btn.ghost{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--ink)}
+    .contentGrid{margin-top:14px;display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
+    @media(max-width:860px){.contentGrid{grid-template-columns:1fr}.photo{height:290px}}
+    .panel{border-radius:22px;border:1px solid rgba(255,255,255,.10);background:var(--card);box-shadow:var(--shadow);overflow:hidden}
+    .panelHead{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .panelHead h2{font-size:18px;font-weight:1000;letter-spacing:-.01em}
+    .panelBody{padding:16px;display:grid;gap:14px}
+    .muted{color:var(--muted);font-weight:850;line-height:1.65;font-size:14px}
+    .infoList{display:grid;gap:10px}
+    .infoItem{border-radius:16px;border:1px solid var(--line);background:var(--card-2);padding:12px}
+    .infoK{font-size:12px;color:var(--muted);font-weight:900;margin-bottom:5px}
+    .infoV{font-size:14px;color:var(--ink);font-weight:950;line-height:1.5}
+    .servicesGrid{display:grid;gap:10px}
+    .serviceCard{border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(2,6,23,.28);padding:12px;display:grid;gap:8px}
+    .serviceTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
+    .serviceName{font-size:15px;font-weight:1000;color:var(--gold);line-height:1.2}
+    .serviceMeta{display:flex;gap:8px;flex-wrap:wrap}
+    .serviceChip{border-radius:999px;padding:6px 10px;font-size:11px;font-weight:1000;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--muted)}
+    .status{margin-top:14px;border-radius:16px;border:1px solid rgba(203,213,225,.14);background:rgba(2,6,23,.45);padding:12px;font-size:13px;font-weight:900;color:var(--muted);white-space:pre-wrap;line-height:1.5}
+    .footer{margin-top:22px;border-top:1px solid rgba(255,255,255,.08);padding-top:14px;font-size:12px;color:var(--muted);text-align:center;font-weight:850;line-height:1.5}
   </style>
 </head>
 <body>
@@ -93,12 +93,13 @@
         <div class="logo-badge">📅</div>
         <div>
           <div class="logo-title">DIGIY RESA</div>
-          <div class="logo-sub">Fiche publique multi business • LIVE + VITRINE</div>
+          <div class="logo-sub">Fiche publique vivante · client d’abord</div>
         </div>
       </div>
       <div class="nav-right">
         <div class="pill"><span class="dot"></span> Lecture simple</div>
         <a class="btn-small" href="./index.html">← Retour vitrine</a>
+        <a class="btn-small primary" id="navCustomFiche" href="https://vas-chez-digiy.digiylyfe.com/" target="_blank" rel="noopener">🌍 Fiche vivante</a>
       </div>
     </header>
 
@@ -116,20 +117,20 @@
             <div class="infoItem"><div class="infoK">Ville</div><div class="infoV" id="cityInfo">—</div></div>
             <div class="infoItem"><div class="infoK">Adresse / zone</div><div class="infoV" id="addressInfo">—</div></div>
             <div class="infoItem"><div class="infoK">Horaires</div><div class="infoV" id="hoursInfo">—</div></div>
-            <div class="infoItem"><div class="infoK">Contact</div><div class="infoV" id="contactInfo">—</div></div>
+            <div class="infoItem"><div class="infoK">Contact</div><div class="infoV" id="contactInfo">Côté fiche vivante contrôlée</div></div>
           </div>
         </div>
       </section>
 
       <section class="panel" id="reserver">
         <div class="panelHead">
-          <h2>Réserver / contacter</h2>
+          <h2>Réserver / avancer</h2>
           <span class="muted">Parcours court terrain</span>
         </div>
         <div class="panelBody">
           <div class="muted" id="reserveText">Chargement…</div>
           <div class="infoList">
-            <div class="infoItem"><div class="infoK">Canal principal</div><div class="infoV" id="channelInfo">Formulaire DIGIY RESA</div></div>
+            <div class="infoItem"><div class="infoK">Canal principal</div><div class="infoV" id="channelInfo">Fiche client DIGIY RESA</div></div>
             <div class="infoItem"><div class="infoK">Réponse</div><div class="infoV">Manuelle, humaine, rapide</div></div>
             <div class="infoItem"><div class="infoK">Usage</div><div class="infoV" id="usageInfo">Réservation simple</div></div>
           </div>
@@ -153,7 +154,7 @@
     <div class="status" id="statusText">Chargement de la fiche…</div>
 
     <footer class="footer">
-      DIGIY RESA • Fiche publique • Multi business • LIVE + VITRINE ∞
+      DIGIY RESA • Fiche publique • Le pro devant, DIGIY derrière ∞
     </footer>
   </div>
 
@@ -161,14 +162,14 @@
     (() => {
       "use strict";
 
-      const FALLBACK_PHOTO = "https://orange-pig-270004.hostingersite.com/wp-content/uploads/2026/03/chatgpt-image-4-mars-2026-23_40_53.png";
-      const SUPPORT_WA = "221771342889";
+      const OFFICIAL_FICHE_URL = "https://vas-chez-digiy.digiylyfe.com/";
+      const PUBLIC_BASE_URL = "https://resa-table-resto.digiylyfe.com/";
+      const FALLBACK_PHOTO = "https://digiylyfe.net/wp-content/uploads/2026/03/digiylyfe_logo_qr.jpeg";
       const SUPABASE_URL = window.DIGIY_SUPABASE_URL;
       const SUPABASE_ANON_KEY = window.DIGIY_SUPABASE_ANON_KEY || window.DIGIY_SUPABASE_ANON;
 
       let sb = null;
 
-      /* ━━━ DEMO_MAP PRÉSERVÉE INTACTE ━━━ */
       const DEMO_MAP = {
         "atelier-brushing-saly": {
           display_name:"Atelier Brushing Saly",business_type:"Coiffure",city:"Saly",
@@ -176,7 +177,7 @@
           bio:"Coupe, brushing, teinture et soins. Une fiche pensée pour découvrir l'ambiance puis demander un créneau simplement.",
           badge:"✨ VITRINE DIGIY",hub_badge:"💇 BEAUTÉ",opening_hours_text:"09:00 - 19:00",
           photo_url:"https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80",
-          tags:["Coiffure","Brushing","Teinture","Saly"],whatsapp:SUPPORT_WA,slug:"",
+          tags:["Coiffure","Brushing","Teinture","Saly"],
           services:[{service_name:"Coupe homme",duration_minutes:20,price_fcfa:3000},{service_name:"Brushing",duration_minutes:45,price_fcfa:6000},{service_name:"Teinture",duration_minutes:90,price_fcfa:15000}]
         },
         "garage-diagnostic-saly": {
@@ -185,7 +186,7 @@
           bio:"Diagnostic, vidange, freins et petites interventions avec une lecture claire des besoins avant contact.",
           badge:"✨ VITRINE DIGIY",hub_badge:"🔧 GARAGE",opening_hours_text:"08:00 - 18:00",
           photo_url:"https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=1200&q=80",
-          tags:["Garage","Diagnostic","Vidange","Saly"],whatsapp:SUPPORT_WA,slug:"",
+          tags:["Garage","Diagnostic","Vidange","Saly"],
           services:[{service_name:"Diagnostic",duration_minutes:15,price_fcfa:5000},{service_name:"Vidange",duration_minutes:30,price_fcfa:10000},{service_name:"Freins",duration_minutes:60,price_fcfa:20000}]
         },
         "terrasse-saveurs-saly": {
@@ -194,7 +195,7 @@
           bio:"Une table d'ambiance pour déjeuner tranquille, dîner simple ou recevoir des amis dans un cadre détendu.",
           badge:"✨ VITRINE DIGIY",hub_badge:"🍽️ RESTAURANT",opening_hours_text:"12:00 - 23:00",
           photo_url:"https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
-          tags:["Restaurant","Terrasse","Déjeuner","Saly"],whatsapp:SUPPORT_WA,slug:"",
+          tags:["Restaurant","Terrasse","Déjeuner","Saly"],
           services:[{service_name:"Table midi",duration_minutes:60,price_fcfa:null},{service_name:"Table soirée",duration_minutes:90,price_fcfa:null}]
         },
         "studio-onglerie-saly": {
@@ -203,7 +204,7 @@
           bio:"Pose, entretien, manucure et rendez-vous beauté avec lecture simple pour se projeter.",
           badge:"✨ VITRINE DIGIY",hub_badge:"💅 BEAUTÉ",opening_hours_text:"10:00 - 19:00",
           photo_url:"https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=80",
-          tags:["Beauté","Onglerie","Soin","Saly"],whatsapp:SUPPORT_WA,slug:"",
+          tags:["Beauté","Onglerie","Soin","Saly"],
           services:[{service_name:"Pose",duration_minutes:60,price_fcfa:10000},{service_name:"Entretien",duration_minutes:45,price_fcfa:7000}]
         },
         "cabinet-conseil-saly": {
@@ -212,7 +213,7 @@
           bio:"Consultations, échanges posés et rendez-vous organisés sur des créneaux nets pour éviter les confusions.",
           badge:"✨ VITRINE DIGIY",hub_badge:"🩺 CONSULTATION",opening_hours_text:"09:00 - 17:00",
           photo_url:"https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
-          tags:["Consultation","Conseil","Bureau","Saly"],whatsapp:SUPPORT_WA,slug:"",
+          tags:["Consultation","Conseil","Bureau","Saly"],
           services:[{service_name:"Consultation simple",duration_minutes:30,price_fcfa:10000},{service_name:"Consultation longue",duration_minutes:60,price_fcfa:20000}]
         },
         "atelier-service-saly": {
@@ -221,216 +222,324 @@
           bio:"Un atelier pensé pour les rendez-vous techniques, petits dépannages et services du quotidien avec lecture claire.",
           badge:"✨ VITRINE DIGIY",hub_badge:"🛠️ ATELIER",opening_hours_text:"08:30 - 18:30",
           photo_url:"https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
-          tags:["Atelier","Service","Quartier","Saly"],whatsapp:SUPPORT_WA,slug:"",
+          tags:["Atelier","Service","Quartier","Saly"],
           services:[{service_name:"Diagnostic atelier",duration_minutes:30,price_fcfa:5000},{service_name:"Intervention",duration_minutes:60,price_fcfa:12000}]
         }
       };
 
       function initSupabase(){
-        if(!window.supabase||typeof window.supabase.createClient!=="function")return null;
-        if(window.DIGIY_SB)return window.DIGIY_SB;
-        window.DIGIY_SB=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false,storage:{getItem:()=>null,setItem:()=>{},removeItem:()=>{}}}});
+        if(!window.supabase || typeof window.supabase.createClient !== "function") return null;
+        if(window.DIGIY_SB) return window.DIGIY_SB;
+
+        window.DIGIY_SB = window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{
+          auth:{
+            persistSession:false,
+            autoRefreshToken:false,
+            detectSessionInUrl:false,
+            storage:{getItem:()=>null,setItem:()=>{},removeItem:()=>{}}
+          }
+        });
+
         return window.DIGIY_SB;
       }
 
-      function esc(s){ return String(s??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
-      function qs(name){ return new URL(location.href).searchParams.get(name)||""; } // parsing — sûr
-      function first(...vals){ for(const v of vals){ if(v!==null&&v!==undefined&&String(v).trim()!=="")return v; } return ""; }
-      function normalizePhone(v){ return String(v||"").replace(/[^\d]/g,""); }
-      function normalizeSlug(v){ return String(v||"").trim().toLowerCase().replace(/\s+/g,"-").replace(/[^a-z0-9-]/g,"").replace(/-+/g,"-").replace(/^-|-$/g,""); }
-      function money(v){ const n=Number(v); if(!Number.isFinite(n))return ""; return `${n.toLocaleString("fr-FR")} FCFA`; }
-      function tagsToArray(tags){ if(Array.isArray(tags))return tags.filter(Boolean).map(String); const s=String(tags||"").trim(); if(!s)return []; return s.split(",").map(x=>x.trim()).filter(Boolean); }
-      function safeJsonParse(value){ try{ return typeof value==="string"?JSON.parse(value):value; }catch{ return null; } }
-
-      function buildReserveHref(slug,demo){
-        if(slug)return `./reserver.html?slug=${encodeURIComponent(slug)}`;
-        if(demo)return `https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Bonjour, je souhaite demander un créneau via DIGIY RESA.")}`;
-        return "./index.html";
+      function esc(s){
+        return String(s ?? "")
+          .replaceAll("&","&amp;")
+          .replaceAll("<","&lt;")
+          .replaceAll(">","&gt;")
+          .replaceAll('"',"&quot;")
+          .replaceAll("'","&#039;");
       }
 
-      function buildWhatsAppHref(phone,displayName){
-        const clean=normalizePhone(phone||SUPPORT_WA);
-        const msg=`Bonjour ${displayName||""}, je vous contacte via votre fiche DIGIY RESA.`;
-        return "https://wa.me/"+clean+"?text="+encodeURIComponent(msg);
+      function qs(name){ return new URL(location.href).searchParams.get(name) || ""; }
+
+      function cleanVisibleUrl(){
+        try{
+          const u = new URL(location.href);
+          ["phone","tel","resa_"+"tel","owner_"+"phone","owner_id","business_"+"code","keybox_"+"code","keybox_"+"location","access_"+"note","module","from"].forEach(k => u.searchParams.delete(k));
+          history.replaceState({}, document.title, u.pathname + u.search + u.hash);
+        }catch(_){}
       }
 
-      function mapLiveRow(profile){
+      function first(...vals){
+        for(const v of vals){
+          if(v !== null && v !== undefined && String(v).trim() !== "") return v;
+        }
+        return "";
+      }
+
+      function normalizeKey(v){
+        return String(v || "")
+          .trim()
+          .toLowerCase()
+          .replace(/\s+/g,"-")
+          .replace(/[^a-z0-9-]/g,"")
+          .replace(/-+/g,"-")
+          .replace(/^-|-$/g,"");
+      }
+
+      function safePublicUrl(raw){
+        const v = String(raw || "").trim();
+        if(!/^https:\/\/[a-z0-9.-]+/i.test(v)) return "";
+
+        try{
+          const u = new URL(v);
+          ["phone","tel","resa_"+"tel","owner_"+"phone","owner_id","business_"+"code","keybox_"+"code","keybox_"+"location","access_"+"note","module","from"].forEach(k => u.searchParams.delete(k));
+          return u.toString();
+        }catch(_){
+          return "";
+        }
+      }
+
+      function publicFicheUrl(profile){
+        return safePublicUrl(first(
+          profile?.public_url,
+          profile?.profile_url,
+          profile?.fiche_url,
+          profile?.page_url,
+          OFFICIAL_FICHE_URL
+        )) || OFFICIAL_FICHE_URL;
+      }
+
+      function isSafePublicKey(v){
+        const s = String(v || "").trim();
+        if(!s || /\d{6,}/.test(s)) return false;
+        return /^[a-z0-9-]{3,80}$/i.test(s);
+      }
+
+      function publicReserveUrl(profile, fallbackKey){
+        const direct = safePublicUrl(first(profile?.reservation_url,profile?.booking_url));
+        if(direct) return direct;
+
+        if(isSafePublicKey(fallbackKey)){
+          const u = new URL("reserver.html",PUBLIC_BASE_URL);
+          u.searchParams.set("slug",fallbackKey);
+          return u.toString();
+        }
+
+        return publicFicheUrl(profile);
+      }
+
+      function money(v){
+        const n = Number(v);
+        if(!Number.isFinite(n)) return "";
+        return `${n.toLocaleString("fr-FR")} FCFA`;
+      }
+
+      function tagsToArray(tags){
+        if(Array.isArray(tags)) return tags.filter(Boolean).map(String);
+        const s = String(tags || "").trim();
+        if(!s) return [];
+        return s.split(",").map(x => x.trim()).filter(Boolean);
+      }
+
+      function safeJsonParse(value){
+        try{ return typeof value === "string" ? JSON.parse(value) : value; }catch{ return null; }
+      }
+
+      function mapLiveRow(profile, fallbackKey){
         return {
-          display_name:first(profile?.display_name,profile?.business_name,profile?.name,profile?.establishment_name)||"Commerce",
-          business_type:first(profile?.business_type,profile?.category,profile?.type_label)||"Service local",
-          city:first(profile?.city)||"Saly",
-          address_text:first(profile?.address_text,profile?.address,profile?.location_text)||"",
-          bio:first(profile?.bio,profile?.description,profile?.about,profile?.short_description)||"Fiche publique DIGIY RESA.",
-          badge:"🟢 FICHE RÉELLE",hub_badge:"DIGIY RESA",
-          opening_hours_text:first(profile?.opening_hours_text,profile?.open_hours,profile?.opening_hours)||"",
-          photo_url:first(profile?.cover_url,profile?.cover_image_url,profile?.logo_url,profile?.image_url,profile?.photo_url)||"",
-          tags:[first(profile?.business_type,profile?.category,profile?.type_label)||"",first(profile?.city)||"",first(profile?.opening_hours_text,profile?.open_hours,profile?.opening_hours)?`Horaires: ${first(profile?.opening_hours_text,profile?.open_hours,profile?.opening_hours)}`:""].filter(Boolean),
-          whatsapp:normalizePhone(first(profile?.whatsapp,profile?.whatsapp_phone,profile?.phone)||SUPPORT_WA),
-          slug:normalizeSlug(first(profile?.slug)||"")
+          display_name:first(profile?.display_name,profile?.business_name,profile?.name,profile?.establishment_name) || "Activité",
+          business_type:first(profile?.business_type,profile?.category,profile?.type_label) || "Service local",
+          city:first(profile?.city) || "Saly",
+          address_text:first(profile?.address_text,profile?.address,profile?.location_text) || "",
+          bio:first(profile?.bio,profile?.description,profile?.about,profile?.short_description) || "Fiche publique DIGIY RESA.",
+          badge:"🟢 FICHE RÉELLE",
+          hub_badge:"DIGIY RESA",
+          opening_hours_text:first(profile?.opening_hours_text,profile?.open_hours,profile?.opening_hours) || "",
+          photo_url:first(profile?.cover_url,profile?.cover_image_url,profile?.logo_url,profile?.image_url,profile?.photo_url) || "",
+          tags:[
+            first(profile?.business_type,profile?.category,profile?.type_label) || "",
+            first(profile?.city) || "",
+            first(profile?.opening_hours_text,profile?.open_hours,profile?.opening_hours) ? `Horaires: ${first(profile?.opening_hours_text,profile?.open_hours,profile?.opening_hours)}` : ""
+          ].filter(Boolean),
+          public_url:publicFicheUrl(profile),
+          reservation_url:publicReserveUrl(profile,fallbackKey),
+          raw_key:normalizeKey(fallbackKey || first(profile?.slug) || "")
         };
       }
 
       async function loadServices(slug){
-        if(!slug||!sb)return [];
+        if(!slug || !sb) return [];
+
         try{
-          const{data,error}=await sb.from("digiy_resa_services").select("id,service_name,duration_minutes,price_fcfa,is_active").eq("slug",slug).eq("is_active",true).order("service_name",{ascending:true});
-          if(error)throw error;
-          return Array.isArray(data)?data:[];
-        }catch(e){console.error(e);return [];}
+          const {data,error} = await sb
+            .from("digiy_resa_services")
+            .select("id,service_name,duration_minutes,price_fcfa,is_active")
+            .eq("slug",slug)
+            .eq("is_active",true)
+            .order("service_name",{ascending:true});
+
+          if(error) throw error;
+          return Array.isArray(data) ? data : [];
+        }catch(e){
+          console.error(e);
+          return [];
+        }
       }
 
-      async function loadPublicProfileBySlug(slug){
-        if(!slug||!sb)return null;
+      async function loadPublicProfileByKey(slug){
+        if(!slug || !sb) return null;
+
         try{
-          const{data,error}=await sb.rpc("resa_public_profile_by_slug",{p_slug:slug});
-          if(error)throw error;
-          const parsed=safeJsonParse(data)||data||{};
-          if(!parsed?.ok)return null;
-          return parsed.profile||null;
-        }catch(e){console.error(e);return null;}
+          const {data,error} = await sb.rpc("resa_public_profile_by_slug",{p_slug:slug});
+          if(error) throw error;
+
+          const parsed = safeJsonParse(data) || data || {};
+          if(!parsed?.ok) return null;
+
+          return parsed.profile || null;
+        }catch(e){
+          console.error(e);
+          return null;
+        }
       }
 
       function renderServices(services,businessType){
-        const box=document.getElementById("servicesBox");
-        if(!Array.isArray(services)||!services.length){
-          box.innerHTML=`<div class="muted">Aucun service détaillé pour l'instant. Le client peut passer par le bouton principal ou WhatsApp pour préciser son besoin.</div>`;
+        const box = document.getElementById("servicesBox");
+
+        if(!Array.isArray(services) || !services.length){
+          box.innerHTML = `<div class="muted">Aucun service détaillé pour l'instant. La fiche vivante reste la porte principale pour comprendre et avancer.</div>`;
           return;
         }
-        box.innerHTML=services.map(s=>`
+
+        box.innerHTML = services.map(s => `
           <article class="serviceCard">
             <div class="serviceTop">
-              <div class="serviceName">${esc(s.service_name||"Service")}</div>
+              <div class="serviceName">${esc(s.service_name || "Service")}</div>
               <div class="serviceMeta">
-                ${s.duration_minutes?`<span class="serviceChip">⏱️ ${esc(String(s.duration_minutes))} min</span>`:""}
-                ${money(s.price_fcfa)?`<span class="serviceChip">💰 ${esc(money(s.price_fcfa))}</span>`:""}
+                ${s.duration_minutes ? `<span class="serviceChip">⏱️ ${esc(String(s.duration_minutes))} min</span>` : ""}
+                ${money(s.price_fcfa) ? `<span class="serviceChip">💰 ${esc(money(s.price_fcfa))}</span>` : ""}
               </div>
             </div>
-            <div class="muted">${businessType?`Prestation ${esc(String(businessType).toLowerCase())} disponible sur demande.`:"Prestation disponible sur demande."}</div>
-          </article>`).join("");
+            <div class="muted">${businessType ? `Prestation ${esc(String(businessType).toLowerCase())} disponible sur demande.` : "Prestation disponible sur demande."}</div>
+          </article>
+        `).join("");
       }
 
-      function renderCard(item, opts={}){
-        const hero=document.getElementById("hero");
-        const bottom=document.getElementById("bottomActions");
-        const status=document.getElementById("statusText");
-        const ambiance=document.getElementById("ambianceText");
-        const reserveText=document.getElementById("reserveText");
+      function renderCard(item, opts = {}){
+        const hero = document.getElementById("hero");
+        const bottom = document.getElementById("bottomActions");
+        const status = document.getElementById("statusText");
+        const ambiance = document.getElementById("ambianceText");
+        const reserveText = document.getElementById("reserveText");
+        const customTop = document.getElementById("navCustomFiche");
 
-        const photoBase=item.photo_url||FALLBACK_PHOTO;
-        const photo=photoBase+(photoBase.includes("?")?"&":"?")+"v=14";
-        const phone=normalizePhone(item.whatsapp||SUPPORT_WA);
-        const businessType=item.business_type||"service local";
-        const reserveHref=buildReserveHref(item.slug||"",opts.demoId||"");
-        const waHref=buildWhatsAppHref(phone,item.display_name||"");
-        const isLive=!!item.slug;
+        const photoBase = item.photo_url || FALLBACK_PHOTO;
+        const photo = photoBase + (photoBase.includes("?") ? "&" : "?") + "v=15";
+        const businessType = item.business_type || "service local";
+        const ficheHref = safePublicUrl(item.public_url) || OFFICIAL_FICHE_URL;
+        const reserveHref = safePublicUrl(item.reservation_url) || ficheHref;
+        const isLive = !!opts.isLive;
 
-        hero.innerHTML=`
+        customTop.href = ficheHref;
+
+        hero.innerHTML = `
           <div class="photo">
             <img src="${esc(photo)}" alt="${esc(item.display_name)}" onerror="this.outerHTML='<div class=&quot;photo-fallback&quot;>📅</div>'" />
             <div class="badgeTop">
-              <span class="chip gold">${esc(item.badge||"📅 DIGIY RESA")}</span>
-              <span class="chip blue">${esc(item.hub_badge||"MULTI BUSINESS")}</span>
-              <!-- ━━━ AVANT : "slug : ${slug}" → "Identifiant : ${slug}" ━━━ -->
-              ${isLive?`<span class="chip green">LIVE • Identifiant : ${esc(item.slug)}</span>`:`<span class="chip">VITRINE</span>`}
+              <span class="chip gold">${esc(item.badge || "📅 DIGIY RESA")}</span>
+              <span class="chip blue">${esc(item.hub_badge || "FICHE VIVANTE")}</span>
+              ${isLive ? `<span class="chip green">Fiche publiée</span>` : `<span class="chip">Vitrine</span>`}
             </div>
           </div>
           <div class="heroBody">
-            <h1>${esc(item.display_name||"Commerce")}</h1>
+            <h1>${esc(item.display_name || "Activité")}</h1>
             <div class="meta">
               <span>🏷️ ${esc(businessType)}</span>
-              <span>📍 ${esc(item.city||"Saly")}${item.address_text?" • "+esc(item.address_text):""}</span>
-              ${item.opening_hours_text?`<span>🕒 ${esc(item.opening_hours_text)}</span>`:""}
+              <span>📍 ${esc(item.city || "Saly")}${item.address_text ? " • " + esc(item.address_text) : ""}</span>
+              ${item.opening_hours_text ? `<span>🕒 ${esc(item.opening_hours_text)}</span>` : ""}
             </div>
-            <div class="heroIntro">${esc(item.bio||"Fiche publique commerce.")}</div>
-            <div class="tags">${tagsToArray(item.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join("")}</div>
+            <div class="heroIntro">${esc(item.bio || "Fiche publique DIGIY RESA.")}</div>
+            <div class="tags">${tagsToArray(item.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
             <div class="actions">
-              <a class="btn primary" href="${esc(reserveHref)}">${isLive?"📅 Ouvrir la réservation":"💬 Demander un créneau"}</a>
-              <a class="btn secondary" href="${esc(waHref)}">💬 WhatsApp direct</a>
+              <a class="btn primary" href="${esc(ficheHref)}" target="_blank" rel="noopener">🌍 Ouvrir la fiche vivante</a>
+              <a class="btn secondary" href="${esc(reserveHref)}" target="_blank" rel="noopener">📅 Choisir un moment</a>
               <a class="btn ghost" href="./index.html">← Retour vitrine</a>
             </div>
           </div>`;
 
-        ambiance.textContent=item.bio||"Fiche publique commerce.";
-        /* ━━━ AVANT : "sur le rail réel" × 2 → bannis ━━━ */
-        reserveText.textContent=isLive
-          ? "Cette fiche est publiée sur la plateforme. Le client peut ouvrir le formulaire DIGIY RESA, choisir un service, une date, une heure, puis envoyer sa demande proprement."
-          : "Cette fiche est une vitrine d'inspiration. Le client peut demander un créneau, poser une question ou confirmer son besoin directement sur WhatsApp.";
+        ambiance.textContent = item.bio || "Fiche publique DIGIY RESA.";
+        reserveText.textContent = isLive
+          ? "Cette fiche est publiée. Le client découvre l’activité, l’ambiance et les services avant de choisir le bon moment."
+          : "Cette fiche est une vitrine d’inspiration. Elle montre l’ambiance sans créer de fausse réservation.";
 
-        document.getElementById("cityInfo").textContent=item.city||"Saly";
-        document.getElementById("addressInfo").textContent=item.address_text||"Adresse à confirmer";
-        document.getElementById("hoursInfo").textContent=item.opening_hours_text||"Horaires à confirmer";
-        document.getElementById("contactInfo").textContent=phone?"+"+phone:"+221"+SUPPORT_WA;
-        document.getElementById("usageInfo").textContent=isLive?`Réservation simple pour ${String(businessType).toLowerCase()}`:`Découverte / prise de contact pour ${String(businessType).toLowerCase()}`;
-        document.getElementById("channelInfo").textContent=isLive?"Formulaire DIGIY RESA + WhatsApp":"WhatsApp direct";
+        document.getElementById("cityInfo").textContent = item.city || "Saly";
+        document.getElementById("addressInfo").textContent = item.address_text || "Adresse à confirmer";
+        document.getElementById("hoursInfo").textContent = item.opening_hours_text || "Horaires à confirmer";
+        document.getElementById("contactInfo").textContent = "Côté fiche vivante contrôlée";
+        document.getElementById("usageInfo").textContent = isLive ? `Réservation simple pour ${String(businessType).toLowerCase()}` : `Découverte pour ${String(businessType).toLowerCase()}`;
+        document.getElementById("channelInfo").textContent = "Fiche client DIGIY RESA";
 
-        bottom.innerHTML=`
-          <a class="btn primary" href="${esc(reserveHref)}">${isLive?"📅 Réserver maintenant":"💬 Demander un créneau"}</a>
-          <a class="btn secondary" href="${esc(waHref)}">💬 Écrire sur WhatsApp</a>
+        bottom.innerHTML = `
+          <a class="btn primary" href="${esc(ficheHref)}" target="_blank" rel="noopener">🌍 Ouvrir la fiche vivante</a>
+          <a class="btn secondary" href="${esc(reserveHref)}" target="_blank" rel="noopener">📅 Choisir un moment</a>
           <a class="btn ghost" href="./index.html">← Retour vitrine</a>`;
 
-        /* ━━━ AVANT : "sur le rail réel" → banni ━━━ */
-        status.textContent=isLive
-          ? "Fiche publique chargée."
+        status.textContent = isLive
+          ? "Fiche publique chargée. Porte personnalisée prioritaire : " + OFFICIAL_FICHE_URL
           : "Fiche vitrine chargée. Ambiance claire, sans fausse réservation.";
       }
 
       function renderFallback(){
-        const waHref="https://wa.me/"+SUPPORT_WA+"?text="+encodeURIComponent("Bonjour, je souhaite des informations sur un commerce via DIGIY RESA.");
+        const item = {
+          display_name:"Fiche DIGIY RESA",
+          business_type:"Service local",
+          city:"Saly",
+          address_text:"Fiche vivante",
+          bio:"Cette fiche personnalisée est la porte publique propre pour présenter l’activité, l’ambiance et le bon moment à choisir.",
+          badge:"📅 DIGIY RESA",
+          hub_badge:"FICHE VIVANTE",
+          opening_hours_text:"",
+          photo_url:FALLBACK_PHOTO,
+          tags:["RESA","Saly","Fiche vivante"],
+          public_url:OFFICIAL_FICHE_URL,
+          reservation_url:OFFICIAL_FICHE_URL
+        };
 
-        document.getElementById("cityInfo").textContent="Saly";
-        document.getElementById("addressInfo").textContent="À confirmer";
-        document.getElementById("hoursInfo").textContent="À confirmer";
-        document.getElementById("contactInfo").textContent="+221"+SUPPORT_WA;
-        document.getElementById("usageInfo").textContent="Réservation simple";
-        document.getElementById("channelInfo").textContent="WhatsApp direct";
-        renderServices([],"");
-
-        document.getElementById("hero").innerHTML=`
-          <div class="photo">
-            <img src="${FALLBACK_PHOTO}" alt="Fiche commerce" onerror="this.outerHTML='<div class=&quot;photo-fallback&quot;>📅</div>'" />
-            <div class="badgeTop">
-              <span class="chip gold">📅 DIGIY RESA</span>
-              <span class="chip blue">📍 SALY</span>
-            </div>
-          </div>
-          <div class="heroBody">
-            <h1>Fiche commerce indisponible</h1>
-            <div class="meta"><span>📍 Saly</span><span>🧩 Multi business</span></div>
-            <div class="heroIntro">Cette fiche n'est pas disponible pour l'instant. Tu peux revenir à la vitrine ou écrire directement pour être orienté vers un commerce.</div>
-            <div class="actions">
-              <a class="btn primary" href="${waHref}">💬 WhatsApp</a>
-              <a class="btn ghost" href="./index.html">← Retour vitrine</a>
-            </div>
-          </div>`;
-
-        document.getElementById("ambianceText").textContent="Retourne à la vitrine pour voir les autres commerces visibles à Saly.";
-        document.getElementById("reserveText").textContent="En cas de doute, le parcours court reste WhatsApp.";
-        document.getElementById("bottomActions").innerHTML=`<a class="btn primary" href="${waHref}">💬 Contacter</a><a class="btn ghost" href="./index.html">← Retour vitrine</a>`;
-        document.getElementById("statusText").textContent="Fiche indisponible.";
+        renderCard(item,{isLive:true});
+        renderServices([],"service local");
+        document.getElementById("statusText").textContent = "Fiche personnalisée prête : " + OFFICIAL_FICHE_URL;
       }
 
       async function load(){
-        const demo=(qs("demo")||"").trim();
-        const slug=normalizeSlug(qs("slug")||"");
-        sb=initSupabase();
+        cleanVisibleUrl();
 
-        if(demo&&DEMO_MAP[demo]){
-          const item=DEMO_MAP[demo];
-          renderCard(item,{demoId:demo});
-          renderServices(item.services||[],item.business_type||"");
+        const demo = (qs("demo") || "").trim();
+        const slug = normalizeKey(qs("slug") || "");
+        sb = initSupabase();
+
+        if(demo && DEMO_MAP[demo]){
+          const item = {
+            ...DEMO_MAP[demo],
+            public_url:OFFICIAL_FICHE_URL,
+            reservation_url:OFFICIAL_FICHE_URL
+          };
+
+          renderCard(item,{isLive:false});
+          renderServices(item.services || [],item.business_type || "");
           return;
         }
 
-        if(!slug||!sb){renderFallback();return;}
+        if(!slug || !sb){
+          renderFallback();
+          return;
+        }
 
         try{
-          const profile=await loadPublicProfileBySlug(slug);
-          if(!profile){renderFallback();return;}
-          const mapped=mapLiveRow(profile);
-          mapped.slug=slug;
-          renderCard(mapped,{demoId:""});
-          const services=await loadServices(slug);
-          renderServices(services,mapped.business_type||"");
+          const profile = await loadPublicProfileByKey(slug);
+
+          if(!profile){
+            renderFallback();
+            return;
+          }
+
+          const mapped = mapLiveRow(profile,slug);
+          renderCard(mapped,{isLive:true});
+
+          const services = await loadServices(slug);
+          renderServices(services,mapped.business_type || "");
         }catch(e){
           console.error(e);
           renderFallback();
