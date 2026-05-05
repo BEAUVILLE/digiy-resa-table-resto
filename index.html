@@ -366,6 +366,7 @@
       const JOIN_MODULE_URL = "https://vas-chez-digiy.digiylyfe.com/";
       const SITE_URL = "https://digiylyfe.com/";
       const PUBLIC_BASE = "https://resa-table-resto.digiylyfe.com/";
+      const OFFICIAL_FICHE_URL = "https://vas-chez-digiy.digiylyfe.com/";
 
       const SUPABASE_URL = window.DIGIY_SUPABASE_URL;
       const SUPABASE_ANON_KEY = window.DIGIY_SUPABASE_ANON_KEY || window.DIGIY_SUPABASE_ANON;
@@ -503,6 +504,26 @@
         }
       }
 
+      function isVasChezDigiyCard(r){
+        const hay = [
+          r?.display_name,
+          r?.business_name,
+          r?.name,
+          r?.establishment_name,
+          r?.business_type,
+          r?.category,
+          r?.type_label,
+          r?.city,
+          r?.address_text,
+          r?.address,
+          r?.location_text
+        ].map(v => String(v || "").trim().toLowerCase()).join(" | ");
+
+        return hay.includes("digiylyfe") &&
+               hay.includes("bon vivre") &&
+               hay.includes("saly");
+      }
+
       function isSafePublicKey(v){
         const s = String(v || "").trim();
         if(!s) return false;
@@ -528,6 +549,7 @@
         const publicKey = first(r.public_key,r.card_id,r.public_id,r.slug);
         const profileUrl = sanitizePublicUrl(first(r.public_url,r.profile_url,r.fiche_url,r.page_url));
         const reserveUrl = sanitizePublicUrl(first(r.reservation_url,r.booking_url));
+        const isOfficialDigiyCard = isVasChezDigiyCard(r);
 
         return {
           kind:"live",
@@ -546,8 +568,8 @@
             first(r.opening_hours_text,r.open_hours,r.opening_hours) ? `Horaires : ${first(r.opening_hours_text,r.open_hours,r.opening_hours)}` : ""
           ].filter(Boolean),
           photo_url:first(r.cover_url,r.cover_image_url,r.logo_url,r.image_url,r.photo_url) || "",
-          profile_url:profileUrl || dynamicPublicPath("fiche.html",publicKey),
-          reservation_url:reserveUrl || dynamicPublicPath("reserver.html",publicKey),
+          profile_url:isOfficialDigiyCard ? OFFICIAL_FICHE_URL : (profileUrl || dynamicPublicPath("fiche.html",publicKey)),
+          reservation_url:isOfficialDigiyCard ? OFFICIAL_FICHE_URL : (reserveUrl || dynamicPublicPath("reserver.html",publicKey)),
           created_at:first(r.updated_at,r.created_at) || null
         };
       }
@@ -1050,5 +1072,6 @@
   </script>
 </body>
 </html>
+
 
 
