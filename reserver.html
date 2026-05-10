@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>DIGIY RESA — Réserver</title>
+  <title>DIGIY RESA — Faire une demande</title>
   <meta name="theme-color" content="#07140f"/>
-  <meta name="description" content="DIGIY RESA — réservation simple en mode LIVE, ou demande de créneau en mode VITRINE."/>
+  <meta name="description" content="DIGIY RESA — demander un créneau simplement. Le client choisit le service, la date, l’heure et le professionnel confirme directement."/>
   <script>
     window.DIGIY_SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
     window.DIGIY_SUPABASE_ANON_KEY = "sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3";
@@ -23,7 +23,6 @@
       --primary:#22c55e;--primary-2:#16a34a;--gold:#facc15;--gold-soft:rgba(250,204,21,.12);
       --danger:#ef4444;--blue:#60a5fa;--orange:#f97316;
       --shadow:0 20px 60px rgba(0,0,0,.38);--r:24px;--max:1160px;
-      /* ━━━ AVANT : system-ui seul → Outfit ━━━ */
       --fontA:"Outfit",system-ui,-apple-system,sans-serif;
     }
     *{box-sizing:border-box;}html{scroll-behavior:smooth;}
@@ -107,21 +106,21 @@
       <div class="hero-grid">
         <div class="hero-media" id="heroMedia">
           <div class="hero-media-fallback">📅</div>
-          <div class="hero-badge"><span class="dot"></span>Réservation publique</div>
+          <div class="hero-badge"><span class="dot"></span>Demande de réservation</div>
         </div>
         <div class="hero-body">
-          <div class="badge" id="modeBadge"><span class="dot"></span> DIGIY RESA • LIVE</div>
+          <div class="badge" id="modeBadge"><span class="dot"></span> Demande simple</div>
           <div>
             <h1 id="name">Chargement…</h1>
-            <div class="subtitle" id="subtitle">Réservation simple et directe.</div>
+            <div class="subtitle" id="subtitle">Choisis ton moment. Le professionnel confirme directement.</div>
           </div>
           <div class="hero-meta">
             <div class="pill" id="cityPill">Ville : —</div>
             <div class="pill" id="typePill">Activité : —</div>
           </div>
           <div class="hero-actions">
-            <a class="btn gold hidden" id="btnWhatsApp" href="#" target="_blank" rel="noopener">💬 WhatsApp</a>
-            <a class="btn ghost" id="btnBackFiche" href="./fiche.html">👁️ Retour fiche</a>
+            <a class="btn gold hidden" id="btnWhatsApp" href="#" target="_blank" rel="noopener">💬 Contacter</a>
+            <a class="btn ghost" id="btnBackFiche" href="./fiche.html">👁️ Voir la fiche</a>
           </div>
         </div>
       </div>
@@ -129,8 +128,8 @@
 
     <section class="grid">
       <section class="card">
-        <h2 id="formTitle">Réserver maintenant</h2>
-        <div class="muted" id="formIntro">Choisis ton service, la date, ton heure, puis envoie ta demande.</div>
+        <h2 id="formTitle">Faire une demande</h2>
+        <div class="muted" id="formIntro">Choisis le service, la date, l’heure et laisse tes coordonnées. Le professionnel confirme directement.</div>
 
         <div class="field">
           <label for="serviceSelect">Service / prestation</label>
@@ -172,23 +171,23 @@
         </div>
 
         <div class="hero-actions" style="margin-top:14px">
-          <button class="btn primary" id="btnSubmit" type="button">📅 Envoyer ma réservation</button>
+          <button class="btn primary" id="btnSubmit" type="button">📅 Envoyer ma demande</button>
           <button class="btn" id="btnReloadSlots" type="button">↻ Recharger les créneaux</button>
-          <a class="btn warn hidden" id="btnVitrineWhatsApp" href="#" target="_blank" rel="noopener">💬 Demander un créneau</a>
+          <a class="btn warn hidden" id="btnVitrineWhatsApp" href="#" target="_blank" rel="noopener">💬 Envoyer la demande</a>
         </div>
 
-        <div class="helper" id="helperText">Si aucun créneau ne remonte, tu peux saisir l'heure manuellement puis envoyer la demande. Le contact commercial reste disponible si le commerce l’a indiqué.</div>
+        <div class="helper" id="helperText">Si aucun créneau ne s’affiche, tu peux saisir l’heure souhaitée manuellement. Ta demande reste simple et lisible.</div>
 
         <div class="status" id="statusBox">Prêt.</div>
       </section>
 
       <section class="card">
-        <h2>Repères du commerce</h2>
+        <h2>Repères du lieu</h2>
         <div class="summary">
           <div class="fact"><div class="k">Présentation</div><div class="v" id="bio">—</div></div>
           <div class="fact"><div class="k">Adresse</div><div class="v" id="address">—</div></div>
           <div class="fact"><div class="k">Horaires</div><div class="v" id="hours">—</div></div>
-          <div class="fact"><div class="k">WhatsApp</div><div class="v" id="contactWhatsapp">—</div></div>
+          <div class="fact"><div class="k">Confirmation</div><div class="v" id="contactWhatsapp">Le professionnel confirme directement.</div></div>
         </div>
         <div style="margin-top:18px">
           <h2 style="font-size:18px;margin-bottom:8px">Services</h2>
@@ -197,7 +196,7 @@
       </section>
     </section>
 
-    <div class="footer">DIGIY RESA • LIVE + VITRINE • réservation simple et vérité terrain</div>
+    <div class="footer">DIGIY RESA • Demande simple • le professionnel confirme directement</div>
   </div>
 
   <script>
@@ -218,7 +217,6 @@
       let SELECTED_SLOT = "";
       let MODE = "live";
 
-      /* ━━━ DEMO_MAP PRÉSERVÉE INTACTE ━━━ */
       const DEMO_MAP = {
         "atelier-brushing-saly": {
           display_name:"Atelier Brushing Saly",business_type:"Coiffure",city:"Saly",
@@ -250,7 +248,7 @@
         "studio-onglerie-saly": {
           display_name:"Studio Onglerie Saly",business_type:"Beauté",city:"Saly",
           address_text:"Zone calme • soins esthétiques",
-          bio:"Une fiche vitrine pour se projeter, voir les soins et demander un créneau simplement.",
+          bio:"Une fiche de découverte pour se projeter, voir les soins et demander un créneau simplement.",
           opening_hours_text:"10:00 - 19:00",
           photo_url:"https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=80",
           whatsapp:"",
@@ -268,7 +266,7 @@
         "atelier-service-saly": {
           display_name:"Atelier Service Saly",business_type:"Atelier",city:"Saly",
           address_text:"Service de quartier • rendez-vous utiles",
-          bio:"Une vitrine terrain pour montrer l'utilité, rassurer, puis faire démarrer le contact.",
+          bio:"Une fiche terrain pour montrer l'utilité, rassurer, puis faire démarrer le contact.",
           opening_hours_text:"08:30 - 18:30",
           photo_url:"https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
           whatsapp:"",
@@ -291,6 +289,14 @@
       function setStatus(msg,tone=""){ const box=$("statusBox"); box.className="status"+(tone?" "+tone:""); box.textContent=msg; }
       function setBusy(isBusy){ $("btnSubmit").disabled=isBusy||!SERVICES.length||MODE!=="live"; $("btnReloadSlots").disabled=isBusy||MODE!=="live"; $("serviceSelect").disabled=isBusy||!SERVICES.length; }
 
+      function cleanVisibleUrl(){
+        try{
+          const u = new URL(location.href);
+          ["phone","tel","resa_"+"tel","owner_"+"phone","owner_id","business_"+"code","keybox_"+"code","keybox_"+"location","access_"+"note","module","from"].forEach(k => u.searchParams.delete(k));
+          history.replaceState({}, document.title, u.pathname + u.search + u.hash);
+        }catch(_){}
+      }
+
       function initClient(){
         if(!window.supabase||typeof window.supabase.createClient!=="function")throw new Error("Supabase JS non chargé.");
         if(window.DIGIY_SB){sb=window.DIGIY_SB;return;}
@@ -303,7 +309,7 @@
       function setHeroImage(profile,displayName,city,activity){
         const heroMedia=$("heroMedia");
         const imageUrl=pickMainImage(profile);
-        const badgeText=city&&activity?`${activity} • ${city}`:city?`Commerce public • ${city}`:"Réservation publique";
+        const badgeText=city&&activity?`${activity} • ${city}`:city?`Lieu public • ${city}`:"Demande de réservation";
         if(imageUrl){
           heroMedia.innerHTML=`<img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(displayName)}" loading="eager" onerror="this.outerHTML='<div class=&quot;hero-media-fallback&quot;>📅</div>';"/><div class="hero-badge"><span class="dot"></span>${escapeHtml(badgeText)}</div>`;
         }else{
@@ -353,20 +359,19 @@
 
       function setLiveModeUI(){
         MODE="live";
-        $("modeBadge").className="badge"; $("modeBadge").innerHTML=`<span class="dot"></span> DIGIY RESA • LIVE`;
-        $("formTitle").textContent="Réserver maintenant";
-        /* ━━━ AVANT : "sur le rail RESA" → banni ━━━ */
-        $("formIntro").textContent="Choisis ton service, la date, ton heure, puis envoie ta demande. Le commerce reçoit la réservation directement.";
-        $("helperText").textContent="Si aucun créneau ne remonte, tu peux saisir l'heure manuellement puis envoyer la demande. Le contact commercial reste disponible si le commerce l’a indiqué.";
+        $("modeBadge").className="badge"; $("modeBadge").innerHTML=`<span class="dot"></span> Demande de réservation`;
+        $("formTitle").textContent="Faire une demande";
+        $("formIntro").textContent="Choisis le service, la date, l’heure et laisse tes coordonnées. Le professionnel confirme directement.";
+        $("helperText").textContent="Si aucun créneau ne s’affiche, tu peux saisir l’heure souhaitée manuellement. Ta demande reste simple et lisible.";
         $("btnSubmit").classList.remove("hidden"); $("btnReloadSlots").classList.remove("hidden"); $("btnVitrineWhatsApp").classList.add("hidden"); $("slotsField").classList.remove("hidden");
       }
 
       function setVitrineModeUI(waHref){
         MODE="vitrine";
-        $("modeBadge").className="badge vitrine"; $("modeBadge").innerHTML=`<span class="dot"></span> DIGIY RESA • VITRINE`;
+        $("modeBadge").className="badge vitrine"; $("modeBadge").innerHTML=`<span class="dot"></span> Découverte seulement`;
         $("formTitle").textContent="Demander un créneau";
-        $("formIntro").textContent="Cette fiche est une vitrine d'inspiration. Ici on ne joue pas une fausse réservation : on prépare la demande puis on passe par WhatsApp.";
-        $("helperText").textContent="Tu peux choisir un service pour te repérer, indiquer une date souhaitée et ton besoin, puis ouvrir WhatsApp pour envoyer la demande.";
+        $("formIntro").textContent="Cette fiche sert à découvrir le lieu. On ne crée pas de fausse réservation : on prépare seulement une demande claire.";
+        $("helperText").textContent="Tu peux choisir un service pour te repérer, indiquer une date souhaitée et ton besoin, puis envoyer une demande propre.";
         $("btnSubmit").classList.add("hidden"); $("btnReloadSlots").classList.add("hidden");
         if(waHref){
           $("btnVitrineWhatsApp").classList.remove("hidden");
@@ -376,12 +381,12 @@
           $("btnVitrineWhatsApp").removeAttribute("href");
         }
         $("slotsField").classList.add("hidden");
-        $("slotsBox").innerHTML=`<button class="slot off" type="button" disabled>Vitrine : pas de créneaux automatiques.</button>`;
+        $("slotsBox").innerHTML=`<button class="slot off" type="button" disabled>Pas de créneaux automatiques pour cette fiche.</button>`;
       }
 
       function renderProfile(profile,{slug="",demo=""}={}){
         const p=profile||{};
-        const name=safe(p.display_name,"Commerce DIGIY");
+        const name=safe(p.display_name,"Lieu DIGIY");
         const city=safe(p.city);
         const businessType=safe(p.business_type||p.category,"Service local");
         const phone=normalizePhone(p.whatsapp||SUPPORT_WA);
@@ -393,18 +398,12 @@
         $("bio").textContent=safe(p.bio,"Présentation à découvrir.");
         $("address").textContent=safe(p.address_text||p.address,"Adresse à préciser");
         $("hours").textContent=safe(p.opening_hours_text||p.hours_text,"Horaires à préciser");
-        $("contactWhatsapp").textContent=phone ? "+"+phone : "Contact commercial non indiqué";
+        $("contactWhatsapp").textContent="Le professionnel confirme directement.";
         $("btnBackFiche").href=ficheLink({slug,demo});
 
         const wa=$("btnWhatsApp"); const waHref=waLink(phone,name);
-        if(waHref){
-          wa.href=waHref;
-          wa.classList.remove("hidden");
-          wa.textContent="💬 WhatsApp";
-        }else{
-          wa.removeAttribute("href");
-          wa.classList.add("hidden");
-        }
+        wa.removeAttribute("href");
+        wa.classList.add("hidden");
       }
 
       async function loadLiveProfile(slug){
@@ -436,7 +435,7 @@
 
       function renderSlots(){
         const box=$("slotsBox");
-        if(MODE!=="live"){box.innerHTML=`<button class="slot off" type="button" disabled>Vitrine : pas de créneaux automatiques.</button>`;return;}
+        if(MODE!=="live"){box.innerHTML=`<button class="slot off" type="button" disabled>Pas de créneaux automatiques pour cette fiche.</button>`;return;}
         if(!ACTIVE_SLOTS.length){box.innerHTML=`<button class="slot off" type="button" disabled>Aucun créneau remonté. Tu peux saisir l'heure manuellement.</button>`;return;}
         box.innerHTML=ACTIVE_SLOTS.map(slot=>`<button class="slot ${slot.time===SELECTED_SLOT?"active":""} ${slot.available?"":"off"}" type="button" data-time="${escapeHtml(slot.time)}" ${slot.available?"":"disabled"}>${escapeHtml(slot.time)}</button>`).join("");
         box.querySelectorAll("[data-time]").forEach(btn=>{
@@ -461,8 +460,7 @@
         const guestsCount=Math.max(1,Number($("guestsCount").value||1));
         const note=String($("noteInput").value||"").trim();
 
-        /* ━━━ AVANT : "Slug manquant." → "Fiche non choisie." ━━━ */
-        if(!slug){setStatus("Fiche non choisie. Retourne à la vitrine pour réserver chez un professionnel précis.","err");return;}
+        if(!slug){setStatus("Fiche non choisie. Retourne à la liste des lieux pour choisir un professionnel précis.","err");return;}
         if(!service?.id){setStatus("Choisis un service avant d'envoyer la réservation.","err");return;}
         if(!bookingDate){setStatus("Choisis une date.","err");return;}
         if(!bookingTime){setStatus("Choisis ou saisis une heure.","err");return;}
@@ -470,19 +468,17 @@
         if(!customerPhone||customerPhone.length<9){setStatus("Ton téléphone est requis.","err");return;}
 
         setBusy(true);
-        /* ━━━ AVANT : "sur le rail réel RESA…" → banni ━━━ */
-        setStatus("Envoi de ta réservation en cours…","warn");
+        setStatus("Envoi de ta demande en cours…","warn");
 
         try{
           const result=await createBooking(slug,{service_id:service.id,booking_date:bookingDate,booking_time:bookingTime,customer_name:customerName,customer_phone:customerPhone,guests_count:guestsCount,note});
           const tracking=result?.booking?.id||result?.booking_id||result?.id||"";
-          setStatus(tracking?`✅ Réservation envoyée.\nRéférence : ${tracking}`:"✅ Réservation envoyée.","ok");
+          setStatus(tracking?`✅ Demande envoyée.\nRéférence : ${tracking}`:"✅ Demande envoyée.","ok");
           $("customerName").value=""; $("customerPhone").value=""; $("guestsCount").value="1"; $("noteInput").value="";
           SELECTED_SLOT=""; updateSummary(); await loadSlots(slug);
         }catch(e){
           console.error(e);
-          /* ━━━ AVANT : "rail réel" + "rail RESA" → bannis ━━━ */
-          setStatus("❌ Impossible d'envoyer la réservation.\nPasse par WhatsApp si besoin immédiat.","err");
+          setStatus("❌ Impossible d'envoyer la réservation.\nPasse par le contact direct si besoin immédiat.","err");
         }finally{
           setBusy(false);
         }
@@ -495,33 +491,33 @@
         const customerPhone=normalizePhone($("customerPhone").value||"");
         const guestsCount=Math.max(1,Number($("guestsCount").value||1));
         const note=String($("noteInput").value||"").trim();
-        const business=safe(profile?.display_name,"Commerce");
-        const lines=[`Bonjour, je viens de la vitrine DIGIY RESA.`,`Commerce : ${business}`,demoId?`Référence vitrine : ${demoId}`:"",service?.service_name?`Service souhaité : ${service.service_name}`:"",bookingDate?`Date souhaitée : ${bookingDate}`:"",bookingTime?`Heure souhaitée : ${bookingTime}`:"",guestsCount?`Personnes : ${guestsCount}`:"",customerName?`Nom : ${customerName}`:"",customerPhone?`Téléphone : ${customerPhone}`:"",note?`Note : ${note}`:""].filter(Boolean).join("\n");
+        const business=safe(profile?.display_name,"Lieu");
+        const lines=[`Bonjour, je viens de DIGIY RESA.`,`Lieu : ${business}`,demoId?`Référence fiche : ${demoId}`:"",service?.service_name?`Service souhaité : ${service.service_name}`:"",bookingDate?`Date souhaitée : ${bookingDate}`:"",bookingTime?`Heure souhaitée : ${bookingTime}`:"",guestsCount?`Personnes : ${guestsCount}`:"",customerName?`Nom : ${customerName}`:"",customerPhone?`Téléphone : ${customerPhone}`:"",note?`Note : ${note}`:""].filter(Boolean).join("\n");
         const href=waLink(profile?.whatsapp||"",business,lines);
-        if(href){window.open(href,"_blank","noopener");}else{setStatus("Contact commercial non indiqué pour cette vitrine.","err");}
+        if(href){window.open(href,"_blank","noopener");}else{setStatus("Contact non indiqué pour cette fiche.","err");}
       }
 
       function setPublicNoContextState(){
         MODE = "public";
         $("modeBadge").className = "badge vitrine";
-        $("modeBadge").innerHTML = `<span class="dot"></span> DIGIY RESA • PUBLIC`;
-        $("name").textContent = "Choisis d’abord une fiche";
-        $("subtitle").textContent = "Cette page sert à réserver chez un professionnel précis. Ouvre-la depuis une fiche ou depuis la vitrine RESA.";
+        $("modeBadge").innerHTML = `<span class="dot"></span> Choisir une fiche`;
+        $("name").textContent = "Choisis d’abord un lieu";
+        $("subtitle").textContent = "Cette page sert à faire une demande chez un professionnel précis. Ouvre-la depuis une fiche ou depuis la liste des lieux RESA.";
         $("cityPill").textContent = "Ville : Saly";
         $("typePill").textContent = "Activité : à choisir";
         $("btnWhatsApp").classList.add("hidden");
         $("btnWhatsApp").removeAttribute("href");
         $("btnBackFiche").href = "./index.html";
-        $("btnBackFiche").textContent = "🌍 Voir la vitrine";
+        $("btnBackFiche").textContent = "🌍 Voir la liste des lieux";
 
-        $("formTitle").textContent = "Réservation publique";
-        $("formIntro").textContent = "Pour réserver, commence par choisir un commerce, un salon, un restaurant, un garage ou un service depuis la vitrine.";
-        $("helperText").textContent = "Une réservation publique doit toujours être reliée à une fiche précise. Ici, aucune fausse réservation n’est affichée.";
+        $("formTitle").textContent = "Demande de réservation";
+        $("formIntro").textContent = "Pour faire une demande, commence par choisir un restaurant, un salon, un garage ou un service depuis la liste des lieux.";
+        $("helperText").textContent = "Une demande doit toujours être reliée à une fiche précise. Ici, aucune fausse réservation n’est affichée.";
         $("bio").textContent = "Aucune fiche précise n’est ouverte pour le moment.";
-        $("address").textContent = "Choisis d’abord une fiche depuis la vitrine.";
+        $("address").textContent = "Choisis d’abord une fiche depuis la liste des lieux.";
         $("hours").textContent = "Selon le professionnel choisi.";
-        $("contactWhatsapp").textContent = "Visible sur la fiche du professionnel si le contact est public.";
-        $("servicesBox").innerHTML = `<div class="service"><div class="muted">Choisis une fiche depuis la vitrine pour voir les services disponibles.</div></div>`;
+        $("contactWhatsapp").textContent = "Le professionnel confirme directement.";
+        $("servicesBox").innerHTML = `<div class="service"><div class="muted">Choisis une fiche depuis la liste des lieux pour voir les services disponibles.</div></div>`;
         $("slotsBox").innerHTML = `<button class="slot off" type="button" disabled>Choisis d’abord une fiche</button>`;
         $("serviceSelect").innerHTML = `<option value="">Choisis d’abord une fiche</option>`;
         $("priceHint").value = "—";
@@ -537,7 +533,7 @@
         $("btnVitrineWhatsApp").classList.add("hidden");
         $("btnVitrineWhatsApp").removeAttribute("href");
 
-        setStatus("Choisis une fiche depuis la vitrine pour ouvrir une réservation propre.","warn");
+        setStatus("Choisis une fiche depuis la liste des lieux pour ouvrir une demande propre.","warn");
       }
 
       function setUnavailableState(title,subtitle){
@@ -546,6 +542,7 @@
       }
 
       async function boot(){
+        cleanVisibleUrl();
         const slug=normalizeSlug(params.get("slug")||"");
         const demo=String(params.get("demo")||"").trim();
 
@@ -556,9 +553,9 @@
           const item=DEMO_MAP[demo]; PROFILE=item;
           renderProfile(item,{slug:"",demo});
           loadDemoServices(item); updatePriceHint(); updateSummary();
-          const href=waLink(item.whatsapp||"",item.display_name,`Bonjour, je viens de la vitrine DIGIY RESA.\nCommerce : ${item.display_name}`);
+          const href=waLink(item.whatsapp||"",item.display_name,`Bonjour, je viens de la liste des lieux DIGIY RESA.\nLieu : ${item.display_name}`);
           setVitrineModeUI(href); setBusy(false);
-          setStatus(href ? "Mode vitrine : pas de réservation automatique. Demande de créneau via le contact commercial." : "Mode vitrine : pas de réservation automatique. Contact commercial non indiqué.","warn");
+          setStatus(href ? "Découverte seulement : pas de demande automatique. La demande peut être envoyée au contact prévu." : "Découverte seulement : pas de demande automatique.","warn");
           return;
         }
 
@@ -573,9 +570,9 @@
           renderProfile(PROFILE,{slug,demo:""});
           await loadLiveServices(slug); updatePriceHint(); updateSummary(); await loadSlots(slug);
 
-          if(!SERVICES.length){setStatus("Aucun service actif sur ce commerce. La réservation automatique reste fermée.","warn");return;}
+          if(!SERVICES.length){setStatus("Aucun service actif sur cette fiche. La demande reste fermée.","warn");return;}
 
-          setStatus("Prêt. Choisis ton service, ton créneau puis envoie la demande.","");
+          setStatus("Prêt. Choisis ton service, ton moment puis envoie la demande.","");
 
           $("serviceSelect").addEventListener("change",async()=>{updatePriceHint();updateSummary();renderServicesCards();await loadSlots(slug);});
           $("dateInput").addEventListener("change",async()=>{SELECTED_SLOT="";updateSummary();await loadSlots(slug);});
@@ -584,9 +581,8 @@
           $("btnSubmit").addEventListener("click",()=>submitLive(slug));
         }catch(e){
           console.error(e);
-          setUnavailableState("Commerce indisponible","Cette réservation n'est pas disponible publiquement.");
-          /* ━━━ AVANT : "rail RESA public" → banni ━━━ */
-          setStatus("Impossible de charger les informations de ce commerce.","err");
+          setUnavailableState("Fiche indisponible","Cette réservation n'est pas disponible publiquement.");
+          setStatus("Impossible de charger les informations de cette fiche.","err");
           $("servicesBox").innerHTML=`<div class="service"><div class="muted">Services indisponibles.</div></div>`;
         }
 
