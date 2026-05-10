@@ -2,9 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <title>DIGIY RESA — Réserver à Saly</title>
+  <title>DIGIY RESA — Réserver à Saly simplement</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="DIGIY RESA — Réserver simplement à Saly. Des fiches vivantes pour découvrir, choisir et avancer sans confusion." />
+  <meta name="description" content="DIGIY RESA — Réserver à Saly simplement. Découvre un lieu, choisis le bon moment et envoie ta demande au professionnel." />
   <meta name="theme-color" content="#061b14" />
   <meta name="robots" content="index,follow" />
 
@@ -106,6 +106,15 @@
     .kpi .chip{border-radius:14px;border:1px solid rgba(203,213,225,.16);background:rgba(15,23,42,.30);padding:10px;font-size:12px;color:var(--muted);font-weight:900;display:flex;justify-content:space-between;align-items:center;gap:10px}
     .kpi .chip .v{color:var(--gold);font-weight:900;white-space:nowrap}
 
+    .how-strip{margin-top:14px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+    .how-step{border-radius:16px;border:1px solid rgba(203,213,225,.16);background:rgba(2,6,23,.28);padding:12px;display:flex;gap:10px;align-items:center;color:var(--muted);font-size:13px;font-weight:900}
+    .how-step b{width:28px;height:28px;border-radius:999px;background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+    .client-box h2{font-size:24px;line-height:1.1;margin:10px 0 8px;color:var(--gold);font-weight:900;letter-spacing:-.01em}
+    .client-box p{color:var(--muted);font-size:14px;line-height:1.55;font-weight:800}
+    .client-promise{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .client-promise span{border-radius:999px;padding:7px 10px;border:1px solid rgba(34,197,94,.22);background:rgba(34,197,94,.10);color:#bbf7d0;font-size:12px;font-weight:900}
+    @media(max-width:720px){.how-strip{grid-template-columns:1fr 1fr}.how-step{padding:10px;font-size:12px}}
+
     .statsbar{margin-top:12px;border-radius:18px;border:1px solid rgba(203,213,225,.14);background:rgba(2,6,23,.24);padding:10px 12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
     .statsbar .left{font-weight:900;color:rgba(234,255,241,.92);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .statsbar .left .sep{opacity:.5}
@@ -200,70 +209,62 @@
         <div class="logo-badge">📅</div>
         <div class="logo-text">
           <div class="logo-title">DIGIY RESA • SALY</div>
-          <div class="logo-sub">Réserver simplement • Disponible maintenant • À découvrir</div>
+          <div class="logo-sub">Lieux, tables, services • Demande simple • Contact direct</div>
         </div>
       </div>
       <div class="nav-right">
-        <div class="pill"><span class="dot"></span> Disponible + à découvrir</div>
+        <div class="pill"><span class="dot"></span> Réservation simple</div>
         <div class="pill">📍 Saly</div>
         <a class="btn-small" href="https://digiylyfe.com/">🌍 Site</a>
         <a class="btn-small" id="btnHub" href="https://digiy-hub.digiylyfe.com/" rel="noopener">🧭 HUB DIGIY</a>
         <a class="btn-small" href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer">📦 Tarifs</a>
-        <a class="btn-small primary" id="btnJoinTop" href="#" rel="noopener">📌 Ma fiche</a>
+        <a class="btn-small primary" id="btnJoinTop" href="#" rel="noopener">🤝 Proposer un lieu</a>
       </div>
     </header>
 
     <section class="hero">
       <div class="hero-inner">
         <div>
-          <h1><span class="hl">Réserver à Saly</span><br />sans se perdre</h1>
+          <h1><span class="hl">Réserver à Saly</span><br />simplement</h1>
           <p>
-            Ici, tu vois ce qui est <b style="color:var(--green);font-weight:900;">disponible maintenant</b>
-            et ce qui <b style="color:var(--gold);font-weight:900;">vaut le détour</b>.
-            RESA aide le client à découvrir un lieu, un service, une ambiance, puis à choisir le bon moment.
+            Restaurants, salons, services, activités : découvre le lieu, regarde l’ambiance,
+            choisis le bon moment et envoie ta demande. Le professionnel reprend la main directement.
           </p>
           <div class="hero-badges">
-            <div class="hero-badge">🟢 <b>Disponible maintenant</b></div>
-            <div class="hero-badge">✨ À découvrir</div>
-            <div class="hero-badge">📅 Réservation simple</div>
             <div class="hero-badge">📍 Saly</div>
+            <div class="hero-badge">📄 Voir la fiche</div>
+            <div class="hero-badge">📅 Faire une demande</div>
+            <div class="hero-badge">🤝 Contact direct</div>
           </div>
 
           <div class="hero-actions-main">
-            <a class="btn-small primary" href="#gridLive">🟢 Voir disponible</a>
-            <a class="btn-small" href="https://digiylyfe.com/">🌍 Site DIGIYLYFE</a>
+            <a class="btn-small primary" href="#gridLive">📅 Voir les lieux à réserver</a>
+            <a class="btn-small" href="#comment-ca-marche">🧭 Comment ça marche</a>
             <a class="btn-small" href="https://digiy-hub.digiylyfe.com/">🧭 HUB DIGIY</a>
-            <a class="btn-small" href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer">📦 Tarifs</a>
+            <a class="btn-small" href="https://digiylyfe.com/">🌍 Site DIGIYLYFE</a>
           </div>
 
-          <div class="statsbar" id="resaStatsBar">
-            <div class="left">
-              <span>📍 <span style="color:var(--gold)">Saly</span> :</span>
-              <span><span id="msTotal">—</span> cartes visibles</span>
-              <span class="sep">•</span>
-              <span><span id="msLive">—</span> disponibles</span>
-              <span class="sep">•</span>
-              <span><span id="msVitrine">—</span> à découvrir</span>
-              <span class="sep">•</span>
-              <span><span id="ms7d">—</span> nouveaux 7j</span>
-            </div>
-            <div class="right">
-              <span class="stats-pill good">Disponibles : <span id="msPublic">—</span></span>
-              <span class="stats-pill warn">Activités : <span id="msCats">—</span></span>
-            </div>
+          <div class="how-strip" id="comment-ca-marche" aria-label="Comment réserver avec DIGIY RESA">
+            <div class="how-step"><b>1</b><span>Choisis un lieu</span></div>
+            <div class="how-step"><b>2</b><span>Regarde la fiche</span></div>
+            <div class="how-step"><b>3</b><span>Envoie ta demande</span></div>
+            <div class="how-step"><b>4</b><span>Le pro confirme</span></div>
           </div>
         </div>
 
-        <aside class="hero-box">
-          <div class="muted" style="font-weight:900;">📊 Lecture rapide à Saly</div>
-          <div class="kpi">
-            <div class="chip"><span>Visibles</span><span class="v" id="kpiCount">—</span></div>
-            <div class="chip"><span>Nouveaux 7j</span><span class="v" id="kpiNew7d">—</span></div>
-            <div class="chip"><span>Disponibles</span><span class="v" id="kpiLive">—</span></div>
-            <div class="chip"><span>À découvrir</span><span class="v" id="kpiVitrine">—</span></div>
+        <aside class="hero-box client-box" aria-label="Promesse DIGIY RESA">
+          <div class="muted" style="font-weight:900;">🌿 Ici, on réserve sans confusion</div>
+          <h2>Un lieu. Un moment. Une demande claire.</h2>
+          <p>
+            DIGIY RESA ne remplace pas le professionnel. Il prépare la rencontre :
+            le client comprend vite, demande proprement, puis le pro confirme avec sa vérité.
+          </p>
+          <div class="client-promise">
+            <span>✅ Pas de faux bouton</span>
+            <span>✅ Pas de jargon technique</span>
+            <span>✅ Relation directe</span>
           </div>
           <div class="status" style="margin-top:12px;"><span id="statusText">🔎 Chargement…</span></div>
-          <div class="status" style="margin-top:10px;"><span class="muted">Dernière carte visible :</span><b id="kpiLast">—</b></div>
         </aside>
       </div>
 
@@ -276,7 +277,7 @@
         </div>
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
           <a class="btn-small" id="btnRefresh" href="#">🔄 Rafraîchir</a>
-          <a class="btn-small" id="btnSupport" href="https://digiy-hub.digiylyfe.com/" rel="noopener">🧭 Besoin d’aide</a>
+          <a class="btn-small" id="btnSupport" href="https://digiy-hub.digiylyfe.com/" rel="noopener">🧭 Maison DIGIY</a>
         </div>
       </div>
     </section>
@@ -285,15 +286,15 @@
       <div class="section-card">
         <div class="section-head">
           <div>
-            <div class="section-title">🟢 Disponible maintenant</div>
+            <div class="section-title">📅 Lieux à réserver</div>
             <div class="section-note">
-              Ici, tu vois les vraies fiches publiées. Quand une fiche est prête,
-              le bouton <b style="color:var(--green)">Réserver</b> ouvre une porte client propre.
+              Ici, le client voit les fiches réellement publiées. Il peut ouvrir la fiche,
+              comprendre le lieu, puis envoyer une demande simple au professionnel.
             </div>
           </div>
           <div class="legend">
-            <span class="legend-pill live">Réservable</span>
-            <span class="legend-pill live">Fiche publiée</span>
+            <span class="legend-pill live">Fiche publique</span>
+            <span class="legend-pill live">Demande simple</span>
           </div>
         </div>
         <div id="gridLive" class="grid"></div>
@@ -306,13 +307,13 @@
           <div>
             <div class="section-title">✨ À découvrir à Saly</div>
             <div class="section-note">
-              Ici, on montre l’ambiance et les idées qui peuvent attirer le regard.
-              Ces cartes n’ouvrent pas une fausse réservation.
+              Ici, on donne des idées et on montre l’ambiance. Ces cartes inspirent le regard
+              sans ouvrir de fausse réservation.
             </div>
           </div>
           <div class="legend">
-            <span class="legend-pill vitrine">À découvrir</span>
-            <span class="legend-pill vitrine">Pas encore réservable</span>
+            <span class="legend-pill vitrine">Inspiration</span>
+            <span class="legend-pill vitrine">Bientôt réservable</span>
           </div>
         </div>
         <div id="gridVitrine" class="grid"></div>
@@ -322,23 +323,23 @@
     <section class="section" id="retours-digiy">
       <div class="return-house">
         <h2>Revenir dans la maison DIGIY</h2>
-        <p>Cette page aide à réserver à Saly. Pour revenir à la vitrine, au HUB ou aux tarifs officiels, utilise les portes ci-dessous.</p>
+        <p>Cette page ouvre la réservation côté client. Pour découvrir l’écosystème, proposer un lieu ou voir les offres professionnelles, utilise les portes ci-dessous.</p>
         <div class="return-actions">
           <a class="btn-small" href="https://digiylyfe.com/">🌍 Site DIGIYLYFE</a>
           <a class="btn-small primary" href="https://digiy-hub.digiylyfe.com/">🧭 HUB DIGIY</a>
           <a class="btn-small" href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer">📦 Tarifs</a>
-          <a class="btn-small" id="btnJoinBottom" href="https://vas-chez-digiy.digiylyfe.com/">📌 Ma fiche</a>
+          <a class="btn-small" id="btnJoinBottom" href="https://vas-chez-digiy.digiylyfe.com/">🤝 Proposer un lieu</a>
         </div>
       </div>
     </section>
 
     <div class="signature">
-      RESA ne vend pas des créneaux.<br />
-      <strong>RESA aide le client à choisir le bon moment, avec le bon pro.</strong>
+      Le client ne voit pas un logiciel.<br />
+      <strong>Il voit un lieu, un moment, puis il fait sa demande simplement.</strong>
     </div>
 
     <footer class="footer">
-      DIGIY RESA • Saly • <span class="zero">Disponible + à découvrir</span> • <span class="brand">simple, clair, humain</span> ∞
+      DIGIY RESA • Saly • <span class="zero">Réservation simple</span> • <span class="brand">contact direct, terrain vivant</span> ∞
     </footer>
   </div>
 
@@ -348,7 +349,7 @@
       <a href="https://digiy-hub.digiylyfe.com/"><span class="ico">🧭</span><span>HUB</span></a>
       <a href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer"><span class="ico">📦</span><span>Tarifs</span></a>
       <a class="active" href="#gridLive"><span class="ico">📅</span><span>Réserver</span></a>
-      <a id="bottomJoin" href="https://vas-chez-digiy.digiylyfe.com/"><span class="ico">📌</span><span>Ma fiche</span></a>
+      <a id="bottomJoin" href="https://vas-chez-digiy.digiylyfe.com/"><span class="ico">📌</span><span>Proposer</span></a>
     </div>
   </nav>
 
@@ -606,6 +607,11 @@
         if(el) el.textContent = msg || "";
       }
 
+      function setText(id,value){
+        const el = document.getElementById(id);
+        if(el) el.textContent = value;
+      }
+
       function esc(s){
         return String(s ?? "")
           .replaceAll("&","&amp;")
@@ -651,12 +657,12 @@
         const new7d = l.filter(r => isNew(r.created_at)).length;
         const cats = new Set(all.map(r => String(r.category || "").trim()).filter(Boolean)).size;
 
-        document.getElementById("msTotal").textContent = String(all.length);
-        document.getElementById("msLive").textContent = String(l.length);
-        document.getElementById("msVitrine").textContent = String(v.length);
-        document.getElementById("ms7d").textContent = String(new7d);
-        document.getElementById("msPublic").textContent = String(l.length);
-        document.getElementById("msCats").textContent = String(cats);
+        setText("msTotal",String(all.length));
+        setText("msLive",String(l.length));
+        setText("msVitrine",String(v.length));
+        setText("ms7d",String(new7d));
+        setText("msPublic",String(l.length));
+        setText("msCats",String(cats));
       }
 
       function updateKpisFiltered(liveFiltered,vitrineFiltered){
@@ -664,10 +670,10 @@
         const v = Array.isArray(vitrineFiltered) ? vitrineFiltered : [];
         const all = [...l,...v];
 
-        document.getElementById("kpiCount").textContent = String(all.length);
-        document.getElementById("kpiNew7d").textContent = String(l.filter(x => isNew(x.created_at)).length);
-        document.getElementById("kpiLive").textContent = String(l.length);
-        document.getElementById("kpiVitrine").textContent = String(v.length);
+        setText("kpiCount",String(all.length));
+        setText("kpiNew7d",String(l.filter(x => isNew(x.created_at)).length));
+        setText("kpiLive",String(l.length));
+        setText("kpiVitrine",String(v.length));
 
         const last = [...all].sort((a,b) => {
           const ta = Date.parse(a.created_at || "") || 0;
@@ -675,7 +681,7 @@
           return tb - ta;
         })[0];
 
-        document.getElementById("kpiLast").textContent = last ? `${last.display_name}${last.kind === "demo" ? " • à découvrir" : " • disponible"}` : "—";
+        setText("kpiLast",last ? `${last.display_name}${last.kind === "demo" ? " • à découvrir" : " • disponible"}` : "—");
       }
 
       function renderSkeleton(){
@@ -733,8 +739,8 @@
           const secondaryBtn = mode === "live"
             ? (reserveHref
                 ? `<a class="btn secondary" href="${esc(reserveHref)}">📅 Réserver</a>`
-                : `<a class="btn ghost" href="#retours-digiy">📌 Bientôt réservable</a>`)
-            : `<a class="btn ghost" href="#retours-digiy">📌 Inspiration</a>`;
+                : `<a class="btn ghost" href="#retours-digiy">⏳ Bientôt réservable</a>`)
+            : `<a class="btn ghost" href="#retours-digiy">✨ Inspiration</a>`;
 
           return `
             <article class="card" data-kind="${esc(r.kind || "")}">
@@ -821,10 +827,10 @@
           applyFilters();
 
           if(LIVE_ROWS.length){
-            setStatus("✅ Les fiches disponibles sont chargées.");
-            toast("✅ Disponible + à découvrir prêts");
+            setStatus("✅ Les lieux à réserver sont chargés.");
+            toast("✅ Lieux à réserver + idées prêts");
           }else{
-            setStatus("⚠️ Rien de disponible pour l’instant. La partie à découvrir reste visible.");
+            setStatus("⚠️ Aucun lieu réservable pour l’instant. Les idées à découvrir restent visibles.");
             toast("✨ Partie à découvrir active");
           }
         }catch(e){
@@ -833,7 +839,7 @@
           fillSelects();
           updateStatsBar(LIVE_ROWS,VITRINE_ROWS);
           applyFilters();
-          setStatus("⚠️ Les fiches disponibles sont indisponibles pour le moment.");
+          setStatus("⚠️ Les lieux à réserver sont indisponibles pour le moment.");
           toast("⚠️ Affichage à découvrir");
         }
       }
@@ -861,7 +867,7 @@
     window.DIGIY_AUDIO_CONFIG = {
       label:"Écouter RESA",
       stopLabel:"Arrêter",
-      text:"Bienvenue sur DIGIY RESA. Ici, le client découvre une activité, une ambiance et un service avant de choisir le bon moment. RESA n'est pas seulement un calendrier. C'est une scène pour les pros qui reçoivent. Le professionnel reste devant. DIGIY reste derrière. Simple, clair, humain.",
+      text:"Bienvenue sur DIGIY RESA. Ici, le client ne voit pas un logiciel. Il voit un lieu, une table, un service, une activité, puis il fait une demande simple. Tu regardes la fiche, tu choisis le bon moment, tu laisses ton contact, et le professionnel confirme directement. DIGIY prépare la rencontre, mais la relation reste entre le client et le professionnel. Simple, clair, humain.",
       buttonBg:"linear-gradient(135deg,#d4af37,#b78b34)",
       buttonColor:"#111827",
       bottom:"24px",
