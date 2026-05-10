@@ -2,13 +2,11 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <title>DIGIY RESA — Fiche vivante</title>
+  <title>DIGIY RESA — Voir le lieu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta
-    name="description"
-    content="Fiche publique DIGIY RESA — découvrir une activité, comprendre l’ambiance et choisir le bon moment."
-  />
+  <meta name="description" content="DIGIY RESA — découvrir un lieu, comprendre l’ambiance et envoyer une demande de réservation simple." />
   <meta name="theme-color" content="#061b14" />
+  <meta name="robots" content="index,follow" />
 
   <script>
     window.DIGIY_SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
@@ -17,231 +15,337 @@
     window.DIGIY_MODULE = "RESA";
   </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
 
   <style>
     :root{
-      --bg:#061b14;--bg2:#0b2218;--card:rgba(7,24,17,.58);--card-2:rgba(2,6,23,.30);
-      --ink:#F4FFF8;--muted:#CFE9D7;--line:rgba(148,163,184,.18);
-      --gold:#facc15;--green:#22c55e;--orange:#f97316;--blue:#60a5fa;
-      --shadow:0 18px 55px rgba(0,0,0,.42);--radius:24px;
-      --fontA:"Outfit",system-ui,-apple-system,sans-serif;
+      --bg:#061b14;
+      --bg2:#0b2218;
+      --ink:#f4fff8;
+      --muted:#cfe9d7;
+      --soft:rgba(244,255,248,.78);
+      --line:rgba(255,255,255,.11);
+      --card:rgba(7,24,17,.58);
+      --card2:rgba(2,6,23,.28);
+      --gold:#facc15;
+      --green:#22c55e;
+      --orange:#f97316;
+      --blue:#60a5fa;
+      --shadow:0 18px 55px rgba(0,0,0,.42);
+      --font:"Outfit",system-ui,-apple-system,sans-serif;
     }
-    *{box-sizing:border-box;margin:0;padding:0;font-family:var(--fontA)}
-    body{min-height:100vh;background:radial-gradient(circle at top, rgba(250,204,21,.10) 0, transparent 55%),radial-gradient(circle at 18% 10%, rgba(34,197,94,.10) 0, transparent 55%),radial-gradient(circle at 85% 12%, rgba(96,165,250,.08) 0, transparent 45%),radial-gradient(circle at top,#0b2218 0,#061b14 50%,#04110d 100%);color:var(--ink)}
+
+    *{box-sizing:border-box;margin:0;padding:0;font-family:var(--font)}
+    html{scroll-behavior:smooth}
+    body{
+      min-height:100vh;
+      background:
+        radial-gradient(circle at top, rgba(250,204,21,.12) 0, transparent 54%),
+        radial-gradient(circle at 12% 10%, rgba(34,197,94,.12) 0, transparent 48%),
+        radial-gradient(circle at 86% 14%, rgba(96,165,250,.09) 0, transparent 42%),
+        linear-gradient(180deg,#0b2218 0,#061b14 54%,#04110d 100%);
+      color:var(--ink);
+      padding-bottom:calc(84px + env(safe-area-inset-bottom,0px));
+    }
     a{color:inherit;text-decoration:none}
-    .page{max-width:1040px;margin:0 auto;padding:16px 14px 42px}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0 14px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:14px;flex-wrap:wrap}
-    .nav-left{display:flex;align-items:center;gap:12px;min-width:0}
-    .logo-badge{width:42px;height:42px;border-radius:16px;background:radial-gradient(circle at 30% 20%,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;color:#04110d;font-weight:1000;font-size:18px;box-shadow:0 10px 26px rgba(250,204,21,.40);flex:0 0 auto}
-    .logo-title{font-size:16px;font-weight:950;letter-spacing:.10em;text-transform:uppercase;line-height:1.1}
-    .logo-sub{font-size:12px;color:var(--muted);font-weight:850;margin-top:2px}
-    .nav-right{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .pill{border-radius:999px;padding:8px 12px;font-size:12px;font-weight:950;border:1px solid rgba(203,213,225,.35);color:rgba(234,255,241,.92);display:inline-flex;align-items:center;gap:8px;background:rgba(2,6,23,.22)}
-    .pill .dot{width:8px;height:8px;border-radius:999px;background:var(--green);box-shadow:0 0 0 4px rgba(34,197,94,.12)}
-    .btn-small{border-radius:999px;padding:10px 14px;font-size:13px;font-weight:950;border:1px solid rgba(203,213,225,.32);background:rgba(15,23,42,.32);color:var(--ink);display:inline-flex;align-items:center;gap:8px;white-space:nowrap;line-height:1}
-    .btn-small.primary{border:none;background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;box-shadow:0 10px 26px rgba(250,204,21,.35)}
-    .hero{border-radius:var(--radius);border:1px solid rgba(255,255,255,.10);background:var(--card);box-shadow:var(--shadow);overflow:hidden;position:relative}
-    .hero::before{content:"";position:absolute;inset:-1px;background:radial-gradient(720px 380px at 15% -10%, rgba(34,197,94,.16), transparent 60%),radial-gradient(620px 340px at 110% 0%, rgba(250,204,21,.12), transparent 60%),radial-gradient(520px 260px at 55% 8%, rgba(96,165,250,.08), transparent 55%);pointer-events:none}
-    .photo{position:relative;width:100%;height:360px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.08);background:#091711}
-    .photo img{width:100%;height:100%;object-fit:cover;display:block}
-    .photo-fallback{width:100%;height:100%;display:grid;place-items:center;font-size:56px;font-weight:1000;color:#fff;background:radial-gradient(circle at 30% 20%, rgba(250,204,21,.18), transparent 30%),radial-gradient(circle at 75% 15%, rgba(34,197,94,.14), transparent 28%),linear-gradient(180deg,#111827,#0b1120)}
-    .badgeTop{position:absolute;top:12px;left:12px;display:flex;gap:8px;flex-wrap:wrap;max-width:calc(100% - 24px);z-index:2}
-    .chip{border-radius:999px;padding:6px 10px;font-size:11px;font-weight:1000;border:1px solid rgba(255,255,255,.14);background:rgba(2,6,23,.58);color:rgba(234,255,241,.92);display:inline-flex;align-items:center;gap:6px;backdrop-filter:blur(6px)}
-    .chip.gold{border-color:rgba(250,204,21,.30)}
-    .chip.green{border-color:rgba(34,197,94,.30)}
-    .chip.blue{border-color:rgba(96,165,250,.30)}
-    .heroBody{position:relative;z-index:1;padding:18px;display:grid;gap:16px}
-    h1{font-size:clamp(30px,4vw,42px);line-height:1.08;font-weight:1000;color:var(--gold);letter-spacing:-.02em}
-    .meta{display:flex;flex-wrap:wrap;gap:10px;color:var(--muted);font-size:14px;font-weight:850}
-    .meta span{display:inline-flex;align-items:center;gap:6px}
-    .heroIntro{color:rgba(234,255,241,.95);font-size:15px;line-height:1.7;font-weight:850;max-width:76ch}
+
+    .page{max-width:1080px;margin:0 auto;padding:16px 14px 44px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 0 14px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:14px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .logo{width:44px;height:44px;border-radius:17px;background:radial-gradient(circle at 30% 20%,var(--gold),var(--orange));display:grid;place-items:center;color:#04110d;font-weight:900;font-size:19px;box-shadow:0 12px 28px rgba(250,204,21,.36);flex:0 0 auto}
+    .brand-title{font-size:16px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:min(62vw,520px)}
+    .brand-sub{font-size:12px;color:var(--muted);font-weight:800;margin-top:2px}
+    .top-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+
+    .btn,.mini{
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      font-weight:900;
+      line-height:1;
+      border:1px solid rgba(203,213,225,.28);
+      background:rgba(15,23,42,.32);
+      color:var(--ink);
+      cursor:pointer;
+      text-align:center;
+      white-space:nowrap;
+    }
+    .mini{padding:10px 14px;font-size:13px}
+    .btn{min-height:50px;padding:14px 17px;font-size:14px;flex:1;min-width:170px}
+    .btn.primary,.mini.primary{border:none;background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;box-shadow:0 12px 28px rgba(250,204,21,.28)}
+    .btn.green{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.32);color:#bbf7d0}
+    .btn.ghost{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);color:var(--ink)}
+
+    .hero{position:relative;overflow:hidden;border-radius:28px;border:1px solid rgba(255,255,255,.1);background:var(--card);box-shadow:var(--shadow)}
+    .hero:before{content:"";position:absolute;inset:-1px;background:radial-gradient(760px 360px at 12% -12%, rgba(34,197,94,.18), transparent 62%),radial-gradient(660px 340px at 110% 0%, rgba(250,204,21,.14), transparent 60%);pointer-events:none}
+    .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:.95fr 1.05fr;min-height:430px}
+    @media(max-width:900px){.hero-grid{grid-template-columns:1fr}.media{height:310px}}
+
+    .media{position:relative;min-height:430px;background:#081911;overflow:hidden}
+    .media img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.05) contrast(1.02)}
+    .fallback{width:100%;height:100%;display:grid;place-items:center;font-size:60px;background:radial-gradient(circle at 30% 20%, rgba(250,204,21,.18), transparent 28%),radial-gradient(circle at 75% 16%, rgba(34,197,94,.15), transparent 30%),linear-gradient(180deg,#111827,#07140f)}
+    .badge-row{position:absolute;left:14px;top:14px;right:14px;display:flex;flex-wrap:wrap;gap:8px;z-index:2}
+    .chip{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:7px 11px;font-size:11px;font-weight:900;border:1px solid rgba(255,255,255,.14);background:rgba(2,6,23,.58);color:rgba(234,255,241,.94);backdrop-filter:blur(8px)}
+    .chip.gold{border-color:rgba(250,204,21,.34);color:#fff0b0}
+    .chip.green{border-color:rgba(34,197,94,.34);color:#c7ffe1}
+    .chip.blue{border-color:rgba(96,165,250,.34);color:#dbeafe}
+
+    .hero-body{padding:22px;display:grid;align-content:center;gap:15px}
+    .eyebrow{display:inline-flex;width:max-content;max-width:100%;border-radius:999px;padding:8px 12px;background:rgba(250,204,21,.11);border:1px solid rgba(250,204,21,.24);color:#fde68a;font-size:12px;font-weight:900;letter-spacing:.04em;text-transform:uppercase}
+    h1{font-size:clamp(31px,4.6vw,50px);line-height:1.04;font-weight:900;letter-spacing:-.02em;color:var(--gold)}
+    .intro{font-size:16px;line-height:1.68;color:rgba(244,255,248,.93);font-weight:800;max-width:68ch}
+    .meta{display:flex;flex-wrap:wrap;gap:9px;color:var(--muted);font-weight:850;font-size:13px}
+    .meta span{border-radius:999px;border:1px solid rgba(203,213,225,.17);background:rgba(2,6,23,.24);padding:8px 11px;display:inline-flex;gap:6px;align-items:center}
     .tags{display:flex;flex-wrap:wrap;gap:8px}
-    .tag{border-radius:999px;padding:7px 11px;border:1px solid rgba(203,213,225,.22);color:var(--muted);background:rgba(2,6,23,.35);font-size:11px;font-weight:950}
-    .actions{display:flex;gap:10px;flex-wrap:wrap}
-    .btn{flex:1;min-width:180px;border-radius:999px;padding:14px 16px;font-size:14px;font-weight:1000;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;line-height:1;white-space:nowrap;border:0;cursor:pointer}
-    .btn.primary{background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;box-shadow:0 10px 24px rgba(250,204,21,.30)}
-    .btn.secondary{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.30);color:#bbf7d0}
-    .btn.ghost{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--ink)}
-    .contentGrid{margin-top:14px;display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
-    @media(max-width:860px){.contentGrid{grid-template-columns:1fr}.photo{height:290px}}
-    .panel{border-radius:22px;border:1px solid rgba(255,255,255,.10);background:var(--card);box-shadow:var(--shadow);overflow:hidden}
-    .panelHead{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-    .panelHead h2{font-size:18px;font-weight:1000;letter-spacing:-.01em}
-    .panelBody{padding:16px;display:grid;gap:14px}
-    .muted{color:var(--muted);font-weight:850;line-height:1.65;font-size:14px}
-    .infoList{display:grid;gap:10px}
-    .infoItem{border-radius:16px;border:1px solid var(--line);background:var(--card-2);padding:12px}
-    .infoK{font-size:12px;color:var(--muted);font-weight:900;margin-bottom:5px}
-    .infoV{font-size:14px;color:var(--ink);font-weight:950;line-height:1.5}
-    .servicesGrid{display:grid;gap:10px}
-    .serviceCard{border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(2,6,23,.28);padding:12px;display:grid;gap:8px}
-    .serviceTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
-    .serviceName{font-size:15px;font-weight:1000;color:var(--gold);line-height:1.2}
-    .serviceMeta{display:flex;gap:8px;flex-wrap:wrap}
-    .serviceChip{border-radius:999px;padding:6px 10px;font-size:11px;font-weight:1000;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--muted)}
-    .status{margin-top:14px;border-radius:16px;border:1px solid rgba(203,213,225,.14);background:rgba(2,6,23,.45);padding:12px;font-size:13px;font-weight:900;color:var(--muted);white-space:pre-wrap;line-height:1.5}
-    .footer{margin-top:22px;border-top:1px solid rgba(255,255,255,.08);padding-top:14px;font-size:12px;color:var(--muted);text-align:center;font-weight:850;line-height:1.5}
+    .tag{border-radius:999px;padding:7px 11px;border:1px solid rgba(203,213,225,.2);background:rgba(2,6,23,.32);color:var(--muted);font-size:12px;font-weight:900}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:3px}
+
+    .section{margin-top:14px;display:grid;gap:14px;grid-template-columns:1.05fr .95fr}
+    @media(max-width:880px){.section{grid-template-columns:1fr}}
+    .panel{border-radius:24px;border:1px solid rgba(255,255,255,.1);background:var(--card);box-shadow:0 14px 42px rgba(0,0,0,.3);overflow:hidden}
+    .panel-head{padding:15px 16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .panel-head h2{font-size:20px;font-weight:900;letter-spacing:-.01em}
+    .note{color:var(--muted);font-weight:800;font-size:13px;line-height:1.55}
+    .panel-body{padding:16px;display:grid;gap:12px}
+    .paragraph{color:rgba(234,255,241,.93);font-weight:800;line-height:1.7;font-size:14px}
+    .list{display:grid;gap:10px}
+    .info{border-radius:16px;border:1px solid rgba(255,255,255,.09);background:var(--card2);padding:12px}
+    .info .k{color:var(--muted);font-size:12px;font-weight:900;margin-bottom:5px}
+    .info .v{font-size:14px;font-weight:900;line-height:1.45;word-break:break-word}
+    .steps{display:grid;gap:10px}
+    .step{display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:start;border-radius:17px;border:1px solid rgba(255,255,255,.09);background:rgba(2,6,23,.27);padding:12px}
+    .num{width:38px;height:38px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;font-weight:900}
+    .step b{display:block;color:#fff;font-size:14px;margin-bottom:4px}
+    .step span{display:block;color:var(--muted);font-size:13px;font-weight:800;line-height:1.45}
+
+    .services{margin-top:14px;border-radius:24px;border:1px solid rgba(255,255,255,.1);background:var(--card);box-shadow:0 14px 42px rgba(0,0,0,.3);padding:16px}
+    .service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+    @media(max-width:920px){.service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:620px){.service-grid{grid-template-columns:1fr}}
+    .service{border-radius:18px;border:1px solid rgba(255,255,255,.1);background:rgba(2,6,23,.28);padding:13px;display:grid;gap:8px;min-height:100%}
+    .service-name{color:var(--gold);font-size:15px;font-weight:900;line-height:1.25}
+    .service-meta{display:flex;flex-wrap:wrap;gap:7px}
+    .service-pill{border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);padding:6px 9px;color:var(--muted);font-size:11px;font-weight:900}
+    .empty{border-radius:18px;border:1px dashed rgba(255,255,255,.16);background:rgba(2,6,23,.2);padding:16px;color:var(--muted);font-weight:900;line-height:1.6}
+
+    .status{margin-top:14px;border-radius:17px;border:1px solid rgba(255,255,255,.1);background:rgba(2,6,23,.42);padding:12px;color:var(--muted);font-size:13px;font-weight:900;line-height:1.5;white-space:pre-wrap}
+    .status.ok{border-color:rgba(34,197,94,.24);background:rgba(34,197,94,.09);color:#c7ffe1}
+    .status.warn{border-color:rgba(250,204,21,.24);background:rgba(250,204,21,.08);color:#fde68a}
+    .status.err{border-color:rgba(239,68,68,.22);background:rgba(239,68,68,.08);color:#fecaca}
+    .signature{margin-top:20px;text-align:center;color:var(--muted);font-weight:900;line-height:1.6;font-size:13px}
+    .signature strong{color:var(--gold)}
+
+    .bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:9998;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));background:rgba(6,27,20,.94);border-top:1px solid rgba(255,255,255,.1);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+    .bottom-inner{width:min(760px,100%);margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+    .bottom-inner a{min-height:54px;border-radius:14px;display:grid;place-items:center;align-content:center;gap:2px;color:rgba(234,255,241,.78);font-size:11px;font-weight:900;text-align:center;border:1px solid transparent;text-decoration:none;background:transparent;padding:0 4px}
+    .bottom-inner .ico{font-size:18px;line-height:1}
+    .bottom-inner a.active{background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d}
   </style>
 </head>
 <body>
   <div class="page">
-    <header class="nav">
-      <div class="nav-left">
-        <div class="logo-badge">📅</div>
+    <header class="topbar">
+      <a class="brand" href="./index.html" aria-label="Retour RESA">
+        <div class="logo">📅</div>
         <div>
-          <div class="logo-title">DIGIY RESA</div>
-          <div class="logo-sub">Fiche publique vivante · client d’abord</div>
+          <div class="brand-title">DIGIY RESA</div>
+          <div class="brand-sub">Voir le lieu · comprendre · réserver</div>
         </div>
-      </div>
-      <div class="nav-right">
-        <div class="pill"><span class="dot"></span> Lecture simple</div>
-        <a class="btn-small" href="./index.html">← Retour vitrine</a>
-        <a class="btn-small primary" id="navCustomFiche" href="https://vas-chez-digiy.digiylyfe.com/" target="_blank" rel="noopener">🌍 Fiche vivante</a>
+      </a>
+      <div class="top-actions">
+        <a class="mini" href="./index.html">← Tous les lieux</a>
+        <a class="mini" href="https://digiylyfe.com/">🌍 Site</a>
+        <a class="mini" href="https://digiy-hub.digiylyfe.com/">🧭 HUB</a>
+        <a class="mini primary" href="https://vas-chez-digiy.digiylyfe.com/">🤝 Proposer un lieu</a>
       </div>
     </header>
 
-    <section class="hero" id="hero"></section>
-
-    <section class="contentGrid">
-      <section class="panel">
-        <div class="panelHead">
-          <h2>Ambiance & expérience</h2>
-          <span class="muted">Ce que le client doit comprendre vite</span>
-        </div>
-        <div class="panelBody">
-          <div class="muted" id="ambianceText">Chargement…</div>
-          <div class="infoList">
-            <div class="infoItem"><div class="infoK">Ville</div><div class="infoV" id="cityInfo">—</div></div>
-            <div class="infoItem"><div class="infoK">Adresse / zone</div><div class="infoV" id="addressInfo">—</div></div>
-            <div class="infoItem"><div class="infoK">Horaires</div><div class="infoV" id="hoursInfo">—</div></div>
-            <div class="infoItem"><div class="infoK">Contact</div><div class="infoV" id="contactInfo">Côté fiche vivante contrôlée</div></div>
+    <main>
+      <section class="hero" id="hero">
+        <div class="hero-grid">
+          <div class="media"><div class="fallback">📅</div></div>
+          <div class="hero-body">
+            <span class="eyebrow">Chargement</span>
+            <h1>Ouverture de la fiche…</h1>
+            <p class="intro">On prépare les informations du lieu.</p>
           </div>
         </div>
       </section>
 
-      <section class="panel" id="reserver">
-        <div class="panelHead">
-          <h2>Réserver / avancer</h2>
-          <span class="muted">Parcours court terrain</span>
-        </div>
-        <div class="panelBody">
-          <div class="muted" id="reserveText">Chargement…</div>
-          <div class="infoList">
-            <div class="infoItem"><div class="infoK">Canal principal</div><div class="infoV" id="channelInfo">Fiche client DIGIY RESA</div></div>
-            <div class="infoItem"><div class="infoK">Réponse</div><div class="infoV">Manuelle, humaine, rapide</div></div>
-            <div class="infoItem"><div class="infoK">Usage</div><div class="infoV" id="usageInfo">Réservation simple</div></div>
+      <section class="section">
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Pourquoi venir ici ?</h2>
+              <div class="note">La lecture doit rester simple pour le client.</div>
+            </div>
           </div>
-          <div class="actions" id="bottomActions"></div>
+          <div class="panel-body">
+            <p class="paragraph" id="aboutText">Chargement…</p>
+            <div class="list">
+              <div class="info"><div class="k">Activité</div><div class="v" id="typeInfo">—</div></div>
+              <div class="info"><div class="k">Ville</div><div class="v" id="cityInfo">—</div></div>
+              <div class="info"><div class="k">Adresse / zone</div><div class="v" id="addressInfo">—</div></div>
+              <div class="info"><div class="k">Horaires</div><div class="v" id="hoursInfo">—</div></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Comment réserver ?</h2>
+              <div class="note">Peu de gestes, pas de confusion.</div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="steps">
+              <div class="step"><div class="num">1</div><div><b>Regarde le lieu</b><span>Tu comprends l’ambiance, l’activité et les infos utiles.</span></div></div>
+              <div class="step"><div class="num">2</div><div><b>Choisis ton moment</b><span>Tu sélectionnes une date, une heure et le nombre de personnes.</span></div></div>
+              <div class="step"><div class="num">3</div><div><b>Envoie ta demande</b><span>La demande part proprement, sans exposer les données sensibles du pro.</span></div></div>
+              <div class="step"><div class="num">4</div><div><b>Le pro confirme</b><span>La relation reste directe, humaine et claire.</span></div></div>
+            </div>
+            <div class="actions">
+              <a class="btn primary" id="reserveBtn" href="./index.html">📅 Réserver</a>
+              <a class="btn ghost" href="./index.html">← Voir d’autres lieux</a>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="services">
+        <div class="panel-head" style="padding:0 0 12px;border-bottom:1px solid rgba(255,255,255,.08);">
+          <div>
+            <h2>Services / prestations</h2>
+            <div class="note">Quelques repères avant de faire ta demande.</div>
+          </div>
+        </div>
+        <div class="service-grid" id="servicesBox">
+          <div class="empty" style="grid-column:1/-1;">Chargement des services…</div>
         </div>
       </section>
-    </section>
 
-    <section class="panel" style="margin-top:14px;">
-      <div class="panelHead">
-        <h2>Services / prestations</h2>
-        <span class="muted">Lecture simple pour le client</span>
+      <div class="status" id="statusText">Chargement de la fiche…</div>
+      <div class="signature">
+        RESA PUBLIC ne montre pas un logiciel.<br />
+        <strong>Il montre un lieu, puis il ouvre une demande simple.</strong>
       </div>
-      <div class="panelBody">
-        <div class="servicesGrid" id="servicesBox">
-          <div class="muted">Chargement des services…</div>
-        </div>
-      </div>
-    </section>
-
-    <div class="status" id="statusText">Chargement de la fiche…</div>
-
-    <footer class="footer">
-      DIGIY RESA • Fiche publique • Le pro devant, DIGIY derrière ∞
-    </footer>
+    </main>
   </div>
+
+  <nav class="bottom-nav" aria-label="Navigation rapide RESA">
+    <div class="bottom-inner">
+      <a href="./index.html"><span class="ico">📅</span><span>Lieux</span></a>
+      <a class="active" id="bottomReserve" href="./index.html"><span class="ico">📝</span><span>Réserver</span></a>
+      <a href="https://digiylyfe.com/"><span class="ico">🌍</span><span>Site</span></a>
+      <a href="https://vas-chez-digiy.digiylyfe.com/"><span class="ico">🤝</span><span>Proposer</span></a>
+    </div>
+  </nav>
 
   <script>
     (() => {
       "use strict";
 
-      const OFFICIAL_FICHE_URL = "https://vas-chez-digiy.digiylyfe.com/";
-      const PUBLIC_BASE_URL = "https://resa-table-resto.digiylyfe.com/";
-      const FALLBACK_PHOTO = "https://digiylyfe.net/wp-content/uploads/2026/03/digiylyfe_logo_qr.jpeg";
       const SUPABASE_URL = window.DIGIY_SUPABASE_URL;
       const SUPABASE_ANON_KEY = window.DIGIY_SUPABASE_ANON_KEY || window.DIGIY_SUPABASE_ANON;
-
+      const FALLBACK_PHOTO = "https://digiylyfe.net/wp-content/uploads/2026/03/digiylyfe_logo_qr.jpeg";
+      const DEFAULT_CITY = "Saly";
       let sb = null;
 
-      const DEMO_MAP = {
+      const DEMOS = {
         "atelier-brushing-saly": {
-          display_name:"Atelier Brushing Saly",business_type:"Coiffure",city:"Saly",
+          display_name:"Atelier Brushing Saly",
+          business_type:"Coiffure",
+          city:"Saly",
           address_text:"Quartier central • rendez-vous beauté",
-          bio:"Coupe, brushing, teinture et soins. Une fiche pensée pour découvrir l'ambiance puis demander un créneau simplement.",
-          badge:"✨ VITRINE DIGIY",hub_badge:"💇 BEAUTÉ",opening_hours_text:"09:00 - 19:00",
+          bio:"Coupe, brushing, teinture et soins. Une fiche pensée pour découvrir l’ambiance, comprendre les prestations et demander un créneau simplement.",
+          opening_hours_text:"09:00 - 19:00",
           photo_url:"https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80",
           tags:["Coiffure","Brushing","Teinture","Saly"],
-          services:[{service_name:"Coupe homme",duration_minutes:20,price_fcfa:3000},{service_name:"Brushing",duration_minutes:45,price_fcfa:6000},{service_name:"Teinture",duration_minutes:90,price_fcfa:15000}]
+          services:[
+            {id:"demo-1",service_name:"Coupe homme",duration_minutes:20,price_fcfa:3000},
+            {id:"demo-2",service_name:"Brushing",duration_minutes:45,price_fcfa:6000},
+            {id:"demo-3",service_name:"Teinture",duration_minutes:90,price_fcfa:15000}
+          ]
         },
         "garage-diagnostic-saly": {
-          display_name:"Garage Diagnostic Saly",business_type:"Garage",city:"Saly",
+          display_name:"Garage Diagnostic Saly",
+          business_type:"Garage",
+          city:"Saly",
           address_text:"Axe principal • mécanique légère",
-          bio:"Diagnostic, vidange, freins et petites interventions avec une lecture claire des besoins avant contact.",
-          badge:"✨ VITRINE DIGIY",hub_badge:"🔧 GARAGE",opening_hours_text:"08:00 - 18:00",
+          bio:"Diagnostic, vidange, freins et petites interventions. La fiche aide le client à comprendre le service avant de demander son moment.",
+          opening_hours_text:"08:00 - 18:00",
           photo_url:"https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=1200&q=80",
           tags:["Garage","Diagnostic","Vidange","Saly"],
-          services:[{service_name:"Diagnostic",duration_minutes:15,price_fcfa:5000},{service_name:"Vidange",duration_minutes:30,price_fcfa:10000},{service_name:"Freins",duration_minutes:60,price_fcfa:20000}]
+          services:[
+            {id:"demo-1",service_name:"Diagnostic",duration_minutes:15,price_fcfa:5000},
+            {id:"demo-2",service_name:"Vidange",duration_minutes:30,price_fcfa:10000},
+            {id:"demo-3",service_name:"Freins",duration_minutes:60,price_fcfa:20000}
+          ]
         },
         "terrasse-saveurs-saly": {
-          display_name:"Terrasse Saveurs Saly",business_type:"Restaurant",city:"Saly",
+          display_name:"Terrasse Saveurs Saly",
+          business_type:"Restaurant",
+          city:"Saly",
           address_text:"Terrasse • déjeuner & soirée",
-          bio:"Une table d'ambiance pour déjeuner tranquille, dîner simple ou recevoir des amis dans un cadre détendu.",
-          badge:"✨ VITRINE DIGIY",hub_badge:"🍽️ RESTAURANT",opening_hours_text:"12:00 - 23:00",
+          bio:"Une table d’ambiance pour déjeuner tranquille, dîner simple ou recevoir des amis dans un cadre détendu.",
+          opening_hours_text:"12:00 - 23:00",
           photo_url:"https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
           tags:["Restaurant","Terrasse","Déjeuner","Saly"],
-          services:[{service_name:"Table midi",duration_minutes:60,price_fcfa:null},{service_name:"Table soirée",duration_minutes:90,price_fcfa:null}]
+          services:[
+            {id:"demo-1",service_name:"Table midi",duration_minutes:60,price_fcfa:null},
+            {id:"demo-2",service_name:"Table soirée",duration_minutes:90,price_fcfa:null}
+          ]
         },
         "studio-onglerie-saly": {
-          display_name:"Studio Onglerie Saly",business_type:"Beauté",city:"Saly",
+          display_name:"Studio Onglerie Saly",
+          business_type:"Beauté",
+          city:"Saly",
           address_text:"Zone calme • soins esthétiques",
-          bio:"Pose, entretien, manucure et rendez-vous beauté avec lecture simple pour se projeter.",
-          badge:"✨ VITRINE DIGIY",hub_badge:"💅 BEAUTÉ",opening_hours_text:"10:00 - 19:00",
+          bio:"Pose, entretien, manucure et rendez-vous beauté avec une lecture simple pour se projeter avant de réserver.",
+          opening_hours_text:"10:00 - 19:00",
           photo_url:"https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=80",
           tags:["Beauté","Onglerie","Soin","Saly"],
-          services:[{service_name:"Pose",duration_minutes:60,price_fcfa:10000},{service_name:"Entretien",duration_minutes:45,price_fcfa:7000}]
+          services:[
+            {id:"demo-1",service_name:"Pose",duration_minutes:60,price_fcfa:10000},
+            {id:"demo-2",service_name:"Entretien",duration_minutes:45,price_fcfa:7000}
+          ]
         },
         "cabinet-conseil-saly": {
-          display_name:"Cabinet Conseil Saly",business_type:"Consultation",city:"Saly",
+          display_name:"Cabinet Conseil Saly",
+          business_type:"Consultation",
+          city:"Saly",
           address_text:"Bureau calme • rendez-vous pro",
           bio:"Consultations, échanges posés et rendez-vous organisés sur des créneaux nets pour éviter les confusions.",
-          badge:"✨ VITRINE DIGIY",hub_badge:"🩺 CONSULTATION",opening_hours_text:"09:00 - 17:00",
+          opening_hours_text:"09:00 - 17:00",
           photo_url:"https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
           tags:["Consultation","Conseil","Bureau","Saly"],
-          services:[{service_name:"Consultation simple",duration_minutes:30,price_fcfa:10000},{service_name:"Consultation longue",duration_minutes:60,price_fcfa:20000}]
+          services:[
+            {id:"demo-1",service_name:"Consultation simple",duration_minutes:30,price_fcfa:10000},
+            {id:"demo-2",service_name:"Consultation longue",duration_minutes:60,price_fcfa:20000}
+          ]
         },
         "atelier-service-saly": {
-          display_name:"Atelier Service Saly",business_type:"Atelier",city:"Saly",
+          display_name:"Atelier Service Saly",
+          business_type:"Atelier",
+          city:"Saly",
           address_text:"Service de quartier • rendez-vous utiles",
           bio:"Un atelier pensé pour les rendez-vous techniques, petits dépannages et services du quotidien avec lecture claire.",
-          badge:"✨ VITRINE DIGIY",hub_badge:"🛠️ ATELIER",opening_hours_text:"08:30 - 18:30",
+          opening_hours_text:"08:30 - 18:30",
           photo_url:"https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
           tags:["Atelier","Service","Quartier","Saly"],
-          services:[{service_name:"Diagnostic atelier",duration_minutes:30,price_fcfa:5000},{service_name:"Intervention",duration_minutes:60,price_fcfa:12000}]
+          services:[
+            {id:"demo-1",service_name:"Diagnostic atelier",duration_minutes:30,price_fcfa:5000},
+            {id:"demo-2",service_name:"Intervention",duration_minutes:60,price_fcfa:12000}
+          ]
         }
       };
 
-      function initSupabase(){
-        if(!window.supabase || typeof window.supabase.createClient !== "function") return null;
-        if(window.DIGIY_SB) return window.DIGIY_SB;
-
-        window.DIGIY_SB = window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{
-          auth:{
-            persistSession:false,
-            autoRefreshToken:false,
-            detectSessionInUrl:false,
-            storage:{getItem:()=>null,setItem:()=>{},removeItem:()=>{}}
-          }
-        });
-
-        return window.DIGIY_SB;
-      }
+      const $ = (id) => document.getElementById(id);
 
       function esc(s){
         return String(s ?? "")
@@ -252,21 +356,17 @@
           .replaceAll("'","&#039;");
       }
 
-      function qs(name){ return new URL(location.href).searchParams.get(name) || ""; }
-
-      function cleanVisibleUrl(){
-        try{
-          const u = new URL(location.href);
-          ["phone","tel","resa_"+"tel","owner_"+"phone","owner_id","business_"+"code","keybox_"+"code","keybox_"+"location","access_"+"note","module","from"].forEach(k => u.searchParams.delete(k));
-          history.replaceState({}, document.title, u.pathname + u.search + u.hash);
-        }catch(_){}
-      }
-
       function first(...vals){
         for(const v of vals){
           if(v !== null && v !== undefined && String(v).trim() !== "") return v;
         }
         return "";
+      }
+
+      function money(v){
+        const n = Number(v);
+        if(!Number.isFinite(n)) return "";
+        return n.toLocaleString("fr-FR") + " FCFA";
       }
 
       function normalizeKey(v){
@@ -279,90 +379,73 @@
           .replace(/^-|-$/g,"");
       }
 
-      function safePublicUrl(raw){
-        const v = String(raw || "").trim();
-        if(!/^https:\/\/[a-z0-9.-]+/i.test(v)) return "";
-
-        try{
-          const u = new URL(v);
-          ["phone","tel","resa_"+"tel","owner_"+"phone","owner_id","business_"+"code","keybox_"+"code","keybox_"+"location","access_"+"note","module","from"].forEach(k => u.searchParams.delete(k));
-          return u.toString();
-        }catch(_){
-          return "";
-        }
-      }
-
-      function publicFicheUrl(profile){
-        return safePublicUrl(first(
-          profile?.public_url,
-          profile?.profile_url,
-          profile?.fiche_url,
-          profile?.page_url,
-          OFFICIAL_FICHE_URL
-        )) || OFFICIAL_FICHE_URL;
-      }
-
       function isSafePublicKey(v){
-        const s = String(v || "").trim();
-        if(!s || /\d{6,}/.test(s)) return false;
+        const s = normalizeKey(v);
+        if(!s) return false;
+        if(/\d{6,}/.test(s)) return false;
         return /^[a-z0-9-]{3,80}$/i.test(s);
       }
 
-      function publicReserveUrl(profile, fallbackKey){
-        const direct = safePublicUrl(first(profile?.reservation_url,profile?.booking_url));
-        if(direct) return direct;
-
-        if(isSafePublicKey(fallbackKey)){
-          const u = new URL("reserver.html",PUBLIC_BASE_URL);
-          u.searchParams.set("slug",fallbackKey);
-          return u.toString();
-        }
-
-        return publicFicheUrl(profile);
+      function cleanVisibleUrl(){
+        try{
+          const u = new URL(location.href);
+          ["phone","tel","resa_"+"tel","owner_"+"phone","owner_id","business_"+"code","keybox_"+"code","keybox_"+"location","access_"+"note","module","from"].forEach(k => u.searchParams.delete(k));
+          history.replaceState({}, document.title, u.pathname + u.search + u.hash);
+        }catch(_){/* no-op */}
       }
 
-      function money(v){
-        const n = Number(v);
-        if(!Number.isFinite(n)) return "";
-        return `${n.toLocaleString("fr-FR")} FCFA`;
-      }
-
-      function tagsToArray(tags){
-        if(Array.isArray(tags)) return tags.filter(Boolean).map(String);
-        const s = String(tags || "").trim();
-        if(!s) return [];
-        return s.split(",").map(x => x.trim()).filter(Boolean);
-      }
-
-      function safeJsonParse(value){
-        try{ return typeof value === "string" ? JSON.parse(value) : value; }catch{ return null; }
-      }
-
-      function mapLiveRow(profile, fallbackKey){
+      function params(){
+        const u = new URL(location.href);
         return {
-          display_name:first(profile?.display_name,profile?.business_name,profile?.name,profile?.establishment_name) || "Activité",
-          business_type:first(profile?.business_type,profile?.category,profile?.type_label) || "Service local",
-          city:first(profile?.city) || "Saly",
-          address_text:first(profile?.address_text,profile?.address,profile?.location_text) || "",
-          bio:first(profile?.bio,profile?.description,profile?.about,profile?.short_description) || "Fiche publique DIGIY RESA.",
-          badge:"🟢 FICHE RÉELLE",
-          hub_badge:"DIGIY RESA",
-          opening_hours_text:first(profile?.opening_hours_text,profile?.open_hours,profile?.opening_hours) || "",
-          photo_url:first(profile?.cover_url,profile?.cover_image_url,profile?.logo_url,profile?.image_url,profile?.photo_url) || "",
-          tags:[
-            first(profile?.business_type,profile?.category,profile?.type_label) || "",
-            first(profile?.city) || "",
-            first(profile?.opening_hours_text,profile?.open_hours,profile?.opening_hours) ? `Horaires: ${first(profile?.opening_hours_text,profile?.open_hours,profile?.opening_hours)}` : ""
-          ].filter(Boolean),
-          public_url:publicFicheUrl(profile),
-          reservation_url:publicReserveUrl(profile,fallbackKey),
-          raw_key:normalizeKey(fallbackKey || first(profile?.slug) || "")
+          slug: normalizeKey(u.searchParams.get("slug") || ""),
+          demo: normalizeKey(u.searchParams.get("demo") || "")
         };
       }
 
-      async function loadServices(slug){
-        if(!slug || !sb) return [];
+      function safeJsonParse(value){
+        try{ return typeof value === "string" ? JSON.parse(value) : value; }
+        catch(_){ return null; }
+      }
 
+      function initSupabase(){
+        if(!window.supabase || typeof window.supabase.createClient !== "function") return null;
+        if(window.DIGIY_SB) return window.DIGIY_SB;
+        window.DIGIY_SB = window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{
+          auth:{
+            persistSession:false,
+            autoRefreshToken:false,
+            detectSessionInUrl:false,
+            storage:{getItem:()=>null,setItem:()=>{},removeItem:()=>{}}
+          },
+          global:{headers:{"X-Client-Info":"digiy-resa-fiche-public"}}
+        });
+        return window.DIGIY_SB;
+      }
+
+      function reserveHref(key, mode){
+        const u = new URL("./reserver.html", location.href);
+        if(mode === "demo") u.searchParams.set("demo", key);
+        else u.searchParams.set("slug", key);
+        return u.pathname + u.search;
+      }
+
+      async function loadProfile(slug){
+        if(!slug || !isSafePublicKey(slug) || !sb) return null;
+        try{
+          const {data,error} = await sb.rpc("resa_public_profile_by_slug",{p_slug:slug});
+          if(error) throw error;
+          const parsed = safeJsonParse(data) || data || {};
+          if(parsed && parsed.ok && parsed.profile) return parsed.profile;
+          return null;
+        }catch(e){
+          console.warn("DIGIY RESA fiche profile",e);
+          return null;
+        }
+      }
+
+      async function loadServices(slug, profileServices){
+        if(Array.isArray(profileServices) && profileServices.length) return profileServices;
+        if(!slug || !isSafePublicKey(slug) || !sb) return [];
         try{
           const {data,error} = await sb
             .from("digiy_resa_services")
@@ -370,183 +453,172 @@
             .eq("slug",slug)
             .eq("is_active",true)
             .order("service_name",{ascending:true});
-
           if(error) throw error;
           return Array.isArray(data) ? data : [];
         }catch(e){
-          console.error(e);
+          console.warn("DIGIY RESA fiche services",e);
           return [];
         }
       }
 
-      async function loadPublicProfileByKey(slug){
-        if(!slug || !sb) return null;
-
-        try{
-          const {data,error} = await sb.rpc("resa_public_profile_by_slug",{p_slug:slug});
-          if(error) throw error;
-
-          const parsed = safeJsonParse(data) || data || {};
-          if(!parsed?.ok) return null;
-
-          return parsed.profile || null;
-        }catch(e){
-          console.error(e);
-          return null;
-        }
+      function normalizeProfile(raw, key, mode){
+        const profile = raw || {};
+        return {
+          key,
+          mode,
+          display_name:first(profile.display_name,profile.business_name,profile.name,profile.establishment_name) || "Lieu à découvrir",
+          business_type:first(profile.business_type,profile.category,profile.type_label) || "Service local",
+          city:first(profile.city) || DEFAULT_CITY,
+          address_text:first(profile.address_text,profile.address,profile.location_text) || "Adresse à confirmer",
+          bio:first(profile.bio,profile.description,profile.about,profile.short_description) || "Ce lieu est présenté sur DIGIY RESA pour aider le client à comprendre vite et réserver simplement.",
+          opening_hours_text:first(profile.opening_hours_text,profile.open_hours,profile.opening_hours) || "Horaires à confirmer",
+          photo_url:first(profile.cover_url,profile.cover_image_url,profile.logo_url,profile.image_url,profile.photo_url) || "",
+          tags:Array.isArray(profile.tags) ? profile.tags : [first(profile.business_type,profile.category,profile.type_label), first(profile.city)].filter(Boolean),
+          services:Array.isArray(profile.services) ? profile.services : []
+        };
       }
 
-      function renderServices(services,businessType){
-        const box = document.getElementById("servicesBox");
+      function renderHero(item, services){
+        const photo = item.photo_url || FALLBACK_PHOTO;
+        const statusLabel = item.mode === "demo" ? "À découvrir" : "Réservable";
+        const reserve = reserveHref(item.key,item.mode);
+        document.title = `${item.display_name} — DIGIY RESA`;
 
-        if(!Array.isArray(services) || !services.length){
-          box.innerHTML = `<div class="muted">Aucun service détaillé pour l'instant. La fiche vivante reste la porte principale pour comprendre et avancer.</div>`;
-          return;
-        }
-
-        box.innerHTML = services.map(s => `
-          <article class="serviceCard">
-            <div class="serviceTop">
-              <div class="serviceName">${esc(s.service_name || "Service")}</div>
-              <div class="serviceMeta">
-                ${s.duration_minutes ? `<span class="serviceChip">⏱️ ${esc(String(s.duration_minutes))} min</span>` : ""}
-                ${money(s.price_fcfa) ? `<span class="serviceChip">💰 ${esc(money(s.price_fcfa))}</span>` : ""}
+        $("hero").innerHTML = `
+          <div class="hero-grid">
+            <div class="media">
+              <img src="${esc(photo + (photo.includes("?") ? "&" : "?") + "v=17")}" alt="${esc(item.display_name)}" loading="eager" onerror="this.outerHTML='<div class=&quot;fallback&quot;>📅</div>'" />
+              <div class="badge-row">
+                <span class="chip gold">📅 DIGIY RESA</span>
+                <span class="chip ${item.mode === "demo" ? "blue" : "green"}">${esc(statusLabel)}</span>
+                <span class="chip">📍 ${esc(item.city)}</span>
               </div>
             </div>
-            <div class="muted">${businessType ? `Prestation ${esc(String(businessType).toLowerCase())} disponible sur demande.` : "Prestation disponible sur demande."}</div>
-          </article>
-        `).join("");
-      }
-
-      function renderCard(item, opts = {}){
-        const hero = document.getElementById("hero");
-        const bottom = document.getElementById("bottomActions");
-        const status = document.getElementById("statusText");
-        const ambiance = document.getElementById("ambianceText");
-        const reserveText = document.getElementById("reserveText");
-        const customTop = document.getElementById("navCustomFiche");
-
-        const photoBase = item.photo_url || FALLBACK_PHOTO;
-        const photo = photoBase + (photoBase.includes("?") ? "&" : "?") + "v=15";
-        const businessType = item.business_type || "service local";
-        const ficheHref = safePublicUrl(item.public_url) || OFFICIAL_FICHE_URL;
-        const reserveHref = safePublicUrl(item.reservation_url) || ficheHref;
-        const isLive = !!opts.isLive;
-
-        customTop.href = ficheHref;
-
-        hero.innerHTML = `
-          <div class="photo">
-            <img src="${esc(photo)}" alt="${esc(item.display_name)}" onerror="this.outerHTML='<div class=&quot;photo-fallback&quot;>📅</div>'" />
-            <div class="badgeTop">
-              <span class="chip gold">${esc(item.badge || "📅 DIGIY RESA")}</span>
-              <span class="chip blue">${esc(item.hub_badge || "FICHE VIVANTE")}</span>
-              ${isLive ? `<span class="chip green">Fiche publiée</span>` : `<span class="chip">Vitrine</span>`}
+            <div class="hero-body">
+              <span class="eyebrow">Voir le lieu</span>
+              <h1>${esc(item.display_name)}</h1>
+              <p class="intro">${esc(item.bio)}</p>
+              <div class="meta">
+                <span>🏷️ ${esc(item.business_type)}</span>
+                <span>📍 ${esc(item.city)}</span>
+                <span>🕒 ${esc(item.opening_hours_text)}</span>
+                <span>🧾 ${services.length ? esc(String(services.length)) + " service(s)" : "Demande simple"}</span>
+              </div>
+              <div class="tags">
+                ${(item.tags || []).filter(Boolean).slice(0,6).map(t => `<span class="tag">${esc(t)}</span>`).join("")}
+              </div>
+              <div class="actions">
+                <a class="btn primary" href="${esc(reserve)}">📅 Faire une demande</a>
+                <a class="btn green" href="#services">🧾 Voir les services</a>
+                <a class="btn ghost" href="./index.html">← Tous les lieux</a>
+              </div>
             </div>
           </div>
-          <div class="heroBody">
-            <h1>${esc(item.display_name || "Activité")}</h1>
-            <div class="meta">
-              <span>🏷️ ${esc(businessType)}</span>
-              <span>📍 ${esc(item.city || "Saly")}${item.address_text ? " • " + esc(item.address_text) : ""}</span>
-              ${item.opening_hours_text ? `<span>🕒 ${esc(item.opening_hours_text)}</span>` : ""}
-            </div>
-            <div class="heroIntro">${esc(item.bio || "Fiche publique DIGIY RESA.")}</div>
-            <div class="tags">${tagsToArray(item.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
-            <div class="actions">
-              <a class="btn primary" href="${esc(ficheHref)}" target="_blank" rel="noopener">🌍 Ouvrir la fiche vivante</a>
-              <a class="btn secondary" href="${esc(reserveHref)}" target="_blank" rel="noopener">📅 Choisir un moment</a>
-              <a class="btn ghost" href="./index.html">← Retour vitrine</a>
-            </div>
-          </div>`;
+        `;
 
-        ambiance.textContent = item.bio || "Fiche publique DIGIY RESA.";
-        reserveText.textContent = isLive
-          ? "Cette fiche est publiée. Le client découvre l’activité, l’ambiance et les services avant de choisir le bon moment."
-          : "Cette fiche est une vitrine d’inspiration. Elle montre l’ambiance sans créer de fausse réservation.";
-
-        document.getElementById("cityInfo").textContent = item.city || "Saly";
-        document.getElementById("addressInfo").textContent = item.address_text || "Adresse à confirmer";
-        document.getElementById("hoursInfo").textContent = item.opening_hours_text || "Horaires à confirmer";
-        document.getElementById("contactInfo").textContent = "Côté fiche vivante contrôlée";
-        document.getElementById("usageInfo").textContent = isLive ? `Réservation simple pour ${String(businessType).toLowerCase()}` : `Découverte pour ${String(businessType).toLowerCase()}`;
-        document.getElementById("channelInfo").textContent = "Fiche client DIGIY RESA";
-
-        bottom.innerHTML = `
-          <a class="btn primary" href="${esc(ficheHref)}" target="_blank" rel="noopener">🌍 Ouvrir la fiche vivante</a>
-          <a class="btn secondary" href="${esc(reserveHref)}" target="_blank" rel="noopener">📅 Choisir un moment</a>
-          <a class="btn ghost" href="./index.html">← Retour vitrine</a>`;
-
-        status.textContent = isLive
-          ? "Fiche publique chargée. Porte personnalisée prioritaire : " + OFFICIAL_FICHE_URL
-          : "Fiche vitrine chargée. Ambiance claire, sans fausse réservation.";
+        $("reserveBtn").href = reserve;
+        $("bottomReserve").href = reserve;
       }
 
-      function renderFallback(){
-        const item = {
-          display_name:"Fiche DIGIY RESA",
-          business_type:"Service local",
-          city:"Saly",
-          address_text:"Fiche vivante",
-          bio:"Cette fiche personnalisée est la porte publique propre pour présenter l’activité, l’ambiance et le bon moment à choisir.",
-          badge:"📅 DIGIY RESA",
-          hub_badge:"FICHE VIVANTE",
-          opening_hours_text:"",
-          photo_url:FALLBACK_PHOTO,
-          tags:["RESA","Saly","Fiche vivante"],
-          public_url:OFFICIAL_FICHE_URL,
-          reservation_url:OFFICIAL_FICHE_URL
-        };
-
-        renderCard(item,{isLive:true});
-        renderServices([],"service local");
-        document.getElementById("statusText").textContent = "Fiche personnalisée prête : " + OFFICIAL_FICHE_URL;
+      function renderInfo(item){
+        $("aboutText").textContent = item.bio;
+        $("typeInfo").textContent = item.business_type;
+        $("cityInfo").textContent = item.city;
+        $("addressInfo").textContent = item.address_text;
+        $("hoursInfo").textContent = item.opening_hours_text;
       }
 
-      async function load(){
+      function renderServices(services){
+        const box = $("servicesBox");
+        if(!Array.isArray(services) || !services.length){
+          box.innerHTML = `<div class="empty" style="grid-column:1/-1;">Les services détaillés ne sont pas encore affichés. Le client peut quand même envoyer une demande simple.</div>`;
+          return;
+        }
+        box.innerHTML = services.map(s => {
+          const name = first(s.service_name,s.name,s.title) || "Service";
+          const duration = first(s.duration_minutes,s.duration) || "";
+          const price = money(s.price_fcfa || s.price || s.amount);
+          return `
+            <article class="service">
+              <div class="service-name">${esc(name)}</div>
+              <div class="service-meta">
+                ${duration ? `<span class="service-pill">⏱️ ${esc(duration)} min</span>` : ""}
+                ${price ? `<span class="service-pill">💰 ${esc(price)}</span>` : ""}
+              </div>
+              <div class="note">Disponible sur demande selon confirmation du professionnel.</div>
+            </article>
+          `;
+        }).join("");
+      }
+
+      function setStatus(text,tone){
+        const el = $("statusText");
+        el.className = "status" + (tone ? " " + tone : "");
+        el.textContent = text;
+      }
+
+      function renderNotFound(){
+        $("hero").innerHTML = `
+          <div class="hero-grid">
+            <div class="media"><div class="fallback">🔎</div></div>
+            <div class="hero-body">
+              <span class="eyebrow">Lieu introuvable</span>
+              <h1>Cette fiche n’est pas disponible</h1>
+              <p class="intro">La fiche demandée n’est pas encore publiée ou le lien n’est pas complet. Reviens à la liste des lieux pour continuer simplement.</p>
+              <div class="actions">
+                <a class="btn primary" href="./index.html">📅 Voir les lieux</a>
+                <a class="btn ghost" href="https://digiy-hub.digiylyfe.com/">🧭 HUB DIGIY</a>
+              </div>
+            </div>
+          </div>
+        `;
+        $("aboutText").textContent = "Fiche indisponible pour le moment.";
+        $("typeInfo").textContent = "—";
+        $("cityInfo").textContent = "—";
+        $("addressInfo").textContent = "—";
+        $("hoursInfo").textContent = "—";
+        renderServices([]);
+        setStatus("⚠️ Fiche indisponible. Aucun téléphone ni identifiant sensible n’est affiché.","warn");
+      }
+
+      async function boot(){
         cleanVisibleUrl();
-
-        const demo = (qs("demo") || "").trim();
-        const slug = normalizeKey(qs("slug") || "");
         sb = initSupabase();
-
-        if(demo && DEMO_MAP[demo]){
-          const item = {
-            ...DEMO_MAP[demo],
-            public_url:OFFICIAL_FICHE_URL,
-            reservation_url:OFFICIAL_FICHE_URL
-          };
-
-          renderCard(item,{isLive:false});
-          renderServices(item.services || [],item.business_type || "");
-          return;
-        }
-
-        if(!slug || !sb){
-          renderFallback();
-          return;
-        }
+        const p = params();
 
         try{
-          const profile = await loadPublicProfileByKey(slug);
-
-          if(!profile){
-            renderFallback();
+          if(p.demo && DEMOS[p.demo]){
+            const item = normalizeProfile(DEMOS[p.demo],p.demo,"demo");
+            const services = item.services || [];
+            renderHero(item,services);
+            renderInfo(item);
+            renderServices(services);
+            setStatus("✨ Lieu à découvrir. Le parcours reste simple et ne déclenche pas de fausse promesse.","ok");
             return;
           }
 
-          const mapped = mapLiveRow(profile,slug);
-          renderCard(mapped,{isLive:true});
+          if(p.slug && isSafePublicKey(p.slug)){
+            const profile = await loadProfile(p.slug);
+            if(profile){
+              const item = normalizeProfile(profile,p.slug,"live");
+              const services = await loadServices(p.slug,item.services);
+              renderHero(item,services);
+              renderInfo(item);
+              renderServices(services);
+              setStatus("✅ Fiche chargée. Le client peut faire sa demande sans voir les données sensibles du professionnel.","ok");
+              return;
+            }
+          }
 
-          const services = await loadServices(slug);
-          renderServices(services,mapped.business_type || "");
+          renderNotFound();
         }catch(e){
           console.error(e);
-          renderFallback();
+          renderNotFound();
+          setStatus("⚠️ Erreur de chargement. La page reste protégée et ne montre aucune donnée sensible.","err");
         }
       }
 
-      load();
+      boot();
     })();
   </script>
 </body>
