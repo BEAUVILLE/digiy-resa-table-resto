@@ -180,7 +180,7 @@
         <div class="logo">📅</div>
         <div>
           <div class="brand-title">DIGIY RESA</div>
-          <div class="brand-sub">Voir le lieu · comprendre · réserver</div>
+          <div class="brand-sub">Fiche simple · QR visible · réserver</div>
         </div>
       </a>
       <div class="top-actions">
@@ -411,18 +411,25 @@
       }
 
       function money(v){
-        if(v === null || v === undefined) return "sur demande";
+        if(v === null || v === undefined) return "";
         const raw = String(v).trim();
-        if(raw === "") return "sur demande";
+        if(raw === "") return "";
         const n = Number(raw);
-        if(!Number.isFinite(n) || n <= 0) return "sur demande";
+        if(!Number.isFinite(n) || n <= 0) return "";
         return n.toLocaleString("fr-FR") + " FCFA";
       }
 
       function normalizeKey(v){
-        return String(v || "")
+        let s = String(v || "")
           .trim()
-          .toLowerCase()
+          .toLowerCase();
+
+        /* Tolérance terrain/cache :
+           accepte slug=resa-221771342889.v2 ou slug=resa-221771342889-v2
+           sans casser la recherche Supabase. */
+        s = s.replace(/(?:[._-]?v\d+)$/i, "");
+
+        return s
           .replace(/\s+/g,"-")
           .replace(/[^a-z0-9-]/g,"")
           .replace(/-+/g,"-")
@@ -432,8 +439,9 @@
       function isSafePublicKey(v){
         const s = normalizeKey(v);
         if(!s) return false;
-        if(/\d{6,}/.test(s)) return false;
-        return /^[a-z0-9-]{3,80}$/i.test(s);
+        /* Les slugs RESA réels peuvent contenir un téléphone/identifiant long,
+           ex : resa-221771342889. On ne le bloque plus ici. */
+        return /^[a-z0-9-]{3,100}$/i.test(s);
       }
 
       function cleanVisibleUrl(){
@@ -587,6 +595,14 @@
         return u.toString();
       }
 
+      function publicReservationUrl(item){
+        const u = new URL("./reserver.html", location.href);
+        ["phone","tel","resa_"+"tel","owner_"+"phone","owner_id","business_"+"code","keybox_"+"code","keybox_"+"location","access_"+"note","module","from"].forEach(k => u.searchParams.delete(k));
+        if(item.mode === "demo") u.searchParams.set("demo", item.key);
+        else u.searchParams.set("slug", item.key);
+        return u.toString();
+      }
+
       function qrApiUrl(link){
         return "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + encodeURIComponent(link);
       }
@@ -618,7 +634,7 @@
           copyBtn.onclick = async () => {
             try{
               await copyText(link);
-              setStatus("✅ Lien de la fiche copié. Le client peut revenir au lieu sans se perdre.","ok");
+              setStatus("✅ Lien de réservation copié. Le client peut faire sa demande sans se perdre.","ok");
             }catch(_){
               setStatus("⚠️ Copie bloquée par le navigateur. Ouvre la fiche puis copie le lien depuis la barre d’adresse.","warn");
             }
@@ -634,7 +650,7 @@
             try{
               if(navigator.share){
                 await navigator.share(payload);
-                setStatus("✅ Fiche prête à circuler. Le QR garde la porte ouverte côté client.","ok");
+                setStatus("✅ Réservation prête à circuler. Le QR ouvre la demande côté client.","ok");
               }else{
                 await copyText(link);
                 setStatus("✅ Partage direct indisponible : lien copié à la place.","ok");
@@ -649,14 +665,15 @@
       function renderQr(item){
         const section = $("qrSection");
         if(!section) return;
-        const link = publicFicheUrl(item);
+        const link = publicReservationUrl(item);
         section.hidden = false;
         $("qrImage").src = qrApiUrl(link);
-        $("qrImage").alt = `QR code fiche RESA ${item.display_name}`;
-        $("qrTitle").textContent = `📲 QR du lieu · ${item.display_name}`;
-        $("qrText").textContent = "Scanne ou partage ce QR pour ouvrir directement la fiche du lieu. Le client revient ici, voit le lieu, puis réserve simplement.";
+        $("qrImage").alt = `QR code réservation RESA ${item.display_name}`;
+        $("qrTitle").textContent = `📲 QR réservation · ${item.display_name}`;
+        $("qrText").textContent = "Scanne ou partage ce QR pour ouvrir directement la demande de réservation. La fiche présente le lieu, le QR lance l’action.";
         $("qrLinkText").textContent = link;
         $("qrOpenBtn").href = link;
+        $("qrOpenBtn").textContent = "📅 Ouvrir la réservation";
         bindQrButtons(link,item);
       }
 
@@ -763,5 +780,6 @@
   </script>
 </body>
 </html>
+
 
 
