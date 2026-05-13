@@ -98,6 +98,51 @@
     .helper{margin-top:10px;color:var(--muted);font-size:12px;font-weight:800;line-height:1.55;}
     .footer{margin-top:16px;text-align:center;color:var(--muted);font-size:12px;font-weight:800;}
     .hidden{display:none !important;}
+
+    /* DIGIY RESA — lisibilité renforcée terrain mobile */
+    body{font-size:18px;line-height:1.55;}
+    .wrap{gap:18px;}
+    .hero-body{padding:28px;gap:20px;}
+    h1{font-size:clamp(38px,5.4vw,62px);line-height:1.02;}
+    h2{font-size:clamp(26px,3vw,34px);line-height:1.08;margin-bottom:14px;}
+    .subtitle{font-size:clamp(19px,2.2vw,24px);line-height:1.55;font-weight:900;}
+    .badge,.pill,.hero-badge{font-size:15px;padding:11px 15px;}
+    .card{padding:24px;}
+    .muted{font-size:18px;line-height:1.65;font-weight:850;}
+    label{font-size:17px;font-weight:950;color:rgba(236,255,244,.88);}
+    input,textarea,select{min-height:62px;font-size:19px;padding:15px 16px;border-radius:17px;font-weight:850;}
+    textarea{min-height:132px;}
+    .btn{min-height:60px;padding:15px 20px;border-radius:17px;font-size:18px;font-weight:1000;}
+    .slot{min-height:58px;font-size:18px;border-radius:17px;padding:13px 15px;}
+    .service{padding:18px;border-radius:22px;}
+    .service-name{font-size:22px;line-height:1.18;}
+    .service-pill{font-size:16px;padding:9px 12px;}
+    .fact{padding:18px;border-radius:22px;}
+    .fact .k{font-size:16px;margin-bottom:8px;}
+    .fact .v{font-size:19px;line-height:1.55;}
+    .summary-box{padding:20px;border-radius:24px;}
+    .summary-box h3{font-size:22px;}
+    .summary-item{padding:16px;border-radius:18px;}
+    .summary-item .k{font-size:14px;}
+    .summary-item .v{font-size:19px;line-height:1.5;}
+    .status{font-size:18px;min-height:62px;padding:16px 18px;border-radius:19px;}
+    .helper,.footer{font-size:16px;line-height:1.6;}
+    @media(max-width:720px){
+      body{padding:12px;font-size:18px;}
+      .hero-grid{min-height:auto;}
+      .hero-media{min-height:220px;}
+      .hero-body{padding:22px;}
+      .card{padding:20px;}
+      h1{font-size:clamp(34px,10vw,46px);}
+      h2{font-size:28px;}
+      .subtitle{font-size:20px;}
+      .badge,.pill,.hero-badge{font-size:14px;}
+      input,textarea,select{font-size:18px;min-height:60px;}
+      .btn{width:100%;font-size:18px;}
+      .service-name{font-size:21px;}
+      .summary-grid,.inline2{grid-template-columns:1fr;}
+    }
+
   </style>
 </head>
 <body>
@@ -607,4 +652,5 @@
   </script>
 </body>
 </html>
+
 
