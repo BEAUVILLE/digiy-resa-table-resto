@@ -98,51 +98,32 @@
     .helper{margin-top:10px;color:var(--muted);font-size:12px;font-weight:800;line-height:1.55;}
     .footer{margin-top:16px;text-align:center;color:var(--muted);font-size:12px;font-weight:800;}
     .hidden{display:none !important;}
-
-    /* DIGIY RESA — lisibilité renforcée terrain mobile */
-    body{font-size:18px;line-height:1.55;}
-    .wrap{gap:18px;}
-    .hero-body{padding:28px;gap:20px;}
-    h1{font-size:clamp(38px,5.4vw,62px);line-height:1.02;}
-    h2{font-size:clamp(26px,3vw,34px);line-height:1.08;margin-bottom:14px;}
-    .subtitle{font-size:clamp(19px,2.2vw,24px);line-height:1.55;font-weight:900;}
-    .badge,.pill,.hero-badge{font-size:15px;padding:11px 15px;}
-    .card{padding:24px;}
-    .muted{font-size:18px;line-height:1.65;font-weight:850;}
-    label{font-size:17px;font-weight:950;color:rgba(236,255,244,.88);}
-    input,textarea,select{min-height:62px;font-size:19px;padding:15px 16px;border-radius:17px;font-weight:850;}
-    textarea{min-height:132px;}
-    .btn{min-height:60px;padding:15px 20px;border-radius:17px;font-size:18px;font-weight:1000;}
-    .slot{min-height:58px;font-size:18px;border-radius:17px;padding:13px 15px;}
-    .service{padding:18px;border-radius:22px;}
-    .service-name{font-size:22px;line-height:1.18;}
-    .service-pill{font-size:16px;padding:9px 12px;}
-    .fact{padding:18px;border-radius:22px;}
-    .fact .k{font-size:16px;margin-bottom:8px;}
-    .fact .v{font-size:19px;line-height:1.55;}
-    .summary-box{padding:20px;border-radius:24px;}
+  
+    /* DIGIY MOBILE BIG FONT DOCTRINE — le terrain doit lire sans zoomer */
+    body{font-size:18px;}
+    h1{font-size:clamp(38px,8vw,58px);line-height:1.04;}
+    h2{font-size:clamp(26px,5.8vw,36px);line-height:1.12;}
+    .subtitle,.muted,.helper,.status,.fact .v{font-size:18px;line-height:1.65;}
+    label{font-size:17px;}
+    input,textarea,select{font-size:18px;min-height:62px;}
+    .btn,.slot{font-size:18px;min-height:62px;padding:16px 18px;}
+    .badge,.pill,.hero-badge,.service-pill{font-size:15px;}
+    .service-name{font-size:22px;}
+    .service{padding:18px;}
     .summary-box h3{font-size:22px;}
-    .summary-item{padding:16px;border-radius:18px;}
-    .summary-item .k{font-size:14px;}
-    .summary-item .v{font-size:19px;line-height:1.5;}
-    .status{font-size:18px;min-height:62px;padding:16px 18px;border-radius:19px;}
-    .helper,.footer{font-size:16px;line-height:1.6;}
-    @media(max-width:720px){
-      body{padding:12px;font-size:18px;}
+    .summary-item .k,.fact .k{font-size:14px;}
+    .summary-item .v{font-size:18px;}
+    @media(max-width:640px){
+      body{padding:10px;font-size:18px;}
+      .hero-body,.card{padding:18px;}
       .hero-grid{min-height:auto;}
-      .hero-media{min-height:220px;}
-      .hero-body{padding:22px;}
-      .card{padding:20px;}
-      h1{font-size:clamp(34px,10vw,46px);}
-      h2{font-size:28px;}
-      .subtitle{font-size:20px;}
-      .badge,.pill,.hero-badge{font-size:14px;}
-      input,textarea,select{font-size:18px;min-height:60px;}
-      .btn{width:100%;font-size:18px;}
-      .service-name{font-size:21px;}
-      .summary-grid,.inline2{grid-template-columns:1fr;}
+      .hero-media{min-height:230px;}
+      .hero-actions .btn,.btn{width:100%;}
+      .slots{grid-template-columns:1fr 1fr;}
+      .service-top{gap:14px;}
+      .service-meta{width:100%;}
+      .service-pill{font-size:15px;padding:10px 12px;}
     }
-
   </style>
 </head>
 <body>
@@ -251,6 +232,8 @@
       const SUPABASE_URL = window.DIGIY_SUPABASE_URL;
       const SUPABASE_ANON_KEY = window.DIGIY_SUPABASE_ANON_KEY || window.DIGIY_SUPABASE_ANON;
       const SUPPORT_WA = "";
+      const DEFAULT_RESA_SLUG = "resa-221771342889";
+      const RESA_SLUG_ALIASES = new Set(["", "digiylyfe", "bon-vivre", "bonvivre", "service-de-prestation-internet"]);
 
       const params = new URLSearchParams(location.search);
       const $ = (id) => document.getElementById(id);
@@ -320,6 +303,7 @@
       };
 
       function normalizeSlug(v){ return String(v||"").trim().toLowerCase().replace(/\s+/g,"-").replace(/[^a-z0-9-]/g,"").replace(/-+/g,"-").replace(/^-|-$/g,""); }
+      function resolveResaSlug(v){ const s=normalizeSlug(v); return RESA_SLUG_ALIASES.has(s) ? DEFAULT_RESA_SLUG : s; }
       function normalizePhone(v){ return String(v||"").replace(/[^\d]/g,""); }
       function escapeHtml(str){ return String(str??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;"); }
       function safe(v,fallback="—"){ const s=String(v||"").trim(); return s||fallback; }
@@ -338,6 +322,55 @@
       function waLink(phone,name,extra=""){ const clean=normalizePhone(phone||""); if(!clean)return ""; const msg=extra||`Bonjour ${name||""}, je vous contacte via votre fiche DIGIY RESA.`; return "https://wa.me/"+clean+"?text="+encodeURIComponent(msg); }
       function ficheLink({slug="",demo=""}={}){ const u=new URL("./fiche.html",location.href); if(slug)u.searchParams.set("slug",slug); if(!slug&&demo)u.searchParams.set("demo",demo); return u.pathname+u.search; }
       function safeJsonParse(value){ try{ return typeof value==="string"?JSON.parse(value):value; }catch{ return null; } }
+
+      const HELD_SLOTS_KEY = "DIGIY_RESA_HELD_SLOTS_V1";
+      const HOLD_TTL_MS = 6 * 60 * 60 * 1000;
+
+      function slotHoldKey(slug,date,time){
+        return [resolveResaSlug(slug), String(date||""), String(time||"").slice(0,5)].join("|");
+      }
+
+      function readLocalHolds(){
+        try{
+          const now = Date.now();
+          const rows = JSON.parse(localStorage.getItem(HELD_SLOTS_KEY) || "[]");
+          const clean = Array.isArray(rows) ? rows.filter(x => x && Number(x.expiresAt||0) > now) : [];
+          localStorage.setItem(HELD_SLOTS_KEY, JSON.stringify(clean));
+          return clean;
+        }catch(_){
+          return [];
+        }
+      }
+
+      function writeLocalHolds(rows){
+        try{ localStorage.setItem(HELD_SLOTS_KEY, JSON.stringify(Array.isArray(rows) ? rows : [])); }catch(_){}
+      }
+
+      function rememberHeldSlot(slug,date,time,tracking=""){
+        const cleanSlug = resolveResaSlug(slug);
+        const key = slotHoldKey(cleanSlug,date,time);
+        if(!cleanSlug || !date || !time) return;
+        const rows = readLocalHolds().filter(x => x.key !== key);
+        rows.push({
+          key,
+          slug: cleanSlug,
+          date: String(date),
+          time: String(time).slice(0,5),
+          tracking: String(tracking||""),
+          createdAt: new Date().toISOString(),
+          expiresAt: Date.now() + HOLD_TTL_MS
+        });
+        writeLocalHolds(rows);
+      }
+
+      function applyHeldSlots(slug,date,slots){
+        const held = new Set(readLocalHolds().map(x => x.key));
+        return (Array.isArray(slots) ? slots : []).map(slot => {
+          const time = String(slot?.time || "").slice(0,5);
+          const isHeld = held.has(slotHoldKey(slug,date,time));
+          return isHeld ? {...slot, available:false, held:true} : slot;
+        });
+      }
 
       function setStatus(msg,tone=""){ const box=$("statusBox"); box.className="status"+(tone?" "+tone:""); box.textContent=msg; }
       function setBusy(isBusy){ $("btnSubmit").disabled=isBusy||!SERVICES.length||MODE!=="live"; $("btnReloadSlots").disabled=isBusy||MODE!=="live"; $("serviceSelect").disabled=isBusy||!SERVICES.length; }
@@ -460,14 +493,24 @@
       }
 
       async function loadLiveProfile(slug){
-        const data=await rpc("resa_public_profile_by_slug",{p_slug:slug});
+        const cleanSlug = resolveResaSlug(slug);
+        let data = await rpc("resa_public_profile_by_slug",{p_slug:cleanSlug});
+        if(!data?.ok && cleanSlug !== DEFAULT_RESA_SLUG){
+          data = await rpc("resa_public_profile_by_slug",{p_slug:DEFAULT_RESA_SLUG});
+        }
         if(!data?.ok)throw new Error(data?.error||"profile_not_found");
         PROFILE=data.profile||{}; return PROFILE;
       }
 
       async function loadLiveServices(slug){
-        const{data,error}=await sb.from("digiy_resa_services").select("id,service_name,duration_minutes,price_fcfa,is_active").eq("slug",slug).eq("is_active",true).order("service_name",{ascending:true});
+        const cleanSlug = resolveResaSlug(slug);
+        let {data,error}=await sb.from("digiy_resa_services").select("id,service_name,duration_minutes,price_fcfa,is_active").eq("slug",cleanSlug).eq("is_active",true).order("service_name",{ascending:true});
         if(error)throw error;
+        if((!Array.isArray(data) || !data.length) && cleanSlug !== DEFAULT_RESA_SLUG){
+          const fallback = await sb.from("digiy_resa_services").select("id,service_name,duration_minutes,price_fcfa,is_active").eq("slug",DEFAULT_RESA_SLUG).eq("is_active",true).order("service_name",{ascending:true});
+          if(fallback.error) throw fallback.error;
+          data = fallback.data;
+        }
         SERVICES=Array.isArray(data)?data:[]; renderServiceSelect(); renderServicesCards();
       }
 
@@ -475,22 +518,26 @@
 
       async function loadSlots(slug){
         if(MODE!=="live")return;
+        const cleanSlug = resolveResaSlug(slug);
         const service=getSelectedService(); const date=$("dateInput").value||todayISO();
         $("slotsBox").innerHTML=`<button class="slot off" type="button" disabled>Chargement…</button>`;
         ACTIVE_SLOTS=[]; SELECTED_SLOT="";
         const attempts=[];
-        if(service?.id)attempts.push({fn:"digiy_resa_get_slots_by_service",args:{p_slug:slug,p_service_id:service.id,p_date:date}});
-        attempts.push({fn:"digiy_resa_get_available_slots",args:{p_slug:slug,p_date:date}});
+        if(service?.id)attempts.push({fn:"digiy_resa_get_slots_by_service",args:{p_slug:cleanSlug,p_service_id:service.id,p_date:date}});
+        attempts.push({fn:"digiy_resa_get_available_slots",args:{p_slug:cleanSlug,p_date:date}});
         let slots=[];
         for(const a of attempts){ try{const data=await rpc(a.fn,a.args);slots=normalizeSlotResult(data);if(slots.length)break;}catch(_){} }
-        ACTIVE_SLOTS=slots; renderSlots();
+        ACTIVE_SLOTS=applyHeldSlots(cleanSlug,date,slots); renderSlots();
       }
 
       function renderSlots(){
         const box=$("slotsBox");
         if(MODE!=="live"){box.innerHTML=`<button class="slot off" type="button" disabled>Pas de créneaux automatiques pour cette fiche.</button>`;return;}
-        if(!ACTIVE_SLOTS.length){box.innerHTML=`<button class="slot off" type="button" disabled>Aucun créneau remonté. Tu peux saisir l'heure manuellement.</button>`;return;}
-        box.innerHTML=ACTIVE_SLOTS.map(slot=>`<button class="slot ${slot.time===SELECTED_SLOT?"active":""} ${slot.available?"":"off"}" type="button" data-time="${escapeHtml(slot.time)}" ${slot.available?"":"disabled"}>${escapeHtml(slot.time)}</button>`).join("");
+        if(!ACTIVE_SLOTS.length){box.innerHTML=`<button class="slot off" type="button" disabled>Aucun créneau automatique remonté. Indique l'heure souhaitée manuellement.</button>`;return;}
+        box.innerHTML=ACTIVE_SLOTS.map(slot=>{
+          const label = slot.held ? `${slot.time} · réservé` : slot.time;
+          return `<button class="slot ${slot.time===SELECTED_SLOT?"active":""} ${slot.available?"":"off"}" type="button" data-time="${escapeHtml(slot.time)}" ${slot.available?"":"disabled"}>${escapeHtml(label)}</button>`;
+        }).join("");
         box.querySelectorAll("[data-time]").forEach(btn=>{
           btn.addEventListener("click",()=>{ SELECTED_SLOT=String(btn.getAttribute("data-time")||""); $("timeInput").value=SELECTED_SLOT; updateSummary(); renderSlots(); });
         });
@@ -505,6 +552,7 @@
       }
 
       async function submitLive(slug){
+        const cleanSlug = resolveResaSlug(slug);
         const service=getSelectedService();
         const bookingDate=$("dateInput").value||"";
         const bookingTime=$("timeInput").value||"";
@@ -596,7 +644,8 @@
 
       async function boot(){
         cleanVisibleUrl();
-        const slug=normalizeSlug(params.get("slug")||"");
+        const rawSlug=normalizeSlug(params.get("slug")||"");
+        const slug=resolveResaSlug(rawSlug);
         const demo=String(params.get("demo")||"").trim();
 
         $("dateInput").value=todayISO(); $("dateInput").min=todayISO(); $("dateInput").max=addDaysISO(60);
