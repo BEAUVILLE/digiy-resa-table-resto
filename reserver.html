@@ -36,6 +36,17 @@
     .hero-media{position:relative;min-height:300px;background:#0a1712;overflow:hidden;}
     .hero-media img{width:100%;height:100%;object-fit:cover;display:block;background:#0f1d17;}
     .hero-media-fallback{width:100%;height:100%;min-height:300px;display:grid;place-items:center;background:radial-gradient(circle at 30% 20%, rgba(250,204,21,.18), transparent 30%),radial-gradient(circle at 75% 15%, rgba(34,197,94,.14), transparent 28%),linear-gradient(180deg, #111827, #0b1120);color:#fff;font-size:54px;font-weight:1000;}
+    .hero-qr-wrap{width:100%;height:100%;min-height:300px;display:grid;place-items:center;padding:18px;background:radial-gradient(circle at 30% 20%, rgba(250,204,21,.18), transparent 32%),radial-gradient(circle at 78% 18%, rgba(34,197,94,.16), transparent 30%),linear-gradient(180deg,#0b1d15,#07140f);}
+    .hero-qr-card{width:min(92%,330px);border-radius:28px;border:1px solid rgba(250,204,21,.32);background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.035));box-shadow:0 18px 48px rgba(0,0,0,.36);padding:18px;display:grid;gap:13px;text-align:center;}
+    .hero-qr-kicker{display:inline-flex;justify-content:center;align-items:center;gap:8px;margin:auto;padding:9px 13px;border-radius:999px;border:1px solid rgba(250,204,21,.25);background:rgba(250,204,21,.11);color:#fde68a;font-size:15px;font-weight:1000;}
+    .hero-qr-img{width:min(100%,230px);height:auto;margin:auto;display:block;border-radius:22px;background:#fff;padding:12px;border:1px solid rgba(250,204,21,.45);box-shadow:0 14px 34px rgba(0,0,0,.34);}
+    .hero-qr-title{font-size:25px;line-height:1.12;font-weight:1000;color:var(--gold);}
+    .hero-qr-text{color:var(--muted);font-size:16px;line-height:1.45;font-weight:900;}
+    .hero-qr-link{border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.18);padding:10px;word-break:break-word;font-size:12px;line-height:1.35;color:rgba(236,255,244,.72);font-weight:900;}
+    .hero-qr-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .hero-qr-actions .btn{min-width:0;width:100%;min-height:50px;font-size:15px;padding:12px;}
+    @media(max-width:640px){.hero-qr-card{width:100%;}.hero-qr-img{width:min(82vw,250px)}.hero-qr-actions{grid-template-columns:1fr}.hero-qr-title{font-size:28px}.hero-qr-text{font-size:18px}.hero-qr-link{font-size:13px}.hero-qr-kicker{font-size:16px}}
+
     .hero-badge{position:absolute;left:16px;bottom:16px;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(7,20,15,.72);color:#fff6c9;font-size:12px;font-weight:950;backdrop-filter:blur(8px);}
     .hero-badge .dot{width:8px;height:8px;border-radius:999px;background:var(--primary);box-shadow:0 0 0 4px rgba(34,197,94,.14);}
     .hero-body{padding:24px;display:grid;gap:18px;align-content:start;}
@@ -131,7 +142,7 @@
     <section class="hero">
       <div class="hero-grid">
         <div class="hero-media" id="heroMedia">
-          <div class="hero-media-fallback">📅</div>
+          <div class="hero-media-fallback">📲</div>
           <div class="hero-badge"><span class="dot"></span>Demande de réservation</div>
         </div>
         <div class="hero-body">
@@ -244,6 +255,8 @@
       let ACTIVE_SLOTS = [];
       let SELECTED_SLOT = "";
       let MODE = "live";
+      let CURRENT_RESA_SLUG = DEFAULT_RESA_SLUG;
+      let CURRENT_DEMO_ID = "";
 
       const DEMO_MAP = {
         "atelier-brushing-saly": {
@@ -308,12 +321,11 @@
       function escapeHtml(str){ return String(str??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;"); }
       function safe(v,fallback="—"){ const s=String(v||"").trim(); return s||fallback; }
       function money(v){
-        const label = "Inclus selon la prestation";
-        if(v === null || v === undefined) return label;
+        if(v === null || v === undefined) return "";
         const raw = String(v).trim();
-        if(raw === "") return label;
+        if(raw === "") return "";
         const n = Number(raw);
-        if(!Number.isFinite(n) || n <= 0) return label;
+        if(!Number.isFinite(n) || n <= 0) return "";
         return n.toLocaleString("fr-FR") + " FCFA";
       }
       function todayISO(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
@@ -321,6 +333,27 @@
       function pickMainImage(p){ return [p?.cover_url,p?.photo_url,p?.image_url,p?.cover_image_url].filter(Boolean)[0]||""; }
       function waLink(phone,name,extra=""){ const clean=normalizePhone(phone||""); if(!clean)return ""; const msg=extra||`Bonjour ${name||""}, je vous contacte via votre fiche DIGIY RESA.`; return "https://wa.me/"+clean+"?text="+encodeURIComponent(msg); }
       function ficheLink({slug="",demo=""}={}){ const u=new URL("./fiche.html",location.href); if(slug)u.searchParams.set("slug",slug); if(!slug&&demo)u.searchParams.set("demo",demo); return u.pathname+u.search; }
+      function reservationUrl({slug="",demo=""}={}){
+        const u = new URL("./reserver.html", location.href);
+        if(demo) u.searchParams.set("demo", demo);
+        else u.searchParams.set("slug", resolveResaSlug(slug || CURRENT_RESA_SLUG || DEFAULT_RESA_SLUG));
+        return u.toString();
+      }
+      function qrApiUrl(text,size=520){
+        const s = Math.max(220, Number(size)||520);
+        return "https://api.qrserver.com/v1/create-qr-code/?size=" + s + "x" + s + "&margin=14&data=" + encodeURIComponent(text);
+      }
+      async function copyText(value){
+        const text = String(value || "").trim();
+        if(!text) throw new Error("copy_empty");
+        if(navigator.clipboard?.writeText){ await navigator.clipboard.writeText(text); return true; }
+        const ta=document.createElement("textarea");
+        ta.value=text; ta.setAttribute("readonly",""); ta.style.position="fixed"; ta.style.left="-9999px";
+        document.body.appendChild(ta); ta.select();
+        const ok=document.execCommand("copy"); ta.remove();
+        if(!ok) throw new Error("copy_failed");
+        return true;
+      }
       function safeJsonParse(value){ try{ return typeof value==="string"?JSON.parse(value):value; }catch{ return null; } }
 
       const HELD_SLOTS_KEY = "DIGIY_RESA_HELD_SLOTS_V1";
@@ -394,12 +427,37 @@
 
       function setHeroImage(profile,displayName,city,activity){
         const heroMedia=$("heroMedia");
-        const imageUrl=pickMainImage(profile);
-        const badgeText=city&&activity?`${activity} • ${city}`:city?`Lieu public • ${city}`:"Demande de réservation";
-        if(imageUrl){
-          heroMedia.innerHTML=`<img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(displayName)}" loading="eager" onerror="this.outerHTML='<div class=&quot;hero-media-fallback&quot;>📅</div>';"/><div class="hero-badge"><span class="dot"></span>${escapeHtml(badgeText)}</div>`;
-        }else{
-          heroMedia.innerHTML=`<div class="hero-media-fallback">📅</div><div class="hero-badge"><span class="dot"></span>${escapeHtml(badgeText)}</div>`;
+        const qrTarget = MODE === "vitrine" && CURRENT_DEMO_ID
+          ? reservationUrl({demo:CURRENT_DEMO_ID})
+          : reservationUrl({slug:CURRENT_RESA_SLUG || DEFAULT_RESA_SLUG});
+
+        heroMedia.innerHTML = `
+          <div class="hero-qr-wrap">
+            <div class="hero-qr-card">
+              <div class="hero-qr-kicker">📲 QR réservation</div>
+              <img class="hero-qr-img" src="${escapeHtml(qrApiUrl(qrTarget,620))}" alt="QR réservation RESA ${escapeHtml(displayName)}" loading="eager"/>
+              <div class="hero-qr-title">Scanne pour réserver</div>
+              <div class="hero-qr-text">Le client ouvre directement cette demande, choisit son service, sa date et son heure.</div>
+              <div class="hero-qr-link">${escapeHtml(qrTarget)}</div>
+              <div class="hero-qr-actions">
+                <a class="btn primary" href="${escapeHtml(qrTarget)}" target="_blank" rel="noopener">📅 Ouvrir</a>
+                <button class="btn gold" id="btnCopyHeroQr" type="button">📋 Copier</button>
+              </div>
+            </div>
+          </div>
+          <div class="hero-badge"><span class="dot"></span>${escapeHtml(city&&activity?`${activity} • ${city}`:"Demande de réservation")}</div>
+        `;
+
+        const copyBtn = $("btnCopyHeroQr");
+        if(copyBtn){
+          copyBtn.onclick = async () => {
+            try{
+              await copyText(qrTarget);
+              setStatus("✅ Lien réservation copié. Le QR ouvre la demande directe.","ok");
+            }catch(_){
+              setStatus("⚠️ Copie bloquée. Ouvre le lien puis copie depuis le navigateur.","warn");
+            }
+          };
         }
       }
 
@@ -647,11 +705,14 @@
         const rawSlug=normalizeSlug(params.get("slug")||"");
         const slug=resolveResaSlug(rawSlug);
         const demo=String(params.get("demo")||"").trim();
+        CURRENT_RESA_SLUG = slug || DEFAULT_RESA_SLUG;
+        CURRENT_DEMO_ID = demo || "";
 
         $("dateInput").value=todayISO(); $("dateInput").min=todayISO(); $("dateInput").max=addDaysISO(60);
         updateSummary(); updatePriceHint();
 
         if(demo&&DEMO_MAP[demo]){
+          MODE="vitrine"; CURRENT_DEMO_ID=demo;
           const item=DEMO_MAP[demo]; PROFILE=item;
           renderProfile(item,{slug:"",demo});
           loadDemoServices(item); updatePriceHint(); updateSummary();
@@ -668,6 +729,7 @@
 
         try{
           initClient(); setLiveModeUI();
+          CURRENT_RESA_SLUG = resolveResaSlug(slug);
           PROFILE=await loadLiveProfile(slug);
           renderProfile(PROFILE,{slug,demo:""});
           await loadLiveServices(slug); updatePriceHint(); updateSummary(); await loadSlots(slug);
@@ -701,6 +763,11 @@
   </script>
 </body>
 </html>
+
+
+
+
+
 
 
 
