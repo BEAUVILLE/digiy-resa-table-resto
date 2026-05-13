@@ -164,8 +164,8 @@
     .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px}
     .tag{border-radius:999px;padding:6px 10px;border:1px solid rgba(203,213,225,.22);color:var(--muted);background:rgba(2,6,23,.35);font-size:11px;font-weight:900}
     .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
-    a.btn{flex:1;min-width:140px;border-radius:999px;padding:12px 14px;font-size:14px;font-weight:900;border:0;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;line-height:1;white-space:nowrap;transition:transform .15s ease, filter .15s ease, box-shadow .15s ease}
-    .btn.primary{background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;box-shadow:0 10px 24px rgba(250,204,21,.30)}
+    a.btn{flex:1;min-width:150px;min-height:56px;border-radius:999px;padding:15px 16px;font-size:15px;font-weight:1000;border:0;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:9px;line-height:1.08;white-space:nowrap;transition:transform .15s ease, filter .15s ease, box-shadow .15s ease}
+    .btn.primary{background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;box-shadow:0 12px 30px rgba(250,204,21,.34);font-size:16px;letter-spacing:.01em}
     .btn.secondary{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.30);color:#bbf7d0}
     .btn.ghost{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--ink)}
     .status{margin-top:12px;border-radius:16px;border:1px solid rgba(203,213,225,.14);background:rgba(2,6,23,.45);padding:12px;font-size:13px;font-weight:800;color:var(--muted);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
@@ -190,11 +190,103 @@
     .bottom-nav .ico{font-size:18px;line-height:1}
     .bottom-nav a.active,.bottom-nav button.active{background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d}
     #digiy-audio-btn{bottom:calc(96px + env(safe-area-inset-bottom,0px))!important}
+    @media(max-width:640px){.actions a.btn{width:100%;min-width:100%;font-size:16px}.actions{gap:8px}}
     @media(max-width:768px){
       .floating-returns{top:calc(env(safe-area-inset-top,0px) + 10px);left:calc(env(safe-area-inset-left,0px) + 10px);right:calc(env(safe-area-inset-right,0px) + 10px)}
       .floating-back{padding:11px 14px;font-size:13px}
     }
   </style>
+
+
+  <style id="digiy-mobile-lisibilite-v3">
+    /* Doctrine DIGIYLYFE — mobile lisible : beau mais petit = perdu. */
+    :root{
+      --fs-hero:clamp(40px,8.8vw,58px);
+      --fs-sub:20px;
+      --lh:1.68;
+    }
+    body{font-size:18px;}
+    .page{padding:18px 16px 52px;}
+    .logo-badge{width:50px;height:50px;font-size:22px;}
+    .logo-title{font-size:19px;line-height:1.15;}
+    .logo-sub{font-size:15px;line-height:1.35;}
+    .floating-back,.pill,.hero-badge,.legend-pill,.chip,.tag,.stats-pill{font-size:15px;}
+    a.btn-small,.btn-small{min-height:56px;padding:15px 18px;font-size:17px;line-height:1.15;}
+    .hero{padding:22px 18px;}
+    .hero h1{font-size:var(--fs-hero);line-height:1.08;}
+    .hero p{font-size:20px;line-height:1.68;}
+    .hero-badges{gap:12px;}
+    .hero-badge{padding:10px 14px;}
+    .how-step{font-size:16px;padding:14px;line-height:1.35;}
+    .how-step b{width:36px;height:36px;font-size:18px;}
+    .client-box h2{font-size:clamp(30px,5vw,38px);line-height:1.08;}
+    .client-box p,.section-note,.return-house p,.signature{font-size:18px;line-height:1.68;}
+    .client-promise span{font-size:15px;padding:9px 12px;}
+    .input,.select{min-height:58px;font-size:18px;padding:15px 16px;}
+    .section-card{padding:20px;}
+    .section-title{font-size:clamp(30px,5vw,38px);line-height:1.12;}
+    .legend-pill{padding:10px 13px;}
+    .grid{gap:18px;}
+    .photo{height:250px;}
+    .body{padding:20px;gap:14px;}
+    .name{font-size:30px;line-height:1.08;}
+    .meta{font-size:18px;line-height:1.45;gap:12px;}
+    .bio{font-size:18px;line-height:1.65;}
+    .tags{gap:10px;}
+    .tag{padding:9px 12px;line-height:1.25;}
+    .actions{gap:12px;margin-top:6px;}
+    a.btn{min-height:68px;min-width:180px;padding:18px 20px;font-size:19px;line-height:1.15;}
+    .btn.primary{font-size:22px;font-weight:1000;box-shadow:0 16px 38px rgba(250,204,21,.40);}
+    .status{font-size:17px;line-height:1.55;padding:15px 16px;}
+    .return-house h2{font-size:30px;}
+    .footer{font-size:15px;line-height:1.55;}
+    .bottom-nav a,.bottom-nav button{min-height:66px;font-size:13px;}
+    .bottom-nav .ico{font-size:23px;}
+    #digiy-audio-btn{font-size:19px!important;padding:18px 28px!important;}
+
+    @media(max-width:640px){
+      body{font-size:18px;}
+      .page{padding:12px 10px 42px;}
+      .floating-returns{gap:7px;}
+      .floating-back{font-size:15px;padding:12px 14px;}
+      .nav{padding-top:58px;}
+      .logo-title{font-size:18px;white-space:normal;max-width:100%;}
+      .logo-sub{font-size:15px;}
+      .nav-right{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+      .nav-right .pill,.nav-right .btn-small{width:100%;justify-content:center;text-align:center;}
+      .hero{padding:18px 14px;border-radius:22px;}
+      .hero h1{font-size:clamp(38px,11vw,48px);}
+      .hero p{font-size:19px;}
+      .hero-badges{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+      .hero-badge{font-size:14px;text-align:center;}
+      .hero-actions-main{display:grid;grid-template-columns:1fr;gap:10px;}
+      .hero-actions-main .btn-small{width:100%;justify-content:center;font-size:18px;}
+      .how-strip{grid-template-columns:1fr;gap:9px;}
+      .how-step{font-size:17px;}
+      .client-box h2{font-size:32px;}
+      .client-box p,.section-note,.return-house p,.signature{font-size:18px;}
+      .controls{display:grid;grid-template-columns:1fr;gap:10px;}
+      .searchRow{display:grid;grid-template-columns:1fr;min-width:0;}
+      .controls > div:last-child{display:grid!important;grid-template-columns:1fr;gap:10px;}
+      .section-card{padding:18px 14px;border-radius:22px;}
+      .section-title{font-size:31px;}
+      .legend{gap:8px;}
+      .legend-pill{font-size:15px;}
+      .photo{height:220px;}
+      .body{padding:18px 15px;}
+      .name{font-size:31px;}
+      .meta,.bio{font-size:18px;}
+      .chip{font-size:13px;}
+      .tag{font-size:15px;}
+      .actions{display:grid;grid-template-columns:1fr;gap:10px;}
+      .actions a.btn{width:100%;min-width:100%;min-height:72px;font-size:20px;white-space:normal;text-align:center;}
+      .actions .btn.primary{font-size:23px;}
+      .bottom-nav-inner{gap:5px;}
+      .bottom-nav a,.bottom-nav button{font-size:12px;min-height:62px;}
+      #digiy-audio-btn{left:12px!important;right:12px!important;bottom:calc(92px + env(safe-area-inset-bottom,0px))!important;justify-content:center;font-size:18px!important;}
+    }
+  </style>
+
 </head>
 
 <body>
@@ -307,8 +399,8 @@
           <div>
             <div class="section-title">✨ Inspiration recommandée · Dans l’air du temps</div>
             <div class="section-note">
-              Ici, on partage les idées, tendances et ambiances utiles du moment. Ces cartes inspirent le regard
-              sans ouvrir de fausse réservation.
+              Ici, on partage les idées, tendances et ambiances utiles du moment. Ces cartes inspirent le regard, montrent les usages du moment
+              et donnent des repères vivants sans ouvrir de fausse réservation.
             </div>
           </div>
           <div class="legend">
@@ -528,6 +620,10 @@
       function isSafePublicKey(v){
         const s = String(v || "").trim();
         if(!s) return false;
+        /* DIGIY RESA : les slugs publics peuvent être du type resa-221...
+           On les accepte pour que le bouton "Réserver maintenant" sorte directement
+           vers reserver.html, au lieu de retomber sur "Voir la fiche". */
+        if(/^resa-[0-9]{6,15}$/i.test(s)) return true;
         if(/\d{6,}/.test(s)) return false;
         return /^[a-z0-9-]{3,80}$/i.test(s);
       }
@@ -733,12 +829,14 @@
           const ficheHref = r.kind === "live" ? (r.profile_url || "") : "";
           const reserveHref = r.kind === "live" ? (r.reservation_url || "") : "";
 
-          const primaryHref = ficheHref || "#retours-digiy";
-          const primaryLabel = mode === "live" ? (ficheHref ? "📄 Voir la fiche" : "📄 Fiche bientôt prête") : "✨ Découvrir";
+          const primaryHref = mode === "live" ? (reserveHref || ficheHref || "#retours-digiy") : "#retours-digiy";
+          const primaryLabel = mode === "live"
+            ? (reserveHref ? "📅 Réserver maintenant" : (ficheHref ? "📄 Voir la fiche" : "📄 Fiche bientôt prête"))
+            : "✨ Découvrir";
 
           const secondaryBtn = mode === "live"
-            ? (reserveHref
-                ? `<a class="btn secondary" href="${esc(reserveHref)}">📅 Réserver</a>`
+            ? (ficheHref
+                ? `<a class="btn secondary" href="${esc(ficheHref)}">📄 Voir la fiche</a>`
                 : `<a class="btn ghost" href="#retours-digiy">🌍 Dans l’air du temps</a>`)
             : `<a class="btn ghost" href="#retours-digiy">✨ Inspiration recommandée</a>`;
 
@@ -1078,6 +1176,9 @@
   </script>
 </body>
 </html>
+
+
+
 
 
 
