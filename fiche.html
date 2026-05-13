@@ -411,8 +411,11 @@
       }
 
       function money(v){
-        const n = Number(v);
-        if(!Number.isFinite(n)) return "";
+        if(v === null || v === undefined) return "sur demande";
+        const raw = String(v).trim();
+        if(raw === "") return "sur demande";
+        const n = Number(raw);
+        if(!Number.isFinite(n) || n <= 0) return "sur demande";
         return n.toLocaleString("fr-FR") + " FCFA";
       }
 
