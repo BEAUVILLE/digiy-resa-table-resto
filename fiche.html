@@ -4,7 +4,8 @@
   <meta charset="utf-8" />
   <title>DIGIY RESA — Voir le lieu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="DIGIY RESA — découvrir un lieu, comprendre l’ambiance et envoyer une demande de réservation simple." />
+  <meta name="description" content="DIGIY RESA — fiche simple avec QR de réservation directe." />
+  <meta name="digiy-build" content="resa-fiche-qr-reservation-directe-20260513" />
   <meta name="theme-color" content="#061b14" />
   <meta name="robots" content="index,follow" />
 
@@ -180,7 +181,7 @@
         <div class="logo">📅</div>
         <div>
           <div class="brand-title">DIGIY RESA</div>
-          <div class="brand-sub">Fiche simple · QR visible · réserver</div>
+          <div class="brand-sub">Voir le lieu · comprendre · réserver</div>
         </div>
       </a>
       <div class="top-actions">
@@ -244,7 +245,7 @@
         </article>
       </section>
 
-      <section class="services">
+      <section class="services" id="services">
         <div class="panel-head" style="padding:0 0 12px;border-bottom:1px solid rgba(255,255,255,.08);">
           <div>
             <h2>Services / prestations</h2>
@@ -256,19 +257,19 @@
         </div>
       </section>
 
-      <section class="qr-panel" id="qrSection" hidden aria-label="QR fiche RESA">
+      <section class="qr-panel" id="qrSection" hidden aria-label="QR réservation RESA">
         <div class="qr-grid">
           <div class="qr-box">
             <img id="qrImage" class="qr-img" alt="QR code fiche DIGIY RESA" loading="lazy" decoding="async" />
           </div>
           <div>
-            <h2 class="qr-title" id="qrTitle">📲 QR du lieu</h2>
+            <h2 class="qr-title" id="qrTitle">📲 QR réservation</h2>
             <p class="qr-text" id="qrText">
-              Scanne ou partage ce QR pour revenir directement à la fiche du lieu. Le lien ouvre côté client, sans accès professionnel.
+              Scanne ou partage ce QR pour ouvrir directement la demande de réservation. Le lien ouvre côté client, sans accès professionnel.
             </p>
             <div class="qr-link" id="qrLinkText">Préparation du lien…</div>
             <div class="qr-actions">
-              <a class="btn primary" id="qrOpenBtn" href="#" target="_blank" rel="noopener noreferrer">🌍 Ouvrir la fiche</a>
+              <a class="btn primary" id="qrOpenBtn" href="#" target="_blank" rel="noopener noreferrer">📅 Ouvrir la réservation</a>
               <button class="btn green" id="qrCopyBtn" type="button">📋 Copier le lien</button>
               <button class="btn ghost" id="qrShareBtn" type="button">📤 Partager</button>
             </div>
@@ -299,7 +300,7 @@
 
       const SUPABASE_URL = window.DIGIY_SUPABASE_URL;
       const SUPABASE_ANON_KEY = window.DIGIY_SUPABASE_ANON_KEY || window.DIGIY_SUPABASE_ANON;
-      const FALLBACK_PHOTO = "https://digiylyfe.net/wp-content/uploads/2026/03/digiylyfe_logo_qr.jpeg";
+      const FALLBACK_PHOTO = ""; // Pas de logo avec QR en image : le vrai QR est généré dans le bloc réservation.
       const DEFAULT_CITY = "Saly";
       let sb = null;
 
@@ -411,6 +412,8 @@
       }
 
       function money(v){
+        // Doctrine RESA : le prix n'est pas forcé.
+        // Prix vide / null / 0 = aucune ligne prix.
         if(v === null || v === undefined) return "";
         const raw = String(v).trim();
         if(raw === "") return "";
@@ -424,10 +427,8 @@
           .trim()
           .toLowerCase();
 
-        /* Tolérance terrain/cache :
-           accepte slug=resa-221771342889.v2 ou slug=resa-221771342889-v2
-           sans casser la recherche Supabase. */
-        s = s.replace(/(?:[._-]?v\d+)$/i, "");
+        // Tolérance cache : slug=resa-221771342889.v2 devient resa-221771342889
+        s = s.replace(/\.v\d+$/i, "");
 
         return s
           .replace(/\s+/g,"-")
@@ -439,9 +440,8 @@
       function isSafePublicKey(v){
         const s = normalizeKey(v);
         if(!s) return false;
-        /* Les slugs RESA réels peuvent contenir un téléphone/identifiant long,
-           ex : resa-221771342889. On ne le bloque plus ici. */
-        return /^[a-z0-9-]{3,100}$/i.test(s);
+        // On accepte les slugs terrain avec téléphone/code intégré : resa-221771342889.
+        return /^[a-z0-9-]{3,96}$/i.test(s);
       }
 
       function cleanVisibleUrl(){
@@ -537,7 +537,11 @@
       }
 
       function renderHero(item, services){
-        const photo = item.photo_url || FALLBACK_PHOTO;
+        const photo = String(item.photo_url || FALLBACK_PHOTO || "").trim();
+        const mediaHtml = photo
+          ? `<img src="${esc(photo + (photo.includes("?") ? "&" : "?") + "v=18")}" alt="${esc(item.display_name)}" loading="eager" onerror="this.outerHTML='<div class=&quot;fallback&quot;>📅</div>'" />`
+          : `<div class="fallback">📅</div>`;
+
         const statusLabel = item.mode === "demo" ? "À découvrir" : "Réservable";
         const reserve = reserveHref(item.key,item.mode);
         document.title = `${item.display_name} — DIGIY RESA`;
@@ -545,7 +549,7 @@
         $("hero").innerHTML = `
           <div class="hero-grid">
             <div class="media">
-              <img src="${esc(photo + (photo.includes("?") ? "&" : "?") + "v=17")}" alt="${esc(item.display_name)}" loading="eager" onerror="this.outerHTML='<div class=&quot;fallback&quot;>📅</div>'" />
+              ${mediaHtml}
               <div class="badge-row">
                 <span class="chip gold">📅 DIGIY RESA</span>
                 <span class="chip ${item.mode === "demo" ? "blue" : "green"}">${esc(statusLabel)}</span>
@@ -553,7 +557,7 @@
               </div>
             </div>
             <div class="hero-body">
-              <span class="eyebrow">Voir le lieu</span>
+              <span class="eyebrow">Fiche simple · QR réservation</span>
               <h1>${esc(item.display_name)}</h1>
               <p class="intro">${esc(item.bio)}</p>
               <div class="meta">
@@ -567,8 +571,8 @@
               </div>
               <div class="actions">
                 <a class="btn primary" href="${esc(reserve)}">📅 Faire une demande</a>
-                <a class="btn green" href="#services">🧾 Voir les services</a>
-                <a class="btn ghost" href="#qrSection">📲 QR fiche</a>
+                <a class="btn green" href="#qrSection">📲 Voir le QR réservation</a>
+                <a class="btn ghost" href="#services">🧾 Voir les services</a>
                 <a class="btn ghost" href="./index.html">← Tous les lieux</a>
               </div>
             </div>
@@ -634,9 +638,9 @@
           copyBtn.onclick = async () => {
             try{
               await copyText(link);
-              setStatus("✅ Lien de réservation copié. Le client peut faire sa demande sans se perdre.","ok");
+              setStatus("✅ Lien réservation copié. Le client peut ouvrir directement la demande.","ok");
             }catch(_){
-              setStatus("⚠️ Copie bloquée par le navigateur. Ouvre la fiche puis copie le lien depuis la barre d’adresse.","warn");
+              setStatus("⚠️ Copie bloquée par le navigateur. Ouvre la réservation puis copie le lien depuis la barre d’adresse.","warn");
             }
           };
         }
@@ -644,7 +648,7 @@
           shareBtn.onclick = async () => {
             const payload = {
               title: `${item.display_name} — DIGIY RESA`,
-              text: `Fiche RESA : ${item.display_name}`,
+              text: `Réservation RESA : ${item.display_name}`,
               url: link
             };
             try{
@@ -656,7 +660,7 @@
                 setStatus("✅ Partage direct indisponible : lien copié à la place.","ok");
               }
             }catch(_){
-              setStatus("ℹ️ Partage annulé ou bloqué. Le QR reste disponible sur la fiche.","warn");
+              setStatus("ℹ️ Partage annulé ou bloqué. Le QR réservation reste disponible sur la fiche.","warn");
             }
           };
         }
@@ -670,7 +674,7 @@
         $("qrImage").src = qrApiUrl(link);
         $("qrImage").alt = `QR code réservation RESA ${item.display_name}`;
         $("qrTitle").textContent = `📲 QR réservation · ${item.display_name}`;
-        $("qrText").textContent = "Scanne ou partage ce QR pour ouvrir directement la demande de réservation. La fiche présente le lieu, le QR lance l’action.";
+        $("qrText").textContent = "Scanne ce QR pour ouvrir directement la demande de réservation. La fiche sert à comprendre, le QR sert à agir.";
         $("qrLinkText").textContent = link;
         $("qrOpenBtn").href = link;
         $("qrOpenBtn").textContent = "📅 Ouvrir la réservation";
@@ -762,7 +766,7 @@
               renderInfo(item);
               renderServices(services);
               renderQr(item);
-              setStatus("✅ Fiche chargée. Le client peut faire sa demande sans voir les données sensibles du professionnel.","ok");
+              setStatus("✅ Fiche chargée. Le QR réservation est visible et ouvre directement la demande.","ok");
               return;
             }
           }
@@ -780,6 +784,7 @@
   </script>
 </body>
 </html>
+
 
 
 
