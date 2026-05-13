@@ -122,6 +122,33 @@
     .step b{display:block;color:#fff;font-size:14px;margin-bottom:4px}
     .step span{display:block;color:var(--muted);font-size:13px;font-weight:800;line-height:1.45}
 
+
+    .qr-panel{
+      margin-top:14px;
+      border-radius:24px;
+      border:1px solid rgba(250,204,21,.24);
+      background:
+        radial-gradient(520px 220px at 100% 0%, rgba(250,204,21,.12), transparent 62%),
+        radial-gradient(520px 220px at 0% 100%, rgba(34,197,94,.10), transparent 62%),
+        var(--card);
+      box-shadow:0 14px 42px rgba(0,0,0,.30);
+      overflow:hidden;
+    }
+    .qr-panel[hidden]{display:none!important}
+    .qr-grid{display:grid;grid-template-columns:230px 1fr;gap:16px;align-items:center;padding:16px}
+    .qr-box{display:flex;align-items:center;justify-content:center;border-radius:22px;border:1px dashed rgba(250,204,21,.34);background:rgba(255,255,255,.06);padding:14px;min-height:224px}
+    .qr-img{width:190px;height:190px;border-radius:18px;background:#fff;padding:10px;box-shadow:0 16px 34px rgba(0,0,0,.24);display:block}
+    .qr-title{font-size:22px;font-weight:900;line-height:1.12;color:var(--gold);margin:0 0 8px}
+    .qr-text{color:rgba(244,255,248,.88);font-size:14px;line-height:1.62;font-weight:800;margin:0 0 12px}
+    .qr-link{word-break:break-word;border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(2,6,23,.28);padding:11px;color:var(--muted);font-size:12px;font-weight:900;line-height:1.45;margin-bottom:12px}
+    .qr-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .qr-actions .btn{min-width:160px;flex:0 1 auto}
+    @media(max-width:720px){
+      .qr-grid{grid-template-columns:1fr;text-align:center}
+      .qr-actions{justify-content:center}
+      .qr-img{width:178px;height:178px}
+    }
+
     .services{margin-top:14px;border-radius:24px;border:1px solid rgba(255,255,255,.1);background:var(--card);box-shadow:0 14px 42px rgba(0,0,0,.3);padding:16px}
     .service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
     @media(max-width:920px){.service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -226,6 +253,26 @@
         </div>
         <div class="service-grid" id="servicesBox">
           <div class="empty" style="grid-column:1/-1;">Chargement des services…</div>
+        </div>
+      </section>
+
+      <section class="qr-panel" id="qrSection" hidden aria-label="QR fiche RESA">
+        <div class="qr-grid">
+          <div class="qr-box">
+            <img id="qrImage" class="qr-img" alt="QR code fiche DIGIY RESA" loading="lazy" decoding="async" />
+          </div>
+          <div>
+            <h2 class="qr-title" id="qrTitle">📲 QR du lieu</h2>
+            <p class="qr-text" id="qrText">
+              Scanne ou partage ce QR pour revenir directement à la fiche du lieu. Le lien ouvre côté client, sans accès professionnel.
+            </p>
+            <div class="qr-link" id="qrLinkText">Préparation du lien…</div>
+            <div class="qr-actions">
+              <a class="btn primary" id="qrOpenBtn" href="#" target="_blank" rel="noopener noreferrer">🌍 Ouvrir la fiche</a>
+              <button class="btn green" id="qrCopyBtn" type="button">📋 Copier le lien</button>
+              <button class="btn ghost" id="qrShareBtn" type="button">📤 Partager</button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -510,6 +557,7 @@
               <div class="actions">
                 <a class="btn primary" href="${esc(reserve)}">📅 Faire une demande</a>
                 <a class="btn green" href="#services">🧾 Voir les services</a>
+                <a class="btn ghost" href="#qrSection">📲 QR fiche</a>
                 <a class="btn ghost" href="./index.html">← Tous les lieux</a>
               </div>
             </div>
@@ -526,6 +574,92 @@
         $("cityInfo").textContent = item.city;
         $("addressInfo").textContent = item.address_text;
         $("hoursInfo").textContent = item.opening_hours_text;
+      }
+
+      function publicFicheUrl(item){
+        const u = new URL("./fiche.html", location.href);
+        ["phone","tel","resa_"+"tel","owner_"+"phone","owner_id","business_"+"code","keybox_"+"code","keybox_"+"location","access_"+"note","module","from"].forEach(k => u.searchParams.delete(k));
+        if(item.mode === "demo") u.searchParams.set("demo", item.key);
+        else u.searchParams.set("slug", item.key);
+        return u.toString();
+      }
+
+      function qrApiUrl(link){
+        return "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + encodeURIComponent(link);
+      }
+
+      async function copyText(value){
+        const text = String(value || "").trim();
+        if(!text) throw new Error("Lien vide");
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly","");
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand("copy");
+        ta.remove();
+        if(!ok) throw new Error("Copie bloquée");
+        return true;
+      }
+
+      function bindQrButtons(link, item){
+        const copyBtn = $("qrCopyBtn");
+        const shareBtn = $("qrShareBtn");
+        if(copyBtn){
+          copyBtn.onclick = async () => {
+            try{
+              await copyText(link);
+              setStatus("✅ Lien de la fiche copié. Le client peut revenir au lieu sans se perdre.","ok");
+            }catch(_){
+              setStatus("⚠️ Copie bloquée par le navigateur. Ouvre la fiche puis copie le lien depuis la barre d’adresse.","warn");
+            }
+          };
+        }
+        if(shareBtn){
+          shareBtn.onclick = async () => {
+            const payload = {
+              title: `${item.display_name} — DIGIY RESA`,
+              text: `Fiche RESA : ${item.display_name}`,
+              url: link
+            };
+            try{
+              if(navigator.share){
+                await navigator.share(payload);
+                setStatus("✅ Fiche prête à circuler. Le QR garde la porte ouverte côté client.","ok");
+              }else{
+                await copyText(link);
+                setStatus("✅ Partage direct indisponible : lien copié à la place.","ok");
+              }
+            }catch(_){
+              setStatus("ℹ️ Partage annulé ou bloqué. Le QR reste disponible sur la fiche.","warn");
+            }
+          };
+        }
+      }
+
+      function renderQr(item){
+        const section = $("qrSection");
+        if(!section) return;
+        const link = publicFicheUrl(item);
+        section.hidden = false;
+        $("qrImage").src = qrApiUrl(link);
+        $("qrImage").alt = `QR code fiche RESA ${item.display_name}`;
+        $("qrTitle").textContent = `📲 QR du lieu · ${item.display_name}`;
+        $("qrText").textContent = "Scanne ou partage ce QR pour ouvrir directement la fiche du lieu. Le client revient ici, voit le lieu, puis réserve simplement.";
+        $("qrLinkText").textContent = link;
+        $("qrOpenBtn").href = link;
+        bindQrButtons(link,item);
+      }
+
+      function hideQr(){
+        const section = $("qrSection");
+        if(section) section.hidden = true;
       }
 
       function renderServices(services){
@@ -578,6 +712,7 @@
         $("addressInfo").textContent = "—";
         $("hoursInfo").textContent = "—";
         renderServices([]);
+        hideQr();
         setStatus("⚠️ Fiche indisponible. Aucun téléphone ni identifiant sensible n’est affiché.","warn");
       }
 
@@ -593,6 +728,7 @@
             renderHero(item,services);
             renderInfo(item);
             renderServices(services);
+            renderQr(item);
             setStatus("✨ Lieu à découvrir. Le parcours reste simple et ne déclenche pas de fausse promesse.","ok");
             return;
           }
@@ -605,6 +741,7 @@
               renderHero(item,services);
               renderInfo(item);
               renderServices(services);
+              renderQr(item);
               setStatus("✅ Fiche chargée. Le client peut faire sa demande sans voir les données sensibles du professionnel.","ok");
               return;
             }
