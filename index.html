@@ -305,15 +305,15 @@
       <div class="section-card">
         <div class="section-head">
           <div>
-            <div class="section-title">✨ À découvrir à Saly</div>
+            <div class="section-title">✨ Inspiration recommandée · Dans l’air du temps</div>
             <div class="section-note">
-              Ici, on donne des idées et on montre l’ambiance. Ces cartes inspirent le regard
+              Ici, on partage les idées, tendances et ambiances utiles du moment. Ces cartes inspirent le regard
               sans ouvrir de fausse réservation.
             </div>
           </div>
           <div class="legend">
-            <span class="legend-pill vitrine">Inspiration</span>
-            <span class="legend-pill vitrine">Bientôt réservable</span>
+            <span class="legend-pill vitrine">✨ Inspiration recommandée</span>
+            <span class="legend-pill vitrine">🌍 Dans l’air du temps</span>
           </div>
         </div>
         <div id="gridVitrine" class="grid"></div>
@@ -739,8 +739,8 @@
           const secondaryBtn = mode === "live"
             ? (reserveHref
                 ? `<a class="btn secondary" href="${esc(reserveHref)}">📅 Réserver</a>`
-                : `<a class="btn ghost" href="#retours-digiy">⏳ Bientôt réservable</a>`)
-            : `<a class="btn ghost" href="#retours-digiy">✨ Inspiration</a>`;
+                : `<a class="btn ghost" href="#retours-digiy">🌍 Dans l’air du temps</a>`)
+            : `<a class="btn ghost" href="#retours-digiy">✨ Inspiration recommandée</a>`;
 
           return `
             <article class="card" data-kind="${esc(r.kind || "")}">
@@ -1078,6 +1078,10 @@
   </script>
 </body>
 </html>
+
+
+
+
 
 
 
