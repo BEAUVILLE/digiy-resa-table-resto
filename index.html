@@ -195,6 +195,98 @@
       .floating-returns{top:calc(env(safe-area-inset-top,0px) + 10px);left:calc(env(safe-area-inset-left,0px) + 10px);right:calc(env(safe-area-inset-right,0px) + 10px)}
       .floating-back{padding:11px 14px;font-size:13px}
     }
+  
+    /* Bloc premium Chez Astou et Baptiste — logiciel client public */
+    .logiciel-public-card{
+      margin-top:18px;
+      border-radius:26px;
+      border:1px solid rgba(250,204,21,.24);
+      background:
+        radial-gradient(780px 320px at 10% -20%,rgba(250,204,21,.16),transparent 62%),
+        radial-gradient(620px 280px at 95% 120%,rgba(34,197,94,.12),transparent 62%),
+        rgba(7,24,17,.58);
+      box-shadow:0 18px 55px rgba(0,0,0,.38);
+      padding:18px;
+      overflow:hidden;
+      position:relative;
+    }
+    .logiciel-public-card:before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background:linear-gradient(135deg,rgba(250,204,21,.08),transparent 35%,rgba(34,197,94,.07));
+      pointer-events:none;
+    }
+    .logiciel-public-inner{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:14px;align-items:center}
+    .logiciel-public-kicker{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 12px;border-radius:999px;
+      border:1px solid rgba(34,197,94,.28);
+      background:rgba(34,197,94,.10);
+      color:#bbf7d0;
+      font-size:13px;font-weight:1000;
+      margin-bottom:10px;
+    }
+    .logiciel-public-title{
+      font-size:clamp(28px,4.4vw,42px);
+      line-height:1.05;
+      font-weight:1000;
+      letter-spacing:-.02em;
+      color:var(--gold);
+      margin-bottom:8px;
+    }
+    .logiciel-public-text{
+      color:var(--muted);
+      font-size:18px;
+      line-height:1.62;
+      font-weight:850;
+      max-width:62ch;
+    }
+    .logiciel-public-actions{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+    .logiciel-public-actions .btn-small{
+      min-height:62px;
+      justify-content:center;
+      border-radius:18px;
+      font-size:18px;
+      text-align:center;
+      white-space:normal;
+    }
+    .logiciel-public-actions .primary{
+      font-size:20px;
+      box-shadow:0 16px 38px rgba(250,204,21,.34);
+    }
+    .logiciel-public-mini{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+      margin-top:12px;
+    }
+    .logiciel-public-mini span{
+      border-radius:14px;
+      border:1px solid rgba(203,213,225,.16);
+      background:rgba(2,6,23,.28);
+      padding:10px 8px;
+      color:rgba(234,255,241,.86);
+      font-size:13px;
+      font-weight:1000;
+      text-align:center;
+      line-height:1.25;
+    }
+    @media(max-width:820px){
+      .logiciel-public-inner{grid-template-columns:1fr}
+      .logiciel-public-mini{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:520px){
+      .logiciel-public-card{padding:15px}
+      .logiciel-public-text{font-size:17px}
+      .logiciel-public-actions .btn-small{font-size:17px}
+      .logiciel-public-actions .primary{font-size:19px}
+    }
+
   </style>
 
 
@@ -318,7 +410,7 @@
         <div>
           <h1><span class="hl">Réserver à Saly</span><br />simplement</h1>
           <p>
-            Restaurants, salons, services, activités : découvre le lieu, regarde l’ambiance,
+            Chez Astou et Baptiste, restaurants, salons, services, activités : découvre le lieu, regarde l’ambiance,
             choisis le bon moment et envoie ta demande. Le professionnel reprend la main directement.
           </p>
           <div class="hero-badges">
@@ -372,6 +464,32 @@
         </div>
       </div>
     </section>
+
+
+    <section class="logiciel-public-card" id="chez-astou-baptiste">
+      <div class="logiciel-public-inner">
+        <div>
+          <div class="logiciel-public-kicker">🏡 Chez Astou et Baptiste · Logiciel client public</div>
+          <div class="logiciel-public-title">Le client clique, puis il agit.</div>
+          <p class="logiciel-public-text">
+            Comme côté DIGIY DRIVER : le public n’arrive pas dans un couloir technique.
+            Il ouvre une page simple pour réserver, WhatsApp, appeler ou partager.
+            Le pro garde la main, la demande arrive proprement en attente.
+          </p>
+          <div class="logiciel-public-mini">
+            <span>📅 Réserver</span>
+            <span>💬 WhatsApp</span>
+            <span>📞 Appeler</span>
+            <span>📤 Partager</span>
+          </div>
+        </div>
+        <div class="logiciel-public-actions">
+          <a class="btn-small primary" href="./public.html?slug=resa-221771000000&tel=221771000000">📱 Ouvrir le logiciel client</a>
+          <a class="btn-small" href="./dispo.html?slug=resa-221771000000&tel=221771000000">📅 Aller direct à la réservation</a>
+        </div>
+      </div>
+    </section>
+
 
     <section class="section">
       <div class="section-card">
@@ -458,6 +576,31 @@
       const SITE_URL = "https://digiylyfe.com/";
       const PUBLIC_BASE = "https://resa-table-resto.digiylyfe.com/";
       const OFFICIAL_FICHE_URL = "https://vas-chez-digiy.digiylyfe.com/";
+
+      const ASTOU_BAPTISTE_SLUG = "resa-221771000000";
+      const ASTOU_BAPTISTE_TEL  = "221771000000";
+
+      const OFFICIAL_RESA_CARDS = [
+        {
+          kind:"live",
+          fixed:true,
+          public_key:ASTOU_BAPTISTE_SLUG,
+          display_name:"Chez Astou et Baptiste",
+          category:"Réservation directe",
+          city:"Saly",
+          address:"Petite Côte",
+          bio:"Chez Astou et Baptiste : le client ouvre le logiciel public, réserve, WhatsApp, appelle ou partage. La demande arrive dans le planning pro en attente. Contact direct, 0% commission.",
+          badge:"🟢 DISPONIBLE",
+          hub_badge:"LOGICIEL CLIENT PUBLIC",
+          price_label:"Demande simple · WhatsApp direct",
+          tags:["Réservation","Saly","Contact direct","0% commission"],
+          photo_url:"https://digiylyfe.net/wp-content/uploads/2026/03/digiylyfe_logo_qr.jpeg",
+          profile_url:`./public.html?slug=${ASTOU_BAPTISTE_SLUG}&tel=${ASTOU_BAPTISTE_TEL}`,
+          reservation_url:`./dispo.html?slug=${ASTOU_BAPTISTE_SLUG}&tel=${ASTOU_BAPTISTE_TEL}`,
+          client_software_url:`./public.html?slug=${ASTOU_BAPTISTE_SLUG}&tel=${ASTOU_BAPTISTE_TEL}`,
+          created_at:new Date().toISOString()
+        }
+      ];
 
       const SUPABASE_URL = window.DIGIY_SUPABASE_URL;
       const SUPABASE_ANON_KEY = window.DIGIY_SUPABASE_ANON_KEY || window.DIGIY_SUPABASE_ANON;
@@ -826,16 +969,17 @@
 
           const ficheHref = r.kind === "live" ? (r.profile_url || "") : "";
           const reserveHref = r.kind === "live" ? (r.reservation_url || "") : "";
+          const logicielHref = r.kind === "live" ? (r.client_software_url || "") : "";
 
-          const primaryHref = mode === "live" ? (reserveHref || ficheHref || "#retours-digiy") : "#retours-digiy";
+          const primaryHref = mode === "live" ? (logicielHref || ficheHref || reserveHref || "#retours-digiy") : "#retours-digiy";
           const primaryLabel = mode === "live"
-            ? (reserveHref ? "📅 Réserver maintenant" : (ficheHref ? "📄 Voir la fiche" : "📄 Fiche bientôt prête"))
+            ? (logicielHref ? "📱 Ouvrir le logiciel client" : (ficheHref ? "📄 Voir la fiche" : (reserveHref ? "📅 Réserver maintenant" : "📄 Fiche bientôt prête")))
             : "✨ Découvrir";
 
           const secondaryBtn = mode === "live"
-            ? (ficheHref
-                ? `<a class="btn secondary" href="${esc(ficheHref)}">📄 Voir la fiche</a>`
-                : `<a class="btn ghost" href="#retours-digiy">🌍 Dans l’air du temps</a>`)
+            ? (reserveHref
+                ? `<a class="btn secondary" href="${esc(reserveHref)}">📅 Réserver</a>`
+                : (ficheHref ? `<a class="btn secondary" href="${esc(ficheHref)}">📄 Voir la fiche</a>` : `<a class="btn ghost" href="#retours-digiy">🌍 Dans l’air du temps</a>`))
             : `<a class="btn ghost" href="#retours-digiy">✨ Inspiration recommandée</a>`;
 
           return `
@@ -913,30 +1057,36 @@
           if(error) throw error;
 
           const raw = Array.isArray(data) ? data : [];
-          LIVE_ROWS = raw
+          const liveFromSupabase = raw
             .filter(r => sameCity(first(r.city),CITY_LOCK))
             .map(mapLiveRow)
             .filter(r => r.profile_url || r.reservation_url);
+
+          const officialKeys = new Set(OFFICIAL_RESA_CARDS.map(r => String(r.public_key || "").toLowerCase()));
+          LIVE_ROWS = [
+            ...OFFICIAL_RESA_CARDS,
+            ...liveFromSupabase.filter(r => !officialKeys.has(String(r.public_key || "").toLowerCase()) && !/chez\s+astou\s+et\s+baptiste/i.test(String(r.display_name || "")))
+          ];
 
           fillSelects();
           updateStatsBar(LIVE_ROWS,VITRINE_ROWS);
           applyFilters();
 
           if(LIVE_ROWS.length){
-            setStatus("✅ Les lieux à réserver sont chargés.");
-            toast("✅ Lieux à réserver + idées prêts");
+            setStatus("✅ Les lieux à réserver sont chargés, avec Chez Astou et Baptiste en porte directe.");
+            toast("✅ Chez Astou et Baptiste + lieux prêts");
           }else{
             setStatus("⚠️ Aucun lieu réservable pour l’instant. Les idées à découvrir restent visibles.");
             toast("✨ Partie à découvrir active");
           }
         }catch(e){
           console.error(e);
-          LIVE_ROWS = [];
+          LIVE_ROWS = [...OFFICIAL_RESA_CARDS];
           fillSelects();
           updateStatsBar(LIVE_ROWS,VITRINE_ROWS);
           applyFilters();
-          setStatus("⚠️ Les lieux à réserver sont indisponibles pour le moment.");
-          toast("⚠️ Affichage à découvrir");
+          setStatus("✅ Chez Astou et Baptiste est disponible. Les autres lieux Supabase sont indisponibles pour le moment.");
+          toast("✅ Chez Astou et Baptiste affiché");
         }
       }
 
@@ -1174,6 +1324,21 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
