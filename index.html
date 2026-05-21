@@ -410,7 +410,7 @@
         <div>
           <h1><span class="hl">Réserver à Saly</span><br />simplement</h1>
           <p>
-            Chez Astou et Baptiste, restaurants, salons, services, activités : découvre le lieu, regarde l’ambiance,
+            Restaurants, salons, services, activités : découvre le lieu, regarde l’ambiance,
             choisis le bon moment et envoie ta demande. Le professionnel reprend la main directement.
           </p>
           <div class="hero-badges">
@@ -465,40 +465,38 @@
       </div>
     </section>
 
-
-    <section class="logiciel-public-card" id="chez-astou-baptiste">
+    <section class="logiciel-public-card" id="chez-baptiste-loc">
       <div class="logiciel-public-inner">
         <div>
-          <div class="logiciel-public-kicker">🏡 Chez Astou et Baptiste · Logiciel client public</div>
-          <div class="logiciel-public-title">Le client clique, puis il agit.</div>
+          <div class="logiciel-public-kicker">🏡 DIGIY LOC · Appartement à Saly</div>
+          <div class="logiciel-public-title">Chez Baptiste — appartement à Saly.</div>
           <p class="logiciel-public-text">
-            Comme côté DIGIY DRIVER : le public n’arrive pas dans un couloir technique.
-            Il ouvre une page simple pour réserver, WhatsApp, appeler ou partager.
-            Le pro garde la main, la demande arrive proprement en attente.
+            Ici, on ne force pas RESA. Chez Baptiste est une vraie porte LOC :
+            dates d’arrivée et de départ, 4 personnes max, quartier paisible,
+            Sénélec en sus, paiement Wave direct au propriétaire.
           </p>
           <div class="logiciel-public-mini">
-            <span>📅 Réserver</span>
+            <span>🏡 Appartement</span>
+            <span>👥 4 pers. max</span>
+            <span>💳 Wave direct</span>
             <span>💬 WhatsApp</span>
-            <span>📞 Appeler</span>
-            <span>📤 Partager</span>
           </div>
         </div>
         <div class="logiciel-public-actions">
-          <a class="btn-small primary" href="./public.html?slug=resa-221771000000&tel=221771000000">📱 Ouvrir le logiciel client</a>
-          <a class="btn-small" href="./dispo.html?slug=resa-221771000000&tel=221771000000">📅 Aller direct à la réservation</a>
+          <a class="btn-small primary" href="https://part-chez-baptiste.digiylyfe.com/">👁️ Voir l’appartement</a>
+          <a class="btn-small" href="https://wa.me/221771342889?text=Bonjour%20Jean%20Baptiste%2C%20je%20viens%20de%20la%20fiche%20DIGIY%20LOC%20et%20je%20souhaite%20r%C3%A9server%20l%27appartement%20Chez%20Baptiste%20%C3%A0%20Saly." target="_blank" rel="noopener">💬 Réserver par WhatsApp</a>
         </div>
       </div>
     </section>
 
 
-    <section class="section">
+<section class="section">
       <div class="section-card">
         <div class="section-head">
           <div>
             <div class="section-title">📅 Lieux à réserver</div>
             <div class="section-note">
-              Ici, le client voit les fiches réellement publiées. Il peut ouvrir la fiche,
-              comprendre le lieu, puis envoyer une demande simple au professionnel.
+              Ici, le client voit les fiches RESA réellement publiées. Le pavé Chez Baptiste reste volontairement côté LOC : logement, dates d’arrivée/départ, propriétaire direct.
             </div>
           </div>
           <div class="legend">
@@ -577,30 +575,10 @@
       const PUBLIC_BASE = "https://resa-table-resto.digiylyfe.com/";
       const OFFICIAL_FICHE_URL = "https://vas-chez-digiy.digiylyfe.com/";
 
-      const ASTOU_BAPTISTE_SLUG = "resa-221771000000";
-      const ASTOU_BAPTISTE_TEL  = "221771000000";
+      const CHEZ_BAPTISTE_LOC_URL = "https://part-chez-baptiste.digiylyfe.com/";
+      const CHEZ_BAPTISTE_WA_URL  = "https://wa.me/221771342889?text=Bonjour%20Jean%20Baptiste%2C%20je%20viens%20de%20la%20fiche%20DIGIY%20LOC%20et%20je%20souhaite%20r%C3%A9server%20l%27appartement%20Chez%20Baptiste%20%C3%A0%20Saly.";
 
-      const OFFICIAL_RESA_CARDS = [
-        {
-          kind:"live",
-          fixed:true,
-          public_key:ASTOU_BAPTISTE_SLUG,
-          display_name:"Chez Astou et Baptiste",
-          category:"Réservation directe",
-          city:"Saly",
-          address:"Petite Côte",
-          bio:"Chez Astou et Baptiste : le client ouvre le logiciel public, réserve, WhatsApp, appelle ou partage. La demande arrive dans le planning pro en attente. Contact direct, 0% commission.",
-          badge:"🟢 DISPONIBLE",
-          hub_badge:"LOGICIEL CLIENT PUBLIC",
-          price_label:"Demande simple · WhatsApp direct",
-          tags:["Réservation","Saly","Contact direct","0% commission"],
-          photo_url:"https://digiylyfe.net/wp-content/uploads/2026/03/digiylyfe_logo_qr.jpeg",
-          profile_url:`./public.html?slug=${ASTOU_BAPTISTE_SLUG}&tel=${ASTOU_BAPTISTE_TEL}`,
-          reservation_url:`./dispo.html?slug=${ASTOU_BAPTISTE_SLUG}&tel=${ASTOU_BAPTISTE_TEL}`,
-          client_software_url:`./public.html?slug=${ASTOU_BAPTISTE_SLUG}&tel=${ASTOU_BAPTISTE_TEL}`,
-          created_at:new Date().toISOString()
-        }
-      ];
+      const OFFICIAL_RESA_CARDS = [];
 
       const SUPABASE_URL = window.DIGIY_SUPABASE_URL;
       const SUPABASE_ANON_KEY = window.DIGIY_SUPABASE_ANON_KEY || window.DIGIY_SUPABASE_ANON;
@@ -1324,6 +1302,20 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
