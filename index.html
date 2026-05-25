@@ -1087,11 +1087,25 @@
     })();
   </script>
 
+  
+<script>
+/* DIGIY — phonétique audio terrain */
+window.digiySpeakText = window.digiySpeakText || function(text){
+  return String(text || "")
+    .replace(/\bWave\b/g, "Wéïv")
+    .replace(/\bWouève\b/g, "Wéïv")
+    .replace(/\bWhatsApp\b/g, "Ouatsap")
+    .replace(/\bDIGIYLYFE\b/g, "Di-ji-laïf")
+    .replace(/\bRESA\b/g, "réservation")
+    .replace(/\bRÉSA\b/g, "réservation");
+};
+</script>
+
   <script>
     window.DIGIY_AUDIO_CONFIG = {
-      label:"Écouter RESA",
+      label:"Écouter réservation",
       stopLabel:"Arrêter",
-      text:"Bienvenue sur DIGIY RESA. Ici, le client ne voit pas un logiciel. Il voit un lieu, une table, un service, une activité, puis il fait une demande simple. Tu regardes la fiche, tu choisis le bon moment, tu laisses ton contact, et le professionnel confirme directement. DIGIY prépare la rencontre, mais la relation reste entre le client et le professionnel. Simple, clair, humain.",
+      text:"Bienvenue sur DIGIY réservation. Ici, le client ne voit pas un logiciel. Il voit un lieu, une table, un service, une activité, puis il fait une demande simple. Tu regardes la fiche, tu choisis le bon moment, tu laisses ton contact, et le professionnel confirme directement. DIGIY prépare la rencontre, mais la relation reste entre le client et le professionnel. Simple, clair, humain.",
       buttonBg:"linear-gradient(135deg,#d4af37,#b78b34)",
       buttonColor:"#111827",
       bottom:"24px",
@@ -1245,7 +1259,7 @@
 
         try{synth.cancel();}catch(e){}
 
-        utterance = new SpeechSynthesisUtterance(config.text);
+        utterance = new SpeechSynthesisUtterance(window.digiySpeakText ? window.digiySpeakText(config.text) : config.text);
         utterance.lang = "fr-FR";
         utterance.rate = config.rate;
         utterance.pitch = config.pitch;
@@ -1302,6 +1316,49 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
