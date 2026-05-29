@@ -1,0 +1,89 @@
+name: Patch RESA visible inscription button
+
+on:
+  push:
+    paths:
+      - .github/workflows/patch-index-resa-visible-button.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add visible RESA inscription button to public index
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          css = r'''
+
+    /* DIGIY RESA — bouton visible inscription établissement */
+    .digiy-resa-pro-float{
+      position:fixed;
+      left:12px;
+      right:12px;
+      bottom:calc(14px + env(safe-area-inset-bottom,0px));
+      z-index:100080;
+      max-width:520px;
+      margin:0 auto;
+      min-height:68px;
+      border-radius:22px;
+      border:1px solid rgba(250,204,21,.86);
+      background:linear-gradient(135deg,#ffdc9a,#facc15,#f59e0b);
+      color:#061b14;
+      box-shadow:0 18px 42px rgba(0,0,0,.34),0 0 0 6px rgba(250,204,21,.10);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      padding:10px 18px;
+      text-decoration:none;
+      font-weight:1000;
+      text-align:left;
+    }
+    .digiy-resa-pro-float .ico{font-size:27px;line-height:1;flex:0 0 auto}
+    .digiy-resa-pro-float strong{display:block;font-size:17px;line-height:1.05;color:#061b14}
+    .digiy-resa-pro-float small{display:block;margin-top:3px;font-size:13px;line-height:1.12;font-weight:1000;color:rgba(6,27,20,.82)}
+    .digiy-resa-pro-float:active{transform:translateY(1px) scale(.995)}
+    @media(min-width:760px){.digiy-resa-pro-float{left:auto;right:22px;width:372px}}
+'''
+          html = r'''
+
+  <!-- DIGIY RESA — porte établissement séparée de la réservation client -->
+  <a class="digiy-resa-pro-float" href="./inscription-resa.html" aria-label="Je suis restaurateur, voir les tarifs DIGIY RESA">
+    <span class="ico">🍽️</span>
+    <span><strong>Je suis restaurateur</strong><small>Voir les tarifs DIGIY RESA</small></span>
+  </a>
+'''
+
+          if 'digiy-resa-pro-float' not in s:
+              s = s.replace('</style>', css + '\n  </style>', 1)
+              s = s.replace('</body>', html + '\n</body>', 1)
+
+          # Sécurité : les anciennes portes pro/tarifs générales vont aussi vers la carte RESA.
+          s = s.replace('href="https://tarifs.digiylyfe.com/" target="_blank" rel="noopener noreferrer"', 'href="./inscription-resa.html"')
+          s = s.replace('href="https://tarifs.digiylyfe.com/"', 'href="./inscription-resa.html"')
+          s = s.replace('href="https://commencer-a-payer.digiylyfe.com/" target="_blank" rel="noopener noreferrer"', 'href="./inscription-resa.html"')
+          s = s.replace('href="https://commencer-a-payer.digiylyfe.com/"', 'href="./inscription-resa.html"')
+
+          if './inscription-resa.html' not in s or 'digiy-resa-pro-float' not in s:
+              raise SystemExit('Bouton RESA non posé')
+
+          p.write_text(s, encoding='utf-8')
+          wf = Path('.github/workflows/patch-index-resa-visible-button.yml')
+          if wf.exists():
+              wf.unlink()
+          PY
+      - name: Commit patch
+        run: |
+          git config user.name "DIGIY Auto Patch"
+          git config user.email "actions@github.com"
+          git add index.html .github/workflows/patch-index-resa-visible-button.yml
+          git commit -m "Add visible RESA inscription button" || echo "Nothing to commit"
+          git push
