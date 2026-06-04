@@ -448,8 +448,29 @@
             <span>✅ Pas de jargon technique</span>
             <span>✅ Relation directe</span>
           </div>
-          <div class="status" style="margin-top:12px;"><span id="statusText">🔎 Chargement…</span></div>
+          <div class="status" style="margin-top:12px;"><span id="statusText">✨ Inspirations prêtes · fiches réelles si disponibles</span></div>
+          <div class="kpi" aria-label="Température publique RESA">
+            <div class="chip"><span>Cartes visibles</span><span class="v" id="kpiCount">6</span></div>
+            <div class="chip"><span>Fiches réelles</span><span class="v" id="kpiLive">0</span></div>
+            <div class="chip"><span>Inspirations</span><span class="v" id="kpiVitrine">6</span></div>
+            <div class="chip"><span>Dernier repère</span><span class="v" id="kpiLast">Inspiration prête</span></div>
+          </div>
         </aside>
+      </div>
+
+      <div class="statsbar" aria-label="Température publique DIGIY RESA">
+        <div class="left">
+          <span>🌡️ Température RESA</span>
+          <span class="sep">•</span>
+          <span><b id="msTotal">6</b> cartes visibles</span>
+          <span class="sep">•</span>
+          <span><b id="msPublic">0</b> fiches réelles</span>
+        </div>
+        <div class="right">
+          <span class="stats-pill good"><b id="msVitrine">6</b> inspirations</span>
+          <span class="stats-pill"><b id="msCats">6</b> activités</span>
+          <span class="stats-pill warn"><b id="ms7d">0</b> nouveautés</span>
+        </div>
       </div>
 
       <div class="controls">
@@ -554,7 +575,7 @@
   <div class="bottom-nav-inner">
     <a href="https://digiylyfe.com/"><span class="ico">🌍</span><span>Site</span></a>
     <a href="https://digiy-hub.digiylyfe.com/"><span class="ico">🧭</span><span>HUB</span></a>
-    <a href="./galerie.html"><span class="ico">🧩</span><span>Usages</span></a>
+    <a href="#gridVitrine"><span class="ico">🧩</span><span>Usages</span></a>
     <a class="active" href="#gridLive"><span class="ico">📅</span><span>Réserver</span></a>
     <a id="bottomJoin" href="https://resa-table-resto.digiylyfe.com/inscription-resa.html"><span class="ico">📌</span><span>Proposer</span></a>
   </div>
@@ -897,7 +918,7 @@
           return tb - ta;
         })[0];
 
-        setText("kpiLast",last ? `${last.display_name}${last.kind === "demo" ? " • à découvrir" : " • disponible"}` : "—");
+        setText("kpiLast",last ? `${last.display_name}${last.kind === "demo" ? " • à découvrir" : " • disponible"}` : "Inspiration prête");
       }
 
       function renderSkeleton(){
@@ -1020,9 +1041,15 @@
       }
 
       async function load(){
-        renderSkeleton();
-        setStatus("🔎 Chargement…");
+        /* Première impression : on affiche les inspirations immédiatement.
+           Supabase vient enrichir ensuite avec les vraies fiches, sans écran d'attente. */
+        LIVE_ROWS = [...OFFICIAL_RESA_CARDS];
         VITRINE_ROWS = [...DEMO_CARDS];
+
+        fillSelects();
+        updateStatsBar(LIVE_ROWS,VITRINE_ROWS);
+        applyFilters();
+        setStatus("✨ Inspirations prêtes · fiches réelles si disponibles");
 
         try{
           sb = initSupabase();
@@ -1052,11 +1079,11 @@
           applyFilters();
 
           if(LIVE_ROWS.length){
-            setStatus("✅ Les lieux à réserver sont chargés, avec Chez Astou et Baptiste en porte directe.");
-            toast("✅ Chez Astou et Baptiste + lieux prêts");
+            setStatus("✅ Fiches réelles chargées · inspirations toujours disponibles.");
+            toast("✅ Fiches RESA chargées");
           }else{
-            setStatus("⚠️ Aucun lieu réservable pour l’instant. Les idées à découvrir restent visibles.");
-            toast("✨ Partie à découvrir active");
+            setStatus("✨ Inspirations visibles · aucune fiche réelle RESA publiée pour l’instant.");
+            toast("✨ Inspirations RESA visibles");
           }
         }catch(e){
           console.error(e);
@@ -1064,8 +1091,8 @@
           fillSelects();
           updateStatsBar(LIVE_ROWS,VITRINE_ROWS);
           applyFilters();
-          setStatus("✅ Chez Astou et Baptiste est disponible. Les autres lieux Supabase sont indisponibles pour le moment.");
-          toast("✅ Chez Astou et Baptiste affiché");
+          setStatus("✨ Inspirations visibles · Supabase indisponible pour le moment.");
+          toast("✨ RESA reste vivante");
         }
       }
 
@@ -1320,6 +1347,352 @@ window.digiySpeakText = window.digiySpeakText || function(text){
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
