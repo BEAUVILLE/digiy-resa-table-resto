@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#f4ead2">
-  <meta name="digiy-version" content="resa-inscription-wave-note-paiement-clair-20260604">
+  <meta name="digiy-version" content="resa-inscription-info-pro-paiement-20260608">
   <title>Inscription RESA — DIGIY</title>
 
   <style>
@@ -392,6 +392,74 @@
       box-shadow:0 16px 36px rgba(77,52,22,.18);
     }
 
+
+
+    .proInfoBox{
+      margin-top:12px;
+      border:1px solid rgba(21,95,67,.20);
+      border-radius:18px;
+      background:rgba(21,95,67,.07);
+      padding:12px;
+    }
+
+    .proInfoBox h3{
+      margin:0 0 8px;
+      color:var(--green);
+      font-size:20px;
+      line-height:1.12;
+      font-weight:1000;
+    }
+
+    .proInfoBox p{
+      margin:0 0 10px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.45;
+      font-weight:900;
+    }
+
+    .proInfoGrid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:9px;
+    }
+
+    .proInfoField label{
+      display:block;
+      margin:0 0 6px;
+      color:#7a4d00;
+      font-size:12px;
+      font-weight:1000;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+    }
+
+    .proInfoField input{
+      width:100%;
+      min-height:48px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fffef8;
+      color:var(--ink);
+      padding:11px 12px;
+      font-weight:900;
+      outline:none;
+      box-shadow:0 8px 18px rgba(77,52,22,.06);
+    }
+
+    .proInfoField input:focus{
+      border-color:rgba(250,204,21,.82);
+      box-shadow:0 0 0 4px rgba(250,204,21,.14);
+    }
+
+    .proInfoMini{
+      margin-top:9px;
+      color:var(--green);
+      font-size:13px;
+      line-height:1.35;
+      font-weight:950;
+    }
+
     @media(max-width:850px){
       .hero,
       .grid{
@@ -403,7 +471,8 @@
         top:auto;
       }
 
-      .prices{
+      .prices,
+      .proInfoGrid{
         grid-template-columns:1fr;
       }
 
@@ -535,6 +604,36 @@
           </div>
         </div>
 
+
+        <div class="proInfoBox" id="proInfoBox">
+          <h3>Infos pro pour paiement</h3>
+          <p>Ces informations servent seulement à identifier le paiement et enrichir le message WhatsApp / SMS. La fiche complète se construit dans l’espace RESA.</p>
+
+          <div class="proInfoGrid">
+            <div class="proInfoField">
+              <label for="proName">Nom / responsable</label>
+              <input id="proName" autocomplete="name" placeholder="Ex : Mamadou Diop">
+            </div>
+
+            <div class="proInfoField">
+              <label for="proPhone">Téléphone / WhatsApp</label>
+              <input id="proPhone" inputmode="tel" autocomplete="tel" placeholder="Ex : +221 77 000 00 00">
+            </div>
+
+            <div class="proInfoField">
+              <label for="proZone">Zone / ville</label>
+              <input id="proZone" autocomplete="address-level2" placeholder="Ex : Saly, Dakar, Mbour">
+            </div>
+
+            <div class="proInfoField">
+              <label for="proActivity">Établissement / activité</label>
+              <input id="proActivity" autocomplete="organization" placeholder="Ex : Salon Awa, Cabinet Diop, Garage Saly">
+            </div>
+          </div>
+
+          <div class="proInfoMini">Le téléphone peut retenir ces infos pour éviter de tout retaper. DIGIY prépare, le pro vérifie.</div>
+        </div>
+
         <div class="noteBox">
           <label for="paymentNote">📝 Note / preuve paiement</label>
           <textarea id="paymentNote" placeholder="Ex : Paiement Wave envoyé pour RESA 3B — 19 900 FCFA — au nom de Mamadou Diop — tél +221 77 000 00 00."></textarea>
@@ -567,6 +666,7 @@
 
       const TEL = "221771342889";
       const WAVE_LABEL = "Wave : JB BEAUVILLE · +221 77 134 28 89";
+      const PRO_MEMORY_KEY = "digiy_resa_payment_identity_v1";
 
       const PLANS = [
         {
@@ -694,6 +794,61 @@
         return ($("paymentNote")?.value || "").trim() || "à compléter";
       }
 
+      function proValue(id){
+        return ($(id)?.value || "").trim();
+      }
+
+      function proInfo(){
+        return {
+          name: proValue("proName"),
+          phone: proValue("proPhone"),
+          zone: proValue("proZone"),
+          activity: proValue("proActivity")
+        };
+      }
+
+      function proInfoText(){
+        const p = proInfo();
+
+        return [
+          "Nom / responsable : " + (p.name || "à compléter"),
+          "Téléphone / WhatsApp : " + (p.phone || "à compléter"),
+          "Zone / ville : " + (p.zone || "à compléter"),
+          "Établissement / activité : " + (p.activity || "à compléter")
+        ].join("\n");
+      }
+
+      function saveProInfo(){
+        try{
+          const data = proInfo();
+          data.updated_at = new Date().toISOString();
+          data.source = "inscription-resa.html";
+          localStorage.setItem(PRO_MEMORY_KEY, JSON.stringify(data));
+        }catch(_){ }
+      }
+
+      function loadProInfo(){
+        try{
+          const data = JSON.parse(localStorage.getItem(PRO_MEMORY_KEY) || "{}");
+          if(data.name && $("proName") && !$("proName").value) $("proName").value = data.name;
+          if(data.phone && $("proPhone") && !$("proPhone").value) $("proPhone").value = data.phone;
+          if(data.zone && $("proZone") && !$("proZone").value) $("proZone").value = data.zone;
+          if(data.activity && $("proActivity") && !$("proActivity").value) $("proActivity").value = data.activity;
+        }catch(_){ }
+      }
+
+      function bindProInfo(){
+        ["proName","proPhone","proZone","proActivity"].forEach(id => {
+          const el = $(id);
+          if(!el) return;
+
+          el.addEventListener("input", () => {
+            saveProInfo();
+            update(false);
+          });
+        });
+      }
+
       function render(){
         ["base","boost","reseau"].forEach(cat => {
           const target =
@@ -738,6 +893,9 @@
 
 Date de demande : ${date()}
 
+Infos pro / établissement :
+${proInfoText()}
+
 Choix :
 ${lines}
 
@@ -765,6 +923,9 @@ Canal souhaité : WhatsApp ou SMS.`;
         return `Bonjour JB, voici la preuve de paiement Wave pour DIGIY RESA.
 
 Date de demande : ${date()}
+
+Infos pro / établissement :
+${proInfoText()}
 
 ${WAVE_LABEL}
 Montant : ${money(sub)}
@@ -846,6 +1007,8 @@ Je joins la capture / preuve de paiement à ce message.`;
         summary.scrollIntoView({behavior:"smooth",block:"start"});
       };
 
+      loadProInfo();
+      bindProInfo();
       update(false);
     })();
   </script>
@@ -858,3 +1021,4 @@ Je joins la capture / preuve de paiement à ce message.`;
   </script>
 </body>
 </html>
+
