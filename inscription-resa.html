@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#f4ead2">
-  <meta name="digiy-version" content="resa-multiservice-inscription-france-senegal-sendwave-grille-pays-20260629">
-  <title>Inscription RESA multi-service — France · Sénégal · DIGIY</title>
+  <meta name="digiy-version" content="resa-multiservice-demande-sans-engagement-activation-payante-sendwave-20260707">
+  <title>Demande RESA multi-service — Activation pro · France · Sénégal · DIGIY</title>
 
   <style>
     :root{
@@ -472,7 +472,8 @@
       }
 
       .prices,
-      .proInfoGrid{
+      .proInfoGrid,
+      .resaDoctrineList{
         grid-template-columns:1fr;
       }
 
@@ -579,13 +580,93 @@
       font-weight:950;
     }
 
+
+    .gold-emphasis{
+      border-color:rgba(250,204,21,.82)!important;
+      background:linear-gradient(135deg,rgba(250,204,21,.32),rgba(245,158,11,.16))!important;
+      color:#7a4d00!important;
+      box-shadow:0 12px 28px rgba(250,204,21,.15)!important;
+    }
+
+    .resaDoctrine{
+      margin-bottom:14px;
+      border:2px solid rgba(250,204,21,.55);
+      border-radius:24px;
+      background:
+        radial-gradient(circle at top right,rgba(250,204,21,.24),transparent 38%),
+        linear-gradient(145deg,rgba(255,255,255,.72),rgba(255,247,223,.86));
+      box-shadow:var(--shadow);
+      padding:18px;
+      display:grid;
+      gap:12px;
+    }
+
+    .resaDoctrineTag{
+      display:inline-flex;
+      width:max-content;
+      max-width:100%;
+      align-items:center;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      border:1px solid rgba(21,95,67,.22);
+      background:rgba(21,95,67,.08);
+      color:var(--green);
+      font-size:12px;
+      font-weight:1000;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+
+    .resaDoctrine h2{
+      margin:0;
+      color:var(--green);
+      font-size:clamp(28px,4.8vw,46px);
+      line-height:1;
+      letter-spacing:-.04em;
+      font-weight:1000;
+    }
+
+    .resaDoctrine p{
+      margin:0;
+      color:#465444;
+      line-height:1.62;
+      font-weight:900;
+    }
+
+    .resaDoctrineList{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:9px;
+    }
+
+    .resaDoctrineList span{
+      border:1px solid rgba(83,58,26,.18);
+      background:rgba(255,255,255,.70);
+      border-radius:17px;
+      padding:11px;
+      color:var(--ink);
+      font-size:13px;
+      line-height:1.35;
+      font-weight:1000;
+    }
+
+    .resaDoctrineQuote{
+      border-left:4px solid var(--gold2);
+      background:rgba(250,204,21,.12);
+      border-radius:16px;
+      padding:12px 14px;
+      color:#7a4d00!important;
+      font-weight:1000!important;
+    }
+
   </style>
 </head>
 
 <body>
   <div class="app">
     <header class="top">
-      <a class="brand" href="./index.html">📅 DIGIY RESA multi-service · inscription</a>
+      <a class="brand" href="./index.html">📅 DIGIY RESA multi-service · demande</a>
 
       <nav class="nav">
         <a href="./index.html">← Page client</a>
@@ -598,7 +679,8 @@
         <h1>Réservations multi-services.</h1>
         <p class="lead">
           RESA n’est pas seulement resto : docteur, avocat, architecte, salon,
-          onglerie, garage, consultant, service ou table. Aucun tarif n’est précoché.
+          onglerie, garage, consultant, service ou table. La demande initiale est sans engagement :
+          aucun tarif n’est précoché, et l’activation RESA devient payante seulement si le pro valide son choix.
         </p>
 
         <div class="pills">
@@ -617,15 +699,37 @@
 
         <p>
           Choix volontaire, addition claire, date dans le message, WhatsApp ou SMS.
-          Après paiement, envoie la preuve sur WhatsApp. France : Sendwave vers Wave Sénégal.
+          Après paiement, envoie la preuve sur WhatsApp.
+          <strong class="gold-emphasis" style="display:inline-flex;padding:2px 8px;border-radius:999px;">France : Sendwave vers Wave Sénégal</strong>.
         </p>
       </div>
     </section>
 
+    <section class="resaDoctrine" aria-label="Doctrine commerciale RESA multi-service">
+      <span class="resaDoctrineTag">Demande RESA sans engagement · Activation RESA payante · 0% commission</span>
+      <h2>Le client réserve. Le pro garde son planning, son prix et son contact.</h2>
+      <p>
+        RESA multi-service ouvre une porte claire pour les rendez-vous, les tables, les créneaux,
+        les cabinets, les salons, les garages et les services. DIGIY ne prend aucune commission
+        sur la réservation, la prestation ou le règlement. La demande initiale / orientation est
+        sans engagement : le paiement concerne seulement l’activation d’une présence RESA,
+        d’un planning, d’un QR, d’une mise en valeur ou d’un pack visibilité.
+      </p>
+      <div class="resaDoctrineList">
+        <span>✅ Demande initiale sans engagement</span>
+        <span>📅 Activation RESA payante</span>
+        <span>🤝 Réservation et paiement directs</span>
+        <span class="gold-emphasis">🇫🇷 France / diaspora : Sendwave possible</span>
+      </div>
+      <p class="resaDoctrineQuote">
+        DIGIY RESA organise la porte de réservation. Le professionnel garde la main sur son agenda, son client et son argent.
+      </p>
+    </section>
+
     <main class="grid">
       <section class="card">
-        <h2>Tarifs RESA</h2>
-        <p>Clique un ou plusieurs choix. Si tu te trompes, efface.</p>
+        <h2>Activation RESA multi-service</h2>
+        <p>Clique un ou plusieurs choix seulement si tu veux activer RESA. Rien n’est précoché. Si tu te trompes, efface.</p>
 
         <div class="countryBox" aria-label="Choix pays RESA">
           <div class="countryTitle">🌍 Choisir le pays de règlement</div>
@@ -634,7 +738,7 @@
               <strong>🇸🇳 Sénégal</strong>
               <span>Tarifs FCFA · Wave direct</span>
             </button>
-            <button class="countryBtn" type="button" data-country="france">
+            <button class="countryBtn gold-emphasis" type="button" data-country="france">
               <strong>🇫🇷 France</strong>
               <span>Tarifs EUR · Sendwave vers Wave Sénégal</span>
             </button>
@@ -644,7 +748,7 @@
           </div>
         </div>
 
-        <div class="section">📅 Abonnement RESA</div>
+        <div class="section">📅 Activation RESA</div>
         <div class="prices" id="baseOptions"></div>
 
         <div class="section">✨ BOOST visibilité</div>
@@ -655,7 +759,7 @@
       </section>
 
       <aside class="card summary" id="summary">
-        <h2>Ce que l’abonnement m’apporte</h2>
+        <h2>Ce que mon activation RESA m’apporte</h2>
 
         <div class="selected" id="selectedBox">
           <strong>Aucun choix sélectionné</strong><br>
@@ -696,10 +800,10 @@
 
           <div class="proof">
             Après paiement Wave, envoie la capture ou la preuve par WhatsApp.
-            DIGIY vérifie puis accompagne l’ouverture / visibilité RESA.
+            DIGIY vérifie puis accompagne l’activation de la présence / visibilité RESA.
           </div>
 
-          <div class="payBadge" id="payBadge">
+          <div class="payBadge gold-emphasis" id="payBadge">
             🇸🇳 Sénégal : règlement Wave direct. 🇫🇷 France : règlement Sendwave vers Wave Sénégal.
           </div>
         </div>
@@ -707,7 +811,7 @@
 
         <div class="proInfoBox" id="proInfoBox">
           <h3>Infos pro pour paiement</h3>
-          <p>Ces informations servent seulement à identifier le paiement et enrichir le message WhatsApp / SMS. La fiche complète se construit dans l’espace RESA.</p>
+          <p>Ces informations servent seulement à identifier la demande RESA et enrichir le message WhatsApp / SMS. La demande initiale est sans engagement ; l’activation RESA se fait ensuite selon le choix validé.</p>
 
           <div class="proInfoGrid">
             <div class="proInfoField">
@@ -750,7 +854,7 @@
         </div>
 
         <div class="actions">
-          <button class="btn" id="btnCopyWave" type="button">📋 Copier Wave</button>
+          <button class="btn" id="btnCopyWave" type="button">📋 Copier paiement</button>
           <a class="btn gold" id="btnProof">📸 Envoyer preuve</a>
           <a class="btn gold" href="https://pro-resa.digiylyfe.com/">🔐 Espace pro</a>
         </div>
@@ -866,7 +970,7 @@
       const COMMON = [
         "Carte de visite complète",
         "QR et lien partageable",
-        "Logiciel métier RESA multi-service",
+        "Présence métier RESA multi-service",
         "Planning / rendez-vous / tables selon métier",
         "Textes prêts",
         "Validation humaine",
@@ -1051,6 +1155,8 @@
 
 Date de demande : ${date()}
 Pays / règlement : ${countryLabel()}
+Demande initiale : sans engagement avant activation RESA
+Doctrine : 0% commission sur la réservation, la prestation ou le règlement
 
 Infos pro / établissement :
 ${proInfoText()}
@@ -1066,6 +1172,7 @@ Note / preuve :
 ${noteText()}
 
 Important : les tarifs France et Sénégal sont une grille pays, pas une conversion au taux de change.
+Important : DIGIY RESA prend 0% commission. Le paiement concerne l’activation choisie.
 
 Après paiement, je vous envoie la preuve ici.
 
@@ -1078,6 +1185,8 @@ Canal souhaité : WhatsApp ou SMS.`;
 
 Date de demande : ${date()}
 Pays / règlement : ${countryLabel()}
+Demande initiale : sans engagement avant activation RESA
+Doctrine : 0% commission sur la réservation, la prestation ou le règlement
 
 Infos pro / établissement :
 ${proInfoText()}
@@ -1132,7 +1241,7 @@ Je joins la capture / preuve de paiement à ce message.`;
         if(proof){
           proof.textContent = country === "france"
             ? "Depuis la France, règle par Sendwave vers le Wave Sénégal de JB BEAUVILLE, puis envoie la preuve par WhatsApp."
-            : "Après paiement Wave, envoie la capture ou la preuve par WhatsApp. DIGIY vérifie puis accompagne l’ouverture / visibilité RESA.";
+            : "Après paiement Wave, envoie la capture ou la preuve par WhatsApp. DIGIY vérifie puis accompagne l’activation de la présence / visibilité RESA.";
         }
 
         $("benefits").innerHTML = (items.length ? [...COMMON,...items.flatMap(p => p.bonus)] : [])
@@ -1201,5 +1310,8 @@ Je joins la capture / preuve de paiement à ce message.`;
   </script>
 </body>
 </html>
+
+
+
 
 
