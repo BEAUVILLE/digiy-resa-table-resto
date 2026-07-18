@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#f4ead2">
-  <meta name="digiy-version" content="resa-inscription-presence-40eur-metier-15eur-20260718">
+  <meta name="digiy-version" content="resa-grille-3a-3c-option-metier-20260718">
   <title>Demande RESA multi-service — Activation pro · France · Sénégal · DIGIY</title>
 
   <style>
@@ -686,15 +686,15 @@
         <p class="lead">
           RESA n’est pas seulement resto : docteur, avocat, architecte, salon,
           onglerie, garage, consultant, service ou table.
-          DIGIY PRÉSENCE construit la fiche professionnelle et son QR.
-          DIGIY MÉTIER ajoute le planning et le logiciel RESA uniquement si le professionnel le choisit.
+          Choisis une seule formule RESA : Essentiel, Standard ou Premium.
+          Le planning et le logiciel RESA restent une option distincte et facultative.
         </p>
 
         <div class="pills">
-          <span class="pill">Présence 19 900 FCFA / 40 €</span>
-          <span class="pill">Métier +8 000 FCFA / +15 €</span>
-          <span class="pill">Total 27 900 FCFA / 55 €</span>
-          <span class="pill">0% commission</span>
+          <span class="pill">3A Essentiel · 12 000 FCFA / 19 €</span>
+          <span class="pill">3B Standard · 19 900 FCFA / 29 €</span>
+          <span class="pill">3C Premium · 35 000 FCFA / 59 €</span>
+          <span class="pill">Logiciel +8 000 FCFA / +15 €</span>
         </div>
       </div>
 
@@ -713,20 +713,19 @@
     </section>
 
     <section class="resaDoctrine" aria-label="Doctrine commerciale RESA multi-service">
-      <span class="resaDoctrineTag">Demande gratuite · Présence 19 900 / 40 € · Métier +8 000 / +15 € · 0% commission</span>
-      <h2>Commencer proprement. Monter quand l’activité le demande.</h2>
+      <span class="resaDoctrineTag">FORMULES 3A À 3C · LOGICIEL +8 000 / +15 € · 0% commission</span>
+      <h2>Choisir la formule adaptée à son niveau de réservation.</h2>
       <p>
-        DIGIY PRÉSENCE donne au professionnel une fiche, un QR officiel,
-        un lien partageable, un contact direct et la maintenance essentielle.
-        DIGIY MÉTIER ajoute le logiciel RESA pour gérer planning, rendez-vous,
-        tables, créneaux, demandes et suivi opérationnel. Cette option reste facultative.
+        Chaque formule RESA conserve son prix officiel.
+        Le logiciel RESA ajoute planning, rendez-vous, tables, créneaux,
+        demandes et suivi opérationnel. Cette option reste facultative.
         PRO CARNET, BOOST et RÉSEAU restent séparés.
       </p>
       <div class="resaDoctrineList">
-        <span>1 · DIGIY PRÉSENCE · 19 900 FCFA / 40 €</span>
-        <span>2 · DIGIY MÉTIER · +8 000 FCFA / +15 €</span>
-        <span>✅ Total avec logiciel · 27 900 FCFA / 55 €</span>
-        <span class="gold-emphasis">Aucun module supplémentaire imposé</span>
+        <span>3A · Essentiel</span>
+        <span>3B · Standard</span>
+        <span>3C · Premium</span>
+        <span class="gold-emphasis">Logiciel RESA facultatif</span>
       </div>
       <p class="resaDoctrineQuote">
         DIGIY RESA organise la porte de réservation. Le professionnel garde la main sur son agenda, son client et son argent.
@@ -736,7 +735,7 @@
     <main class="grid">
       <section class="card">
         <h2>Activation RESA multi-service</h2>
-        <p>Commence par DIGIY PRÉSENCE. Ajoute DIGIY MÉTIER seulement si tu veux le planning et le logiciel RESA.</p>
+        <p>Choisis une seule formule RESA. Ajoute ensuite le logiciel seulement si tu veux le planning et le suivi opérationnel.</p>
 
         <div class="countryBox" aria-label="Choix pays RESA">
           <div class="countryTitle">🌍 Choisir le pays de règlement</div>
@@ -751,15 +750,15 @@
             </button>
           </div>
           <div class="countryNote" id="countryNote">
-            Sénégal : Présence 19 900 FCFA ; Métier +8 000 FCFA ; total 27 900 FCFA.
-            France : Présence 40 € ; Métier +15 € ; total 55 €.
+            Sénégal : 3A 12 000 · 3B 19 900 · 3C 35 000 FCFA.
+            Logiciel RESA facultatif : +8 000 FCFA.
           </div>
         </div>
 
-        <div class="section">1 · SOCLE — DIGIY PRÉSENCE</div>
+        <div class="section">1 · FORMULE RESA — CHOISIR UNE SEULE</div>
         <div class="prices" id="baseOptions"></div>
 
-        <div class="section">2 · OPTION MÉTIER — DIGIY MÉTIER</div>
+        <div class="section">2 · OPTION LOGICIEL RESA — FACULTATIVE</div>
         <div class="prices" id="metierOptions"></div>
 
         <div class="section">✨ BOOST visibilité</div>
@@ -851,7 +850,7 @@
 
         <div class="noteBox">
           <label for="paymentNote">📝 Note / preuve paiement</label>
-          <textarea id="paymentNote" placeholder="Ex : DIGIY PRÉSENCE RESA — 19 900 FCFA ; option métier ajoutée — total 27 900 FCFA — Mamadou Diop."></textarea>
+          <textarea id="paymentNote" placeholder="Ex : RESA 3B — 19 900 FCFA ; logiciel ajouté +8 000 FCFA ; total 27 900 FCFA — Mamadou Diop."></textarea>
         </div>
 
         <div class="dateBox" id="dateBox">Date de demande : —</div>
@@ -887,21 +886,39 @@
 
       const PLANS = [
         {
-          code:"PRESENCE",
+          code:"3A",
           cat:"base",
-          name:"DIGIY PRÉSENCE RESA",
+          name:"RESA 3A · Essentiel",
+          fcfa:12000,
+          eur:19,
+          desc:"Formule de base pour démarrer avec une présence RESA simple et claire.",
+          bonus:["Fiche établissement visible","QR officiel","Lien partageable","Contact direct"]
+        },
+        {
+          code:"3B",
+          cat:"base",
+          name:"RESA 3B · Standard",
           fcfa:19900,
-          eur:40,
-          desc:"Fiche professionnelle, QR officiel, lien partageable, contact direct et maintenance essentielle.",
+          eur:29,
+          desc:"Formule de base renforcée pour une activité régulière de réservation.",
+          bonus:["Fiche établissement visible","QR officiel","Lien partageable","Contact direct"]
+        },
+        {
+          code:"3C",
+          cat:"base",
+          name:"RESA 3C · Premium",
+          fcfa:35000,
+          eur:59,
+          desc:"Formule premium pour une présence plus forte et un volume de réservation plus élevé.",
           bonus:["Fiche établissement visible","QR officiel","Lien partageable","Contact direct"]
         },
         {
           code:"METIER",
           cat:"metier",
-          name:"DIGIY MÉTIER RESA",
+          name:"Option logiciel métier RESA",
           fcfa:8000,
           eur:15,
-          desc:"Option facultative : logiciel RESA pour planning, rendez-vous, tables, créneaux, demandes et suivi.",
+          desc:"Option facultative : planning, rendez-vous, tables, créneaux, demandes et suivi.",
           bonus:["Logiciel métier RESA","Planning et rendez-vous","Tables ou créneaux","Suivi des demandes"]
         },
         {
@@ -1107,8 +1124,8 @@
         const note = $("countryNote");
         if(note){
           note.innerHTML = country === "france"
-            ? "🇫🇷 France : DIGIY PRÉSENCE RESA à <strong>40 €</strong> ; DIGIY MÉTIER RESA à <strong>+15 €</strong> ; total <strong>55 €</strong>. Règlement Sendwave vers Wave Sénégal."
-            : "🇸🇳 Sénégal : DIGIY PRÉSENCE RESA à <strong>19 900 FCFA</strong> ; DIGIY MÉTIER RESA à <strong>+8 000 FCFA</strong> ; total <strong>27 900 FCFA</strong>.";
+            ? "🇫🇷 France : 3A 19 € · 3B 29 € · 3C 59 €. Logiciel RESA facultatif : <strong>+15 €</strong>."
+            : "🇸🇳 Sénégal : 3A 12 000 · 3B 19 900 · 3C 35 000 FCFA. Logiciel RESA facultatif : <strong>+8 000 FCFA</strong>.";
         }
 
         try{
@@ -1131,7 +1148,7 @@
             : cat === "boost" ? "boostOptions"
             : "reseauOptions";
 
-          const presenceSelected = selected.has("PRESENCE");
+          const presenceSelected = ["3A","3B","3C"].some(code => selected.has(code));
 
           $(target).innerHTML = PLANS.filter(p => p.cat === cat).map(p => {
             const unavailable = p.code === "METIER" && !presenceSelected;
@@ -1162,11 +1179,22 @@
           btn.onclick = () => {
             const code = btn.dataset.code;
 
-            if(code === "METIER" && !selected.has("PRESENCE")) return;
+            const baseCodes = ["3A","3B","3C"];
+            const isBase = baseCodes.includes(code);
+            const hasBase = baseCodes.some(baseCode => selected.has(baseCode));
 
-            if(selected.has(code)){
+            if(code === "METIER" && !hasBase) return;
+
+            if(isBase){
+              if(selected.has(code)){
+                selected.delete(code);
+                selected.delete("METIER");
+              }else{
+                baseCodes.forEach(baseCode => selected.delete(baseCode));
+                selected.add(code);
+              }
+            }else if(selected.has(code)){
               selected.delete(code);
-              if(code === "PRESENCE") selected.delete("METIER");
             }else{
               selected.add(code);
             }
@@ -1197,8 +1225,8 @@ Choix :
 ${choiceLines()}
 
 Doctrine RESA :
-- DIGIY PRÉSENCE : socle
-- DIGIY MÉTIER : option facultative
+- Formule 3A, 3B ou 3C : choisir une seule base
+- Logiciel métier RESA : option facultative
 - PRO CARNET, BOOST et RÉSEAU : séparés
 
 Total : ${total.label}
@@ -1247,8 +1275,8 @@ Je joins la capture / preuve de paiement à ce message.`;
         const total = totals();
 
         $("selectedBox").innerHTML = items.length
-          ? `<strong>${items.length} choix sélectionné${items.length > 1 ? "s" : ""}</strong><br>${selected.has("METIER") ? "Présence + logiciel métier" : selected.has("PRESENCE") ? "Présence seule" : "Option de visibilité séparée"}`
-          : `<strong>Aucun choix sélectionné</strong><br>Rien n’est précoché. Commence par DIGIY PRÉSENCE.`;
+          ? `<strong>${items.length} choix sélectionné${items.length > 1 ? "s" : ""}</strong><br>${selected.has("METIER") ? "Formule RESA + logiciel métier" : ["3A","3B","3C"].some(code => selected.has(code)) ? "Formule RESA seule" : "Option de visibilité séparée"}`
+          : `<strong>Aucun choix sélectionné</strong><br>Rien n’est précoché. Choisis une formule 3A, 3B ou 3C.`;
 
         $("choiceList").innerHTML = items.length
           ? items.map(p => `
@@ -1355,6 +1383,18 @@ Je joins la capture / preuve de paiement à ce message.`;
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
