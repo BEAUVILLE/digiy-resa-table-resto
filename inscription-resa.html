@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#f4ead2">
-  <meta name="digiy-version" content="resa-multiservice-demande-sans-engagement-activation-payante-sendwave-20260707">
+  <meta name="digiy-version" content="resa-inscription-presence-40eur-metier-15eur-20260718">
   <title>Demande RESA multi-service — Activation pro · France · Sénégal · DIGIY</title>
 
   <style>
@@ -219,6 +219,12 @@
       border-color:#facc15;
       background:rgba(250,204,21,.22);
       box-shadow:0 12px 30px rgba(250,204,21,.10);
+    }
+
+    .option.disabled{
+      opacity:.46;
+      cursor:not-allowed;
+      filter:grayscale(.15);
     }
 
     .code{
@@ -679,15 +685,16 @@
         <h1>Réservations multi-services.</h1>
         <p class="lead">
           RESA n’est pas seulement resto : docteur, avocat, architecte, salon,
-          onglerie, garage, consultant, service ou table. La demande initiale est sans engagement :
-          aucun tarif n’est précoché, et l’activation RESA devient payante seulement si le pro valide son choix.
+          onglerie, garage, consultant, service ou table.
+          DIGIY PRÉSENCE construit la fiche professionnelle et son QR.
+          DIGIY MÉTIER ajoute le planning et le logiciel RESA uniquement si le professionnel le choisit.
         </p>
 
         <div class="pills">
-          <span class="pill">Planning clair</span>
-          <span class="pill">WhatsApp direct</span>
+          <span class="pill">Présence 19 900 FCFA / 40 €</span>
+          <span class="pill">Métier +8 000 FCFA / +15 €</span>
+          <span class="pill">Total 27 900 FCFA / 55 €</span>
           <span class="pill">0% commission</span>
-          <span class="pill">Validation humaine</span>
         </div>
       </div>
 
@@ -706,20 +713,20 @@
     </section>
 
     <section class="resaDoctrine" aria-label="Doctrine commerciale RESA multi-service">
-      <span class="resaDoctrineTag">Demande RESA sans engagement · Activation RESA payante · 0% commission</span>
-      <h2>Le client réserve. Le pro garde son planning, son prix et son contact.</h2>
+      <span class="resaDoctrineTag">Demande gratuite · Présence 19 900 / 40 € · Métier +8 000 / +15 € · 0% commission</span>
+      <h2>Commencer proprement. Monter quand l’activité le demande.</h2>
       <p>
-        RESA multi-service ouvre une porte claire pour les rendez-vous, les tables, les créneaux,
-        les cabinets, les salons, les garages et les services. DIGIY ne prend aucune commission
-        sur la réservation, la prestation ou le règlement. La demande initiale / orientation est
-        sans engagement : le paiement concerne seulement l’activation d’une présence RESA,
-        d’un planning, d’un QR, d’une mise en valeur ou d’un pack visibilité.
+        DIGIY PRÉSENCE donne au professionnel une fiche, un QR officiel,
+        un lien partageable, un contact direct et la maintenance essentielle.
+        DIGIY MÉTIER ajoute le logiciel RESA pour gérer planning, rendez-vous,
+        tables, créneaux, demandes et suivi opérationnel. Cette option reste facultative.
+        PRO CARNET, BOOST et RÉSEAU restent séparés.
       </p>
       <div class="resaDoctrineList">
-        <span>✅ Demande initiale sans engagement</span>
-        <span>📅 Activation RESA payante</span>
-        <span>🤝 Réservation et paiement directs</span>
-        <span class="gold-emphasis">🇫🇷 France / diaspora : Sendwave possible</span>
+        <span>1 · DIGIY PRÉSENCE · 19 900 FCFA / 40 €</span>
+        <span>2 · DIGIY MÉTIER · +8 000 FCFA / +15 €</span>
+        <span>✅ Total avec logiciel · 27 900 FCFA / 55 €</span>
+        <span class="gold-emphasis">Aucun module supplémentaire imposé</span>
       </div>
       <p class="resaDoctrineQuote">
         DIGIY RESA organise la porte de réservation. Le professionnel garde la main sur son agenda, son client et son argent.
@@ -729,7 +736,7 @@
     <main class="grid">
       <section class="card">
         <h2>Activation RESA multi-service</h2>
-        <p>Clique un ou plusieurs choix seulement si tu veux activer RESA. Rien n’est précoché. Si tu te trompes, efface.</p>
+        <p>Commence par DIGIY PRÉSENCE. Ajoute DIGIY MÉTIER seulement si tu veux le planning et le logiciel RESA.</p>
 
         <div class="countryBox" aria-label="Choix pays RESA">
           <div class="countryTitle">🌍 Choisir le pays de règlement</div>
@@ -744,12 +751,16 @@
             </button>
           </div>
           <div class="countryNote" id="countryNote">
-            Les tarifs France et Sénégal sont une grille pays : pas une conversion au taux de change.
+            Sénégal : Présence 19 900 FCFA ; Métier +8 000 FCFA ; total 27 900 FCFA.
+            France : Présence 40 € ; Métier +15 € ; total 55 €.
           </div>
         </div>
 
-        <div class="section">📅 Activation RESA</div>
+        <div class="section">1 · SOCLE — DIGIY PRÉSENCE</div>
         <div class="prices" id="baseOptions"></div>
+
+        <div class="section">2 · OPTION MÉTIER — DIGIY MÉTIER</div>
+        <div class="prices" id="metierOptions"></div>
 
         <div class="section">✨ BOOST visibilité</div>
         <div class="prices" id="boostOptions"></div>
@@ -840,7 +851,7 @@
 
         <div class="noteBox">
           <label for="paymentNote">📝 Note / preuve paiement</label>
-          <textarea id="paymentNote" placeholder="Ex : Paiement Wave envoyé pour RESA 3B — 19 900 FCFA — au nom de Mamadou Diop — tél +221 77 000 00 00."></textarea>
+          <textarea id="paymentNote" placeholder="Ex : DIGIY PRÉSENCE RESA — 19 900 FCFA ; option métier ajoutée — total 27 900 FCFA — Mamadou Diop."></textarea>
         </div>
 
         <div class="dateBox" id="dateBox">Date de demande : —</div>
@@ -876,31 +887,22 @@
 
       const PLANS = [
         {
-          code:"3A",
+          code:"PRESENCE",
           cat:"base",
-          name:"RESA Essentiel",
-          fcfa:12000,
-          eur:19,
-          desc:"Fiche, QR, demandes WhatsApp et réservations simples.",
-          bonus:["Fiche établissement","QR et WhatsApp direct","Réservations simples"]
-        },
-        {
-          code:"3B",
-          cat:"base",
-          name:"RESA Standard",
+          name:"DIGIY PRÉSENCE RESA",
           fcfa:19900,
-          eur:29,
-          desc:"Planning, messages prêts, gestion des demandes.",
-          bonus:["Planning","Messages prêts","Gestion des demandes"]
+          eur:40,
+          desc:"Fiche professionnelle, QR officiel, lien partageable, contact direct et maintenance essentielle.",
+          bonus:["Fiche établissement visible","QR officiel","Lien partageable","Contact direct"]
         },
         {
-          code:"3C",
-          cat:"base",
-          name:"RESA Premium",
-          fcfa:35000,
-          eur:59,
-          desc:"Présence renforcée, rythme, QR et accompagnement.",
-          bonus:["Présence renforcée","QR","Accompagnement"]
+          code:"METIER",
+          cat:"metier",
+          name:"DIGIY MÉTIER RESA",
+          fcfa:8000,
+          eur:15,
+          desc:"Option facultative : logiciel RESA pour planning, rendez-vous, tables, créneaux, demandes et suivi.",
+          bonus:["Logiciel métier RESA","Planning et rendez-vous","Tables ou créneaux","Suivi des demandes"]
         },
         {
           code:"E1",
@@ -970,8 +972,6 @@
       const COMMON = [
         "Carte de visite complète",
         "QR et lien partageable",
-        "Présence métier RESA multi-service",
-        "Planning / rendez-vous / tables selon métier",
         "Textes prêts",
         "Validation humaine",
         "0% commission",
@@ -1107,8 +1107,8 @@
         const note = $("countryNote");
         if(note){
           note.innerHTML = country === "france"
-            ? "🇫🇷 France : règlement en euros par <strong>Sendwave</strong> vers le <strong>Wave Sénégal JB BEAUVILLE · +221 77 134 28 89</strong>. Grille pays, pas taux de change."
-            : "🇸🇳 Sénégal : règlement en FCFA par <strong>Wave direct</strong> vers <strong>JB BEAUVILLE · +221 77 134 28 89</strong>.";
+            ? "🇫🇷 France : DIGIY PRÉSENCE RESA à <strong>40 €</strong> ; DIGIY MÉTIER RESA à <strong>+15 €</strong> ; total <strong>55 €</strong>. Règlement Sendwave vers Wave Sénégal."
+            : "🇸🇳 Sénégal : DIGIY PRÉSENCE RESA à <strong>19 900 FCFA</strong> ; DIGIY MÉTIER RESA à <strong>+8 000 FCFA</strong> ; total <strong>27 900 FCFA</strong>.";
         }
 
         try{
@@ -1124,21 +1124,53 @@
       }
 
       function render(){
-        ["base","boost","reseau"].forEach(cat => {
-          const target = cat === "base" ? "baseOptions" : cat === "boost" ? "boostOptions" : "reseauOptions";
-          $(target).innerHTML = PLANS.filter(p => p.cat === cat).map(p => `
-              <button class="option ${selected.has(p.code) ? "active" : ""}" type="button" data-code="${p.code}">
+        ["base","metier","boost","reseau"].forEach(cat => {
+          const target =
+            cat === "base" ? "baseOptions"
+            : cat === "metier" ? "metierOptions"
+            : cat === "boost" ? "boostOptions"
+            : "reseauOptions";
+
+          const presenceSelected = selected.has("PRESENCE");
+
+          $(target).innerHTML = PLANS.filter(p => p.cat === cat).map(p => {
+            const unavailable = p.code === "METIER" && !presenceSelected;
+            const note = p.code === "METIER"
+              ? (country === "france"
+                  ? "Option facultative · +15 € / mois"
+                  : "Option facultative · +8 000 FCFA / mois")
+              : "";
+
+            return `
+              <button
+                class="option ${selected.has(p.code) ? "active" : ""} ${unavailable ? "disabled" : ""}"
+                type="button"
+                data-code="${p.code}"
+                ${unavailable ? "disabled" : ""}
+              >
                 <span class="code ${cat !== "base" ? "extra" : ""}">${p.code}</span>
                 <b>${p.name}</b>
                 <span class="amount">${planAmount(p)}</span>
+                ${note ? `<span>${note}</span>` : ""}
                 <span>${p.desc}</span>
               </button>
-            `).join("");
+            `;
+          }).join("");
         });
 
         document.querySelectorAll(".option").forEach(btn => {
           btn.onclick = () => {
-            selected.has(btn.dataset.code) ? selected.delete(btn.dataset.code) : selected.add(btn.dataset.code);
+            const code = btn.dataset.code;
+
+            if(code === "METIER" && !selected.has("PRESENCE")) return;
+
+            if(selected.has(code)){
+              selected.delete(code);
+              if(code === "PRESENCE") selected.delete("METIER");
+            }else{
+              selected.add(code);
+            }
+
             update(true);
           };
         });
@@ -1163,6 +1195,11 @@ ${proInfoText()}
 
 Choix :
 ${choiceLines()}
+
+Doctrine RESA :
+- DIGIY PRÉSENCE : socle
+- DIGIY MÉTIER : option facultative
+- PRO CARNET, BOOST et RÉSEAU : séparés
 
 Total : ${total.label}
 
@@ -1210,8 +1247,8 @@ Je joins la capture / preuve de paiement à ce message.`;
         const total = totals();
 
         $("selectedBox").innerHTML = items.length
-          ? `<strong>${items.length} choix sélectionné${items.length > 1 ? "s" : ""}</strong><br>${countryLabel()}`
-          : `<strong>Aucun choix sélectionné</strong><br>Rien n’est précoché.`;
+          ? `<strong>${items.length} choix sélectionné${items.length > 1 ? "s" : ""}</strong><br>${selected.has("METIER") ? "Présence + logiciel métier" : selected.has("PRESENCE") ? "Présence seule" : "Option de visibilité séparée"}`
+          : `<strong>Aucun choix sélectionné</strong><br>Rien n’est précoché. Commence par DIGIY PRÉSENCE.`;
 
         $("choiceList").innerHTML = items.length
           ? items.map(p => `
@@ -1244,7 +1281,14 @@ Je joins la capture / preuve de paiement à ce message.`;
             : "Après paiement Wave, envoie la capture ou la preuve par WhatsApp. DIGIY vérifie puis accompagne l’activation de la présence / visibilité RESA.";
         }
 
-        $("benefits").innerHTML = (items.length ? [...COMMON,...items.flatMap(p => p.bonus)] : [])
+        $("benefits").innerHTML = (items.length
+          ? [
+              ...COMMON,
+              ...items
+                .filter(p => p.code !== "METIER" || selected.has("METIER"))
+                .flatMap(p => p.bonus)
+            ]
+          : [])
           .slice(0,22)
           .map(x => `<li>✅ ${x}</li>`)
           .join("");
@@ -1281,6 +1325,7 @@ Je joins la capture / preuve de paiement à ce message.`;
 
       $("btnClear").onclick = () => {
         selected.clear();
+        if($("paymentNote")) $("paymentNote").value = "";
         update(true);
       };
 
@@ -1310,6 +1355,12 @@ Je joins la capture / preuve de paiement à ce message.`;
   </script>
 </body>
 </html>
+
+
+
+
+
+
 
 
 
