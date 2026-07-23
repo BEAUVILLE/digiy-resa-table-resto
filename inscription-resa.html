@@ -9,6 +9,7 @@
   <title>Demande RESA multi-service — Activation pro · France · Sénégal · DIGIY</title>
 
   <style>
+    /* ========== VOS COULEURS ORIGINALES ========== */
     :root{
       --bg:#f4ead2;
       --bg2:#ead9b7;
@@ -23,7 +24,8 @@
       --shadow:0 16px 42px rgba(77,52,22,.13);
     }
 
-    *{box-sizing:border-box}
+    /* ========== RESET & BASE ========== */
+    *{box-sizing:border-box;margin:0;padding:0}
 
     html{scroll-behavior:smooth}
 
@@ -36,72 +38,76 @@
         linear-gradient(180deg,var(--bg),var(--bg2));
       color:var(--ink);
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      font-size:18px;
+      font-size:16px;
       font-weight:850;
+      padding:12px;
       padding-bottom:104px;
     }
 
-    a{
-      color:inherit;
-      text-decoration:none;
-    }
+    a{color:inherit;text-decoration:none}
+    button,input,textarea{font:inherit}
 
-    button,
-    input,
-    textarea{
-      font:inherit;
-    }
-
+    /* ========== LAYOUT ========== */
     .app{
       max-width:1060px;
       margin:auto;
-      padding:14px;
+      padding:10px;
     }
 
+    /* ========== HEADER ========== */
     .top{
       position:sticky;
       top:0;
       z-index:20;
-      margin:-14px -14px 14px;
-      padding:12px 14px;
+      margin:-10px -10px 14px;
+      padding:10px 12px;
       background:rgba(244,234,210,.94);
       backdrop-filter:blur(12px);
       border-bottom:1px solid var(--line);
       display:flex;
       justify-content:space-between;
-      gap:10px;
+      gap:8px;
       flex-wrap:wrap;
+      border-radius:0 0 16px 16px;
     }
 
     .brand{
       font-weight:1000;
       color:var(--green);
+      font-size:clamp(14px,3.5vw,18px);
+      display:flex;
+      align-items:center;
+      gap:6px;
     }
 
     .nav{
       display:flex;
-      gap:8px;
+      gap:6px;
       flex-wrap:wrap;
     }
 
     .btn,
     button,
     .nav a{
-      min-height:48px;
-      border-radius:16px;
+      min-height:44px;
+      border-radius:14px;
       border:1px solid var(--line);
       background:#fff;
       color:var(--ink);
-      padding:0 14px;
+      padding:0 12px;
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap:8px;
+      gap:6px;
       cursor:pointer;
       font-weight:1000;
       text-align:center;
       box-shadow:0 10px 26px rgba(77,52,22,.08);
+      font-size:clamp(12px,2.5vw,15px);
+      transition:all 0.15s ease;
     }
+
+    .btn:active{transform:scale(0.96)}
 
     .gold{
       background:linear-gradient(135deg,var(--gold),var(--gold2))!important;
@@ -121,6 +127,7 @@
       border-color:rgba(250,204,21,.45)!important;
     }
 
+    /* ========== HERO ========== */
     .hero,
     .card{
       border:1px solid var(--line);
@@ -130,7 +137,7 @@
     }
 
     .hero{
-      padding:20px;
+      padding:18px;
       margin-bottom:14px;
       display:grid;
       grid-template-columns:1fr 1fr;
@@ -138,7 +145,7 @@
     }
 
     h1{
-      font-size:clamp(34px,6vw,58px);
+      font-size:clamp(28px,6vw,48px);
       line-height:1.02;
       margin:0;
       font-weight:1000;
@@ -147,36 +154,38 @@
     }
 
     h2{
-      margin:0 0 10px;
+      margin:0 0 8px;
       color:var(--green);
-      font-size:26px;
+      font-size:clamp(20px,3.5vw,26px);
       line-height:1.12;
     }
 
     .lead,
     p{
       color:var(--muted);
-      line-height:1.58;
+      line-height:1.5;
       font-weight:900;
+      font-size:clamp(13px,2.2vw,16px);
     }
 
     .pills{
       display:flex;
-      gap:8px;
+      gap:6px;
       flex-wrap:wrap;
-      margin-top:14px;
+      margin-top:10px;
     }
 
     .pill{
       border:1px solid rgba(21,95,67,.18);
       background:rgba(21,95,67,.07);
       border-radius:999px;
-      padding:8px 12px;
-      font-size:13px;
+      padding:6px 10px;
+      font-size:clamp(10px,1.8vw,13px);
       font-weight:1000;
       color:var(--green);
     }
 
+    /* ========== GRID ========== */
     .grid{
       display:grid;
       grid-template-columns:1.08fr .92fr;
@@ -184,39 +193,46 @@
     }
 
     .card{
-      padding:16px;
+      padding:14px;
     }
 
     .section{
-      margin:16px 0 10px;
-      padding:12px;
+      margin:12px 0 8px;
+      padding:10px;
       border:1px solid rgba(250,204,21,.48);
       background:rgba(250,204,21,.14);
       border-radius:16px;
       font-weight:1000;
       color:#7a4d00;
+      font-size:clamp(12px,2vw,14px);
     }
 
+    /* ========== OPTIONS ========== */
     .prices{
       display:grid;
       grid-template-columns:repeat(2,1fr);
-      gap:10px;
+      gap:8px;
     }
 
     .option{
       border:1px solid var(--line);
-      border-radius:18px;
+      border-radius:16px;
       background:#fff;
-      padding:14px;
+      padding:12px;
       display:grid;
-      gap:7px;
+      gap:5px;
       text-align:left;
       color:var(--ink);
-      min-height:125px;
+      min-height:110px;
+      cursor:pointer;
+      transition:all 0.15s ease;
+      font-size:clamp(12px,2vw,14px);
     }
 
+    .option:active{transform:scale(0.97)}
+
     .option.active{
-      border-color:#facc15;
+      border-color:var(--gold);
       background:rgba(250,204,21,.22);
       box-shadow:0 12px 30px rgba(250,204,21,.10);
     }
@@ -230,14 +246,16 @@
     .code{
       display:inline-flex;
       width:max-content;
-      min-width:48px;
-      height:38px;
+      min-width:44px;
+      height:34px;
       border-radius:12px;
       align-items:center;
       justify-content:center;
       background:linear-gradient(135deg,var(--green2),var(--green));
       color:#fff;
       font-weight:1000;
+      font-size:clamp(10px,1.6vw,13px);
+      padding:0 10px;
     }
 
     .code.extra{
@@ -248,11 +266,13 @@
     .amount{
       color:#7a4d00;
       font-weight:1000;
+      font-size:clamp(14px,2.2vw,17px);
     }
 
+    /* ========== SUMMARY ========== */
     .summary{
       position:sticky;
-      top:82px;
+      top:72px;
     }
 
     .selected,
@@ -260,11 +280,11 @@
     .dateBox,
     .payment,
     .noteBox{
-      margin-top:12px;
+      margin-top:10px;
       border:1px solid rgba(250,204,21,.42);
-      border-radius:18px;
+      border-radius:16px;
       background:rgba(250,204,21,.12);
-      padding:12px;
+      padding:10px;
     }
 
     .payment{
@@ -273,10 +293,10 @@
     }
 
     .waveHero{
-      margin-top:12px;
-      padding:18px;
-      border-radius:20px;
-      background:linear-gradient(135deg,#facc15,#f59e0b);
+      margin-top:10px;
+      padding:14px;
+      border-radius:18px;
+      background:linear-gradient(135deg,var(--gold),var(--gold2));
       color:#111;
       border:1px solid rgba(250,204,21,.78);
       box-shadow:0 14px 32px rgba(77,52,22,.20);
@@ -284,37 +304,37 @@
 
     .waveHero small{
       display:block;
-      font-size:13px;
+      font-size:clamp(10px,1.6vw,13px);
       font-weight:1000;
       letter-spacing:.08em;
       text-transform:uppercase;
       opacity:.88;
-      margin-bottom:7px;
+      margin-bottom:5px;
     }
 
     .waveHero strong{
       display:block;
-      font-size:clamp(24px,5.6vw,38px);
+      font-size:clamp(20px,4.5vw,32px);
       line-height:1.12;
       font-weight:1000;
       letter-spacing:-.035em;
     }
 
     .paymentTitle{
-      font-size:20px;
+      font-size:clamp(16px,2.8vw,20px);
       color:#7a4d00;
       font-weight:1000;
-      margin-bottom:8px;
+      margin-bottom:6px;
     }
 
     .payLine{
       display:flex;
       justify-content:space-between;
-      gap:12px;
-      padding:8px 0;
+      gap:10px;
+      padding:6px 0;
       border-bottom:1px solid var(--line);
       color:var(--muted);
-      font-size:15px;
+      font-size:clamp(13px,2vw,15px);
       font-weight:1000;
     }
 
@@ -327,50 +347,53 @@
     }
 
     .proof{
-      margin-top:10px;
-      padding:10px;
+      margin-top:8px;
+      padding:8px;
       border-radius:14px;
       background:rgba(255,255,255,.72);
       border:1px dashed rgba(250,204,21,.55);
       color:#7a4d00;
-      line-height:1.45;
+      line-height:1.4;
       font-weight:950;
+      font-size:clamp(12px,1.8vw,14px);
     }
 
     .noteBox label{
       display:block;
       color:#7a4d00;
-      font-size:13px;
+      font-size:clamp(11px,1.6vw,13px);
       font-weight:1000;
-      margin-bottom:7px;
+      margin-bottom:5px;
     }
 
     .noteBox textarea{
       width:100%;
-      min-height:96px;
+      min-height:80px;
       resize:vertical;
-      border-radius:16px;
+      border-radius:14px;
       border:1px solid var(--line);
       background:#fffef8;
       color:var(--ink);
-      padding:12px;
-      line-height:1.45;
+      padding:10px;
+      line-height:1.4;
       font-weight:900;
       outline:none;
+      font-size:clamp(12px,2vw,14px);
     }
 
     .line{
       display:flex;
       justify-content:space-between;
-      gap:10px;
+      gap:8px;
       border-bottom:1px solid var(--line);
-      padding:8px 0;
+      padding:6px 0;
       color:var(--muted);
       font-weight:1000;
+      font-size:clamp(13px,2vw,15px);
     }
 
     .line.final{
-      font-size:24px;
+      font-size:clamp(20px,3.5vw,24px);
       color:var(--green);
       border-bottom:0;
     }
@@ -378,63 +401,67 @@
     .actions{
       display:grid;
       grid-template-columns:1fr 1fr 1fr;
-      gap:9px;
-      margin-top:14px;
+      gap:8px;
+      margin-top:12px;
     }
 
     .benefits{
-      line-height:1.55;
+      line-height:1.5;
       color:var(--ink);
+      font-size:clamp(12px,1.8vw,14px);
+      padding-left:18px;
+      margin:8px 0;
     }
 
+    /* ========== FLOATING ========== */
     .floating{
       position:fixed;
       left:12px;
       bottom:calc(12px + env(safe-area-inset-bottom,0px));
       z-index:50;
       border-radius:18px;
-      min-height:60px;
-      width:min(360px,calc(100vw - 24px));
+      min-height:54px;
+      width:min(320px,calc(100vw - 24px));
       box-shadow:0 16px 36px rgba(77,52,22,.18);
+      font-size:clamp(13px,2.5vw,16px);
     }
 
-
-
+    /* ========== PRO INFO ========== */
     .proInfoBox{
-      margin-top:12px;
+      margin-top:10px;
       border:1px solid rgba(21,95,67,.20);
-      border-radius:18px;
+      border-radius:16px;
       background:rgba(21,95,67,.07);
-      padding:12px;
+      padding:10px;
     }
 
     .proInfoBox h3{
-      margin:0 0 8px;
+      margin:0 0 6px;
       color:var(--green);
-      font-size:20px;
+      font-size:clamp(16px,2.8vw,20px);
       line-height:1.12;
       font-weight:1000;
     }
 
     .proInfoBox p{
-      margin:0 0 10px;
+      margin:0 0 8px;
       color:var(--muted);
-      font-size:14px;
-      line-height:1.45;
+      font-size:clamp(11px,1.8vw,14px);
+      line-height:1.4;
       font-weight:900;
     }
 
     .proInfoGrid{
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:9px;
+      gap:8px;
     }
 
     .proInfoField label{
       display:block;
-      margin:0 0 6px;
+      margin:0 0 4px;
       color:#7a4d00;
-      font-size:12px;
+      font-size:clamp(10px,1.4vw,12px);
       font-weight:1000;
       text-transform:uppercase;
       letter-spacing:.05em;
@@ -442,15 +469,16 @@
 
     .proInfoField input{
       width:100%;
-      min-height:48px;
-      border-radius:16px;
+      min-height:42px;
+      border-radius:14px;
       border:1px solid var(--line);
       background:#fffef8;
       color:var(--ink);
-      padding:11px 12px;
+      padding:9px 10px;
       font-weight:900;
       outline:none;
       box-shadow:0 8px 18px rgba(77,52,22,.06);
+      font-size:clamp(13px,2vw,15px);
     }
 
     .proInfoField input:focus{
@@ -459,13 +487,180 @@
     }
 
     .proInfoMini{
-      margin-top:9px;
+      margin-top:8px;
       color:var(--green);
-      font-size:13px;
+      font-size:clamp(11px,1.6vw,13px);
+      line-height:1.3;
+      font-weight:950;
+    }
+
+    /* ========== COUNTRY ========== */
+    .countryBox{
+      margin:12px 0;
+      border:1px solid rgba(21,95,67,.22);
+      border-radius:18px;
+      padding:12px;
+      background:rgba(21,95,67,.065);
+      display:grid;
+      gap:8px;
+    }
+
+    .countryTitle{
+      color:var(--green);
+      font-size:clamp(14px,2.5vw,18px);
+      font-weight:1000;
+      line-height:1.15;
+    }
+
+    .countryGrid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:8px;
+    }
+
+    .countryBtn{
+      min-height:52px;
+      border-radius:16px;
+      border:1px solid rgba(83,58,26,.20);
+      background:#fffef8;
+      color:var(--green);
+      display:grid;
+      gap:2px;
+      padding:8px 10px;
+      text-align:left;
+      box-shadow:0 8px 18px rgba(77,52,22,.07);
+      cursor:pointer;
+      transition:all 0.15s ease;
+      font-size:clamp(12px,2vw,14px);
+    }
+
+    .countryBtn:active{transform:scale(0.97)}
+
+    .countryBtn strong{
+      color:var(--green);
+      font-size:clamp(14px,2.2vw,16px);
+      font-weight:1000;
+    }
+
+    .countryBtn span{
+      color:var(--muted);
+      font-size:clamp(10px,1.4vw,12px);
+      line-height:1.2;
+      font-weight:900;
+    }
+
+    .countryBtn.active{
+      border-color:rgba(250,204,21,.86);
+      background:rgba(250,204,21,.24);
+      box-shadow:0 12px 24px rgba(250,204,21,.15);
+    }
+
+    .countryNote{
+      border-radius:14px;
+      border:1px dashed rgba(21,95,67,.26);
+      background:rgba(255,255,255,.55);
+      color:var(--green);
+      padding:8px;
+      font-size:clamp(11px,1.6vw,13px);
       line-height:1.35;
       font-weight:950;
     }
 
+    .payBadge{
+      margin-top:8px;
+      border-radius:14px;
+      border:1px dashed rgba(21,95,67,.26);
+      background:rgba(255,255,255,.60);
+      color:var(--green);
+      padding:8px;
+      font-size:clamp(11px,1.6vw,13px);
+      line-height:1.35;
+      font-weight:950;
+    }
+
+    .gold-emphasis{
+      border-color:rgba(250,204,21,.82)!important;
+      background:linear-gradient(135deg,rgba(250,204,21,.32),rgba(245,158,11,.16))!important;
+      color:#7a4d00!important;
+      box-shadow:0 12px 28px rgba(250,204,21,.15)!important;
+    }
+
+    /* ========== DOCTRINE ========== */
+    .resaDoctrine{
+      margin-bottom:14px;
+      border:2px solid rgba(250,204,21,.55);
+      border-radius:24px;
+      background:
+        radial-gradient(circle at top right,rgba(250,204,21,.24),transparent 38%),
+        linear-gradient(145deg,rgba(255,255,255,.72),rgba(255,247,223,.86));
+      box-shadow:var(--shadow);
+      padding:16px;
+      display:grid;
+      gap:10px;
+    }
+
+    .resaDoctrineTag{
+      display:inline-flex;
+      width:max-content;
+      max-width:100%;
+      align-items:center;
+      min-height:30px;
+      padding:0 10px;
+      border-radius:999px;
+      border:1px solid rgba(21,95,67,.22);
+      background:rgba(21,95,67,.08);
+      color:var(--green);
+      font-size:clamp(10px,1.5vw,12px);
+      font-weight:1000;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+
+    .resaDoctrine h2{
+      margin:0;
+      color:var(--green);
+      font-size:clamp(22px,4vw,38px);
+      line-height:1;
+      letter-spacing:-.04em;
+      font-weight:1000;
+    }
+
+    .resaDoctrine p{
+      margin:0;
+      color:#465444;
+      line-height:1.5;
+      font-weight:900;
+      font-size:clamp(13px,2vw,15px);
+    }
+
+    .resaDoctrineList{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:8px;
+    }
+
+    .resaDoctrineList span{
+      border:1px solid rgba(83,58,26,.18);
+      background:rgba(255,255,255,.70);
+      border-radius:15px;
+      padding:10px;
+      color:var(--ink);
+      font-size:clamp(11px,1.6vw,13px);
+      line-height:1.3;
+      font-weight:1000;
+    }
+
+    .resaDoctrineQuote{
+      border-left:4px solid var(--gold2);
+      background:rgba(250,204,21,.12);
+      border-radius:14px;
+      padding:10px 12px;
+      color:#7a4d00!important;
+      font-weight:1000!important;
+      font-size:clamp(13px,2vw,15px)!important;
+    }
+
+    /* ========== RESPONSIVE ========== */
     @media(max-width:850px){
       .hero,
       .grid{
@@ -479,7 +674,8 @@
 
       .prices,
       .proInfoGrid,
-      .resaDoctrineList{
+      .resaDoctrineList,
+      .countryGrid{
         grid-template-columns:1fr;
       }
 
@@ -493,179 +689,134 @@
 
       .nav a{
         flex:1;
+        font-size:clamp(11px,2.2vw,13px);
+        min-height:38px;
+        padding:0 8px;
       }
 
       .payLine,
       .line{
         display:grid;
-        gap:3px;
+        gap:2px;
       }
 
       .floating{
-        left:12px;
+        left:10px;
         right:auto;
-        width:calc(100vw - 24px);
+        width:calc(100vw - 20px);
+        bottom:calc(10px + env(safe-area-inset-bottom,0px));
+        min-height:48px;
+        font-size:clamp(12px,2.5vw,14px);
+        padding:0 12px;
+      }
+
+      .top{
+        margin:-10px -10px 10px;
+        padding:8px 10px;
+        border-radius:0;
+      }
+
+      .brand{
+        font-size:clamp(13px,3vw,16px);
+      }
+
+      .hero{
+        padding:14px;
+      }
+
+      .card{
+        padding:12px;
+      }
+
+      .option{
+        min-height:90px;
+        padding:10px;
+      }
+
+      .btn{
+        min-height:40px;
+        font-size:clamp(12px,2.2vw,14px);
+        padding:0 10px;
+      }
+
+      .waveHero strong{
+        font-size:clamp(18px,4vw,26px);
+      }
+
+      h1{
+        font-size:clamp(24px,5vw,36px);
+      }
+
+      .resaDoctrine{
+        padding:14px;
       }
     }
 
-    .countryBox{
-      margin:14px 0;
-      border:1px solid rgba(21,95,67,.22);
-      border-radius:20px;
-      padding:13px;
-      background:rgba(21,95,67,.065);
-      display:grid;
-      gap:10px;
+    @media(max-width:400px){
+      body{
+        padding:6px;
+        padding-bottom:90px;
+      }
+
+      .app{
+        padding:4px;
+      }
+
+      .hero{
+        padding:10px;
+        border-radius:16px;
+      }
+
+      .card{
+        padding:10px;
+        border-radius:16px;
+      }
+
+      .option{
+        min-height:80px;
+        padding:8px;
+        border-radius:12px;
+      }
+
+      .code{
+        min-height:28px;
+        min-width:36px;
+        font-size:10px;
+        padding:0 6px;
+      }
+
+      .proInfoField input{
+        min-height:36px;
+        font-size:14px;
+        padding:6px 8px;
+      }
+
+      .top{
+        padding:6px 8px;
+        margin:-6px -6px 8px;
+      }
+
+      .nav a{
+        font-size:11px;
+        min-height:32px;
+        padding:0 6px;
+      }
+
+      .btn{
+        min-height:36px;
+        font-size:12px;
+        padding:0 8px;
+      }
+
+      .floating{
+        left:6px;
+        width:calc(100vw - 12px);
+        bottom:calc(6px + env(safe-area-inset-bottom,0px));
+        min-height:42px;
+        font-size:12px;
+        border-radius:14px;
+      }
     }
-
-    .countryTitle{
-      color:var(--green);
-      font-size:18px;
-      font-weight:1000;
-      line-height:1.15;
-    }
-
-    .countryGrid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:9px;
-    }
-
-    .countryBtn{
-      min-height:58px;
-      border-radius:18px;
-      border:1px solid rgba(83,58,26,.20);
-      background:#fffef8;
-      color:var(--green);
-      display:grid;
-      gap:2px;
-      padding:10px 12px;
-      text-align:left;
-      box-shadow:0 8px 18px rgba(77,52,22,.07);
-    }
-
-    .countryBtn strong{
-      color:var(--green);
-      font-size:16px;
-      font-weight:1000;
-    }
-
-    .countryBtn span{
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.25;
-      font-weight:900;
-    }
-
-    .countryBtn.active{
-      border-color:rgba(250,204,21,.86);
-      background:rgba(250,204,21,.24);
-      box-shadow:0 12px 24px rgba(250,204,21,.15);
-    }
-
-    .countryNote{
-      border-radius:16px;
-      border:1px dashed rgba(21,95,67,.26);
-      background:rgba(255,255,255,.55);
-      color:var(--green);
-      padding:10px;
-      font-size:13px;
-      line-height:1.38;
-      font-weight:950;
-    }
-
-    .payBadge{
-      margin-top:10px;
-      border-radius:16px;
-      border:1px dashed rgba(21,95,67,.26);
-      background:rgba(255,255,255,.60);
-      color:var(--green);
-      padding:10px;
-      font-size:13px;
-      line-height:1.4;
-      font-weight:950;
-    }
-
-
-    .gold-emphasis{
-      border-color:rgba(250,204,21,.82)!important;
-      background:linear-gradient(135deg,rgba(250,204,21,.32),rgba(245,158,11,.16))!important;
-      color:#7a4d00!important;
-      box-shadow:0 12px 28px rgba(250,204,21,.15)!important;
-    }
-
-    .resaDoctrine{
-      margin-bottom:14px;
-      border:2px solid rgba(250,204,21,.55);
-      border-radius:24px;
-      background:
-        radial-gradient(circle at top right,rgba(250,204,21,.24),transparent 38%),
-        linear-gradient(145deg,rgba(255,255,255,.72),rgba(255,247,223,.86));
-      box-shadow:var(--shadow);
-      padding:18px;
-      display:grid;
-      gap:12px;
-    }
-
-    .resaDoctrineTag{
-      display:inline-flex;
-      width:max-content;
-      max-width:100%;
-      align-items:center;
-      min-height:34px;
-      padding:0 12px;
-      border-radius:999px;
-      border:1px solid rgba(21,95,67,.22);
-      background:rgba(21,95,67,.08);
-      color:var(--green);
-      font-size:12px;
-      font-weight:1000;
-      letter-spacing:.04em;
-      text-transform:uppercase;
-    }
-
-    .resaDoctrine h2{
-      margin:0;
-      color:var(--green);
-      font-size:clamp(28px,4.8vw,46px);
-      line-height:1;
-      letter-spacing:-.04em;
-      font-weight:1000;
-    }
-
-    .resaDoctrine p{
-      margin:0;
-      color:#465444;
-      line-height:1.62;
-      font-weight:900;
-    }
-
-    .resaDoctrineList{
-      display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
-      gap:9px;
-    }
-
-    .resaDoctrineList span{
-      border:1px solid rgba(83,58,26,.18);
-      background:rgba(255,255,255,.70);
-      border-radius:17px;
-      padding:11px;
-      color:var(--ink);
-      font-size:13px;
-      line-height:1.35;
-      font-weight:1000;
-    }
-
-    .resaDoctrineQuote{
-      border-left:4px solid var(--gold2);
-      background:rgba(250,204,21,.12);
-      border-radius:16px;
-      padding:12px 14px;
-      color:#7a4d00!important;
-      font-weight:1000!important;
-    }
-
   </style>
 </head>
 
@@ -705,10 +856,10 @@
           <strong>JB BEAUVILLE · +221 77 134 28 89</strong>
         </div>
 
-        <p>
+        <p style="margin-top:8px;">
           Choix volontaire, addition claire, date dans le message, WhatsApp ou SMS.
           Après paiement, envoie la preuve sur WhatsApp.
-          <strong class="gold-emphasis" style="display:inline-flex;padding:2px 8px;border-radius:999px;">France : Sendwave vers Wave Sénégal</strong>.
+          <strong class="gold-emphasis" style="display:inline-flex;padding:2px 8px;border-radius:999px;font-size:clamp(11px,1.8vw,14px);">France : Sendwave vers Wave Sénégal</strong>.
         </p>
       </div>
     </section>
@@ -821,7 +972,6 @@
             🇸🇳 Sénégal : règlement Wave direct. 🇫🇷 France : règlement Sendwave vers Wave Sénégal.
           </div>
         </div>
-
 
         <div class="proInfoBox" id="proInfoBox">
           <h3>Infos pro pour paiement</h3>
@@ -1166,10 +1316,10 @@
                 ${unavailable ? "disabled" : ""}
               >
                 <span class="code ${cat !== "base" ? "extra" : ""}">${p.code}</span>
-                <b>${p.name}</b>
+                <b style="font-size:clamp(12px,2vw,14px);">${p.name}</b>
                 <span class="amount">${planAmount(p)}</span>
-                ${note ? `<span>${note}</span>` : ""}
-                <span>${p.desc}</span>
+                ${note ? `<span style="font-size:clamp(10px,1.6vw,12px);">${note}</span>` : ""}
+                <span style="font-size:clamp(11px,1.6vw,13px);color:var(--muted);">${p.desc}</span>
               </button>
             `;
           }).join("");
@@ -1393,7 +1543,6 @@ Je joins la capture / preuve de paiement à ce message.`;
   </script>
 </body>
 </html>
-
 
 
 
