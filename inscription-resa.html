@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#f4ead2">
-  <meta name="digiy-version" content="resa-presence-19900-fiche-moteur-8000-20260723">
-  <title>Demande RESA multi-service — Activation pro · France · Sénégal · DIGIY</title>
+  <meta name="digiy-version" content="resa-direct-sms-coordonnees-obligatoires-en-haut-20260724">
+  <title>Demande RESA multi-service — Coordonnées d’abord · SMS direct</title>
 
   <style>
     :root{
@@ -476,6 +476,55 @@
       box-shadow:0 0 0 4px rgba(250,204,21,.14);
     }
 
+    .proInfoBox.proInfoFirst{
+      margin:14px 0 18px;
+      border-width:2px;
+      background:
+        radial-gradient(circle at top right,rgba(250,204,21,.20),transparent 42%),
+        rgba(21,95,67,.07);
+    }
+
+    .requiredMark{
+      color:#b91c1c;
+      font-weight:1000;
+    }
+
+    .sendBlocked{
+      opacity:.48!important;
+      filter:grayscale(.28);
+      cursor:not-allowed!important;
+    }
+
+    .smsDirectHelp{
+      margin:10px 0 0;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(21,95,67,.22);
+      background:rgba(21,95,67,.07);
+      color:var(--green);
+      font-size:clamp(11px,1.7vw,13px);
+      line-height:1.45;
+      font-weight:900;
+      text-align:center;
+    }
+
+    .formWarning{
+      display:none;
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(185,28,28,.30);
+      background:rgba(254,226,226,.88);
+      color:#991b1b;
+      line-height:1.45;
+      font-weight:950;
+      font-size:clamp(11px,1.7vw,13px);
+    }
+
+    .formWarning.show{
+      display:block;
+    }
+
     .proInfoMini{
       margin-top:8px;
       color:var(--green);
@@ -879,6 +928,45 @@
         <h2>Présence RESA multi-service</h2>
         <p>Choisis la Présence RESA ou le niveau Premium. Ajoute la fiche détaillée, le planning et le moteur uniquement si tu en as besoin.</p>
 
+        <div class="proInfoBox proInfoFirst" id="proInfoBox">
+          <h3>1 · Vos coordonnées</h3>
+          <p>
+            Renseignez d’abord ces informations. Aucun SMS, WhatsApp ou envoi de preuve
+            ne peut partir sans elles. Les champs marqués <span class="requiredMark">*</span> sont obligatoires.
+          </p>
+
+          <div class="proInfoGrid">
+            <div class="proInfoField">
+              <label for="proName">Nom / responsable <span class="requiredMark">*</span></label>
+              <input id="proName" name="proName" autocomplete="name"
+                     placeholder="Ex : Mamadou Diop" required>
+            </div>
+
+            <div class="proInfoField">
+              <label for="proPhone">Téléphone / WhatsApp <span class="requiredMark">*</span></label>
+              <input id="proPhone" name="proPhone" type="tel" inputmode="tel" autocomplete="tel"
+                     placeholder="Ex : +221 77 000 00 00" required minlength="8">
+            </div>
+
+            <div class="proInfoField">
+              <label for="proZone">Zone / ville <span class="requiredMark">*</span></label>
+              <input id="proZone" name="proZone" autocomplete="address-level2"
+                     placeholder="Ex : Saly, Dakar, Mbour" required>
+            </div>
+
+            <div class="proInfoField">
+              <label for="proActivity">Établissement / activité <span class="requiredMark">*</span></label>
+              <input id="proActivity" name="proActivity" autocomplete="organization"
+                     placeholder="Ex : Salon Awa, Cabinet Diop, Garage Saly" required>
+            </div>
+          </div>
+
+          <div class="proInfoMini">
+            Ces informations servent à identifier la demande et le paiement.
+          </div>
+        </div>
+
+        <div class="section">2 · PAYS ET FORMULE RESA</div>
         <div class="countryBox" aria-label="Choix pays RESA">
           <div class="countryTitle">🌍 Choisir le pays de règlement</div>
           <div class="countryGrid">
@@ -897,10 +985,10 @@
           </div>
         </div>
 
-        <div class="section">1 · VISIBILITÉ RESA — PRÉSENCE OU PREMIUM</div>
+        <div class="section">3 · VISIBILITÉ RESA — PRÉSENCE OU PREMIUM</div>
         <div class="prices" id="baseOptions"></div>
 
-        <div class="section">2 · FICHE DÉTAILLÉE + PLANNING + MOTEUR RESA — FACULTATIF</div>
+        <div class="section">4 · FICHE DÉTAILLÉE + PLANNING + MOTEUR RESA — FACULTATIF</div>
         <div class="prices" id="metierOptions"></div>
 
         <div class="section">✨ BOOST visibilité</div>
@@ -960,35 +1048,6 @@
           </div>
         </div>
 
-        <div class="proInfoBox" id="proInfoBox">
-          <h3>Infos pro pour paiement</h3>
-          <p>Ces informations servent à identifier la demande et le paiement. La fiche détaillée, le planning et le moteur RESA ne sont activés que lorsque l'option à +8 000 FCFA / +15 € est choisie.</p>
-
-          <div class="proInfoGrid">
-            <div class="proInfoField">
-              <label for="proName">Nom / responsable</label>
-              <input id="proName" autocomplete="name" placeholder="Ex : Mamadou Diop">
-            </div>
-
-            <div class="proInfoField">
-              <label for="proPhone">Téléphone / WhatsApp</label>
-              <input id="proPhone" inputmode="tel" autocomplete="tel" placeholder="Ex : +221 77 000 00 00">
-            </div>
-
-            <div class="proInfoField">
-              <label for="proZone">Zone / ville</label>
-              <input id="proZone" autocomplete="address-level2" placeholder="Ex : Saly, Dakar, Mbour">
-            </div>
-
-            <div class="proInfoField">
-              <label for="proActivity">Établissement / activité</label>
-              <input id="proActivity" autocomplete="organization" placeholder="Ex : Salon Awa, Cabinet Diop, Garage Saly">
-            </div>
-          </div>
-
-          <div class="proInfoMini">Le téléphone peut retenir ces infos pour éviter de tout retaper. DIGIY prépare, le pro vérifie.</div>
-        </div>
-
         <div class="noteBox">
           <label for="paymentNote">📝 Note / preuve paiement</label>
           <textarea id="paymentNote" placeholder="Ex : Présence RESA — 19 900 FCFA / 45 € ; fiche + planning + moteur ajoutés +8 000 FCFA / +15 € ; total 27 900 FCFA / 60 € — Mamadou Diop."></textarea>
@@ -1000,12 +1059,19 @@
 
         <div class="actions">
           <a class="btn green" id="btnWa">💬 WhatsApp</a>
-          <button class="btn" id="btnSms" type="button">📱 SMS</button>
+          <button class="btn gold" id="btnSms" type="button">📱 Ouvrir mon SMS déjà rempli</button>
           <button class="btn clear" id="btnClear" type="button">🧹 Effacer</button>
         </div>
 
+        <div class="smsDirectHelp">
+          Sur téléphone, aucun copier-coller : Messages s’ouvre avec le numéro DIGIY
+          et une demande RESA courte déjà remplie. Il reste seulement à appuyer sur Envoyer.
+        </div>
+
+        <div class="formWarning" id="formWarning" role="alert" aria-live="assertive"></div>
+
         <div class="actions">
-          <button class="btn" id="btnCopyWave" type="button">📋 Copier paiement</button>
+          <button class="btn" id="btnCopyWave" type="button">Autre solution : copier paiement</button>
           <a class="btn gold" id="btnProof">📸 Envoyer preuve</a>
           <a class="btn gold" href="https://pro-resa.digiylyfe.com/">🔐 Espace pro</a>
         </div>
@@ -1024,6 +1090,12 @@
       const SENDWAVE_LABEL = "Sendwave France → Wave Sénégal : JB BEAUVILLE · +221 77 134 28 89";
       const PRO_MEMORY_KEY = "digiy_resa_payment_identity_v1";
       const COUNTRY_KEY = "digiy_resa_payment_country_v1";
+      const IS_IOS_OR_IPADOS =
+        /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+      const MOBILE_DEVICE =
+        /Android|Windows Phone|Mobile/i.test(navigator.userAgent) ||
+        IS_IOS_OR_IPADOS;
 
       const PLANS = [
         {
@@ -1353,6 +1425,103 @@
         return items.map(p => `- ${p.code} · ${p.name} · ${planAmount(p)}`).join("\n") || "Aucun choix sélectionné";
       }
 
+      function requiredProFields(){
+        return ["proName","proPhone","proZone","proActivity"]
+          .map(id => $(id))
+          .filter(Boolean);
+      }
+
+      function hasValidResaChoice(){
+        return ["PRESENCE","PREMIUM","FIRST"].some(code => selected.has(code));
+      }
+
+      function showFormWarning(message){
+        const warning = $("formWarning");
+        if(!warning) return;
+        warning.textContent = message || "";
+        warning.classList.toggle("show", Boolean(message));
+      }
+
+      function validateBeforeSend(showMessage){
+        const invalidField = requiredProFields().find(
+          field => !String(field.value || "").trim() || !field.checkValidity()
+        );
+
+        if(invalidField){
+          if(showMessage){
+            showFormWarning("⚠️ Renseigne d’abord le nom, le téléphone, la ville et l’établissement / activité.");
+            invalidField.focus({preventScroll:true});
+            invalidField.scrollIntoView({behavior:"smooth",block:"center"});
+            invalidField.reportValidity();
+          }
+          return false;
+        }
+
+        if(!hasValidResaChoice()){
+          if(showMessage){
+            showFormWarning("⚠️ Choisis la Présence RESA, Premium RESA ou FIRST avant d’envoyer.");
+            $("baseOptions")?.scrollIntoView({behavior:"smooth",block:"center"});
+          }
+          return false;
+        }
+
+        if(totals().pending){
+          if(showMessage){
+            showFormWarning("⚠️ Un tarif France sélectionné reste à confirmer avant l’envoi.");
+          }
+          return false;
+        }
+
+        showFormWarning("");
+        return true;
+      }
+
+      function updateSendState(){
+        const ready =
+          requiredProFields().every(
+            field => String(field.value || "").trim() && field.checkValidity()
+          ) &&
+          hasValidResaChoice() &&
+          !totals().pending;
+
+        ["btnWa","btnSms","btnProof"].forEach(id => {
+          const el = $(id);
+          if(!el) return;
+          el.classList.toggle("sendBlocked", !ready);
+          el.setAttribute("aria-disabled", String(!ready));
+        });
+      }
+
+      function shortText(value,maxLength){
+        const clean = String(value || "").replace(/\s+/g," ").trim();
+        return clean.length > maxLength ? clean.slice(0,maxLength-1) + "…" : clean;
+      }
+
+      function smsMsg(){
+        const p = proInfo();
+        const total = totals();
+        const codes = chosen().map(plan => plan.code).join(" + ") || "Aucun choix";
+
+        return [
+          "DEMANDE DIGIY RESA",
+          "Pays: " + (country === "france" ? "France" : "Senegal"),
+          "Choix: " + codes,
+          "Total: " + total.label,
+          "Nom/responsable: " + shortText(p.name,55),
+          "Telephone candidat: " + shortText(p.phone,28),
+          "Zone/ville: " + shortText(p.zone,45),
+          "Etablissement/activite: " + shortText(p.activity,75),
+          noteText() !== "à compléter" ? "Note: " + shortText(noteText(),130) : "",
+          "Je demande a etre recontacte pour valider mon activation RESA.",
+          "0% commission DIGIY."
+        ].filter(Boolean).join("\n");
+      }
+
+      function buildSmsHref(message){
+        const separator = IS_IOS_OR_IPADOS ? "&" : "?";
+        return "sms:+" + TEL + separator + "body=" + encodeURIComponent(message);
+      }
+
       function msg(){
         const total = totals();
         return `Bonjour JB, je veux avancer avec DIGIY RESA multi-service.
@@ -1470,6 +1639,7 @@ Je joins la capture / preuve de paiement à ce message.`;
 
         $("btnWa").href = "https://wa.me/" + TEL + "?text=" + encodeURIComponent(msg());
         $("btnProof").href = "https://wa.me/" + TEL + "?text=" + encodeURIComponent(proofMsg());
+        updateSendState();
 
         if(scroll && matchMedia("(max-width:850px)").matches){
           summary.scrollIntoView({behavior:"smooth",block:"start"});
@@ -1482,25 +1652,39 @@ Je joins la capture / preuve de paiement à ce message.`;
 
       $("paymentNote").addEventListener("input", () => update(false));
 
-      $("btnSms").onclick = () => {
-        if(!navigator.clipboard) return;
-        navigator.clipboard.writeText(msg()).then(() => {
-          $("btnSms").textContent = "✅ Message SMS copié";
-          setTimeout(() => $("btnSms").textContent = "📱 SMS", 1600);
-        });
+      $("btnSms").onclick = event => {
+        event.preventDefault();
+        if(!validateBeforeSend(true)) return;
+        window.location.href = buildSmsHref(smsMsg());
       };
+
+      $("btnWa").addEventListener("click", event => {
+        if(!validateBeforeSend(true)) event.preventDefault();
+      });
+
+      $("btnProof").addEventListener("click", event => {
+        if(!validateBeforeSend(true)) event.preventDefault();
+      });
+
+      $("btnCopyWave").hidden = MOBILE_DEVICE;
 
       $("btnCopyWave").onclick = () => {
         if(!navigator.clipboard) return;
         navigator.clipboard.writeText(paymentLabel()).then(() => {
           $("btnCopyWave").textContent = "✅ Paiement copié";
-          setTimeout(() => $("btnCopyWave").textContent = "📋 Copier paiement", 1600);
+          setTimeout(() => $("btnCopyWave").textContent = "Autre solution : copier paiement", 1600);
         });
       };
 
       $("btnClear").onclick = () => {
         selected.clear();
         if($("paymentNote")) $("paymentNote").value = "";
+        ["proName","proPhone","proZone","proActivity"].forEach(id => {
+          const field = $(id);
+          if(field) field.value = "";
+        });
+        try{ localStorage.removeItem(PRO_MEMORY_KEY); }catch(_){ }
+        showFormWarning("");
         update(true);
       };
 
@@ -1529,6 +1713,53 @@ Je joins la capture / preuve de paiement à ce message.`;
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
