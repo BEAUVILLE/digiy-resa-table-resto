@@ -3,727 +3,233 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>DIGIY RESA — Réserver un service local</title>
-  <meta name="description" content="DIGIY RESA prépare une demande claire de rendez-vous ou de réservation. Le professionnel confirme. Paiement direct et 0% commission DIGIY.">
+  <title>DIGIY RESA — Trouver un professionnel</title>
+  <meta name="description" content="DIGIY RESA présente les professionnels disponibles. Le client choisit un métier, ouvre la fiche du professionnel puis réserve directement auprès de lui. Paiement direct, 0% commission DIGIY.">
   <meta name="theme-color" content="#061b14">
   <meta name="robots" content="index,follow">
-  <meta name="digiy-build" content="resa-client-cartouche-menu-20260727">
+  <meta name="digiy-build" content="resa-vitrine-annuaire-pro-20260727">
   <style>
     :root{
-      --bg:#061b14;
-      --card:#0b2a1f;
-      --card2:#103728;
-      --line:rgba(255,255,255,.12);
-      --line-strong:rgba(255,255,255,.20);
-      --text:#ecfdf5;
-      --muted:rgba(236,253,245,.72);
-      --gold:#facc15;
-      --orange:#f59e0b;
-      --green:#22c55e;
-      --blue:#3b82f6;
-      --red:#ef4444;
-      --shadow:0 18px 55px rgba(0,0,0,.38);
-      --radius:22px;
+      --bg:#061b14;--card:#0b2a1f;--card2:#103728;--line:rgba(255,255,255,.12);
+      --text:#ecfdf5;--muted:rgba(236,253,245,.72);--gold:#facc15;--orange:#f59e0b;
+      --green:#22c55e;--shadow:0 18px 55px rgba(0,0,0,.38);--radius:22px;
       --font:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
     }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;min-height:100vh;color:var(--text);font-family:var(--font);
-      background:
-        radial-gradient(circle at top,rgba(250,204,21,.10),transparent 34%),
-        radial-gradient(circle at bottom,rgba(34,197,94,.09),transparent 38%),
-        var(--bg);
-      -webkit-font-smoothing:antialiased;
-    }
-    button,input,select,textarea{font:inherit}
-    button{cursor:pointer}
-    a{color:inherit;text-decoration:none}
-    .app{width:min(920px,100%);min-height:100vh;margin:0 auto;padding-bottom:28px}
-
-    .header{
-      position:sticky;top:0;z-index:100;
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      padding:12px 14px;background:rgba(6,27,20,.94);
-      border-bottom:1px solid var(--line);backdrop-filter:blur(12px);
-    }
-    .brand{display:flex;align-items:center;gap:10px;min-width:0}
-    .logo{
-      width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
-      flex:0 0 auto;font-size:21px;color:#111;
-      background:linear-gradient(135deg,var(--gold),var(--orange));
-      box-shadow:0 8px 22px rgba(250,204,21,.28);
-    }
-    .brand-title{font-size:17px;font-weight:950;letter-spacing:.05em;line-height:1.05}
-    .brand-sub{margin-top:3px;color:var(--muted);font-size:12px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .header-actions{display:flex;align-items:center;justify-content:flex-end;gap:7px}
-
-    .btn{
-      min-height:46px;border:0;border-radius:14px;padding:0 14px;
-      display:inline-flex;align-items:center;justify-content:center;gap:7px;
-      color:#111;font-weight:950;text-align:center;
-      background:linear-gradient(135deg,var(--gold),var(--orange));
-      box-shadow:0 10px 24px rgba(250,204,21,.18);
-      transition:.18s ease;
-    }
-    .btn:hover{transform:translateY(-1px)}
-    .btn:focus-visible,.field-control:focus-visible{outline:3px solid rgba(250,204,21,.30);outline-offset:2px}
-    .btn.ghost{color:var(--text);background:rgba(255,255,255,.05);border:1px solid var(--line);box-shadow:none}
-    .btn.green{color:#bbf7d0;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.42);box-shadow:none}
-    .btn.blue{color:#bfdbfe;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.40);box-shadow:none}
-    .btn.red{color:#fecaca;background:rgba(239,68,68,.13);border:1px solid rgba(239,68,68,.36);box-shadow:none}
-    .btn.disabled,.btn[aria-disabled="true"]{opacity:.46;cursor:not-allowed;transform:none}
-    .small-btn{min-height:38px;padding:0 11px;border-radius:999px;font-size:12px}
-
-    .hero{
-      margin:16px 14px 0;padding:18px;border:1px solid var(--line);border-radius:var(--radius);
-      background:
-        radial-gradient(circle at top left,rgba(34,197,94,.10),transparent 38%),
-        radial-gradient(circle at bottom right,rgba(250,204,21,.09),transparent 38%),
-        linear-gradient(180deg,rgba(11,42,31,.98),rgba(9,30,22,.98));
-      box-shadow:var(--shadow);
-    }
-    .eyebrow{
-      display:inline-flex;align-items:center;min-height:30px;padding:0 11px;border-radius:999px;
-      color:#fde68a;background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.25);
-      font-size:11px;font-weight:950;letter-spacing:.07em;text-transform:uppercase;
-    }
-    .hero h1{margin:11px 0 8px;font-size:clamp(30px,7vw,48px);line-height:1.02;letter-spacing:-.045em;font-weight:950}
-    .hero h1 span{color:#fde68a}
-    .hero p{margin:0;max-width:62ch;color:var(--muted);font-size:14px;font-weight:720;line-height:1.55}
-    .trust{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}
-    .trust span{padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.04);color:var(--muted);font-size:11px;font-weight:900}
-
-    .resa-menu{
-      margin:12px 14px 0;border:1px solid rgba(250,204,21,.24);border-radius:18px;
-      background:linear-gradient(180deg,rgba(16,55,40,.96),rgba(9,30,22,.96));
-      box-shadow:0 12px 32px rgba(0,0,0,.26);overflow:hidden;
-    }
-    .resa-menu-head{
-      width:100%;min-height:54px;padding:10px 13px;border:0;background:transparent;color:var(--text);
-      display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;
-    }
-    .resa-menu-title{display:flex;align-items:center;gap:10px;min-width:0}
-    .resa-menu-icon{
-      width:34px;height:34px;border-radius:12px;display:grid;place-items:center;flex:0 0 auto;
-      background:rgba(250,204,21,.12);border:1px solid rgba(250,204,21,.26);
-    }
-    .resa-menu-title b{display:block;color:#fde68a;font-size:14px;font-weight:950}
-    .resa-menu-title small{display:block;margin-top:2px;color:var(--muted);font-size:11px;font-weight:760}
-    .resa-menu-chevron{font-size:17px;color:#fde68a;transition:.18s ease}
-    .resa-menu-head[aria-expanded="false"] .resa-menu-chevron{transform:rotate(-90deg)}
-    .resa-menu-body{padding:0 12px 12px}
-    .resa-menu-body[hidden]{display:none}
-    .resa-menu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-    .resa-door{
-      min-height:66px;padding:8px 6px;border-radius:14px;border:1px solid var(--line);
-      background:rgba(255,255,255,.045);color:var(--text);display:grid;place-items:center;align-content:center;
-      gap:3px;text-align:center;transition:.16s ease;
-    }
-    .resa-door:hover{border-color:rgba(250,204,21,.38);background:rgba(250,204,21,.07);transform:translateY(-1px)}
-    .resa-door.active{border-color:rgba(250,204,21,.58);background:rgba(250,204,21,.11);box-shadow:0 7px 18px rgba(250,204,21,.08)}
-    .resa-door span{font-size:21px;line-height:1}
-    .resa-door b{font-size:11px;font-weight:950;line-height:1.15}
-
-    .panel{
-      margin:16px 14px 0;padding:16px;border:1px solid var(--line);border-radius:var(--radius);
-      background:linear-gradient(180deg,rgba(11,42,31,.98),rgba(9,30,22,.98));
-      box-shadow:var(--shadow);
-    }
-    .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
-    .panel-title{font-size:22px;font-weight:950;line-height:1.08}
-    .panel-sub{margin-top:5px;max-width:60ch;color:var(--muted);font-size:13px;font-weight:720;line-height:1.48}
-    .step-badge{
-      flex:0 0 auto;min-width:34px;height:34px;border-radius:999px;display:grid;place-items:center;
-      background:rgba(250,204,21,.10);border:1px solid rgba(250,204,21,.28);color:#fde68a;font-weight:950;
-    }
-
-    .form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .field{display:grid;gap:6px}
-    .field.full{grid-column:1/-1}
-    .field label{color:#fde68a;font-size:11px;font-weight:950;letter-spacing:.055em;text-transform:uppercase}
-    .field-control{
-      width:100%;min-height:50px;padding:10px 12px;border-radius:15px;
-      border:1px solid rgba(255,255,255,.18);outline:none;
-      background:rgba(255,255,255,.96);color:#061b14;font-weight:850;
-    }
-    textarea.field-control{min-height:88px;resize:vertical;line-height:1.45}
-    .field-hint{color:var(--muted);font-size:11px;line-height:1.35}
-    .prepare-row{grid-column:1/-1;display:flex;gap:9px;flex-wrap:wrap;margin-top:2px}
-    .prepare-row .btn{flex:1}
-
-    .result{display:none}
-    .result.show{display:block}
-    .summary{
-      display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;
-    }
-    .summary-item{padding:11px 12px;border-radius:15px;border:1px solid var(--line);background:rgba(255,255,255,.04)}
-    .summary-item small{display:block;color:var(--muted);font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.055em}
-    .summary-item strong{display:block;margin-top:4px;color:var(--text);font-size:14px;line-height:1.3;overflow-wrap:anywhere}
-    .summary-item.full{grid-column:1/-1}
-    .reference{color:#fde68a!important}
-    .message-label{margin:0 0 7px;color:#fde68a;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
-    .message-preview{
-      margin:0;min-height:210px;max-height:390px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;
-      padding:13px;border-radius:17px;border:1px solid rgba(250,204,21,.28);
-      background:rgba(0,0,0,.18);color:#fff8cf;font:750 13px/1.48 var(--font);
-    }
-    .actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
-    .actions .btn{width:100%}
-    .result-note{margin:10px 0 0;text-align:center;color:var(--muted);font-size:11px;line-height:1.4}
-
-    .rules{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-    .rule{padding:12px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.04)}
-    .rule b{display:block;color:#fde68a;font-size:13px}
-    .rule span{display:block;margin-top:4px;color:var(--muted);font-size:12px;line-height:1.42}
-    .pro-line{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
-    .pro-line p{margin:0;color:var(--muted);font-size:12px;line-height:1.42}
-
-    .toast{
-      position:fixed;left:50%;bottom:22px;z-index:300;max-width:90vw;
-      transform:translateX(-50%) translateY(12px);opacity:0;pointer-events:none;
-      padding:10px 14px;border-radius:999px;border:1px solid var(--line);
-      background:rgba(2,6,23,.92);color:#fff;font-size:12px;font-weight:950;text-align:center;
-      transition:.18s ease;
-    }
-    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-    footer{padding:18px 14px 0;text-align:center;color:var(--muted);font-size:11px;line-height:1.45}
-
-    @media(max-width:720px){
-      .header{align-items:flex-start;flex-wrap:wrap}
-      .header-actions{margin-left:auto}
-      .hide-mobile{display:none}
-      .form{grid-template-columns:1fr}
-      .field.full,.prepare-row{grid-column:1}
-      .rules{grid-template-columns:1fr}
-      .resa-menu-grid{grid-template-columns:repeat(4,1fr)}
-    }
-    @media(max-width:520px){
-      .hero,.panel{margin-left:10px;margin-right:10px;padding:14px}
-      .summary,.actions{grid-template-columns:1fr}
-      .summary-item.full{grid-column:1}
-      .prepare-row{display:grid;grid-template-columns:1fr}
-      .pro-line{align-items:stretch;flex-direction:column}
-      .pro-line .btn{width:100%}
-      .resa-menu{margin-left:10px;margin-right:10px}
-      .resa-menu-grid{grid-template-columns:repeat(2,1fr)}
-      .resa-door{min-height:62px}
-    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:
+      radial-gradient(circle at top,rgba(250,204,21,.10),transparent 34%),
+      radial-gradient(circle at bottom,rgba(34,197,94,.09),transparent 38%),var(--bg);
+      color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}button{font:inherit}.app{width:min(900px,100%);margin:0 auto;padding-bottom:30px}
+    .top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding:12px 14px;background:rgba(6,27,20,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:10px;min-width:0}.logo{width:42px;height:42px;border-radius:14px;display:grid;
+      place-items:center;background:linear-gradient(135deg,var(--gold),var(--orange));color:#111;font-size:22px;flex:0 0 auto}
+    .brand b{display:block;font-size:17px;font-weight:950;letter-spacing:.03em}.brand small{display:block;color:var(--muted);margin-top:2px}
+    .top-actions{display:flex;gap:7px}.top-btn{min-height:40px;padding:0 11px;border-radius:999px;border:1px solid var(--line);
+      background:rgba(255,255,255,.05);color:var(--text);font-weight:900;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+    .hero,.menu,.results,.rule{margin:14px;padding:17px;border:1px solid var(--line);border-radius:var(--radius);
+      background:linear-gradient(180deg,rgba(11,42,31,.98),rgba(9,30,22,.98));box-shadow:var(--shadow)}
+    .eyebrow{display:inline-flex;padding:7px 11px;border-radius:999px;border:1px solid rgba(250,204,21,.30);
+      background:rgba(250,204,21,.08);color:#fde68a;font-size:11px;font-weight:950;text-transform:uppercase;letter-spacing:.07em}
+    h1{margin:12px 0 8px;font-size:clamp(31px,8vw,54px);line-height:.98;letter-spacing:-.045em}
+    h1 span{color:#fde68a}.lead{margin:0;color:var(--muted);font-size:14px;line-height:1.6;max-width:64ch;font-weight:700}
+    .proofs{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}.proof{padding:7px 10px;border-radius:999px;border:1px solid var(--line);
+      background:rgba(255,255,255,.04);font-size:11px;color:var(--muted);font-weight:900}
+    .section-title{font-size:21px;font-weight:950}.section-sub{color:var(--muted);font-size:13px;line-height:1.5;margin-top:4px}
+    .categories{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:13px}
+    .category{min-height:84px;border-radius:17px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);
+      padding:10px 7px;cursor:pointer;display:grid;place-items:center;align-content:center;gap:5px;text-align:center;transition:.16s ease}
+    .category:hover{transform:translateY(-1px);border-color:rgba(250,204,21,.36)}.category.active{border-color:rgba(250,204,21,.60);
+      background:rgba(250,204,21,.10);box-shadow:0 7px 20px rgba(250,204,21,.08)}
+    .category .ico{font-size:25px}.category b{font-size:12px;font-weight:950}.category small{font-size:10px;color:var(--muted);font-weight:800}
+    .results{scroll-margin-top:76px}.result-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.count{padding:6px 9px;
+      border-radius:999px;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.28);color:#bbf7d0;font-size:11px;font-weight:900}
+    .pro-list{display:grid;gap:10px;margin-top:13px}.pro-card{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;
+      padding:13px;border-radius:18px;border:1px solid rgba(250,204,21,.28);background:radial-gradient(circle at top right,rgba(250,204,21,.10),transparent 45%),rgba(255,255,255,.04)}
+    .pro-logo{width:54px;height:54px;border-radius:17px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),var(--orange));color:#111;font-size:26px}
+    .pro-name{font-size:17px;font-weight:950}.pro-meta{margin-top:3px;color:var(--muted);font-size:12px;line-height:1.4}.pro-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+    .tag{font-size:10px;font-weight:900;padding:5px 7px;border-radius:999px;border:1px solid var(--line);color:#fde68a;background:rgba(250,204,21,.06)}
+    .open-pro{min-height:45px;padding:0 13px;border-radius:14px;background:linear-gradient(135deg,var(--gold),var(--orange));color:#111;font-weight:950;
+      display:inline-flex;align-items:center;justify-content:center;text-align:center}
+    .empty{padding:17px;border:1px dashed rgba(255,255,255,.18);border-radius:17px;text-align:center;background:rgba(255,255,255,.025)}
+    .empty-ico{font-size:30px}.empty b{display:block;margin-top:7px}.empty p{margin:6px auto 0;color:var(--muted);font-size:13px;line-height:1.5;max-width:48ch}
+    .pro-cta{display:inline-flex;margin-top:12px;min-height:43px;padding:0 13px;border-radius:13px;border:1px solid rgba(34,197,94,.35);background:rgba(34,197,94,.11);color:#bbf7d0;font-weight:950;align-items:center}
+    .rule{box-shadow:none}.rule-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}.rule-item{padding:11px;border-radius:15px;border:1px solid var(--line);background:rgba(255,255,255,.035)}
+    .rule-item b{display:block;color:#fde68a;font-size:12px}.rule-item span{display:block;margin-top:4px;color:var(--muted);font-size:11px;line-height:1.45}
+    footer{text-align:center;padding:8px 14px;color:var(--muted);font-size:11px;line-height:1.5}
+    @media(max-width:660px){.categories{grid-template-columns:repeat(2,minmax(0,1fr))}.pro-card{grid-template-columns:auto 1fr}.open-pro{grid-column:1/-1;width:100%}.rule-grid{grid-template-columns:1fr}.top-btn.home{display:none}}
   </style>
 </head>
 <body>
 <div class="app">
-  <header class="header">
-    <a class="brand" href="#top" aria-label="DIGIY RESA">
+  <header class="top">
+    <a class="brand" href="#top">
       <div class="logo">📅</div>
-      <div>
-        <div class="brand-title">DIGIY RESA</div>
-        <div class="brand-sub" data-i18n="brandSub">Demande simple · confirmation du pro</div>
-      </div>
+      <div><b>DIGIY RESA</b><small data-i18n="brandSub">Les professionnels disponibles</small></div>
     </a>
-    <div class="header-actions">
-      <a class="btn ghost small-btn hide-mobile" href="https://digiylyfe.com/">🌍 DIGIYLYFE</a>
-      <a class="btn ghost small-btn hide-mobile" href="https://resa-table-resto.digiylyfe.com/inscription-resa.html" data-i18n="proTop">🧾 Espace pro</a>
-      <button class="btn ghost small-btn" id="langBtn" type="button" aria-label="Changer de langue">🇬🇧 EN</button>
+    <div class="top-actions">
+      <a class="top-btn home" href="https://digiylyfe.com/">DIGIYLYFE</a>
+      <button class="top-btn" id="langBtn" type="button">🇬🇧 EN</button>
     </div>
   </header>
 
   <main id="top">
     <section class="hero">
-      <span class="eyebrow" data-i18n="eyebrow">Rendez-vous · réservation · service</span>
-      <h1 data-i18n="heroTitle">Prépare ta demande. <span>Le pro confirme.</span></h1>
-      <p data-i18n="heroText">Choisis le service, la date et l’heure. DIGIY prépare un message clair que tu envoies directement au professionnel.</p>
-      <div class="trust">
-        <span data-i18n="trust1">⏱️ Créneaux de 15 min</span>
-        <span data-i18n="trust2">🤝 Paiement direct</span>
-        <span data-i18n="trust3">0% commission DIGIY</span>
+      <span class="eyebrow" data-i18n="eyebrow">Vitrine RESA · contact direct</span>
+      <h1 data-i18n="heroTitle">Choisis un métier. <span>Entre chez le professionnel.</span></h1>
+      <p class="lead" data-i18n="heroText">Ici, aucune réservation générale. Chaque professionnel possède sa propre fiche, ses prestations, ses horaires et son moyen de contact. Tu choisis le métier, puis tu ouvres sa fiche.</p>
+      <div class="proofs">
+        <span class="proof" data-i18n="proof1">Paiement direct au pro</span>
+        <span class="proof" data-i18n="proof2">0% commission DIGIY</span>
+        <span class="proof" data-i18n="proof3">Le pro confirme</span>
       </div>
     </section>
 
-    <section class="resa-menu" aria-label="Menu des catégories RESA">
-      <button class="resa-menu-head" id="resaMenuToggle" type="button" aria-expanded="true" aria-controls="resaMenuBody">
-        <span class="resa-menu-title">
-          <span class="resa-menu-icon">🧭</span>
-          <span>
-            <b data-i18n="menuTitle">Choisir ma RESA</b>
-            <small id="resaMenuCurrent" data-i18n="menuSub">Restaurant, santé, métiers et services</small>
-          </span>
-        </span>
-        <span class="resa-menu-chevron" aria-hidden="true">⌄</span>
-      </button>
-      <div class="resa-menu-body" id="resaMenuBody">
-        <div class="resa-menu-grid" id="resaMenuGrid"></div>
-      </div>
+    <section class="menu" aria-labelledby="menuTitle">
+      <div class="section-title" id="menuTitle" data-i18n="menuTitle">Quel professionnel cherches-tu ?</div>
+      <div class="section-sub" data-i18n="menuSub">Le menu affiche uniquement les fiches réellement publiées.</div>
+      <div class="categories" id="categories"></div>
     </section>
 
-    <section class="panel" id="demande">
-      <div class="panel-head">
+    <section class="results" id="results" aria-live="polite">
+      <div class="result-head">
         <div>
-          <div class="panel-title" data-i18n="formTitle">Ta demande</div>
-          <div class="panel-sub" data-i18n="formSub">Remplis l’essentiel. La demande n’est définitive qu’après confirmation du professionnel.</div>
+          <div class="section-title" id="resultTitle">Restaurants</div>
+          <div class="section-sub" id="resultSub">Professionnels disponibles dans cette catégorie.</div>
         </div>
-        <div class="step-badge">1</div>
+        <span class="count" id="resultCount">1 fiche</span>
       </div>
-
-      <form class="form" id="resaForm" novalidate>
-        <div class="field full">
-          <label for="resaType" data-i18n="labelType">Service demandé</label>
-          <select class="field-control" id="resaType" required></select>
-        </div>
-
-        <div class="field">
-          <label for="resaDate" data-i18n="labelDate">Date souhaitée</label>
-          <input class="field-control" id="resaDate" type="date" required>
-        </div>
-        <div class="field">
-          <label for="resaTime" data-i18n="labelTime">Heure souhaitée</label>
-          <input class="field-control" id="resaTime" type="time" value="09:00" step="900" required>
-        </div>
-
-        <div class="field">
-          <label for="resaDuration" data-i18n="labelDuration">Durée</label>
-          <select class="field-control" id="resaDuration"></select>
-        </div>
-        <div class="field">
-          <label for="resaPeople" data-i18n="labelPeople">Personnes / unités</label>
-          <input class="field-control" id="resaPeople" type="number" min="1" value="1">
-        </div>
-
-        <div class="field">
-          <label for="clientName" data-i18n="labelName">Ton nom</label>
-          <input class="field-control" id="clientName" autocomplete="name" required>
-        </div>
-        <div class="field">
-          <label for="clientPhone" data-i18n="labelPhone">Ton téléphone</label>
-          <input class="field-control" id="clientPhone" type="tel" inputmode="tel" autocomplete="tel">
-        </div>
-
-        <div class="field full">
-          <label for="resaNote" data-i18n="labelNote">Précision utile</label>
-          <textarea class="field-control" id="resaNote" data-i18n-placeholder="notePlaceholder" placeholder="Ex. besoin précis, adresse, nombre de personnes…"></textarea>
-        </div>
-
-        <div class="prepare-row">
-          <button class="btn" type="submit" data-i18n="prepareBtn">✅ Préparer ma demande</button>
-          <button class="btn ghost" id="clearBtn" type="button" data-i18n="clearBtn">✕ Effacer</button>
-        </div>
-      </form>
+      <div class="pro-list" id="proList"></div>
     </section>
 
-    <section class="panel result" id="resultPanel" aria-live="polite">
-      <div class="panel-head">
-        <div>
-          <div class="panel-title" data-i18n="resultTitle">Demande prête</div>
-          <div class="panel-sub" data-i18n="resultSub">Vérifie le message, puis choisis WhatsApp, SMS, copie ou partage.</div>
-        </div>
-        <div class="step-badge">2</div>
-      </div>
-
-      <div class="summary">
-        <div class="summary-item"><small data-i18n="sumService">Service</small><strong id="sumService">—</strong></div>
-        <div class="summary-item"><small data-i18n="sumDate">Créneau</small><strong id="sumDate">—</strong></div>
-        <div class="summary-item"><small data-i18n="sumName">Client</small><strong id="sumName">—</strong></div>
-        <div class="summary-item"><small data-i18n="sumPhone">Téléphone</small><strong id="sumPhone">—</strong></div>
-        <div class="summary-item full"><small data-i18n="sumReference">Référence</small><strong class="reference" id="sumReference">—</strong></div>
-      </div>
-
-      <div class="message-label" data-i18n="messageLabel">Message exact préparé</div>
-      <pre class="message-preview" id="messagePreview">—</pre>
-
-      <div class="actions">
-        <button class="btn green" id="waBtn" type="button" data-i18n="waBtn">💬 Envoyer par WhatsApp</button>
-        <button class="btn blue" id="smsBtn" type="button" data-i18n="smsBtn">✉️ Envoyer par SMS</button>
-        <button class="btn ghost" id="copyBtn" type="button" data-i18n="copyBtn">📋 Copier le message</button>
-        <button class="btn ghost" id="shareBtn" type="button" data-i18n="shareBtn">↗️ Partager</button>
-      </div>
-      <p class="result-note" data-i18n="resultNote">Le client choisit lui-même le professionnel destinataire. DIGIY n’envoie rien sans son action.</p>
-    </section>
-
-    <section class="panel" id="regles">
-      <div class="panel-head">
-        <div>
-          <div class="panel-title" data-i18n="rulesTitle">La règle est simple</div>
-          <div class="panel-sub" data-i18n="rulesSub">DIGIY prépare la route. Le professionnel garde la décision.</div>
-        </div>
-      </div>
-      <div class="rules">
-        <div class="rule"><b data-i18n="rule1Title">Demande libre</b><span data-i18n="rule1Text">Le client prépare et envoie son message directement.</span></div>
-        <div class="rule"><b data-i18n="rule2Title">Confirmation humaine</b><span data-i18n="rule2Text">Le créneau existe seulement lorsque le professionnel confirme.</span></div>
-        <div class="rule"><b data-i18n="rule3Title">Relation directe</b><span data-i18n="rule3Text">Paiement au professionnel et 0% commission DIGIY.</span></div>
-      </div>
-      <div class="pro-line">
-        <p data-i18n="proText">Professionnel : active ta présence RESA, ton planning et ton QR.</p>
-        <a class="btn ghost" href="https://resa-table-resto.digiylyfe.com/inscription-resa.html" data-i18n="proBtn">🧾 Faire une demande pro</a>
+    <section class="rule">
+      <div class="section-title" data-i18n="ruleTitle">La bonne architecture RESA</div>
+      <div class="rule-grid">
+        <div class="rule-item"><b data-i18n="rule1Title">1. Le portail oriente</b><span data-i18n="rule1Text">Il montre les métiers et les professionnels disponibles.</span></div>
+        <div class="rule-item"><b data-i18n="rule2Title">2. La fiche présente</b><span data-i18n="rule2Text">Elle porte le nom, les services, les images et les coordonnées du pro.</span></div>
+        <div class="rule-item"><b data-i18n="rule3Title">3. Le pro reçoit</b><span data-i18n="rule3Text">La demande ou réservation arrive directement chez le professionnel concerné.</span></div>
       </div>
     </section>
   </main>
 
-  <footer data-i18n="footer">DIGIY RESA · Le client demande · Le professionnel confirme · Paiement direct · 0% commission.</footer>
+  <footer data-i18n="footer">DIGIY RESA · une vitrine de professionnels · contact direct · 0% commission.</footer>
 </div>
-<div class="toast" id="toast">OK</div>
 
 <script>
-(function(){
+(() => {
   "use strict";
 
   const I18N = {
     fr:{
-      title:"DIGIY RESA — Réserver un service local",
-      desc:"DIGIY RESA prépare une demande claire de rendez-vous ou de réservation. Le professionnel confirme. Paiement direct et 0% commission DIGIY.",
-      brandSub:"Demande simple · confirmation du pro",
-      proTop:"🧾 Espace pro",
-      eyebrow:"Rendez-vous · réservation · service",
-      heroTitle:"Prépare ta demande. <span>Le pro confirme.</span>",
-      heroText:"Choisis le service, la date et l’heure. DIGIY prépare un message clair que tu envoies directement au professionnel.",
-      menuTitle:"Choisir ma RESA",menuSub:"Restaurant, santé, métiers et services",menuSelected:"RESA sélectionnée",
-      trust1:"⏱️ Créneaux de 15 min",trust2:"🤝 Paiement direct",trust3:"0% commission DIGIY",
-      formTitle:"Ta demande",
-      formSub:"Remplis l’essentiel. La demande n’est définitive qu’après confirmation du professionnel.",
-      labelType:"Service demandé",labelDate:"Date souhaitée",labelTime:"Heure souhaitée",labelDuration:"Durée",labelPeople:"Personnes / unités",labelName:"Ton nom",labelPhone:"Ton téléphone",labelNote:"Précision utile",
-      notePlaceholder:"Ex. besoin précis, adresse, nombre de personnes…",
-      prepareBtn:"✅ Préparer ma demande",clearBtn:"✕ Effacer",
-      resultTitle:"Demande prête",resultSub:"Vérifie le message, puis choisis WhatsApp, SMS, copie ou partage.",
-      sumService:"Service",sumDate:"Créneau",sumName:"Client",sumPhone:"Téléphone",sumReference:"Référence",
-      messageLabel:"Message exact préparé",
-      waBtn:"💬 Envoyer par WhatsApp",smsBtn:"✉️ Envoyer par SMS",copyBtn:"📋 Copier le message",copiedBtn:"✅ Message copié",shareBtn:"↗️ Partager",
-      resultNote:"Le client choisit lui-même le professionnel destinataire. DIGIY n’envoie rien sans son action.",
-      rulesTitle:"La règle est simple",rulesSub:"DIGIY prépare la route. Le professionnel garde la décision.",
-      rule1Title:"Demande libre",rule1Text:"Le client prépare et envoie son message directement.",
-      rule2Title:"Confirmation humaine",rule2Text:"Le créneau existe seulement lorsque le professionnel confirme.",
-      rule3Title:"Relation directe",rule3Text:"Paiement au professionnel et 0% commission DIGIY.",
-      proText:"Professionnel : active ta présence RESA, ton planning et ton QR.",proBtn:"🧾 Faire une demande pro",
-      footer:"DIGIY RESA · Le client demande · Le professionnel confirme · Paiement direct · 0% commission.",
-      phName:"Ton nom",phPhone:"Ton WhatsApp ou téléphone",
-      incomplete:"Complète le service, ton nom, la date et l’heure.",pastDate:"Choisis aujourd’hui ou une date future.",prepared:"Demande préparée",copied:"Message copié",copyFailed:"Copie impossible",changed:"Demande modifiée : prépare le nouveau message.",nothing:"Prépare d’abord ta demande.",
-      noPhone:"Non communiqué",noNote:"Aucune précision",shareTitle:"Demande DIGIY RESA",
-      message:(v)=>`Bonjour, je souhaite faire une demande avec DIGIY RESA.
-
-Référence : ${v.reference}
-Service : ${v.type}
-Nom : ${v.name}
-Téléphone : ${v.phone}
-Date : ${v.date}
-Heure : ${v.time}
-Durée : ${v.duration}
-Personnes / unités : ${v.people}
-Précision : ${v.note}
-
-Disponibilité à confirmer par le professionnel.
-Paiement direct au professionnel · 0% commission DIGIY.`
+      brandSub:"Les professionnels disponibles",eyebrow:"Vitrine RESA · contact direct",
+      heroTitle:'Choisis un métier. <span>Entre chez le professionnel.</span>',
+      heroText:"Ici, aucune réservation générale. Chaque professionnel possède sa propre fiche, ses prestations, ses horaires et son moyen de contact. Tu choisis le métier, puis tu ouvres sa fiche.",
+      proof1:"Paiement direct au pro",proof2:"0% commission DIGIY",proof3:"Le pro confirme",
+      menuTitle:"Quel professionnel cherches-tu ?",menuSub:"Le menu affiche uniquement les fiches réellement publiées.",
+      available:"Professionnels disponibles dans cette catégorie.",one:"1 fiche",none:"0 fiche",
+      emptyTitle:"Aucun professionnel publié pour le moment",emptyText:"Cette porte reste prête, mais nous n’inventons pas de faux professionnels.",
+      proApply:"Je suis professionnel",open:"Ouvrir la fiche",restaurant:"Restaurants",doctor:"Docteurs",architect:"Architectes",accountant:"Comptables",services:"Services",nails:"Ongleries",hair:"Coiffeurs",
+      sarlatMeta:"Sarlat-la-Canéda · Dordogne · France",sarlatTags:["Restaurant","Carte digitale","Contact direct"],
+      ruleTitle:"La bonne architecture RESA",rule1Title:"1. Le portail oriente",rule1Text:"Il montre les métiers et les professionnels disponibles.",
+      rule2Title:"2. La fiche présente",rule2Text:"Elle porte le nom, les services, les images et les coordonnées du pro.",
+      rule3Title:"3. Le pro reçoit",rule3Text:"La demande ou réservation arrive directement chez le professionnel concerné.",
+      footer:"DIGIY RESA · une vitrine de professionnels · contact direct · 0% commission.",lang:"🇬🇧 EN"
     },
     en:{
-      title:"DIGIY RESA — Book a local service",
-      desc:"DIGIY RESA prepares a clear appointment or booking request. The professional confirms. Direct payment and 0% DIGIY commission.",
-      brandSub:"Simple request · professional confirmation",
-      proTop:"🧾 Pro space",
-      eyebrow:"Appointment · booking · service",
-      heroTitle:"Prepare your request. <span>The pro confirms.</span>",
-      heroText:"Choose the service, date and time. DIGIY prepares a clear message that you send directly to the professional.",
-      menuTitle:"Choose my RESA",menuSub:"Restaurant, health, trades and services",menuSelected:"Selected RESA",
-      trust1:"⏱️ 15-minute slots",trust2:"🤝 Direct payment",trust3:"0% DIGIY commission",
-      formTitle:"Your request",
-      formSub:"Fill in the essentials. The request is final only after the professional confirms.",
-      labelType:"Requested service",labelDate:"Requested date",labelTime:"Requested time",labelDuration:"Duration",labelPeople:"People / units",labelName:"Your name",labelPhone:"Your phone",labelNote:"Useful detail",
-      notePlaceholder:"Example: exact need, address, number of people…",
-      prepareBtn:"✅ Prepare my request",clearBtn:"✕ Clear",
-      resultTitle:"Request ready",resultSub:"Check the message, then choose WhatsApp, SMS, copy or share.",
-      sumService:"Service",sumDate:"Time slot",sumName:"Client",sumPhone:"Phone",sumReference:"Reference",
-      messageLabel:"Exact prepared message",
-      waBtn:"💬 Send by WhatsApp",smsBtn:"✉️ Send by SMS",copyBtn:"📋 Copy message",copiedBtn:"✅ Message copied",shareBtn:"↗️ Share",
-      resultNote:"The client chooses the professional recipient. DIGIY sends nothing without their action.",
-      rulesTitle:"The rule is simple",rulesSub:"DIGIY prepares the route. The professional keeps the decision.",
-      rule1Title:"Open request",rule1Text:"The client prepares and sends the message directly.",
-      rule2Title:"Human confirmation",rule2Text:"The time slot exists only after the professional confirms.",
-      rule3Title:"Direct relationship",rule3Text:"Payment to the professional and 0% DIGIY commission.",
-      proText:"Professional: activate your RESA presence, schedule and QR.",proBtn:"🧾 Make a pro request",
-      footer:"DIGIY RESA · The client requests · The professional confirms · Direct payment · 0% commission.",
-      phName:"Your name",phPhone:"Your WhatsApp or phone",
-      incomplete:"Complete the service, your name, date and time.",pastDate:"Choose today or a future date.",prepared:"Request prepared",copied:"Message copied",copyFailed:"Copy failed",changed:"Request changed: prepare the new message.",nothing:"Prepare your request first.",
-      noPhone:"Not provided",noNote:"No detail",shareTitle:"DIGIY RESA request",
-      message:(v)=>`Hello, I would like to make a request with DIGIY RESA.
-
-Reference: ${v.reference}
-Service: ${v.type}
-Name: ${v.name}
-Phone: ${v.phone}
-Date: ${v.date}
-Time: ${v.time}
-Duration: ${v.duration}
-People / units: ${v.people}
-Detail: ${v.note}
-
-Availability must be confirmed by the professional.
-Direct payment to the professional · 0% DIGIY commission.`
+      brandSub:"Available professionals",eyebrow:"RESA showcase · direct contact",
+      heroTitle:'Choose a trade. <span>Enter the professional’s page.</span>',
+      heroText:"There is no generic booking form here. Each professional has their own page, services, opening hours and contact method. Choose a trade, then open the professional’s page.",
+      proof1:"Direct payment to the pro",proof2:"0% DIGIY commission",proof3:"The pro confirms",
+      menuTitle:"Which professional are you looking for?",menuSub:"The menu only shows genuinely published professional pages.",
+      available:"Professionals available in this category.",one:"1 page",none:"0 pages",
+      emptyTitle:"No professional published yet",emptyText:"This doorway is ready, but we do not invent fake professionals.",
+      proApply:"I am a professional",open:"Open the page",restaurant:"Restaurants",doctor:"Doctors",architect:"Architects",accountant:"Accountants",services:"Services",nails:"Nail salons",hair:"Hairdressers",
+      sarlatMeta:"Sarlat-la-Canéda · Dordogne · France",sarlatTags:["Restaurant","Digital card","Direct contact"],
+      ruleTitle:"The right RESA architecture",rule1Title:"1. The portal guides",rule1Text:"It displays trades and available professionals.",
+      rule2Title:"2. The page presents",rule2Text:"It carries the professional’s name, services, images and contact details.",
+      rule3Title:"3. The pro receives",rule3Text:"The request or booking goes directly to the relevant professional.",
+      footer:"DIGIY RESA · a professional showcase · direct contact · 0% commission.",lang:"🇫🇷 FR"
     }
   };
 
-  const OPTIONS = {
-    durations:{
-      fr:["15 min","30 min","45 min","1 h","1 h 15","1 h 30","2 h","Demi-journée","Journée","Nuit / 24 h"],
-      en:["15 min","30 min","45 min","1 hour","1 h 15","1 h 30","2 hours","Half-day","Full day","Night / 24 h"]
-    },
-    types:{
-      fr:["Rendez-vous entreprise","Présentation de projet","Docteur / médecin","Dentiste","Kiné / santé","Architecte","Comptable / gestion","Garage / mécanicien","Onglerie","Coiffeur / barber","Salon / beauté","Service à domicile / proximité","Artisan / intervention","Plombier / électricien","Consultation / conseil","Avocat / administratif","Visite / découverte","Location / rendez-vous","Table restaurant","Chambre / nuitée","Autre demande"],
-      en:["Business appointment","Project presentation","Doctor / medical","Dentist","Physiotherapy / health","Architect","Accountant / management","Garage / mechanic","Nail salon","Hairdresser / barber","Salon / beauty","Home / local service","Artisan / intervention","Plumber / electrician","Consultation / advice","Lawyer / administration","Visit / discovery","Rental / appointment","Restaurant table","Room / night stay","Other request"]
-    }
-  };
-
-  const RESA_MENU = [
-    {id:"restaurant",icon:"🍽️",label:{fr:"Restaurant",en:"Restaurant"},type:{fr:"Table restaurant",en:"Restaurant table"}},
-    {id:"doctor",icon:"🩺",label:{fr:"Docteur",en:"Doctor"},type:{fr:"Docteur / médecin",en:"Doctor / medical"}},
-    {id:"architect",icon:"📐",label:{fr:"Architecte",en:"Architect"},type:{fr:"Architecte",en:"Architect"}},
-    {id:"accountant",icon:"🧾",label:{fr:"Comptable",en:"Accountant"},type:{fr:"Comptable / gestion",en:"Accountant / management"}},
-    {id:"services",icon:"🛠️",label:{fr:"Services",en:"Services"},type:{fr:"Service à domicile / proximité",en:"Home / local service"}},
-    {id:"nails",icon:"💅",label:{fr:"Onglerie",en:"Nail salon"},type:{fr:"Onglerie",en:"Nail salon"}},
-    {id:"hair",icon:"✂️",label:{fr:"Coiffeur",en:"Hairdresser"},type:{fr:"Coiffeur / barber",en:"Hairdresser / barber"}},
-    {id:"business",icon:"🏢",label:{fr:"Entreprise",en:"Business"},type:{fr:"Rendez-vous entreprise",en:"Business appointment"}}
+  const CATEGORIES = [
+    {id:"restaurant",icon:"🍽️",label:"restaurant",hint:{fr:"Sarlat disponible",en:"Sarlat available"}},
+    {id:"doctor",icon:"🩺",label:"doctor",hint:{fr:"Santé",en:"Health"}},
+    {id:"architect",icon:"📐",label:"architect",hint:{fr:"Projet",en:"Project"}},
+    {id:"accountant",icon:"🧾",label:"accountant",hint:{fr:"Gestion",en:"Management"}},
+    {id:"services",icon:"🛠️",label:"services",hint:{fr:"Proximité",en:"Local"}},
+    {id:"nails",icon:"💅",label:"nails",hint:{fr:"Beauté",en:"Beauty"}},
+    {id:"hair",icon:"✂️",label:"hair",hint:{fr:"Coiffure",en:"Hair"}}
   ];
 
-  let currentLang = localStorage.getItem("digiy_resa_lang") === "en" ? "en" : "fr";
-  let orderData = null;
-  let suppressInvalidation = false;
+  const PROS = {
+    restaurant:[{
+      name:"Malraux & Entre2",icon:"🍽️",url:"https://malraux-entre2.digiylyfe.com/"
+    }]
+  };
+
+  let lang = localStorage.getItem("digiy_resa_hub_lang") === "en" ? "en" : "fr";
+  let activeCategory = "restaurant";
   const $ = id => document.getElementById(id);
+  const t = key => I18N[lang][key] ?? key;
 
-  function t(key){ return I18N[currentLang][key] ?? key; }
-  function value(id){ return ($(id)?.value || "").trim(); }
-  function today(){
-    const d = new Date();
-    const y = d.getFullYear();
-    const m = String(d.getMonth()+1).padStart(2,"0");
-    const day = String(d.getDate()).padStart(2,"0");
-    return `${y}-${m}-${day}`;
-  }
-  function roundToQuarter(raw){
-    if(!raw) return raw;
-    const parts = raw.split(":").map(Number);
-    if(parts.length < 2 || parts.some(Number.isNaN)) return raw;
-    const total = parts[0]*60 + parts[1];
-    const rounded = Math.round(total/15)*15;
-    const h = String(Math.floor(rounded/60)%24).padStart(2,"0");
-    const m = String(rounded%60).padStart(2,"0");
-    return `${h}:${m}`;
-  }
-  function formatDate(raw){
-    if(!raw) return "";
-    const parts = raw.split("-");
-    if(parts.length !== 3) return raw;
-    return currentLang === "fr" ? `${parts[2]}/${parts[1]}/${parts[0]}` : `${parts[1]}/${parts[2]}/${parts[0]}`;
-  }
-  function makeReference(){
-    const d = new Date();
-    const date = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,"0")}${String(d.getDate()).padStart(2,"0")}`;
-    const time = `${String(d.getHours()).padStart(2,"0")}${String(d.getMinutes()).padStart(2,"0")}`;
-    const rand = Math.floor(100 + Math.random()*900);
-    return `RESA-${date}-${time}-${rand}`;
-  }
-  function showToast(text){
-    const toast = $("toast");
-    toast.textContent = text;
-    toast.classList.add("show");
-    clearTimeout(showToast.timer);
-    showToast.timer = setTimeout(()=>toast.classList.remove("show"),1900);
-  }
-  function fillSelect(id,list){
-    const el = $(id);
-    const selected = Math.max(0,el.selectedIndex);
-    el.innerHTML = list.map(item=>`<option>${item}</option>`).join("");
-    el.selectedIndex = Math.min(selected,list.length-1);
-  }
-  function invalidateOrder(notify=false){
-    if(suppressInvalidation || !orderData) return;
-    orderData = null;
-    $("resultPanel").classList.remove("show");
-    $("messagePreview").textContent = "—";
-    $("copyBtn").innerHTML = t("copyBtn");
-    if(notify) showToast(t("changed"));
-  }
-  function setMenuOpen(open){
-    $("resaMenuToggle").setAttribute("aria-expanded",open ? "true" : "false");
-    $("resaMenuBody").hidden = !open;
-  }
-  function renderResaMenu(){
-    const selected = value("resaType");
-    $("resaMenuGrid").innerHTML = "";
-    RESA_MENU.forEach(item=>{
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "resa-door" + (selected === item.type[currentLang] ? " active" : "");
-      btn.dataset.resaId = item.id;
-      btn.innerHTML = `<span>${item.icon}</span><b>${item.label[currentLang]}</b>`;
-      btn.addEventListener("click",()=>selectResa(item));
-      $("resaMenuGrid").appendChild(btn);
-    });
-  }
-  function selectResa(item){
-    const target = item.type[currentLang];
-    const select = $("resaType");
-    const option = Array.from(select.options).find(opt=>opt.value === target || opt.textContent === target);
-    if(option) select.value = option.value;
-    invalidateOrder(true);
-    renderResaMenu();
-    $("resaMenuCurrent").textContent = `${t("menuSelected")} : ${item.label[currentLang]}`;
-    $("demande").scrollIntoView({behavior:"smooth",block:"start"});
-    setTimeout(()=>select.focus({preventScroll:true}),320);
-  }
-  function syncMenuSelection(){
-    const selected = value("resaType");
-    const item = RESA_MENU.find(entry=>entry.type[currentLang] === selected);
-    $("resaMenuCurrent").textContent = item ? `${t("menuSelected")} : ${item.label[currentLang]}` : t("menuSub");
-    renderResaMenu();
-  }
-  function applyLang(lang){
-    suppressInvalidation = true;
-    currentLang = lang === "en" ? "en" : "fr";
-    localStorage.setItem("digiy_resa_lang",currentLang);
-    document.documentElement.lang = currentLang;
-    document.title = t("title");
-    document.querySelector('meta[name="description"]')?.setAttribute("content",t("desc"));
-    document.querySelectorAll("[data-i18n]").forEach(el=>{
-      const translated = I18N[currentLang][el.dataset.i18n];
-      if(translated === undefined) return;
-      if(String(translated).includes("<")) el.innerHTML = translated;
-      else el.textContent = translated;
-    });
-    document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
-      const translated = I18N[currentLang][el.dataset.i18nPlaceholder];
-      if(translated !== undefined) el.placeholder = translated;
-    });
-    $("clientName").placeholder = t("phName");
-    $("clientPhone").placeholder = t("phPhone");
-    $("langBtn").textContent = currentLang === "fr" ? "🇬🇧 EN" : "🇫🇷 FR";
-    fillSelect("resaDuration",OPTIONS.durations[currentLang]);
-    fillSelect("resaType",OPTIONS.types[currentLang]);
-    renderResaMenu();
-    syncMenuSelection();
-    suppressInvalidation = false;
-    if(orderData) invalidateOrder(true);
-  }
-  function requestState(){
-    if(!value("resaType") || !value("clientName") || !value("resaDate") || !value("resaTime")) return {ok:false,key:"incomplete"};
-    if(value("resaDate") < today()) return {ok:false,key:"pastDate"};
-    return {ok:true,key:""};
-  }
-  function validateRequest(){
-    const state = requestState();
-    if(state.ok) return true;
-    showToast(t(state.key));
-    $("resaForm").reportValidity?.();
-    return false;
-  }
-  function buildSnapshot(){
-    const roundedTime = roundToQuarter(value("resaTime"));
-    $("resaTime").value = roundedTime;
-    const snapshot = {
-      reference:makeReference(),
-      type:value("resaType"),
-      name:value("clientName"),
-      phone:value("clientPhone") || t("noPhone"),
-      date:formatDate(value("resaDate")),
-      rawDate:value("resaDate"),
-      time:roundedTime,
-      duration:value("resaDuration"),
-      people:value("resaPeople") || "1",
-      note:value("resaNote") || t("noNote")
-    };
-    return Object.freeze({...snapshot,message:t("message")(snapshot)});
-  }
-  function renderOrder(){
-    $("sumService").textContent = orderData.type;
-    $("sumDate").textContent = `${orderData.date} · ${orderData.time}`;
-    $("sumName").textContent = orderData.name;
-    $("sumPhone").textContent = orderData.phone;
-    $("sumReference").textContent = orderData.reference;
-    $("messagePreview").textContent = orderData.message;
-    $("resultPanel").classList.add("show");
-    $("resultPanel").scrollIntoView({behavior:"smooth",block:"start"});
-  }
-  function prepareOrder(event){
-    event?.preventDefault();
-    if(!validateRequest()) return;
-    orderData = buildSnapshot();
-    renderOrder();
-    showToast(t("prepared"));
-  }
-  function requireOrder(){
-    if(orderData) return true;
-    showToast(t("nothing"));
-    return false;
-  }
-  function openWhatsapp(){
-    if(!requireOrder()) return;
-    window.open("https://wa.me/?text="+encodeURIComponent(orderData.message),"_blank","noopener,noreferrer");
-  }
-  function openSms(){
-    if(!requireOrder()) return;
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const separator = isIOS ? "&" : "?";
-    window.location.href = `sms:${separator}body=${encodeURIComponent(orderData.message)}`;
-  }
-  async function copyMessage(){
-    if(!requireOrder()) return;
-    try{
-      await navigator.clipboard.writeText(orderData.message);
-    }catch(error){
-      const area = document.createElement("textarea");
-      area.value = orderData.message;
-      area.setAttribute("readonly","");
-      area.style.position = "fixed";
-      area.style.opacity = "0";
-      document.body.appendChild(area);
-      area.select();
-      const copied = document.execCommand("copy");
-      area.remove();
-      if(!copied){ showToast(t("copyFailed")); return; }
-    }
-    $("copyBtn").innerHTML = t("copiedBtn");
-    showToast(t("copied"));
-    setTimeout(()=>$("copyBtn").innerHTML=t("copyBtn"),1700);
-  }
-  async function shareMessage(){
-    if(!requireOrder()) return;
-    if(navigator.share){
-      try{ await navigator.share({title:t("shareTitle"),text:orderData.message}); }catch(error){}
-    }else{
-      copyMessage();
-    }
-  }
-  function clearForm(){
-    suppressInvalidation = true;
-    $("resaForm").reset();
-    $("resaDate").value = today();
-    $("resaTime").value = "09:00";
-    $("resaPeople").value = "1";
-    $("resaType").selectedIndex = 0;
-    $("resaDuration").selectedIndex = 0;
-    syncMenuSelection();
-    suppressInvalidation = false;
-    orderData = null;
-    $("resultPanel").classList.remove("show");
-    $("messagePreview").textContent = "—";
-    window.scrollTo({top:0,behavior:"smooth"});
+  function renderCategories(){
+    $("categories").innerHTML = CATEGORIES.map(cat => `
+      <button class="category${cat.id===activeCategory?' active':''}" type="button" data-category="${cat.id}" aria-pressed="${cat.id===activeCategory}">
+        <span class="ico">${cat.icon}</span><b>${t(cat.label)}</b><small>${cat.hint[lang]}</small>
+      </button>`).join("");
   }
 
-  $("resaDate").min = today();
-  $("resaDate").value = today();
-  $("resaForm").addEventListener("submit",prepareOrder);
-  $("clearBtn").addEventListener("click",clearForm);
-  $("waBtn").addEventListener("click",openWhatsapp);
-  $("smsBtn").addEventListener("click",openSms);
-  $("copyBtn").addEventListener("click",copyMessage);
-  $("shareBtn").addEventListener("click",shareMessage);
-  $("langBtn").addEventListener("click",()=>applyLang(currentLang === "fr" ? "en" : "fr"));
-  $("resaMenuToggle").addEventListener("click",()=>setMenuOpen($("resaMenuToggle").getAttribute("aria-expanded") !== "true"));
-  $("resaType").addEventListener("change",syncMenuSelection);
-  ["resaType","resaDate","resaTime","resaDuration","resaPeople","clientName","clientPhone","resaNote"].forEach(id=>{
-    $(id).addEventListener("input",()=>invalidateOrder(true));
-    $(id).addEventListener("change",()=>invalidateOrder(true));
+  function renderPros(){
+    const cat = CATEGORIES.find(item => item.id===activeCategory) || CATEGORIES[0];
+    const pros = PROS[activeCategory] || [];
+    $("resultTitle").textContent = t(cat.label);
+    $("resultSub").textContent = t("available");
+    $("resultCount").textContent = pros.length ? t("one") : t("none");
+
+    if(!pros.length){
+      $("proList").innerHTML = `<div class="empty"><div class="empty-ico">${cat.icon}</div><b>${t("emptyTitle")}</b><p>${t("emptyText")}</p><a class="pro-cta" href="https://resa-table-resto.digiylyfe.com/inscription-resa.html">${t("proApply")}</a></div>`;
+      return;
+    }
+
+    $("proList").innerHTML = pros.map(pro => `
+      <article class="pro-card">
+        <div class="pro-logo">${pro.icon}</div>
+        <div><div class="pro-name">${pro.name}</div><div class="pro-meta">${t("sarlatMeta")}</div><div class="pro-tags">${t("sarlatTags").map(tag=>`<span class="tag">${tag}</span>`).join("")}</div></div>
+        <a class="open-pro" href="${pro.url}" target="_blank" rel="noopener noreferrer">${t("open")} →</a>
+      </article>`).join("");
+  }
+
+  function applyLang(){
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const value = t(el.dataset.i18n);
+      if(String(value).includes("<")) el.innerHTML = value; else el.textContent = value;
+    });
+    $("langBtn").textContent = t("lang");
+    renderCategories();renderPros();
+  }
+
+  $("categories").addEventListener("click", event => {
+    const button = event.target.closest("[data-category]");
+    if(!button) return;
+    activeCategory = button.dataset.category;
+    renderCategories();renderPros();
+    $("results").scrollIntoView({behavior:"smooth",block:"start"});
   });
 
-  applyLang(currentLang);
+  $("langBtn").addEventListener("click", () => {
+    lang = lang === "fr" ? "en" : "fr";
+    localStorage.setItem("digiy_resa_hub_lang",lang);
+    applyLang();
+  });
+
+  applyLang();
 })();
 </script>
 </body>
 </html>
+
 
 
 
