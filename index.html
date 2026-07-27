@@ -1,645 +1,726 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>DIGIY RESA — Demande de service local · 0% commission</title>
-<meta name="description" content="DIGIY RESA — demande multi-métier internationale : Afrique, France, diaspora. Le client prépare une demande libre, le pro confirme. Activation pro payante, paiement direct, 0% commission.">
-<meta name="theme-color" content="#061b14">
-<meta name="robots" content="index,follow">
-<meta name="digiy-build" content="resa-public-multimetier-lot-verite-creneaux-20260710">
-<style>
-:root{--bg:#061b14;--ink:#f4fff8;--muted:#cfe9d7;--gold:#facc15;--orange:#f97316;--green:#22c55e;--line:rgba(255,255,255,.14);--card:rgba(7,24,17,.58);--shadow:0 18px 55px rgba(0,0,0,.38);--font:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100svh;padding-bottom:calc(84px + env(safe-area-inset-bottom,0px));background:radial-gradient(800px 420px at 10% -8%,rgba(250,204,21,.14),transparent 60%),radial-gradient(700px 360px at 100% 0%,rgba(34,197,94,.13),transparent 58%),linear-gradient(180deg,#0b2218,#061b14 52%,#04110d);color:var(--ink);font-family:var(--font);font-weight:850}a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}button{cursor:pointer}.wrap{width:min(1100px,calc(100% - 24px));margin:0 auto}.top{position:sticky;top:0;z-index:50;background:rgba(6,27,20,.94);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(14px)}.topin{min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0}.brand{display:flex;align-items:center;gap:10px;min-width:0}.logo{width:44px;height:44px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;font-size:22px;box-shadow:0 10px 28px rgba(250,204,21,.28)}.brand b{display:block;color:var(--gold);letter-spacing:.12em;font-size:14px;font-weight:1000;text-transform:uppercase}.brand span{display:block;color:var(--muted);font-size:12px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.toplinks{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pill{min-height:40px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.06);padding:0 12px;display:inline-flex;align-items:center;justify-content:center;color:#eafff1;font-size:12px;font-weight:1000}.pill.gold{border:0;background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d}.hero{padding:16px 0}.heroCard{border:1px solid rgba(255,255,255,.10);border-radius:30px;background:var(--card);box-shadow:var(--shadow);padding:18px;overflow:hidden}.kicker{display:inline-flex;align-items:center;gap:8px;min-height:34px;border-radius:999px;border:1px solid rgba(34,197,94,.28);background:rgba(34,197,94,.10);color:#bbf7d0;padding:0 12px;font-size:12px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}.hero h1{margin:12px 0 8px;font-size:clamp(38px,8vw,78px);line-height:.92;letter-spacing:-.06em;font-weight:1000}.hero h1 span{background:linear-gradient(135deg,var(--gold),var(--green));-webkit-background-clip:text;color:transparent}.hero p{margin:0;color:var(--muted);line-height:1.55;font-size:16px;max-width:80ch}.badges{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}.badge{border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(2,6,23,.26);color:var(--muted);padding:8px 11px;font-size:12px;font-weight:1000}.actionsTop{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}.door{min-height:92px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.07);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:4px;padding:10px}.door strong{font-size:26px}.door b{font-size:14px;font-weight:1000}.door small{font-size:11px;color:var(--muted);font-weight:900}.door.gold{background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;border:0}.door.gold small{color:rgba(4,17,13,.76)}.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:12px}.panel{border:1px solid rgba(255,255,255,.10);border-radius:26px;background:var(--card);box-shadow:0 14px 40px rgba(0,0,0,.28);padding:16px;margin-bottom:12px}.panel h2{margin:0 0 10px;color:var(--gold);font-size:27px;line-height:1;font-weight:1000;letter-spacing:-.03em}.panel p{margin:0 0 12px;color:var(--muted);line-height:1.55;font-size:14px}.form{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:#fde68a;font-weight:1000;letter-spacing:.07em;text-transform:uppercase}.input,.select,.area{width:100%;min-height:48px;border-radius:16px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.94);color:#04110d;padding:10px 12px;outline:none;font-weight:900}.area{min-height:100px;resize:vertical;line-height:1.45}.input:focus,.select:focus,.area:focus{border-color:rgba(250,204,21,.72);box-shadow:0 0 0 3px rgba(250,204,21,.13)}.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.btn{min-height:52px;border-radius:17px;border:1px solid var(--line);background:rgba(255,255,255,.08);color:#fff;padding:0 14px;display:inline-flex;align-items:center;justify-content:center;text-align:center;font-weight:1000}.btn.gold{border:0;background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d}.btn.green{border-color:rgba(34,197,94,.32);background:rgba(34,197,94,.14);color:#bbf7d0}.btn.disabled,.btn[aria-disabled="true"]{opacity:.46;filter:saturate(.55);cursor:not-allowed}.preview{white-space:pre-wrap;border:1px solid rgba(250,204,21,.24);border-radius:20px;background:rgba(2,6,23,.30);min-height:260px;padding:14px;color:#fff4b8;line-height:1.45;font-size:14px}.steps{display:grid;gap:10px}.step{border:1px solid rgba(255,255,255,.10);border-radius:18px;background:rgba(255,255,255,.06);padding:13px;display:flex;gap:12px;align-items:flex-start}.step b:first-child{width:32px;height:32px;border-radius:999px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d;flex:0 0 auto}.step strong{display:block;color:#fff;font-weight:1000}.step span{display:block;margin-top:4px;color:var(--muted);line-height:1.45;font-size:13px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{border:1px solid rgba(255,255,255,.10);border-radius:22px;background:rgba(255,255,255,.06);padding:14px}.card .ico{font-size:30px}.card h3{margin:8px 0 7px;color:#fff;font-size:18px}.card p{margin:0;color:var(--muted);line-height:1.5;font-size:13px}.notice{border:1px solid rgba(34,197,94,.28);background:rgba(34,197,94,.10);color:#bbf7d0;border-radius:20px;padding:14px;line-height:1.5}.bottom{position:fixed;left:0;right:0;bottom:0;z-index:80;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));background:rgba(6,27,20,.94);border-top:1px solid rgba(255,255,255,.10);backdrop-filter:blur(12px)}.bottomin{width:min(820px,100%);margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.bottom a,.bottom button{min-height:54px;border-radius:14px;border:0;background:transparent;color:rgba(244,255,248,.82);display:grid;place-items:center;align-content:center;gap:2px;font-weight:1000;font-size:11px}.bottom .active{background:linear-gradient(135deg,var(--gold),var(--orange));color:#04110d}.toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(16px);opacity:0;pointer-events:none;z-index:100;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(2,6,23,.86);color:#fff;padding:11px 15px;font-weight:1000;transition:.18s;text-align:center;max-width:92vw}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}footer{padding:18px 0 34px;text-align:center;color:var(--muted);font-size:12px;font-weight:900;line-height:1.5}@media(max-width:980px){.actionsTop{grid-template-columns:repeat(3,1fr)}.cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:860px){.grid{grid-template-columns:1fr}.form{grid-template-columns:1fr}.toplinks{display:none}}@media(max-width:520px){.actionsTop{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.heroCard,.panel{padding:14px}.door{min-height:84px}.bottomin{grid-template-columns:repeat(5,1fr)}}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>DIGIY RESA — Réserver un service local</title>
+  <meta name="description" content="DIGIY RESA prépare une demande claire de rendez-vous ou de réservation. Le professionnel confirme. Paiement direct et 0% commission DIGIY.">
+  <meta name="theme-color" content="#061b14">
+  <meta name="robots" content="index,follow">
+  <meta name="digiy-build" content="resa-client-cartouche-menu-20260727">
+  <style>
+    :root{
+      --bg:#061b14;
+      --card:#0b2a1f;
+      --card2:#103728;
+      --line:rgba(255,255,255,.12);
+      --line-strong:rgba(255,255,255,.20);
+      --text:#ecfdf5;
+      --muted:rgba(236,253,245,.72);
+      --gold:#facc15;
+      --orange:#f59e0b;
+      --green:#22c55e;
+      --blue:#3b82f6;
+      --red:#ef4444;
+      --shadow:0 18px 55px rgba(0,0,0,.38);
+      --radius:22px;
+      --font:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;min-height:100vh;color:var(--text);font-family:var(--font);
+      background:
+        radial-gradient(circle at top,rgba(250,204,21,.10),transparent 34%),
+        radial-gradient(circle at bottom,rgba(34,197,94,.09),transparent 38%),
+        var(--bg);
+      -webkit-font-smoothing:antialiased;
+    }
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    .app{width:min(920px,100%);min-height:100vh;margin:0 auto;padding-bottom:28px}
 
+    .header{
+      position:sticky;top:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:12px 14px;background:rgba(6,27,20,.94);
+      border-bottom:1px solid var(--line);backdrop-filter:blur(12px);
+    }
+    .brand{display:flex;align-items:center;gap:10px;min-width:0}
+    .logo{
+      width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
+      flex:0 0 auto;font-size:21px;color:#111;
+      background:linear-gradient(135deg,var(--gold),var(--orange));
+      box-shadow:0 8px 22px rgba(250,204,21,.28);
+    }
+    .brand-title{font-size:17px;font-weight:950;letter-spacing:.05em;line-height:1.05}
+    .brand-sub{margin-top:3px;color:var(--muted);font-size:12px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .header-actions{display:flex;align-items:center;justify-content:flex-end;gap:7px}
 
-.langBtn{
-  min-height:40px;
-  border-radius:999px;
-  border:1px solid rgba(250,204,21,.42);
-  background:rgba(250,204,21,.12);
-  color:#fde68a;
-  padding:0 12px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  font-size:12px;
-  font-weight:1000;
-}
-.langBtn strong{letter-spacing:.04em}
-@media(max-width:860px){
-  .langBtn{margin-left:auto}
-}
+    .btn{
+      min-height:46px;border:0;border-radius:14px;padding:0 14px;
+      display:inline-flex;align-items:center;justify-content:center;gap:7px;
+      color:#111;font-weight:950;text-align:center;
+      background:linear-gradient(135deg,var(--gold),var(--orange));
+      box-shadow:0 10px 24px rgba(250,204,21,.18);
+      transition:.18s ease;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn:focus-visible,.field-control:focus-visible{outline:3px solid rgba(250,204,21,.30);outline-offset:2px}
+    .btn.ghost{color:var(--text);background:rgba(255,255,255,.05);border:1px solid var(--line);box-shadow:none}
+    .btn.green{color:#bbf7d0;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.42);box-shadow:none}
+    .btn.blue{color:#bfdbfe;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.40);box-shadow:none}
+    .btn.red{color:#fecaca;background:rgba(239,68,68,.13);border:1px solid rgba(239,68,68,.36);box-shadow:none}
+    .btn.disabled,.btn[aria-disabled="true"]{opacity:.46;cursor:not-allowed;transform:none}
+    .small-btn{min-height:38px;padding:0 11px;border-radius:999px;font-size:12px}
 
-/* === DIGIY RESA · Doctrine demande libre / activation pro === */
-.doctrineBand{
-  margin:0 0 12px;
-  border:2px solid rgba(250,204,21,.32);
-  border-radius:26px;
-  background:
-    radial-gradient(circle at top right,rgba(250,204,21,.16),transparent 42%),
-    radial-gradient(circle at bottom left,rgba(34,197,94,.12),transparent 42%),
-    rgba(255,255,255,.058);
-  box-shadow:0 14px 40px rgba(0,0,0,.30);
-  padding:16px;
-}
-.doctrineTag{
-  display:inline-flex;
-  align-items:center;
-  min-height:32px;
-  padding:0 11px;
-  border-radius:999px;
-  border:1px solid rgba(250,204,21,.42);
-  background:rgba(250,204,21,.12);
-  color:#fde68a;
-  font-size:12px;
-  font-weight:1000;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-}
-.doctrineBand h2{
-  margin:10px 0 8px;
-  color:#fff;
-  font-size:clamp(26px,5vw,46px);
-  line-height:1;
-  font-weight:1000;
-  letter-spacing:-.045em;
-}
-.doctrineBand h2 span{
-  background:linear-gradient(135deg,var(--gold),var(--green));
-  -webkit-background-clip:text;
-  color:transparent;
-}
-.doctrineBand p{
-  margin:0;
-  color:var(--muted);
-  line-height:1.58;
-  font-size:15px;
-  max-width:88ch;
-}
-.doctrineGrid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  margin-top:12px;
-}
-.doctrineItem{
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.055);
-  border-radius:20px;
-  padding:13px;
-}
-.doctrineItem b{
-  display:block;
-  color:#fde68a;
-  font-size:14px;
-  margin-bottom:5px;
-  font-weight:1000;
-}
-.doctrineItem span{
-  display:block;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.45;
-}
-.doctrineQuote{
-  margin-top:12px!important;
-  padding:12px 14px;
-  border-left:4px solid var(--gold);
-  border-radius:18px;
-  background:rgba(250,204,21,.10);
-  color:#fde68a!important;
-  font-weight:1000!important;
-}
-@media(max-width:760px){
-  .doctrineGrid{grid-template-columns:1fr}
-}
+    .hero{
+      margin:16px 14px 0;padding:18px;border:1px solid var(--line);border-radius:var(--radius);
+      background:
+        radial-gradient(circle at top left,rgba(34,197,94,.10),transparent 38%),
+        radial-gradient(circle at bottom right,rgba(250,204,21,.09),transparent 38%),
+        linear-gradient(180deg,rgba(11,42,31,.98),rgba(9,30,22,.98));
+      box-shadow:var(--shadow);
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;min-height:30px;padding:0 11px;border-radius:999px;
+      color:#fde68a;background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.25);
+      font-size:11px;font-weight:950;letter-spacing:.07em;text-transform:uppercase;
+    }
+    .hero h1{margin:11px 0 8px;font-size:clamp(30px,7vw,48px);line-height:1.02;letter-spacing:-.045em;font-weight:950}
+    .hero h1 span{color:#fde68a}
+    .hero p{margin:0;max-width:62ch;color:var(--muted);font-size:14px;font-weight:720;line-height:1.55}
+    .trust{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}
+    .trust span{padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.04);color:var(--muted);font-size:11px;font-weight:900}
 
+    .resa-menu{
+      margin:12px 14px 0;border:1px solid rgba(250,204,21,.24);border-radius:18px;
+      background:linear-gradient(180deg,rgba(16,55,40,.96),rgba(9,30,22,.96));
+      box-shadow:0 12px 32px rgba(0,0,0,.26);overflow:hidden;
+    }
+    .resa-menu-head{
+      width:100%;min-height:54px;padding:10px 13px;border:0;background:transparent;color:var(--text);
+      display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;
+    }
+    .resa-menu-title{display:flex;align-items:center;gap:10px;min-width:0}
+    .resa-menu-icon{
+      width:34px;height:34px;border-radius:12px;display:grid;place-items:center;flex:0 0 auto;
+      background:rgba(250,204,21,.12);border:1px solid rgba(250,204,21,.26);
+    }
+    .resa-menu-title b{display:block;color:#fde68a;font-size:14px;font-weight:950}
+    .resa-menu-title small{display:block;margin-top:2px;color:var(--muted);font-size:11px;font-weight:760}
+    .resa-menu-chevron{font-size:17px;color:#fde68a;transition:.18s ease}
+    .resa-menu-head[aria-expanded="false"] .resa-menu-chevron{transform:rotate(-90deg)}
+    .resa-menu-body{padding:0 12px 12px}
+    .resa-menu-body[hidden]{display:none}
+    .resa-menu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .resa-door{
+      min-height:66px;padding:8px 6px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.045);color:var(--text);display:grid;place-items:center;align-content:center;
+      gap:3px;text-align:center;transition:.16s ease;
+    }
+    .resa-door:hover{border-color:rgba(250,204,21,.38);background:rgba(250,204,21,.07);transform:translateY(-1px)}
+    .resa-door.active{border-color:rgba(250,204,21,.58);background:rgba(250,204,21,.11);box-shadow:0 7px 18px rgba(250,204,21,.08)}
+    .resa-door span{font-size:21px;line-height:1}
+    .resa-door b{font-size:11px;font-weight:950;line-height:1.15}
 
+    .panel{
+      margin:16px 14px 0;padding:16px;border:1px solid var(--line);border-radius:var(--radius);
+      background:linear-gradient(180deg,rgba(11,42,31,.98),rgba(9,30,22,.98));
+      box-shadow:var(--shadow);
+    }
+    .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+    .panel-title{font-size:22px;font-weight:950;line-height:1.08}
+    .panel-sub{margin-top:5px;max-width:60ch;color:var(--muted);font-size:13px;font-weight:720;line-height:1.48}
+    .step-badge{
+      flex:0 0 auto;min-width:34px;height:34px;border-radius:999px;display:grid;place-items:center;
+      background:rgba(250,204,21,.10);border:1px solid rgba(250,204,21,.28);color:#fde68a;font-weight:950;
+    }
 
-/* === DIGIY RESA · Vue internationale === */
-.territoryBand{
-  margin:0 0 12px;
-  border:1px solid rgba(250,204,21,.26);
-  border-radius:26px;
-  background:
-    radial-gradient(circle at top left,rgba(250,204,21,.13),transparent 42%),
-    radial-gradient(circle at bottom right,rgba(34,197,94,.12),transparent 42%),
-    rgba(255,255,255,.055);
-  box-shadow:0 14px 40px rgba(0,0,0,.28);
-  padding:16px;
-}
-.territoryBand small{
-  display:inline-flex;
-  align-items:center;
-  min-height:32px;
-  padding:0 11px;
-  border-radius:999px;
-  border:1px solid rgba(34,197,94,.30);
-  background:rgba(34,197,94,.10);
-  color:#bbf7d0;
-  font-size:12px;
-  font-weight:1000;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-}
-.territoryBand h2{
-  margin:10px 0 8px;
-  color:#fff;
-  font-size:clamp(26px,5vw,46px);
-  line-height:1;
-  font-weight:1000;
-  letter-spacing:-.045em;
-}
-.territoryBand p{
-  margin:0;
-  color:var(--muted);
-  line-height:1.58;
-  font-size:15px;
-  max-width:82ch;
-}
-.territoryGrid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-top:12px;
-}
-.territoryItem{
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.055);
-  border-radius:20px;
-  padding:13px;
-}
-.territoryItem b{
-  display:block;
-  color:#fde68a;
-  font-size:14px;
-  margin-bottom:5px;
-  font-weight:1000;
-}
-.territoryItem span{
-  display:block;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.45;
-}
-@media(max-width:760px){
-  .territoryGrid{grid-template-columns:1fr}
-}
+    .form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .field{display:grid;gap:6px}
+    .field.full{grid-column:1/-1}
+    .field label{color:#fde68a;font-size:11px;font-weight:950;letter-spacing:.055em;text-transform:uppercase}
+    .field-control{
+      width:100%;min-height:50px;padding:10px 12px;border-radius:15px;
+      border:1px solid rgba(255,255,255,.18);outline:none;
+      background:rgba(255,255,255,.96);color:#061b14;font-weight:850;
+    }
+    textarea.field-control{min-height:88px;resize:vertical;line-height:1.45}
+    .field-hint{color:var(--muted);font-size:11px;line-height:1.35}
+    .prepare-row{grid-column:1/-1;display:flex;gap:9px;flex-wrap:wrap;margin-top:2px}
+    .prepare-row .btn{flex:1}
 
-</style>
+    .result{display:none}
+    .result.show{display:block}
+    .summary{
+      display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;
+    }
+    .summary-item{padding:11px 12px;border-radius:15px;border:1px solid var(--line);background:rgba(255,255,255,.04)}
+    .summary-item small{display:block;color:var(--muted);font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.055em}
+    .summary-item strong{display:block;margin-top:4px;color:var(--text);font-size:14px;line-height:1.3;overflow-wrap:anywhere}
+    .summary-item.full{grid-column:1/-1}
+    .reference{color:#fde68a!important}
+    .message-label{margin:0 0 7px;color:#fde68a;font-size:11px;font-weight:950;letter-spacing:.06em;text-transform:uppercase}
+    .message-preview{
+      margin:0;min-height:210px;max-height:390px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;
+      padding:13px;border-radius:17px;border:1px solid rgba(250,204,21,.28);
+      background:rgba(0,0,0,.18);color:#fff8cf;font:750 13px/1.48 var(--font);
+    }
+    .actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+    .actions .btn{width:100%}
+    .result-note{margin:10px 0 0;text-align:center;color:var(--muted);font-size:11px;line-height:1.4}
+
+    .rules{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+    .rule{padding:12px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.04)}
+    .rule b{display:block;color:#fde68a;font-size:13px}
+    .rule span{display:block;margin-top:4px;color:var(--muted);font-size:12px;line-height:1.42}
+    .pro-line{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+    .pro-line p{margin:0;color:var(--muted);font-size:12px;line-height:1.42}
+
+    .toast{
+      position:fixed;left:50%;bottom:22px;z-index:300;max-width:90vw;
+      transform:translateX(-50%) translateY(12px);opacity:0;pointer-events:none;
+      padding:10px 14px;border-radius:999px;border:1px solid var(--line);
+      background:rgba(2,6,23,.92);color:#fff;font-size:12px;font-weight:950;text-align:center;
+      transition:.18s ease;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    footer{padding:18px 14px 0;text-align:center;color:var(--muted);font-size:11px;line-height:1.45}
+
+    @media(max-width:720px){
+      .header{align-items:flex-start;flex-wrap:wrap}
+      .header-actions{margin-left:auto}
+      .hide-mobile{display:none}
+      .form{grid-template-columns:1fr}
+      .field.full,.prepare-row{grid-column:1}
+      .rules{grid-template-columns:1fr}
+      .resa-menu-grid{grid-template-columns:repeat(4,1fr)}
+    }
+    @media(max-width:520px){
+      .hero,.panel{margin-left:10px;margin-right:10px;padding:14px}
+      .summary,.actions{grid-template-columns:1fr}
+      .summary-item.full{grid-column:1}
+      .prepare-row{display:grid;grid-template-columns:1fr}
+      .pro-line{align-items:stretch;flex-direction:column}
+      .pro-line .btn{width:100%}
+      .resa-menu{margin-left:10px;margin-right:10px}
+      .resa-menu-grid{grid-template-columns:repeat(2,1fr)}
+      .resa-door{min-height:62px}
+    }
+  </style>
 </head>
 <body>
-<header class="top">
-  <div class="wrap topin">
-    <a class="brand" href="#top">
+<div class="app">
+  <header class="header">
+    <a class="brand" href="#top" aria-label="DIGIY RESA">
       <div class="logo">📅</div>
       <div>
-        <b>DIGIY RESA</b>
-        <span data-i18n="brandSub">Afrique · France · Diaspora · 15 min</span>
+        <div class="brand-title">DIGIY RESA</div>
+        <div class="brand-sub" data-i18n="brandSub">Demande simple · confirmation du pro</div>
       </div>
     </a>
-    <div class="toplinks">
-      <a class="pill gold" href="#demande" data-i18n="navAsk">📲 Demander</a>
-      <a class="pill gold" href="https://resa-table-resto.digiylyfe.com/inscription-resa.html" data-i18n="navSignup">🧾 Demande pro</a>
-      <a class="pill" href="#doctrine-resa">Doctrine</a>
-      <a class="pill" href="#territoires" data-i18n="navTerritories">Territoires</a>
-      <a class="pill" href="#types" data-i18n="navJobs">Métiers</a>
-      <a class="pill" href="#comment" data-i18n="navHow">Comment ça marche</a>
-      <a class="pill" href="https://digiylyfe.com/">DIGIYLYFE</a>
+    <div class="header-actions">
+      <a class="btn ghost small-btn hide-mobile" href="https://digiylyfe.com/">🌍 DIGIYLYFE</a>
+      <a class="btn ghost small-btn hide-mobile" href="https://resa-table-resto.digiylyfe.com/inscription-resa.html" data-i18n="proTop">🧾 Espace pro</a>
+      <button class="btn ghost small-btn" id="langBtn" type="button" aria-label="Changer de langue">🇬🇧 EN</button>
     </div>
-    <button class="langBtn" id="langBtn" type="button" aria-label="Switch language">🇬🇧 <strong>EN</strong></button>
-  </div>
-</header>
+  </header>
 
-<main class="wrap" id="top">
-  <section class="hero">
-    <div class="heroCard">
-      <span class="kicker" data-i18n="kicker">Afrique · France · Diaspora · créneaux de 15 minutes</span>
-      <h1 data-i18n="heroTitle">Réserve un service local. <span>Le pro confirme.</span></h1>
-      <p data-i18n="heroText">DIGIY RESA sert à préparer une demande de rendez-vous ou de réservation pour plusieurs métiers et territoires : Afrique, France, diaspora. Entreprise, docteur, architecte, garage, onglerie, coiffeur, artisan, consultant, table, chambre, visite ou service. Le client prépare une demande claire. Le professionnel confirme. L’activation pro est payante côté professionnel ; DIGIY garde 0% commission.</p>
-      <div class="badges">
-        <span class="badge" data-i18n="badge1">Afrique · France · Diaspora</span>
-        <span class="badge" data-i18n="badge2">Créneaux 15 min</span>
-        <span class="badge" data-i18n="badge3">Paiement direct au pro</span>
-        <span class="badge" data-i18n="badge4">0% commission DIGIY</span>
-        <span class="badge" data-i18n="badge5">Disponibilité à confirmer</span>
+  <main id="top">
+    <section class="hero">
+      <span class="eyebrow" data-i18n="eyebrow">Rendez-vous · réservation · service</span>
+      <h1 data-i18n="heroTitle">Prépare ta demande. <span>Le pro confirme.</span></h1>
+      <p data-i18n="heroText">Choisis le service, la date et l’heure. DIGIY prépare un message clair que tu envoies directement au professionnel.</p>
+      <div class="trust">
+        <span data-i18n="trust1">⏱️ Créneaux de 15 min</span>
+        <span data-i18n="trust2">🤝 Paiement direct</span>
+        <span data-i18n="trust3">0% commission DIGIY</span>
       </div>
-      <nav class="actionsTop">
-        <a class="door gold" href="#demande"><strong>📲</strong><b data-i18n="doorAsk">Demander</b><small data-i18n="doorAskSmall">message prêt</small></a>
-        <a class="door gold" href="https://resa-table-resto.digiylyfe.com/inscription-resa.html"><strong>🧾</strong><b data-i18n="doorSignup">Demande pro</b><small data-i18n="doorSignupSmall">activation RESA</small></a>
-        <a class="door gold" href="#territoires"><strong>🌍</strong><b data-i18n="doorTerritories">Territoires</b><small data-i18n="doorTerritoriesSmall">Afrique · France</small></a>
-        <a class="door gold" href="#types"><strong>🏢</strong><b data-i18n="doorCompany">Entreprise</b><small>DIGIYLYFE</small></a>
-        <a class="door" href="#types"><strong>🩺</strong><b data-i18n="doorHealth">Santé</b><small data-i18n="doorHealthSmall">docteur / dentiste</small></a>
-        <a class="door" href="#types"><strong>💅</strong><b data-i18n="doorBeauty">Beauté</b><small data-i18n="doorBeautySmall">onglerie / coiffeur</small></a>
-        <a class="door" href="#types"><strong>🚗</strong><b data-i18n="doorGarage">Garage</b><small data-i18n="doorGarageSmall">mécanique / auto</small></a>
-        <a class="door" href="#types"><strong>📐</strong><b data-i18n="doorProject">Projet</b><small data-i18n="doorProjectSmall">architecte / conseil</small></a>
-      </nav>
-    </div>
-  </section>
+    </section>
 
-  <section class="doctrineBand" id="doctrine-resa" aria-label="Doctrine DIGIY RESA">
-    <span class="doctrineTag" data-i18n="doctrineTag">Demande client libre · Activation pro payante · 0% commission</span>
-    <h2 data-i18n="doctrineTitle">Le client prépare. <span>Le pro confirme et garde la main.</span></h2>
-    <p data-i18n="doctrineLead">
-      DIGIY RESA prépare une demande claire de rendez-vous, de table, de visite ou de service.
-      La demande client est libre : elle ne remplace pas la confirmation du professionnel.
-      L’activation pro RESA est payante seulement côté professionnel, quand il veut une présence,
-      un planning, un QR, une mise en valeur ou une porte de réservation.
-    </p>
-    <div class="doctrineGrid">
-      <div class="doctrineItem"><b data-i18n="doctrineClientTitle">✅ Client : demande libre</b><span data-i18n="doctrineClientText">Le client prépare un message clair et l’envoie au pro.</span></div>
-      <div class="doctrineItem"><b data-i18n="doctrineProTitle">📅 Pro : activation payante</b><span data-i18n="doctrineProText">La présence RESA, le planning, le QR et la visibilité s’activent clairement.</span></div>
-      <div class="doctrineItem"><b data-i18n="doctrineMoneyTitle">🤝 Paiement direct</b><span data-i18n="doctrineMoneyText">DIGIY ne prend aucune commission sur la réservation ou la prestation.</span></div>
-      <div class="doctrineItem"><b data-i18n="doctrineConfirmTitle">🛡️ Confirmation humaine</b><span data-i18n="doctrineConfirmText">La réservation n’est définitive que lorsque le professionnel confirme.</span></div>
-    </div>
-    <p class="doctrineQuote" data-i18n="doctrineQuote">
-      DIGIY RESA organise la route entre le client et le professionnel — sans détour, sans commission, sans dépossession.
-    </p>
-  </section>
+    <section class="resa-menu" aria-label="Menu des catégories RESA">
+      <button class="resa-menu-head" id="resaMenuToggle" type="button" aria-expanded="true" aria-controls="resaMenuBody">
+        <span class="resa-menu-title">
+          <span class="resa-menu-icon">🧭</span>
+          <span>
+            <b data-i18n="menuTitle">Choisir ma RESA</b>
+            <small id="resaMenuCurrent" data-i18n="menuSub">Restaurant, santé, métiers et services</small>
+          </span>
+        </span>
+        <span class="resa-menu-chevron" aria-hidden="true">⌄</span>
+      </button>
+      <div class="resa-menu-body" id="resaMenuBody">
+        <div class="resa-menu-grid" id="resaMenuGrid"></div>
+      </div>
+    </section>
 
-  <section class="territoryBand" id="territoires" aria-label="Territoires DIGIY RESA">
-    <small data-i18n="territorySmall">Rendez-vous directs · sans plateforme fermée</small>
-    <h2 data-i18n="territoryTitle">Une même réservation, plusieurs territoires.</h2>
-    <p data-i18n="territoryLead">DIGIY RESA n’est pas limité à une ville ni à un métier. Le client prépare une demande claire, le professionnel garde la main, confirme le créneau et reçoit le paiement directement. La méthode peut servir à Saly, Mbour, Dakar, Sarlat, Arcachon ou dans la diaspora.</p>
-    <div class="territoryGrid">
-      <div class="territoryItem"><b data-i18n="territoryAfricaTitle">🇸🇳 Afrique · preuve terrain</b><span data-i18n="territoryAfricaText">Rendez-vous locaux, logements, restaurants, chauffeurs, garages, beauté, artisans, santé et services de proximité.</span></div>
-      <div class="territoryItem"><b data-i18n="territoryFranceTitle">🇫🇷 France · marché pro</b><span data-i18n="territoryFranceText">Artisans, indépendants, gîtes, restaurants, garages, cabinets, commerces et services qui veulent recevoir des demandes propres.</span></div>
-      <div class="territoryItem"><b data-i18n="territoryDiasporaTitle">🌍 Diaspora · pont direct</b><span data-i18n="territoryDiasporaText">Familles, voyageurs et clients peuvent demander un service local sans passer par une plateforme qui capture la relation.</span></div>
-    </div>
-  </section>
+    <section class="panel" id="demande">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title" data-i18n="formTitle">Ta demande</div>
+          <div class="panel-sub" data-i18n="formSub">Remplis l’essentiel. La demande n’est définitive qu’après confirmation du professionnel.</div>
+        </div>
+        <div class="step-badge">1</div>
+      </div>
 
-  <section class="grid">
-    <div class="panel" id="demande">
-      <h2 data-i18n="formTitle">📲 Demande de réservation</h2>
-      <p data-i18n="formIntro">Remplis le minimum. L’heure fonctionne par pas de 15 minutes. DIGIY prépare le message, puis tu l’envoies au professionnel, quel que soit le territoire.</p>
-      <form class="form" id="resaForm">
-        <div class="field"><label data-i18n="labelName">Nom</label><input class="input" id="clientName" autocomplete="name" required></div>
-        <div class="field"><label data-i18n="labelPhone">Téléphone</label><input class="input" id="clientPhone" inputmode="tel" autocomplete="tel"></div>
-        <div class="field"><label data-i18n="labelDate">Date souhaitée</label><input class="input" id="resaDate" type="date" required></div>
-        <div class="field"><label data-i18n="labelTime">Heure souhaitée</label><input class="input" id="resaTime" type="time" value="09:00" step="900" required></div>
-        <div class="field"><label data-i18n="labelDuration">Durée souhaitée</label><select class="select" id="resaDuration"></select></div>
-        <div class="field"><label data-i18n="labelPeople">Personnes / unités</label><input class="input" id="resaPeople" type="number" min="1" value="1"></div>
-        <div class="field full"><label data-i18n="labelType">Métier / type de demande</label><select class="select" id="resaType"></select></div>
-        <div class="field full"><label data-i18n="labelNote">Message libre</label><textarea class="area" id="resaNote"></textarea></div>
-        <div class="field full"><button class="btn gold" type="submit" data-i18n="prepareBtn">✅ Préparer le message</button></div>
+      <form class="form" id="resaForm" novalidate>
+        <div class="field full">
+          <label for="resaType" data-i18n="labelType">Service demandé</label>
+          <select class="field-control" id="resaType" required></select>
+        </div>
+
+        <div class="field">
+          <label for="resaDate" data-i18n="labelDate">Date souhaitée</label>
+          <input class="field-control" id="resaDate" type="date" required>
+        </div>
+        <div class="field">
+          <label for="resaTime" data-i18n="labelTime">Heure souhaitée</label>
+          <input class="field-control" id="resaTime" type="time" value="09:00" step="900" required>
+        </div>
+
+        <div class="field">
+          <label for="resaDuration" data-i18n="labelDuration">Durée</label>
+          <select class="field-control" id="resaDuration"></select>
+        </div>
+        <div class="field">
+          <label for="resaPeople" data-i18n="labelPeople">Personnes / unités</label>
+          <input class="field-control" id="resaPeople" type="number" min="1" value="1">
+        </div>
+
+        <div class="field">
+          <label for="clientName" data-i18n="labelName">Ton nom</label>
+          <input class="field-control" id="clientName" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="clientPhone" data-i18n="labelPhone">Ton téléphone</label>
+          <input class="field-control" id="clientPhone" type="tel" inputmode="tel" autocomplete="tel">
+        </div>
+
+        <div class="field full">
+          <label for="resaNote" data-i18n="labelNote">Précision utile</label>
+          <textarea class="field-control" id="resaNote" data-i18n-placeholder="notePlaceholder" placeholder="Ex. besoin précis, adresse, nombre de personnes…"></textarea>
+        </div>
+
+        <div class="prepare-row">
+          <button class="btn" type="submit" data-i18n="prepareBtn">✅ Préparer ma demande</button>
+          <button class="btn ghost" id="clearBtn" type="button" data-i18n="clearBtn">✕ Effacer</button>
+        </div>
       </form>
-    </div>
-    <div class="panel">
-      <h2 data-i18n="previewTitle">Message préparé</h2>
-      <div class="preview" id="preview">Remplis la demande puis clique “Préparer le message”.</div>
-      <div class="btns">
-        <a class="btn gold" id="waBtn" href="https://wa.me/?text=Bonjour%2C%20je%20viens%20depuis%20DIGIY%20RESA." target="_blank" rel="noopener noreferrer" data-i18n="whatsappBtn">📲 Envoyer WhatsApp</a>
-        <button class="btn green" type="button" onclick="copyMessage()" data-i18n="copyBtn">📋 Copier</button>
-        <button class="btn" type="button" onclick="nativeShare()" data-i18n="shareBtn">↗️ Partager</button>
+    </section>
+
+    <section class="panel result" id="resultPanel" aria-live="polite">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title" data-i18n="resultTitle">Demande prête</div>
+          <div class="panel-sub" data-i18n="resultSub">Vérifie le message, puis choisis WhatsApp, SMS, copie ou partage.</div>
+        </div>
+        <div class="step-badge">2</div>
       </div>
-      <p style="margin-top:12px" data-i18n="previewNote">Le bouton WhatsApp ouvre un partage. Tu choisis ensuite le contact du professionnel.</p>
-    </div>
-  </section>
 
-  <section class="panel" id="types">
-    <h2 data-i18n="typesTitle">Portes RESA multi-métier · international</h2>
-    <div class="cards">
-      <div class="card"><div class="ico">🏢</div><h3 data-i18n="cardCompanyTitle">Entreprise / DIGIYLYFE</h3><p data-i18n="cardCompanyText">Exemple central : rendez-vous entreprise, présentation projet, appel, démonstration, accompagnement.</p></div>
-      <div class="card"><div class="ico">🩺</div><h3 data-i18n="cardHealthTitle">Santé</h3><p data-i18n="cardHealthText">Docteur, dentiste, kiné, consultation. Demande claire, créneau 15 min, confirmation par le cabinet.</p></div>
-      <div class="card"><div class="ico">💅</div><h3 data-i18n="cardBeautyTitle">Beauté</h3><p data-i18n="cardBeautyText">Onglerie, coiffeur, barber, salon, soin. Heure souhaitée, service demandé, pro confirme.</p></div>
-      <div class="card"><div class="ico">🚗</div><h3 data-i18n="cardGarageTitle">Garage</h3><p data-i18n="cardGarageText">Diagnostic, entretien, mécanique, lavage, dépannage léger. Le garage confirme le créneau.</p></div>
-      <div class="card"><div class="ico">📐</div><h3 data-i18n="cardProjectTitle">Projet</h3><p data-i18n="cardProjectText">Architecte, conseil, administratif, visite technique, devis, rendez-vous préparatoire.</p></div>
-      <div class="card"><div class="ico">🛠️</div><h3 data-i18n="cardCraftTitle">Artisans</h3><p data-i18n="cardCraftText">Plomberie, électricité, travaux, intervention terrain, visite de chantier ou dépannage.</p></div>
-      <div class="card"><div class="ico">🍽️</div><h3 data-i18n="cardTableTitle">Table / chambre</h3><p data-i18n="cardTableText">Restaurant, lounge, hôtel, nuitée : ça reste possible, mais RESA n’est pas limité à ça.</p></div>
-      <div class="card"><div class="ico">📅</div><h3 data-i18n="cardFreeTitle">Service libre</h3><p data-i18n="cardFreeText">Toute activité qui fonctionne par créneau : le client demande, le pro confirme.</p></div>
-    </div>
-  </section>
-
-  <section class="grid" id="comment">
-    <div class="panel">
-      <h2 data-i18n="howTitle">Comment ça marche</h2>
-      <div class="steps">
-        <div class="step"><b>1</b><div><strong data-i18n="step1Title">Tu prépares</strong><span data-i18n="step1Text">Tu poses le métier, la date, l’heure par pas de 15 minutes, la durée et le besoin.</span></div></div>
-        <div class="step"><b>2</b><div><strong data-i18n="step2Title">Tu envoies</strong><span data-i18n="step2Text">DIGIY prépare un message propre pour WhatsApp ou partage.</span></div></div>
-        <div class="step"><b>3</b><div><strong data-i18n="step3Title">Le pro confirme</strong><span data-i18n="step3Text">La réservation n’est pas définitive tant que le professionnel n’a pas confirmé.</span></div></div>
+      <div class="summary">
+        <div class="summary-item"><small data-i18n="sumService">Service</small><strong id="sumService">—</strong></div>
+        <div class="summary-item"><small data-i18n="sumDate">Créneau</small><strong id="sumDate">—</strong></div>
+        <div class="summary-item"><small data-i18n="sumName">Client</small><strong id="sumName">—</strong></div>
+        <div class="summary-item"><small data-i18n="sumPhone">Téléphone</small><strong id="sumPhone">—</strong></div>
+        <div class="summary-item full"><small data-i18n="sumReference">Référence</small><strong class="reference" id="sumReference">—</strong></div>
       </div>
-    </div>
-    <div class="panel">
-      <h2 data-i18n="ruleTitle">Règle terrain</h2>
-      <div class="notice" data-i18n="notice"><strong>Disponibilité à confirmer par le professionnel.</strong><br><br>DIGIY ne remplace pas le responsable. DIGIY prépare la demande, clarifie le métier ou l’entreprise, le créneau, facilite le contact, puis le pro garde la main.</div>
-      <div class="btns"><a class="btn gold" href="#demande" data-i18n="makeRequestBtn">📲 Faire une demande</a><a class="btn green" href="https://resa-table-resto.digiylyfe.com/inscription-resa.html" data-i18n="proSignupBtn">🧾 Demande pro</a><a class="btn" href="https://digiylyfe.com/" data-i18n="backBtn">Retour DIGIYLYFE</a></div>
-    </div>
-  </section>
-</main>
 
-<footer class="wrap" data-i18n="footer">DIGIY RESA · Afrique · France · Diaspora · multi-métier · créneaux 15 min · Paiement direct au pro · 0% commission.</footer>
+      <div class="message-label" data-i18n="messageLabel">Message exact préparé</div>
+      <pre class="message-preview" id="messagePreview">—</pre>
 
-<nav class="bottom">
-  <div class="bottomin">
-    <a class="active" href="#demande"><span>📲</span><span data-i18n="bottomAsk">Demander</span></a>
-    <a href="#types"><span>🏢</span><span data-i18n="bottomJobs">Métiers</span></a>
-    <a href="#comment"><span>✅</span><span data-i18n="bottomConfirm">Confirmer</span></a>
-    <a href="https://resa-table-resto.digiylyfe.com/inscription-resa.html"><span>🧾</span><span data-i18n="bottomSignup">Demande</span></a>
-    <a href="https://digiylyfe.com/"><span>🏠</span><span>DIGIY</span></a>
-  </div>
-</nav>
+      <div class="actions">
+        <button class="btn green" id="waBtn" type="button" data-i18n="waBtn">💬 Envoyer par WhatsApp</button>
+        <button class="btn blue" id="smsBtn" type="button" data-i18n="smsBtn">✉️ Envoyer par SMS</button>
+        <button class="btn ghost" id="copyBtn" type="button" data-i18n="copyBtn">📋 Copier le message</button>
+        <button class="btn ghost" id="shareBtn" type="button" data-i18n="shareBtn">↗️ Partager</button>
+      </div>
+      <p class="result-note" data-i18n="resultNote">Le client choisit lui-même le professionnel destinataire. DIGIY n’envoie rien sans son action.</p>
+    </section>
+
+    <section class="panel" id="regles">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title" data-i18n="rulesTitle">La règle est simple</div>
+          <div class="panel-sub" data-i18n="rulesSub">DIGIY prépare la route. Le professionnel garde la décision.</div>
+        </div>
+      </div>
+      <div class="rules">
+        <div class="rule"><b data-i18n="rule1Title">Demande libre</b><span data-i18n="rule1Text">Le client prépare et envoie son message directement.</span></div>
+        <div class="rule"><b data-i18n="rule2Title">Confirmation humaine</b><span data-i18n="rule2Text">Le créneau existe seulement lorsque le professionnel confirme.</span></div>
+        <div class="rule"><b data-i18n="rule3Title">Relation directe</b><span data-i18n="rule3Text">Paiement au professionnel et 0% commission DIGIY.</span></div>
+      </div>
+      <div class="pro-line">
+        <p data-i18n="proText">Professionnel : active ta présence RESA, ton planning et ton QR.</p>
+        <a class="btn ghost" href="https://resa-table-resto.digiylyfe.com/inscription-resa.html" data-i18n="proBtn">🧾 Faire une demande pro</a>
+      </div>
+    </section>
+  </main>
+
+  <footer data-i18n="footer">DIGIY RESA · Le client demande · Le professionnel confirme · Paiement direct · 0% commission.</footer>
+</div>
 <div class="toast" id="toast">OK</div>
 
 <script>
-const DIGIY_RESA_I18N = {
-  fr:{
-    title:"DIGIY RESA — Réserver un service local partout",
-    desc:"DIGIY RESA — Réservation multi-métier internationale : Afrique, France, diaspora. Entreprise, santé, beauté, garage, artisan, logement, table ou service. Le pro confirme.",
-    brandSub:"Afrique · France · Diaspora · 15 min",
-    navAsk:"📲 Demander", navSignup:"🧾 Demande pro", navTerritories:"Territoires", navJobs:"Métiers", navHow:"Comment ça marche",
-    kicker:"Afrique · France · Diaspora · créneaux de 15 minutes",
-    heroTitle:"Réserve un service local. <span>Le pro confirme.</span>",
-    heroText:"DIGIY RESA sert à préparer une demande de rendez-vous ou de réservation pour plusieurs métiers et territoires : Afrique, France, diaspora. Entreprise, docteur, architecte, garage, onglerie, coiffeur, artisan, consultant, table, chambre, visite ou service. Le client prépare une demande claire. Le professionnel confirme. L’activation pro est payante côté professionnel ; DIGIY garde 0% commission.",
-    badge1:"Afrique · France · Diaspora", badge2:"Créneaux 15 min", badge3:"Paiement direct au pro", badge4:"0% commission DIGIY", badge5:"Disponibilité à confirmer",
-    doorAsk:"Demander", doorAskSmall:"message prêt", doorSignup:"Demande pro", doorSignupSmall:"activation RESA", doorTerritories:"Territoires", doorTerritoriesSmall:"Afrique · France", doorCompany:"Entreprise", doorHealth:"Santé", doorHealthSmall:"docteur / dentiste", doorBeauty:"Beauté", doorBeautySmall:"onglerie / coiffeur", doorGarage:"Garage", doorGarageSmall:"mécanique / auto", doorProject:"Projet", doorProjectSmall:"architecte / conseil",
-    doctrineTag:"Demande client libre · Activation pro payante · 0% commission",
-    doctrineTitle:"Le client prépare. <span>Le pro confirme et garde la main.</span>",
-    doctrineLead:"DIGIY RESA prépare une demande claire de rendez-vous, de table, de visite ou de service. La demande client est libre : elle ne remplace pas la confirmation du professionnel. L’activation pro RESA est payante seulement côté professionnel, quand il veut une présence, un planning, un QR, une mise en valeur ou une porte de réservation.",
-    doctrineClientTitle:"✅ Client : demande libre",
-    doctrineClientText:"Le client prépare un message clair et l’envoie au pro.",
-    doctrineProTitle:"📅 Pro : activation payante",
-    doctrineProText:"La présence RESA, le planning, le QR et la visibilité s’activent clairement.",
-    doctrineMoneyTitle:"🤝 Paiement direct",
-    doctrineMoneyText:"DIGIY ne prend aucune commission sur la réservation ou la prestation.",
-    doctrineConfirmTitle:"🛡️ Confirmation humaine",
-    doctrineConfirmText:"La réservation n’est définitive que lorsque le professionnel confirme.",
-    doctrineQuote:"DIGIY RESA organise la route entre le client et le professionnel — sans détour, sans commission, sans dépossession.",
-    territorySmall:"Rendez-vous directs · sans plateforme fermée",
-    territoryTitle:"Une même réservation, plusieurs territoires.",
-    territoryLead:"DIGIY RESA n’est pas limité à une ville ni à un métier. Le client prépare une demande claire, le professionnel garde la main, confirme le créneau et reçoit le paiement directement. La méthode peut servir à Saly, Mbour, Dakar, Sarlat, Arcachon ou dans la diaspora.",
-    territoryAfricaTitle:"🇸🇳 Afrique · preuve terrain",
-    territoryAfricaText:"Rendez-vous locaux, logements, restaurants, chauffeurs, garages, beauté, artisans, santé et services de proximité.",
-    territoryFranceTitle:"🇫🇷 France · marché pro",
-    territoryFranceText:"Artisans, indépendants, gîtes, restaurants, garages, cabinets, commerces et services qui veulent recevoir des demandes propres.",
-    territoryDiasporaTitle:"🌍 Diaspora · pont direct",
-    territoryDiasporaText:"Familles, voyageurs et clients peuvent demander un service local sans passer par une plateforme qui capture la relation.",
-    formTitle:"📲 Demande de réservation",
-    formIntro:"Remplis le minimum. L’heure fonctionne par pas de 15 minutes. DIGIY prépare le message, puis tu l’envoies au professionnel, quel que soit le territoire.",
-    labelName:"Nom", labelPhone:"Téléphone", labelDate:"Date souhaitée", labelTime:"Heure souhaitée", labelDuration:"Durée souhaitée", labelPeople:"Personnes / unités", labelType:"Métier / type de demande", labelNote:"Message libre",
-    prepareBtn:"✅ Préparer le message",
-    previewTitle:"Message préparé",
-    previewEmpty:"Remplis la demande puis clique “Préparer le message”.",
-    whatsappBtn:"📲 Envoyer WhatsApp", copyBtn:"📋 Copier", shareBtn:"↗️ Partager",
-    previewNote:"Le bouton WhatsApp ouvre un partage. Tu choisis ensuite le contact du professionnel.",
-    typesTitle:"Portes RESA multi-métier · international",
-    cardCompanyTitle:"Entreprise / DIGIYLYFE", cardCompanyText:"Exemple central : rendez-vous entreprise, présentation projet, appel, démonstration, accompagnement.",
-    cardHealthTitle:"Santé", cardHealthText:"Docteur, dentiste, kiné, consultation. Demande claire, créneau 15 min, confirmation par le cabinet.",
-    cardBeautyTitle:"Beauté", cardBeautyText:"Onglerie, coiffeur, barber, salon, soin. Heure souhaitée, service demandé, pro confirme.",
-    cardGarageTitle:"Garage", cardGarageText:"Diagnostic, entretien, mécanique, lavage, dépannage léger. Le garage confirme le créneau.",
-    cardProjectTitle:"Projet", cardProjectText:"Architecte, conseil, administratif, visite technique, devis, rendez-vous préparatoire.",
-    cardCraftTitle:"Artisans", cardCraftText:"Plomberie, électricité, travaux, intervention terrain, visite de chantier ou dépannage.",
-    cardTableTitle:"Table / chambre", cardTableText:"Restaurant, lounge, hôtel, nuitée : ça reste possible, mais RESA n’est pas limité à ça.",
-    cardFreeTitle:"Service libre", cardFreeText:"Toute activité qui fonctionne par créneau : le client demande, le pro confirme.",
-    howTitle:"Comment ça marche",
-    step1Title:"Tu prépares", step1Text:"Tu poses le métier, la date, l’heure par pas de 15 minutes, la durée et le besoin.",
-    step2Title:"Tu envoies", step2Text:"DIGIY prépare un message propre pour WhatsApp ou partage.",
-    step3Title:"Le pro confirme", step3Text:"La réservation n’est pas définitive tant que le professionnel n’a pas confirmé.",
-    ruleTitle:"Règle terrain",
-    notice:"<strong>Disponibilité à confirmer par le professionnel.</strong><br><br>DIGIY ne remplace pas le responsable. DIGIY prépare la demande, clarifie le métier ou l’entreprise, le créneau, facilite le contact, puis le pro garde la main.",
-    makeRequestBtn:"📲 Faire une demande", proSignupBtn:"🧾 Demande pro", backBtn:"Retour DIGIYLYFE",
-    footer:"DIGIY RESA · Afrique · France · Diaspora · multi-métier · créneaux 15 min · demande libre · activation pro payante · paiement direct au pro · 0% commission.",
-    bottomAsk:"Demander", bottomJobs:"Métiers", bottomConfirm:"Confirmer", bottomSignup:"Demande",
-    langButton:"🇬🇧 <strong>EN</strong>",
-    phName:"Ton nom", phPhone:"Ton WhatsApp",
-    phNote:"Ex : rendez-vous DIGIYLYFE, présentation de mon entreprise, rendez-vous docteur, consultation architecte, diagnostic garage, pose ongles, coupe enfant, intervention plomberie...",
-    msgPrepared:"Message préparé", msgCopied:"Message copié", copyImpossible:"Copie impossible", shareOpened:"Partage ouvert", incompleteRequest:"Complète le nom, la date et l’heure avant d’envoyer.", pastDate:"Choisis aujourd’hui ou une date future.",
-    shareTitle:"DIGIY RESA multi-métier international",
-    values:{client:"Client", callback:"À rappeler", toSet:"À préciser", reservation:"Réservation", noNote:"Aucune note"},
-    message:(v)=>`Bonjour, je viens depuis DIGIY RESA international.
+(function(){
+  "use strict";
 
-Demande multi-métier / entreprise : ${v.type}
+  const I18N = {
+    fr:{
+      title:"DIGIY RESA — Réserver un service local",
+      desc:"DIGIY RESA prépare une demande claire de rendez-vous ou de réservation. Le professionnel confirme. Paiement direct et 0% commission DIGIY.",
+      brandSub:"Demande simple · confirmation du pro",
+      proTop:"🧾 Espace pro",
+      eyebrow:"Rendez-vous · réservation · service",
+      heroTitle:"Prépare ta demande. <span>Le pro confirme.</span>",
+      heroText:"Choisis le service, la date et l’heure. DIGIY prépare un message clair que tu envoies directement au professionnel.",
+      menuTitle:"Choisir ma RESA",menuSub:"Restaurant, santé, métiers et services",menuSelected:"RESA sélectionnée",
+      trust1:"⏱️ Créneaux de 15 min",trust2:"🤝 Paiement direct",trust3:"0% commission DIGIY",
+      formTitle:"Ta demande",
+      formSub:"Remplis l’essentiel. La demande n’est définitive qu’après confirmation du professionnel.",
+      labelType:"Service demandé",labelDate:"Date souhaitée",labelTime:"Heure souhaitée",labelDuration:"Durée",labelPeople:"Personnes / unités",labelName:"Ton nom",labelPhone:"Ton téléphone",labelNote:"Précision utile",
+      notePlaceholder:"Ex. besoin précis, adresse, nombre de personnes…",
+      prepareBtn:"✅ Préparer ma demande",clearBtn:"✕ Effacer",
+      resultTitle:"Demande prête",resultSub:"Vérifie le message, puis choisis WhatsApp, SMS, copie ou partage.",
+      sumService:"Service",sumDate:"Créneau",sumName:"Client",sumPhone:"Téléphone",sumReference:"Référence",
+      messageLabel:"Message exact préparé",
+      waBtn:"💬 Envoyer par WhatsApp",smsBtn:"✉️ Envoyer par SMS",copyBtn:"📋 Copier le message",copiedBtn:"✅ Message copié",shareBtn:"↗️ Partager",
+      resultNote:"Le client choisit lui-même le professionnel destinataire. DIGIY n’envoie rien sans son action.",
+      rulesTitle:"La règle est simple",rulesSub:"DIGIY prépare la route. Le professionnel garde la décision.",
+      rule1Title:"Demande libre",rule1Text:"Le client prépare et envoie son message directement.",
+      rule2Title:"Confirmation humaine",rule2Text:"Le créneau existe seulement lorsque le professionnel confirme.",
+      rule3Title:"Relation directe",rule3Text:"Paiement au professionnel et 0% commission DIGIY.",
+      proText:"Professionnel : active ta présence RESA, ton planning et ton QR.",proBtn:"🧾 Faire une demande pro",
+      footer:"DIGIY RESA · Le client demande · Le professionnel confirme · Paiement direct · 0% commission.",
+      phName:"Ton nom",phPhone:"Ton WhatsApp ou téléphone",
+      incomplete:"Complète le service, ton nom, la date et l’heure.",pastDate:"Choisis aujourd’hui ou une date future.",prepared:"Demande préparée",copied:"Message copié",copyFailed:"Copie impossible",changed:"Demande modifiée : prépare le nouveau message.",nothing:"Prépare d’abord ta demande.",
+      noPhone:"Non communiqué",noNote:"Aucune précision",shareTitle:"Demande DIGIY RESA",
+      message:(v)=>`Bonjour, je souhaite faire une demande avec DIGIY RESA.
+
+Référence : ${v.reference}
+Service : ${v.type}
 Nom : ${v.name}
 Téléphone : ${v.phone}
-Date souhaitée : ${v.date}
-Heure souhaitée : ${v.time}
-Durée souhaitée : ${v.duration}
+Date : ${v.date}
+Heure : ${v.time}
+Durée : ${v.duration}
 Personnes / unités : ${v.people}
-Message : ${v.note}
+Précision : ${v.note}
 
-Créneau demandé par pas de 15 minutes.
 Disponibilité à confirmer par le professionnel.
-Paiement direct au pro · 0% commission DIGIY.`
-  },
-  en:{
-    title:"DIGIY RESA — Book a local service anywhere",
-    desc:"DIGIY RESA — International multi-trade booking: Africa, France, diaspora. Business, health, beauty, garage, artisan, housing, table or service. The professional confirms.",
-    brandSub:"Africa · France · Diaspora · 15 min",
-    navAsk:"📲 Request", navSignup:"🧾 Pro request", navTerritories:"Territories", navJobs:"Trades", navHow:"How it works",
-    kicker:"Africa · France · Diaspora · 15-minute time slots",
-    heroTitle:"Book a local service. <span>The pro confirms.</span>",
-    heroText:"DIGIY RESA helps you prepare an appointment or booking request across trades and territories: Africa, France and the diaspora. Business, doctor, architect, garage, nail salon, hairdresser, artisan, consultant, table, room, visit or service. The client prepares a clear request. The professional confirms. Pro activation is paid on the professional side; DIGIY keeps 0% commission.",
-    badge1:"Africa · France · Diaspora", badge2:"15-min slots", badge3:"Direct payment to the pro", badge4:"0% DIGIY commission", badge5:"Availability to confirm",
-    doorAsk:"Request", doorAskSmall:"ready message", doorSignup:"Pro request", doorSignupSmall:"activate RESA", doorTerritories:"Territories", doorTerritoriesSmall:"Africa · France", doorCompany:"Business", doorHealth:"Health", doorHealthSmall:"doctor / dentist", doorBeauty:"Beauty", doorBeautySmall:"nails / hair", doorGarage:"Garage", doorGarageSmall:"mechanic / car", doorProject:"Project", doorProjectSmall:"architect / advice",
-    doctrineTag:"Free client request · Paid pro activation · 0% commission",
-    doctrineTitle:"The client prepares. <span>The pro confirms and stays in control.</span>",
-    doctrineLead:"DIGIY RESA prepares a clear request for an appointment, table, visit or service. The client request is free: it does not replace the professional’s confirmation. The pro RESA activation is paid only on the professional side, when they want a presence, schedule, QR, highlighting or booking doorway.",
-    doctrineClientTitle:"✅ Client: free request",
-    doctrineClientText:"The client prepares a clear message and sends it to the pro.",
-    doctrineProTitle:"📅 Pro: paid activation",
-    doctrineProText:"The RESA presence, schedule, QR and visibility are activated clearly.",
-    doctrineMoneyTitle:"🤝 Direct payment",
-    doctrineMoneyText:"DIGIY takes no commission on the booking or service.",
-    doctrineConfirmTitle:"🛡️ Human confirmation",
-    doctrineConfirmText:"The booking is final only when the professional confirms.",
-    doctrineQuote:"DIGIY RESA organizes the road between client and professional — no detour, no commission, no dispossession.",
-    territorySmall:"Direct appointments · no closed platform",
-    territoryTitle:"One booking method, several territories.",
-    territoryLead:"DIGIY RESA is not limited to one city or one trade. The client prepares a clear request, the professional stays in control, confirms the time slot and receives payment directly. The method can serve Saly, Mbour, Dakar, Sarlat, Arcachon or the diaspora.",
-    territoryAfricaTitle:"🇸🇳 Africa · field proof",
-    territoryAfricaText:"Local appointments, housing, restaurants, drivers, garages, beauty, artisans, health and nearby services.",
-    territoryFranceTitle:"🇫🇷 France · pro market",
-    territoryFranceText:"Artisans, independents, gîtes, restaurants, garages, offices, shops and services that want clean requests.",
-    territoryDiasporaTitle:"🌍 Diaspora · direct bridge",
-    territoryDiasporaText:"Families, travelers and clients can request a local service without a platform capturing the relationship.",
-    formTitle:"📲 Booking request",
-    formIntro:"Fill in the minimum. Time works in 15-minute steps. DIGIY prepares the message, then you send it to the professional, whatever the territory.",
-    labelName:"Name", labelPhone:"Phone", labelDate:"Requested date", labelTime:"Requested time", labelDuration:"Requested duration", labelPeople:"People / units", labelType:"Trade / request type", labelNote:"Free message",
-    prepareBtn:"✅ Prepare message",
-    previewTitle:"Prepared message",
-    previewEmpty:"Fill in the request, then click “Prepare message”.",
-    whatsappBtn:"📲 Send WhatsApp", copyBtn:"📋 Copy", shareBtn:"↗️ Share",
-    previewNote:"The WhatsApp button opens a share message. You then choose the professional’s contact.",
-    typesTitle:"RESA international multi-trade doors",
-    cardCompanyTitle:"Business / DIGIYLYFE", cardCompanyText:"Central example: business appointment, project presentation, call, demonstration, support.",
-    cardHealthTitle:"Health", cardHealthText:"Doctor, dentist, physiotherapist, consultation. Clear request, 15-min slot, confirmation by the office.",
-    cardBeautyTitle:"Beauty", cardBeautyText:"Nails, hairdresser, barber, salon, care. Requested time, service needed, the pro confirms.",
-    cardGarageTitle:"Garage", cardGarageText:"Diagnosis, maintenance, mechanics, washing, light repair. The garage confirms the slot.",
-    cardProjectTitle:"Project", cardProjectText:"Architect, advice, administrative help, technical visit, quote, preparation meeting.",
-    cardCraftTitle:"Artisans", cardCraftText:"Plumbing, electricity, works, field intervention, site visit or repair.",
-    cardTableTitle:"Table / room", cardTableText:"Restaurant, lounge, hotel, night stay: possible, but RESA is not limited to that.",
-    cardFreeTitle:"Open service", cardFreeText:"Any activity that works by time slot: the client requests, the pro confirms.",
-    howTitle:"How it works",
-    step1Title:"You prepare", step1Text:"You set the trade, date, 15-minute time slot, duration and need.",
-    step2Title:"You send", step2Text:"DIGIY prepares a clean message for WhatsApp or sharing.",
-    step3Title:"The pro confirms", step3Text:"The booking is not final until the professional confirms.",
-    ruleTitle:"Field rule",
-    notice:"<strong>Availability must be confirmed by the professional.</strong><br><br>DIGIY does not replace the person in charge. DIGIY prepares the request, clarifies the trade or business, the time slot, helps contact, then the pro stays in control.",
-    makeRequestBtn:"📲 Make a request", proSignupBtn:"🧾 Pro request", backBtn:"Back to DIGIYLYFE",
-    footer:"DIGIY RESA · Africa · France · Diaspora · multi-trade · 15-min slots · free request · paid pro activation · direct payment to the pro · 0% commission.",
-    bottomAsk:"Request", bottomJobs:"Trades", bottomConfirm:"Confirm", bottomSignup:"Request",
-    langButton:"🇫🇷 <strong>FR</strong>",
-    phName:"Your name", phPhone:"Your WhatsApp",
-    phNote:"Example: DIGIYLYFE appointment, business presentation, doctor appointment, architect consultation, garage diagnosis, nail service, child haircut, plumbing intervention...",
-    msgPrepared:"Message prepared", msgCopied:"Message copied", copyImpossible:"Copy impossible", shareOpened:"Share opened", incompleteRequest:"Complete the name, date and time before sending.", pastDate:"Choose today or a future date.",
-    shareTitle:"DIGIY RESA international multi-trade",
-    values:{client:"Client", callback:"Call back needed", toSet:"To be specified", reservation:"Booking", noNote:"No note"},
-    message:(v)=>`Hello, I am coming from international DIGIY RESA.
+Paiement direct au professionnel · 0% commission DIGIY.`
+    },
+    en:{
+      title:"DIGIY RESA — Book a local service",
+      desc:"DIGIY RESA prepares a clear appointment or booking request. The professional confirms. Direct payment and 0% DIGIY commission.",
+      brandSub:"Simple request · professional confirmation",
+      proTop:"🧾 Pro space",
+      eyebrow:"Appointment · booking · service",
+      heroTitle:"Prepare your request. <span>The pro confirms.</span>",
+      heroText:"Choose the service, date and time. DIGIY prepares a clear message that you send directly to the professional.",
+      menuTitle:"Choose my RESA",menuSub:"Restaurant, health, trades and services",menuSelected:"Selected RESA",
+      trust1:"⏱️ 15-minute slots",trust2:"🤝 Direct payment",trust3:"0% DIGIY commission",
+      formTitle:"Your request",
+      formSub:"Fill in the essentials. The request is final only after the professional confirms.",
+      labelType:"Requested service",labelDate:"Requested date",labelTime:"Requested time",labelDuration:"Duration",labelPeople:"People / units",labelName:"Your name",labelPhone:"Your phone",labelNote:"Useful detail",
+      notePlaceholder:"Example: exact need, address, number of people…",
+      prepareBtn:"✅ Prepare my request",clearBtn:"✕ Clear",
+      resultTitle:"Request ready",resultSub:"Check the message, then choose WhatsApp, SMS, copy or share.",
+      sumService:"Service",sumDate:"Time slot",sumName:"Client",sumPhone:"Phone",sumReference:"Reference",
+      messageLabel:"Exact prepared message",
+      waBtn:"💬 Send by WhatsApp",smsBtn:"✉️ Send by SMS",copyBtn:"📋 Copy message",copiedBtn:"✅ Message copied",shareBtn:"↗️ Share",
+      resultNote:"The client chooses the professional recipient. DIGIY sends nothing without their action.",
+      rulesTitle:"The rule is simple",rulesSub:"DIGIY prepares the route. The professional keeps the decision.",
+      rule1Title:"Open request",rule1Text:"The client prepares and sends the message directly.",
+      rule2Title:"Human confirmation",rule2Text:"The time slot exists only after the professional confirms.",
+      rule3Title:"Direct relationship",rule3Text:"Payment to the professional and 0% DIGIY commission.",
+      proText:"Professional: activate your RESA presence, schedule and QR.",proBtn:"🧾 Make a pro request",
+      footer:"DIGIY RESA · The client requests · The professional confirms · Direct payment · 0% commission.",
+      phName:"Your name",phPhone:"Your WhatsApp or phone",
+      incomplete:"Complete the service, your name, date and time.",pastDate:"Choose today or a future date.",prepared:"Request prepared",copied:"Message copied",copyFailed:"Copy failed",changed:"Request changed: prepare the new message.",nothing:"Prepare your request first.",
+      noPhone:"Not provided",noNote:"No detail",shareTitle:"DIGIY RESA request",
+      message:(v)=>`Hello, I would like to make a request with DIGIY RESA.
 
-Multi-trade / business request: ${v.type}
+Reference: ${v.reference}
+Service: ${v.type}
 Name: ${v.name}
 Phone: ${v.phone}
-Requested date: ${v.date}
-Requested time: ${v.time}
-Requested duration: ${v.duration}
+Date: ${v.date}
+Time: ${v.time}
+Duration: ${v.duration}
 People / units: ${v.people}
-Message: ${v.note}
+Detail: ${v.note}
 
-Requested slot in 15-minute steps.
 Availability must be confirmed by the professional.
-Direct payment to the pro · 0% DIGIY commission.`
-  }
-};
-
-const DIGIY_RESA_OPTIONS = {
-  durations:{
-    fr:["15 min","30 min","45 min","1h","1h15","1h30","2h","Demi-journée","Journée","Nuit / 24h"],
-    en:["15 min","30 min","45 min","1h","1h15","1h30","2h","Half-day","Full day","Night / 24h"]
-  },
-  types:{
-    fr:["Mon entreprise / DIGIYLYFE","Rendez-vous entreprise","Présentation projet","Docteur / médecin","Dentiste","Kiné / santé","Architecte","Garage / mécanicien","Onglerie","Coiffeur / barber","Salon / beauté","Artisan / intervention","Plombier / électricien","Consultation / conseil","Avocat / administratif","Visite / découverte","Location / rendez-vous","Table restaurant","Chambre / nuitée","Autre demande"],
-    en:["My business / DIGIYLYFE","Business appointment","Project presentation","Doctor / medical","Dentist","Physiotherapy / health","Architect","Garage / mechanic","Nail salon","Hairdresser / barber","Salon / beauty","Artisan / intervention","Plumber / electrician","Consultation / advice","Lawyer / administration","Visit / discovery","Rental / appointment","Restaurant table","Room / night stay","Other request"]
-  }
-};
-
-let currentLang = localStorage.getItem("digiy_resa_lang") || "fr";
-const $=id=>document.getElementById(id);
-let currentMessage='';
-
-function tr(key){return (DIGIY_RESA_I18N[currentLang] && DIGIY_RESA_I18N[currentLang][key]) || DIGIY_RESA_I18N.fr[key] || key}
-function today(){
-  const d=new Date();
-  const y=d.getFullYear();
-  const m=String(d.getMonth()+1).padStart(2,'0');
-  const day=String(d.getDate()).padStart(2,'0');
-  return `${y}-${m}-${day}`;
-}
-function toast(t){const el=$('toast');el.textContent=t;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),1800)}
-function val(id){return ($(id)?.value||'').trim()}
-function roundToQuarter(value){if(!value)return value;const parts=value.split(':').map(Number);if(parts.length<2)return value;const total=parts[0]*60+parts[1];const q=Math.round(total/15)*15;const h=String(Math.floor(q/60)%24).padStart(2,'0');const m=String(q%60).padStart(2,'0');return h+':'+m}
-
-function fillSelect(id, list){
-  const el=$(id);
-  if(!el) return;
-  const idx=Math.max(0, el.selectedIndex);
-  el.innerHTML=list.map(v=>`<option>${v}</option>`).join('');
-  el.selectedIndex=Math.min(idx, list.length-1);
-}
-
-function applyLang(lang){
-  currentLang = lang === "en" ? "en" : "fr";
-  localStorage.setItem("digiy_resa_lang", currentLang);
-  const pack = DIGIY_RESA_I18N[currentLang];
-  document.documentElement.lang=currentLang;
-  document.title=pack.title;
-  const meta=document.querySelector('meta[name="description"]');
-  if(meta) meta.setAttribute("content", pack.desc);
-  document.querySelectorAll("[data-i18n]").forEach(el=>{
-    const key=el.getAttribute("data-i18n");
-    const value=pack[key];
-    if(value === undefined) return;
-    if(String(value).includes("<")) el.innerHTML=value;
-    else el.textContent=value;
-  });
-  const langBtn=$("langBtn");
-  if(langBtn) langBtn.innerHTML=pack.langButton;
-  if($("clientName")) $("clientName").placeholder=pack.phName;
-  if($("clientPhone")) $("clientPhone").placeholder=pack.phPhone;
-  if($("resaNote")) $("resaNote").placeholder=pack.phNote;
-  fillSelect("resaDuration", DIGIY_RESA_OPTIONS.durations[currentLang]);
-  fillSelect("resaType", DIGIY_RESA_OPTIONS.types[currentLang]);
-  if($("preview") && !currentMessage) $("preview").textContent=pack.previewEmpty;
-  refreshPreview(false);
-}
-
-function buildMessage(){
-  const pack = DIGIY_RESA_I18N[currentLang];
-  const values = pack.values;
-  const payload={
-    name:val('clientName')||values.client,
-    phone:val('clientPhone')||values.callback,
-    date:val('resaDate')||values.toSet,
-    time:roundToQuarter(val('resaTime')||values.toSet),
-    duration:val('resaDuration')||values.toSet,
-    people:val('resaPeople')||'1',
-    type:val('resaType')||values.reservation,
-    note:val('resaNote')||values.noNote
+Direct payment to the professional · 0% DIGIY commission.`
+    }
   };
-  return pack.message(payload);
-}
 
-function requestState(){
-  const name=val('clientName');
-  const date=val('resaDate');
-  const time=val('resaTime');
-  if(!name || !date || !time) return {ok:false,reason:'incompleteRequest'};
-  if(date < today()) return {ok:false,reason:'pastDate'};
-  return {ok:true,reason:''};
-}
+  const OPTIONS = {
+    durations:{
+      fr:["15 min","30 min","45 min","1 h","1 h 15","1 h 30","2 h","Demi-journée","Journée","Nuit / 24 h"],
+      en:["15 min","30 min","45 min","1 hour","1 h 15","1 h 30","2 hours","Half-day","Full day","Night / 24 h"]
+    },
+    types:{
+      fr:["Rendez-vous entreprise","Présentation de projet","Docteur / médecin","Dentiste","Kiné / santé","Architecte","Comptable / gestion","Garage / mécanicien","Onglerie","Coiffeur / barber","Salon / beauté","Service à domicile / proximité","Artisan / intervention","Plombier / électricien","Consultation / conseil","Avocat / administratif","Visite / découverte","Location / rendez-vous","Table restaurant","Chambre / nuitée","Autre demande"],
+      en:["Business appointment","Project presentation","Doctor / medical","Dentist","Physiotherapy / health","Architect","Accountant / management","Garage / mechanic","Nail salon","Hairdresser / barber","Salon / beauty","Home / local service","Artisan / intervention","Plumber / electrician","Consultation / advice","Lawyer / administration","Visit / discovery","Rental / appointment","Restaurant table","Room / night stay","Other request"]
+    }
+  };
 
-function setActionState(){
-  const state=requestState();
-  const wa=$('waBtn');
-  if(!wa) return state;
-  wa.classList.toggle('disabled',!state.ok);
-  wa.setAttribute('aria-disabled',state.ok?'false':'true');
-  wa.href=state.ok ? 'https://wa.me/?text='+encodeURIComponent(currentMessage) : '#demande';
-  return state;
-}
+  const RESA_MENU = [
+    {id:"restaurant",icon:"🍽️",label:{fr:"Restaurant",en:"Restaurant"},type:{fr:"Table restaurant",en:"Restaurant table"}},
+    {id:"doctor",icon:"🩺",label:{fr:"Docteur",en:"Doctor"},type:{fr:"Docteur / médecin",en:"Doctor / medical"}},
+    {id:"architect",icon:"📐",label:{fr:"Architecte",en:"Architect"},type:{fr:"Architecte",en:"Architect"}},
+    {id:"accountant",icon:"🧾",label:{fr:"Comptable",en:"Accountant"},type:{fr:"Comptable / gestion",en:"Accountant / management"}},
+    {id:"services",icon:"🛠️",label:{fr:"Services",en:"Services"},type:{fr:"Service à domicile / proximité",en:"Home / local service"}},
+    {id:"nails",icon:"💅",label:{fr:"Onglerie",en:"Nail salon"},type:{fr:"Onglerie",en:"Nail salon"}},
+    {id:"hair",icon:"✂️",label:{fr:"Coiffeur",en:"Hairdresser"},type:{fr:"Coiffeur / barber",en:"Hairdresser / barber"}},
+    {id:"business",icon:"🏢",label:{fr:"Entreprise",en:"Business"},type:{fr:"Rendez-vous entreprise",en:"Business appointment"}}
+  ];
 
-function requireCompleteRequest(){
-  const state=requestState();
-  if(state.ok) return true;
-  toast(tr(state.reason));
-  const form=$('resaForm');
-  if(form && typeof form.reportValidity==='function') form.reportValidity();
-  return false;
-}
+  let currentLang = localStorage.getItem("digiy_resa_lang") === "en" ? "en" : "fr";
+  let orderData = null;
+  let suppressInvalidation = false;
+  const $ = id => document.getElementById(id);
 
-function refreshPreview(showReady=true){
-  if($('resaTime'))$('resaTime').value=roundToQuarter($('resaTime').value||'09:00');
-  currentMessage=buildMessage();
-  $('preview').textContent=currentMessage;
-  setActionState();
-  if(showReady){}
-}
+  function t(key){ return I18N[currentLang][key] ?? key; }
+  function value(id){ return ($(id)?.value || "").trim(); }
+  function today(){
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,"0");
+    const day = String(d.getDate()).padStart(2,"0");
+    return `${y}-${m}-${day}`;
+  }
+  function roundToQuarter(raw){
+    if(!raw) return raw;
+    const parts = raw.split(":").map(Number);
+    if(parts.length < 2 || parts.some(Number.isNaN)) return raw;
+    const total = parts[0]*60 + parts[1];
+    const rounded = Math.round(total/15)*15;
+    const h = String(Math.floor(rounded/60)%24).padStart(2,"0");
+    const m = String(rounded%60).padStart(2,"0");
+    return `${h}:${m}`;
+  }
+  function formatDate(raw){
+    if(!raw) return "";
+    const parts = raw.split("-");
+    if(parts.length !== 3) return raw;
+    return currentLang === "fr" ? `${parts[2]}/${parts[1]}/${parts[0]}` : `${parts[1]}/${parts[2]}/${parts[0]}`;
+  }
+  function makeReference(){
+    const d = new Date();
+    const date = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,"0")}${String(d.getDate()).padStart(2,"0")}`;
+    const time = `${String(d.getHours()).padStart(2,"0")}${String(d.getMinutes()).padStart(2,"0")}`;
+    const rand = Math.floor(100 + Math.random()*900);
+    return `RESA-${date}-${time}-${rand}`;
+  }
+  function showToast(text){
+    const toast = $("toast");
+    toast.textContent = text;
+    toast.classList.add("show");
+    clearTimeout(showToast.timer);
+    showToast.timer = setTimeout(()=>toast.classList.remove("show"),1900);
+  }
+  function fillSelect(id,list){
+    const el = $(id);
+    const selected = Math.max(0,el.selectedIndex);
+    el.innerHTML = list.map(item=>`<option>${item}</option>`).join("");
+    el.selectedIndex = Math.min(selected,list.length-1);
+  }
+  function invalidateOrder(notify=false){
+    if(suppressInvalidation || !orderData) return;
+    orderData = null;
+    $("resultPanel").classList.remove("show");
+    $("messagePreview").textContent = "—";
+    $("copyBtn").innerHTML = t("copyBtn");
+    if(notify) showToast(t("changed"));
+  }
+  function setMenuOpen(open){
+    $("resaMenuToggle").setAttribute("aria-expanded",open ? "true" : "false");
+    $("resaMenuBody").hidden = !open;
+  }
+  function renderResaMenu(){
+    const selected = value("resaType");
+    $("resaMenuGrid").innerHTML = "";
+    RESA_MENU.forEach(item=>{
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "resa-door" + (selected === item.type[currentLang] ? " active" : "");
+      btn.dataset.resaId = item.id;
+      btn.innerHTML = `<span>${item.icon}</span><b>${item.label[currentLang]}</b>`;
+      btn.addEventListener("click",()=>selectResa(item));
+      $("resaMenuGrid").appendChild(btn);
+    });
+  }
+  function selectResa(item){
+    const target = item.type[currentLang];
+    const select = $("resaType");
+    const option = Array.from(select.options).find(opt=>opt.value === target || opt.textContent === target);
+    if(option) select.value = option.value;
+    invalidateOrder(true);
+    renderResaMenu();
+    $("resaMenuCurrent").textContent = `${t("menuSelected")} : ${item.label[currentLang]}`;
+    $("demande").scrollIntoView({behavior:"smooth",block:"start"});
+    setTimeout(()=>select.focus({preventScroll:true}),320);
+  }
+  function syncMenuSelection(){
+    const selected = value("resaType");
+    const item = RESA_MENU.find(entry=>entry.type[currentLang] === selected);
+    $("resaMenuCurrent").textContent = item ? `${t("menuSelected")} : ${item.label[currentLang]}` : t("menuSub");
+    renderResaMenu();
+  }
+  function applyLang(lang){
+    suppressInvalidation = true;
+    currentLang = lang === "en" ? "en" : "fr";
+    localStorage.setItem("digiy_resa_lang",currentLang);
+    document.documentElement.lang = currentLang;
+    document.title = t("title");
+    document.querySelector('meta[name="description"]')?.setAttribute("content",t("desc"));
+    document.querySelectorAll("[data-i18n]").forEach(el=>{
+      const translated = I18N[currentLang][el.dataset.i18n];
+      if(translated === undefined) return;
+      if(String(translated).includes("<")) el.innerHTML = translated;
+      else el.textContent = translated;
+    });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
+      const translated = I18N[currentLang][el.dataset.i18nPlaceholder];
+      if(translated !== undefined) el.placeholder = translated;
+    });
+    $("clientName").placeholder = t("phName");
+    $("clientPhone").placeholder = t("phPhone");
+    $("langBtn").textContent = currentLang === "fr" ? "🇬🇧 EN" : "🇫🇷 FR";
+    fillSelect("resaDuration",OPTIONS.durations[currentLang]);
+    fillSelect("resaType",OPTIONS.types[currentLang]);
+    renderResaMenu();
+    syncMenuSelection();
+    suppressInvalidation = false;
+    if(orderData) invalidateOrder(true);
+  }
+  function requestState(){
+    if(!value("resaType") || !value("clientName") || !value("resaDate") || !value("resaTime")) return {ok:false,key:"incomplete"};
+    if(value("resaDate") < today()) return {ok:false,key:"pastDate"};
+    return {ok:true,key:""};
+  }
+  function validateRequest(){
+    const state = requestState();
+    if(state.ok) return true;
+    showToast(t(state.key));
+    $("resaForm").reportValidity?.();
+    return false;
+  }
+  function buildSnapshot(){
+    const roundedTime = roundToQuarter(value("resaTime"));
+    $("resaTime").value = roundedTime;
+    const snapshot = {
+      reference:makeReference(),
+      type:value("resaType"),
+      name:value("clientName"),
+      phone:value("clientPhone") || t("noPhone"),
+      date:formatDate(value("resaDate")),
+      rawDate:value("resaDate"),
+      time:roundedTime,
+      duration:value("resaDuration"),
+      people:value("resaPeople") || "1",
+      note:value("resaNote") || t("noNote")
+    };
+    return Object.freeze({...snapshot,message:t("message")(snapshot)});
+  }
+  function renderOrder(){
+    $("sumService").textContent = orderData.type;
+    $("sumDate").textContent = `${orderData.date} · ${orderData.time}`;
+    $("sumName").textContent = orderData.name;
+    $("sumPhone").textContent = orderData.phone;
+    $("sumReference").textContent = orderData.reference;
+    $("messagePreview").textContent = orderData.message;
+    $("resultPanel").classList.add("show");
+    $("resultPanel").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  function prepareOrder(event){
+    event?.preventDefault();
+    if(!validateRequest()) return;
+    orderData = buildSnapshot();
+    renderOrder();
+    showToast(t("prepared"));
+  }
+  function requireOrder(){
+    if(orderData) return true;
+    showToast(t("nothing"));
+    return false;
+  }
+  function openWhatsapp(){
+    if(!requireOrder()) return;
+    window.open("https://wa.me/?text="+encodeURIComponent(orderData.message),"_blank","noopener,noreferrer");
+  }
+  function openSms(){
+    if(!requireOrder()) return;
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const separator = isIOS ? "&" : "?";
+    window.location.href = `sms:${separator}body=${encodeURIComponent(orderData.message)}`;
+  }
+  async function copyMessage(){
+    if(!requireOrder()) return;
+    try{
+      await navigator.clipboard.writeText(orderData.message);
+    }catch(error){
+      const area = document.createElement("textarea");
+      area.value = orderData.message;
+      area.setAttribute("readonly","");
+      area.style.position = "fixed";
+      area.style.opacity = "0";
+      document.body.appendChild(area);
+      area.select();
+      const copied = document.execCommand("copy");
+      area.remove();
+      if(!copied){ showToast(t("copyFailed")); return; }
+    }
+    $("copyBtn").innerHTML = t("copiedBtn");
+    showToast(t("copied"));
+    setTimeout(()=>$("copyBtn").innerHTML=t("copyBtn"),1700);
+  }
+  async function shareMessage(){
+    if(!requireOrder()) return;
+    if(navigator.share){
+      try{ await navigator.share({title:t("shareTitle"),text:orderData.message}); }catch(error){}
+    }else{
+      copyMessage();
+    }
+  }
+  function clearForm(){
+    suppressInvalidation = true;
+    $("resaForm").reset();
+    $("resaDate").value = today();
+    $("resaTime").value = "09:00";
+    $("resaPeople").value = "1";
+    $("resaType").selectedIndex = 0;
+    $("resaDuration").selectedIndex = 0;
+    syncMenuSelection();
+    suppressInvalidation = false;
+    orderData = null;
+    $("resultPanel").classList.remove("show");
+    $("messagePreview").textContent = "—";
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
 
-$('langBtn')?.addEventListener('click',()=>applyLang(currentLang === 'fr' ? 'en' : 'fr'));
-const localToday=today();
-$('resaDate').value=localToday;
-$('resaDate').min=localToday;
-['clientName','clientPhone','resaDate','resaTime','resaDuration','resaPeople','resaType','resaNote'].forEach(id=>$(id).addEventListener('input',()=>refreshPreview(false)));
-$('resaTime').addEventListener('change',()=>refreshPreview(false));
-$('waBtn').addEventListener('click',e=>{if(!requireCompleteRequest())e.preventDefault()});
-$('resaForm').addEventListener('submit',e=>{
-  e.preventDefault();
-  if(!requireCompleteRequest()) return;
-  refreshPreview();
-  toast(tr('msgPrepared'));
-});
+  $("resaDate").min = today();
+  $("resaDate").value = today();
+  $("resaForm").addEventListener("submit",prepareOrder);
+  $("clearBtn").addEventListener("click",clearForm);
+  $("waBtn").addEventListener("click",openWhatsapp);
+  $("smsBtn").addEventListener("click",openSms);
+  $("copyBtn").addEventListener("click",copyMessage);
+  $("shareBtn").addEventListener("click",shareMessage);
+  $("langBtn").addEventListener("click",()=>applyLang(currentLang === "fr" ? "en" : "fr"));
+  $("resaMenuToggle").addEventListener("click",()=>setMenuOpen($("resaMenuToggle").getAttribute("aria-expanded") !== "true"));
+  $("resaType").addEventListener("change",syncMenuSelection);
+  ["resaType","resaDate","resaTime","resaDuration","resaPeople","clientName","clientPhone","resaNote"].forEach(id=>{
+    $(id).addEventListener("input",()=>invalidateOrder(true));
+    $(id).addEventListener("change",()=>invalidateOrder(true));
+  });
 
-async function copyMessage(){
-  if(!requireCompleteRequest()) return;
-  refreshPreview(false);
-  try{await navigator.clipboard.writeText(currentMessage);toast(tr('msgCopied'))}catch(e){toast(tr('copyImpossible'))}
-}
-
-async function nativeShare(){
-  if(!requireCompleteRequest()) return;
-  refreshPreview(false);
-  if(navigator.share){try{await navigator.share({title:tr('shareTitle'),text:currentMessage});toast(tr('shareOpened'))}catch(e){}}else{copyMessage()}
-}
-
-applyLang(currentLang);
+  applyLang(currentLang);
+})();
 </script>
 </body>
 </html>
