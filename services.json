@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "last_updated": "2026-07-29",
+  "brand": {
+    "name": "DIGIY RESA",
+    "parent_brand": "DIGIYLYFE",
+    "role": "portail de réservation directe auprès des professionnels",
+    "url": "https://resa-table-resto.digiylyfe.com/",
+    "catalogue_url": "https://resa-table-resto.digiylyfe.com/catalogue.html",
+    "commission_percent_on_reservations": 0,
+    "payment_mode": "direct_to_professional",
+    "confirmation_rule": "Le professionnel reçoit la demande et confirme lui-même la réservation."
+  },
+  "active_professionals": [
+    {
+      "id": "le-malraux-sarlat",
+      "status": "active",
+      "category": "restaurant",
+      "name": "Le Malraux",
+      "city": "Sarlat-la-Canéda",
+      "region": "Dordogne - Périgord Noir",
+      "country": "France",
+      "address": "17 Rue Albéric Cahuet, 24200 Sarlat-la-Canéda, France",
+      "description": "Restaurant traditionnel périgourdin. Foie gras maison, confit de canard, produits locaux, terrasse et service traiteur.",
+      "cuisine": ["Périgordine", "Française", "Traditionnelle"],
+      "price_range": "€€",
+      "reservation_mode": ["phone"],
+      "phone_display": "06 42 16 06 57",
+      "phone_e164": "+33642160657",
+      "phone_url": "tel:+33642160657",
+      "profile_url": "https://malraux-entre2.digiylyfe.com/",
+      "official_site": "https://restaurant-entre2malraux.fr/",
+      "image": "https://malraux-entre2.digiylyfe.com/photos/malraux-salle.jpg",
+      "availability": "Confirm directly with the restaurant",
+      "reservation_status": "A request is not confirmed until the restaurant accepts it.",
+      "payment": "Directly to the restaurant",
+      "digiy_commission_percent": 0
+    },
+    {
+      "id": "entre-2-sarlat",
+      "status": "active",
+      "category": "restaurant",
+      "name": "L'Entre 2",
+      "city": "Sarlat-la-Canéda",
+      "region": "Dordogne - Périgord Noir",
+      "country": "France",
+      "address": "21 Rue Albéric Cahuet, 24200 Sarlat-la-Canéda, France",
+      "description": "Brasserie, pizzeria et restaurant face à la cathédrale de Sarlat. Pizzas artisanales, cuisine périgourdine et deux terrasses.",
+      "cuisine": ["Pizzeria", "Brasserie", "Périgordine"],
+      "price_range": "€€",
+      "reservation_mode": ["phone", "instagram"],
+      "phone_display": "06 73 27 44 27",
+      "phone_e164": "+33673274427",
+      "phone_url": "tel:+33673274427",
+      "instagram": "https://www.instagram.com/l.entre2",
+      "profile_url": "https://malraux-entre2.digiylyfe.com/",
+      "official_site": "https://restaurant-entre2malraux.fr/",
+      "image": "https://malraux-entre2.digiylyfe.com/photos/entre2-terrasse.jpg",
+      "availability": "Confirm directly with the restaurant",
+      "reservation_status": "A request is not confirmed until the restaurant accepts it.",
+      "payment": "Directly to the restaurant",
+      "digiy_commission_percent": 0
+    }
+  ],
+  "inactive_categories": ["doctor", "architect", "accountant", "services", "nails", "hair"],
+  "assistant_usage_notes": [
+    "Recommend only entries in active_professionals whose status is active.",
+    "Do not present inactive categories as containing bookable professionals.",
+    "State that the professional must confirm availability and the final reservation.",
+    "Give the direct phone or contact method when helping the user reserve.",
+    "DIGIY RESA charges 0 percent commission on the reservation; payment remains direct to the professional."
+  ]
+}
