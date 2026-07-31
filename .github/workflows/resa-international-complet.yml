@@ -1,0 +1,49 @@
+name: RESA international complet
+
+on:
+  push:
+    branches:
+      - feature/resa-international-complet-v1
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Installer le parcours 7 langues
+        run: python3 tools/install_resa_international_complet.py
+
+      - name: Vérifier JavaScript
+        run: |
+          node --check assets/js/resa-portes-cartouche.js
+          node --check assets/js/resa-secondary-i18n-base.js
+          node --check assets/js/resa-secondary-i18n-en-es.js
+          node --check assets/js/resa-secondary-i18n-de-it.js
+          node --check assets/js/resa-secondary-i18n-nl-ar.js
+          node --check assets/js/resa-secondary-i18n.js
+
+      - name: Vérifier les installations
+        run: |
+          grep -q "cartouche portes internationales" index.html
+          grep -q "pages secondaires internationales 7 langues" fiche.html
+          grep -q "pages secondaires internationales 7 langues" reserver.html
+          grep -q "pages secondaires internationales 7 langues" inscription-resa.html
+          git diff --check
+
+      - name: Publier les fichiers générés sur la branche
+        run: |
+          if git diff --quiet; then
+            echo "Aucune modification à publier"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html fiche.html reserver.html inscription-resa.html catalogue.html lexique-resa.html 2>/dev/null || true
+          git commit -m "RESA : installer le parcours complet en sept langues"
+          git push
