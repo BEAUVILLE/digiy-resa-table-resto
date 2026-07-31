@@ -58,20 +58,19 @@ if index.exists():
         changed = True
         print("LANGUE CONSERVÉE: lien inscription dans index.html")
 
-# Le moteur expose la traduction de message pour les canaux directs.
-engine = Path("assets/js/resa-secondary-i18n.js")
-if engine.exists():
-    source = engine.read_text(encoding="utf-8")
-    old = 'function translateMessage(value){return String(value||"").split("\\n").map(translateString).join("\\n")}'
-    new = old + ';window.DIGIY_RESA_TRANSLATE_MESSAGE=translateMessage'
-    if old in source and "DIGIY_RESA_TRANSLATE_MESSAGE" not in source:
-        source = source.replace(old, new, 1)
-        engine.write_text(source, encoding="utf-8")
+# Le pont de traduction des messages est chargé après les dictionnaires.
+inscription = Path("inscription-resa.html")
+if inscription.exists():
+    source = inscription.read_text(encoding="utf-8")
+    engine_tag = '  <script src="./assets/js/resa-secondary-i18n.js?v=20260731"></script>'
+    bridge_tag = '  <script src="./assets/js/resa-message-i18n-bridge.js?v=20260731"></script>'
+    if engine_tag in source and bridge_tag not in source:
+        source = source.replace(engine_tag, engine_tag + "\n" + bridge_tag, 1)
+        inscription.write_text(source, encoding="utf-8")
         changed = True
-        print("TRADUCTEUR GLOBAL: messages directs")
+        print("PONT MESSAGE: inscription-resa.html")
 
 # Le SMS prérempli passe par le traducteur avant l'ouverture de Messages.
-inscription = Path("inscription-resa.html")
 if inscription.exists():
     source = inscription.read_text(encoding="utf-8")
     old = "window.location.href = buildSmsHref(smsMsg());"
