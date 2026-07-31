@@ -58,4 +58,32 @@ if index.exists():
         changed = True
         print("LANGUE CONSERVÉE: lien inscription dans index.html")
 
+# Le moteur expose la traduction de message pour les canaux directs.
+engine = Path("assets/js/resa-secondary-i18n.js")
+if engine.exists():
+    source = engine.read_text(encoding="utf-8")
+    old = 'function translateMessage(value){return String(value||"").split("\\n").map(translateString).join("\\n")}'
+    new = old + ';window.DIGIY_RESA_TRANSLATE_MESSAGE=translateMessage'
+    if old in source and "DIGIY_RESA_TRANSLATE_MESSAGE" not in source:
+        source = source.replace(old, new, 1)
+        engine.write_text(source, encoding="utf-8")
+        changed = True
+        print("TRADUCTEUR GLOBAL: messages directs")
+
+# Le SMS prérempli passe par le traducteur avant l'ouverture de Messages.
+inscription = Path("inscription-resa.html")
+if inscription.exists():
+    source = inscription.read_text(encoding="utf-8")
+    old = "window.location.href = buildSmsHref(smsMsg());"
+    new = """const message = smsMsg();
+        const translatedMessage = typeof window.DIGIY_RESA_TRANSLATE_MESSAGE === \"function\"
+          ? window.DIGIY_RESA_TRANSLATE_MESSAGE(message)
+          : message;
+        window.location.href = buildSmsHref(translatedMessage);"""
+    if old in source and "translatedMessage" not in source:
+        source = source.replace(old, new, 1)
+        inscription.write_text(source, encoding="utf-8")
+        changed = True
+        print("SMS 7 LANGUES: inscription-resa.html")
+
 print("MODIFICATIONS PRÊTES" if changed else "AUCUNE MODIFICATION NÉCESSAIRE")
