@@ -1,0 +1,40 @@
+name: RESA cartouche index v2
+
+on:
+  push:
+    branches:
+      - feature/resa-cartouche-index-v2
+    paths:
+      - tools/resa-cartouche-v2-trigger.txt
+
+permissions:
+  contents: write
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: feature/resa-cartouche-index-v2
+
+      - name: Installer la nouvelle référence
+        run: python3 tools/bump_resa_cartouche_v2.py
+
+      - name: Vérifier la cartouche
+        run: |
+          grep -q 'resa-portes-cartouche.js?v=20260731-cartouche-v2' index.html
+          node --check assets/js/resa-portes-cartouche.js
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "Aucune modification"
+          else
+            git commit -m "RESA : activer la cartouche complète dans l’index"
+            git push origin HEAD:feature/resa-cartouche-index-v2
+          fi
