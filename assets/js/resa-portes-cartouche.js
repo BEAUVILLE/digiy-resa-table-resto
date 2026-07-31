@@ -52,7 +52,7 @@
         <a href="${withLang("./catalogue.html",current)}"><b>📚 ${t.catalogue}</b><small>CATALOGUE</small></a>
         <a href="${withLang("./app.html",current)}"><b>📲 ${t.app}</b><small>APP RESA</small></a>
         <a href="${withLang("./lexique-resa.html",current)}"><b>🗣️ ${t.lexicon}</b><small>LEXIQUE</small></a>
-        <a href="${withLang("https://pro-resa.digiylyfe.com/",current)}"><b>🔐 ${t.pro}</b><small>PRO RESA</small></a>
+        <a href="${withLang("https://pro-espace.digiylyfe.com/",current)}"><b>🔐 ${t.pro}</b><small>MON ESPACE PRO</small></a>
         <a href="${withLang("https://digiy-hub.digiylyfe.com/",current)}"><b>🧭 ${t.home}</b><small>HUB DIGIY</small></a>
       </div>`;
   }
