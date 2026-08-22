@@ -356,6 +356,10 @@ function setLang(lang){
 document.querySelectorAll('#langs button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
 setLang(new URLSearchParams(location.search).get('lang')||'fr');
 </script>
+
+<div class="digiy-global-home-return" style="max-width:980px;margin:18px auto;padding:0 14px;text-align:center">
+  <a href="https://digiylyfe.com/" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 15px;border-radius:999px;text-decoration:none;font:900 14px/1.2 system-ui,-apple-system,Segoe UI,sans-serif;border:1px solid rgba(127,127,127,.28);background:rgba(255,255,255,.08);color:inherit">🏠 Retour à l’accueil DIGIYLYFE</a>
+</div>
 </body>
 </html>
 
