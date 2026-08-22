@@ -1,0 +1,46 @@
+name: DIGIYLYFE verified home navigation fix
+
+on:
+  push:
+    paths:
+      - '.github/workflows/digiy-home-return-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix-navigation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Patch RESA reader pages
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          HOME='https://digiylyfe.com/'
+          targets=[Path('index.html'),Path('catalogue.html')]
+          block='''\n<div class="digiy-global-home-return" style="max-width:980px;margin:18px auto;padding:0 14px;text-align:center">\n  <a href="https://digiylyfe.com/" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 15px;border-radius:999px;text-decoration:none;font:900 14px/1.2 system-ui,-apple-system,Segoe UI,sans-serif;border:1px solid rgba(127,127,127,.28);background:rgba(255,255,255,.08);color:inherit">🏠 Retour à l’accueil DIGIYLYFE</a>\n</div>\n'''
+          for p in targets:
+              if not p.exists(): continue
+              s=p.read_text(encoding='utf-8'); original=s
+              s=s.replace('https://digiy-hub.digiylyfe.com/',HOME).replace('./digiy-hub/',HOME)
+              s=s.replace('← Retour DIGIY Hub','← Retour DIGIYLYFE').replace('🧭 HUB','🏠 DIGIYLYFE')
+              has_home=('href="https://digiylyfe.com/' in s or "href='https://digiylyfe.com/" in s)
+              if not has_home:
+                  s=s.replace('</body>',block+'</body>',1) if '</body>' in s else s+block
+              if s!=original:
+                  p.write_text(s,encoding='utf-8'); print('changed',p)
+          PY
+      - name: Commit verified navigation fix and remove helper
+        shell: bash
+        run: |
+          git config user.name "DIGIYLYFE maintenance"
+          git config user.email "actions@users.noreply.github.com"
+          git rm .github/workflows/digiy-home-return-once.yml
+          git add -A
+          git status --short
+          git commit -m "Navigation: fix RESA return to DIGIYLYFE home"
+          git push origin HEAD:main
