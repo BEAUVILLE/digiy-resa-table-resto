@@ -1,0 +1,51 @@
+name: DIGIYLYFE home navigation one-time fix
+
+on:
+  push:
+    paths:
+      - '.github/workflows/digiy-home-return-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix-navigation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Patch public reader navigation
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          HOME='https://digiylyfe.com/'
+          OLD=('https://digiy-hub.digiylyfe.com/','./digiy-hub/')
+          targets=[Path('index.html'),Path('catalogue.html')]
+          block='''\n<div class="digiy-global-home-return" style="max-width:980px;margin:18px auto;padding:0 14px;text-align:center">\n  <a href="https://digiylyfe.com/" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 15px;border-radius:999px;text-decoration:none;font:900 14px/1.2 system-ui,-apple-system,Segoe UI,sans-serif;border:1px solid rgba(127,127,127,.28);background:rgba(255,255,255,.08);color:inherit">🏠 Retour à l’accueil DIGIYLYFE</a>\n</div>\n'''
+          home_anchor=re.compile(r'<a\\b[^>]*href=["\\\']https://digiylyfe\\.com/(?:\\?[^"\\\']*)?["\\\'][^>]*>',re.I)
+          old_anchor=re.compile(r'<a\\b(?=[^>]*href=["\\\'](?:https://digiy-hub\\.digiylyfe\\.com/|\\./digiy-hub/)[^"\\\']*["\\\'])[^>]*>.*?</a>',re.I|re.S)
+          for p in targets:
+              if not p.exists(): continue
+              s=p.read_text(encoding='utf-8'); original=s; had_home=bool(home_anchor.search(s))
+              if any(x in s for x in OLD):
+                  if had_home: s=old_anchor.sub('',s)
+                  else:
+                      s=s.replace(OLD[0],HOME).replace(OLD[1],HOME)
+                      s=s.replace('← Retour DIGIY Hub','← Retour DIGIYLYFE').replace('🧭 HUB','🏠 DIGIYLYFE')
+              s=s.replace(OLD[0],HOME).replace(OLD[1],HOME)
+              if not home_anchor.search(s):
+                  s=s.replace('</body>',block+'</body>',1) if '</body>' in s else s+block
+              if s!=original: p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit surgical navigation fix and remove helper
+        shell: bash
+        run: |
+          git config user.name "DIGIYLYFE maintenance"
+          git config user.email "actions@users.noreply.github.com"
+          git rm .github/workflows/digiy-home-return-once.yml
+          git add index.html catalogue.html 2>/dev/null || true
+          git commit -m "Navigation: return public RESA pages to DIGIYLYFE home"
+          git push origin HEAD:main
