@@ -1,0 +1,29 @@
+name: Align RESA pricing band
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-resa-pricing-band-20260822.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add starting-price wording in RESA band
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html'); s=p.read_text(encoding='utf-8')
+          s=s.replace('MÉTIER / INDÉPENDANT · 19 900 FCFA / mois','MÉTIER / INDÉPENDANT · À PARTIR DE 19 900 FCFA / mois')
+          s=s.replace('ÉTABLISSEMENT / STRUCTURE · 28 000 FCFA / mois','ÉTABLISSEMENT / STRUCTURE · À PARTIR DE 28 000 FCFA / mois')
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          git config user.name "DIGIYLYFE"
+          git config user.email "actions@users.noreply.github.com"
+          git rm .github/workflows/fix-resa-pricing-band-20260822.yml
+          git add index.html
+          git diff --cached --quiet || git commit -m "UI: align RESA pricing band with starting prices"
+          git push
