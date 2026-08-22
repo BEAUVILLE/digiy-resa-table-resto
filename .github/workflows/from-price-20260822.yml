@@ -1,0 +1,38 @@
+name: Add starting-price wording RESA
+on:
+  push:
+    paths:
+      - '.github/workflows/from-price-20260822.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update membership wording
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html'); s=p.read_text(encoding='utf-8')
+          pairs=[
+          ('DEMANDE D’ADHÉSION · 19 900 FCFA / mois','DEMANDE D’ADHÉSION · À PARTIR DE 19 900 FCFA / mois'),
+          ('MEMBERSHIP REQUEST · 19,900 FCFA / month','MEMBERSHIP REQUEST · FROM 19,900 FCFA / month'),
+          ('SOLICITUD DE ADHESIÓN · 19 900 FCFA / mes','SOLICITUD DE ADHESIÓN · DESDE 19 900 FCFA / mes'),
+          ('PEDIDO DE ADESÃO · 19 900 FCFA / mês','PEDIDO DE ADESÃO · A PARTIR DE 19 900 FCFA / mês'),
+          ('MITGLIEDSCHAFT ANFRAGEN · 19.900 FCFA / Monat','MITGLIEDSCHAFT ANFRAGEN · AB 19.900 FCFA / Monat'),
+          ('RICHIESTA DI ADESIONE · 19 900 FCFA / mese','RICHIESTA DI ADESIONE · DA 19 900 FCFA / mese'),
+          ('LIDMAATSCHAP AANVRAGEN · 19.900 FCFA / maand','LIDMAATSCHAP AANVRAGEN · VANAF 19.900 FCFA / maand'),
+          ('طلب العضوية · 19,900 فرنك CFA / شهر','طلب العضوية · ابتداءً من 19,900 فرنك CFA / شهر')]
+          if pairs[0][0] not in s: raise SystemExit('French RESA price marker missing')
+          for a,b in pairs: s=s.replace(a,b)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          git config user.name "DIGIYLYFE"
+          git config user.email "actions@users.noreply.github.com"
+          git rm .github/workflows/from-price-20260822.yml
+          git add index.html
+          git diff --cached --quiet || git commit -m "UI: show RESA membership as starting price"
+          git push
