@@ -1,6 +1,5 @@
-/* DIGIY RESA — ancien cartouche de routes retiré de l’index public — 2026-08-12
-   Les anciennes portes vers fiche.html, reserver.html, inscription-resa.html,
-   catalogue.html, app.html, lexique-resa.html, PRO et HUB ne sont plus injectées.
-   Le fichier est conservé comme point neutre afin de ne pas casser le chargement
-   de l’index pendant la transition. */
+/* DIGIY RESA — ancienne mécanique archivée le 2026-08-25.
+   Ce chemin reste volontairement présent pour éviter les 404.
+   Le moteur correspondant est conservé dans archive/ancienne-mecanique-pro-resa-2026-08-25/.
+   Doctrine : ADHÉRENT SANS MOTEUR — LE MOTEUR RESTE À L’ATELIER. */
 (()=>{"use strict";})();

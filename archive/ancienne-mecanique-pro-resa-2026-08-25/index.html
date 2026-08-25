@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DIGIY RESA — Rendez-vous et réservations directes</title>
+<style>
+:root{--green:#073f32;--green2:#0d634b;--gold:#d8ad46;--cream:#f6f1e5;--paper:#fffefa;--ink:#173b31;--muted:#6e8179;--line:#dfe8e2}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--cream);color:var(--ink)}
+header{background:var(--green);color:#fff;border-bottom:4px solid var(--gold);padding:16px 14px}
+.wrap{max-width:980px;margin:auto}
+.headtop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.brandmark{font-size:26px} .brand{font-weight:950;font-size:22px} .sub{font-size:11px;color:#eadfae;margin-top:3px}
+.zero{border:1px solid var(--gold);border-radius:999px;padding:7px 10px;color:#f2d77e;font-size:10px;font-weight:900;text-align:center;white-space:nowrap}
+.nav,.langs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.nav a,.langs button{border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;border-radius:999px;padding:6px 9px;font-size:9px;font-weight:850;text-decoration:none;cursor:pointer}
+.langs button{background:#fffefa;color:var(--green);border-color:#e1e8e4} .langs button.active{background:var(--gold);border-color:var(--gold)}
+.join{margin-top:10px;display:flex;justify-content:space-between;gap:10px;align-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(216,173,70,.55);border-radius:13px;padding:9px 10px}
+.join div{display:flex;flex-direction:column;gap:2px} .join strong{font-size:11px} .join span{font-size:9px;color:#e8e2ca}
+.join a{background:var(--gold);color:var(--green);text-decoration:none;border-radius:999px;padding:8px 10px;font-size:9px;font-weight:950;text-align:center}
+main{max-width:980px;margin:auto;padding:16px 8px 40px}
+.section{display:flex;align-items:center;gap:9px;margin-bottom:9px} .section .ico{width:38px;height:38px;background:#e4efe8;border-radius:50%;display:grid;place-items:center}
+.section h1{font-size:18px;margin:0} .section p{font-size:10px;color:var(--muted);margin:2px 0 0}
+.doctrine{background:#fff8df;border:1px solid #ead28a;border-left:4px solid var(--gold);border-radius:11px;padding:9px 10px;font-size:9px;line-height:1.35;color:#5e5124;margin-bottom:10px}
+.doctrine strong{display:block;color:var(--green);font-size:10px;margin-bottom:3px}
+.listing{display:grid;grid-template-columns:34% 66%;background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:10px 0;box-shadow:0 7px 18px rgba(7,63,50,.07)}
+.visual{position:relative;display:block;min-height:390px;background:#dce5df;overflow:hidden} .visual img{width:100%;height:100%;object-fit:cover;display:block}
+.visual-hint{position:absolute;bottom:7px;left:6px;right:6px;background:rgba(7,63,50,.9);color:#fff;border-radius:999px;padding:6px 5px;text-align:center;font-size:8px;font-weight:900}
+.info{padding:10px 9px} .eyebrow{color:var(--gold);font-size:7px;font-weight:950;letter-spacing:.7px;margin:0 0 3px}
+.name-row{display:block} h2{font-size:17px;margin:0;color:var(--green);line-height:1.05} .activity{font-size:9px;color:var(--muted);margin:3px 0}
+.area{display:inline-block;background:#e8f1eb;border-radius:999px;padding:4px 6px;font-size:8px;font-weight:850}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin:7px 0 5px} .chip{font-size:7.5px;background:#eef4f0;border:1px solid #dfe8e2;border-radius:999px;padding:4px 5px;font-weight:750}
+.desc,.rule{font-size:8.5px;line-height:1.3;color:var(--muted);margin:5px 0} .rule{border-left:2px solid var(--gold);padding-left:6px}
+.direct{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:7px 0;margin:7px 0;display:grid;gap:3px}
+.direct div{display:grid;grid-template-columns:1.05fr .95fr;gap:4px;font-size:8px} .direct strong{color:var(--green);font-size:8.5px}
+.qrrow{display:flex;gap:7px;align-items:center;background:#edf5ef;border-radius:9px;padding:7px} .qr{width:54px;height:54px;background:white;padding:2px;border-radius:5px}
+.qrrow div{display:flex;flex-direction:column;gap:3px} .qrrow strong{font-size:8.5px} .qrrow span{font-size:7.5px;color:var(--muted);line-height:1.2}
+.actions{display:grid;grid-template-columns:1fr;gap:5px;margin-top:7px} .btn{text-decoration:none;border-radius:999px;padding:8px 7px;text-align:center;font-size:9px;font-weight:950}
+.primary{background:var(--green);color:#fff} .secondary{border:1px solid var(--green2);color:var(--green2);background:#fff} .whatsapp{border:1px solid #1d8b57;color:#1d8b57;background:#fff}
+footer{text-align:center;color:var(--muted);font-size:8px;padding:18px 5px}
+html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-right:2px solid var(--gold);padding-left:0;padding-right:6px}
+@media(min-width:651px){
+  main{padding:22px 14px 50px} .listing{grid-template-columns:34% 66%;border-radius:20px} .visual{min-height:440px} .info{padding:18px}
+  h2{font-size:25px} .activity{font-size:13px} .area{font-size:11px} .chip{font-size:11px;padding:6px 9px}
+  .desc,.rule{font-size:12px} .direct{grid-template-columns:repeat(3,1fr);gap:7px;padding:12px 0;margin:13px 0} .direct div{display:flex;flex-direction:column;text-align:center;font-size:10px}
+  .direct strong{font-size:11px} .qr{width:74px;height:74px} .qrrow strong{font-size:12px} .qrrow span{font-size:11px}
+  .actions{grid-template-columns:repeat(2,1fr);gap:8px} .btn{font-size:11px;padding:10px}
+  .doctrine{font-size:11px;padding:11px 12px} .section h1{font-size:22px} .section p{font-size:13px}
+}
+@media(max-width:380px){.listing{grid-template-columns:32% 68%} .visual{min-height:370px} .info{padding:8px 7px} h2{font-size:16px} .chip{font-size:7px;padding:3px 4px} .qr{width:48px;height:48px}}
+</style>
+
+<style id="resa-standard-extra">
+.resa-pricing{margin:10px 0 14px;padding:10px;border:1px solid #dfc36c;border-radius:13px;background:#fff9e8}
+.resa-pricing strong{display:block;font-size:10px;color:#624e18;margin-bottom:7px}
+.resa-pricing-actions{display:grid;grid-template-columns:1fr;gap:7px}
+.resa-pricing-actions a{display:flex;align-items:center;justify-content:center;text-align:center;min-height:42px;border-radius:999px;text-decoration:none;font-size:8.5px;font-weight:950;padding:7px}
+.resa-pricing-actions a:first-child{background:#073f32;color:#fff}
+.resa-pricing-actions a:last-child{background:#d8ad46;color:#073f32}
+.placeholder-slot{border:2px dashed #d8ad46;background:linear-gradient(180deg,#fffefa,#fff7e6)}
+.placeholder-visual{position:relative;background:linear-gradient(145deg,#073f32,#0c6049);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.placeholder-core{min-height:100%;width:100%;padding:18px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff}
+.placeholder-core .icon{font-size:44px;margin-bottom:10px}.placeholder-core strong{font-size:16px;line-height:1.08}.placeholder-core small{margin-top:8px;color:#eadfac;font-size:7px}
+.place-band{position:absolute;top:14px;left:-48px;right:-48px;transform:rotate(-12deg);background:#d8ad46;color:#073f32;text-align:center;font-size:10px;font-weight:1000;letter-spacing:.08em;padding:7px 0;box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.qr-empty{display:grid;place-items:center;border:2px dashed #9db4a7;color:#6d7d77;font-size:9px;font-weight:950;background:#fff}
+.resa-kind{color:#0b5b3e;font-weight:950}
+@media(max-width:430px){.resa-pricing-actions{grid-template-columns:1fr}}
+@media(min-width:651px){.resa-pricing{padding:14px 16px}.resa-pricing strong{font-size:13px}.resa-pricing-actions a{font-size:10.5px;min-height:48px}.placeholder-core .icon{font-size:62px}.placeholder-core strong{font-size:24px}.placeholder-core small{font-size:10px}.place-band{font-size:14px;padding:9px 0}}
+</style>
+
+
+<style id="resa-metiers-band-style">
+.metiers-band{
+  margin:12px 0 16px;
+  padding:12px;
+  border:1px solid rgba(216,173,70,.45);
+  border-radius:18px;
+  background:linear-gradient(145deg,rgba(255,249,232,.98),rgba(255,244,214,.96));
+}
+.metiers-band strong{
+  display:block;
+  color:#5e4912;
+  font-size:10px;
+  line-height:1.35;
+  margin-bottom:8px;
+}
+.metiers-band .metiers-row{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:2px;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+.metiers-band .metiers-row::-webkit-scrollbar{display:none}
+.metier-pill{
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:34px;
+  padding:7px 12px;
+  border-radius:999px;
+  border:1px solid rgba(7,63,50,.18);
+  background:#fff;
+  color:#073f32;
+  font-size:8.5px;
+  font-weight:950;
+  white-space:nowrap;
+  box-shadow:0 6px 14px rgba(0,0,0,.05);
+}
+.metiers-note{
+  margin-top:8px;
+  color:#6c5b2a;
+  font-size:8px;
+  line-height:1.4;
+  font-weight:850;
+}
+@media(min-width:651px){
+  .metiers-band{padding:15px 16px;border-radius:22px}
+  .metiers-band strong{font-size:12.5px}
+  .metier-pill{min-height:40px;padding:9px 14px;font-size:10.5px}
+  .metiers-note{font-size:10px}
+}
+</style>
+
+</head>
+<body>
+<header>
+<div class="wrap">
+  <div class="headtop">
+    <div><div class="brandmark">📅</div><div class="brand">DIGIY RESA</div><div class="sub">Réservations directes · rendez-vous · demandes de créneau</div></div>
+    <div class="zero">0 % COMMISSION<br>DIGIYLYFE</div>
+  </div>
+  <div class="nav">
+    <a href="https://digiylyfe.com/?lang=fr" target="_blank">🌍 DIGIYLYFE</a>
+    <a href="https://digiylyfe.com/" target="_blank">📅 DIGIY RESA</a>
+  </div>
+  <div class="langs" id="langs">
+    <button data-lang="fr" class="active">🇫🇷 FR</button><button data-lang="en">🇬🇧 EN</button><button data-lang="es">🇪🇸 ES</button><button data-lang="pt">🇵🇹 PT</button>
+    <button data-lang="de">🇩🇪 DE</button><button data-lang="it">🇮🇹 IT</button><button data-lang="nl">🇳🇱 NL</button><button data-lang="ar">🇸🇦 AR</button>
+  </div>
+  <div class="join">
+    <div><strong data-i18n="joinq">Vous recevez sur rendez-vous ou réservation ?</strong><span data-i18n="jointext">Rejoignez DIGIYLYFE comme adhérent et rendez votre activité visible pour une demande directe de rendez-vous ou de réservation.</span></div>
+    <a href="https://digiylyfe.com/tarifs-adherents-1.html?country=fr" target="_blank" data-i18n="join">DEMANDE D’ADHÉSION · 19 900 FCFA / mois · 45 € EUROPE</a>
+  </div>
+</div>
+</header>
+<main>
+  <a data-digiy-return-home="1" href="https://digiylyfe.com/" aria-label="Retour DIGIYLYFE.COM" style="width:100%;min-height:52px;display:flex;align-items:center;justify-content:center;margin:0 0 14px;padding:11px 18px;border:2px solid #d8ad46;border-radius:999px;background:#073f32;color:#fff;text-decoration:none;font:950 15px/1.2 system-ui,-apple-system,Segoe UI,sans-serif;letter-spacing:.02em;box-shadow:0 8px 20px rgba(7,63,50,.20)">← RETOUR DIGIYLYFE.COM</a>
+  <section class="section"><div class="ico">🛍️</div><div><h1 data-i18n="title">DIGIY RESA · ADHÉRENTS</h1><p data-i18n="subtitle">Rendez-vous · Réservations directes · Le professionnel confirme</p></div></section>
+  <div class="doctrine"><strong>🛡️ <span data-i18n="role">RÔLE DE DIGIYLYFE</span></strong><span data-i18n="doctrine">DIGIYLYFE publie la présence numérique de ses adhérents. Chaque professionnel reste seul responsable de ses créneaux, de sa disponibilité, de ses tarifs, de ses conditions, de ses obligations et de la prestation fournie. Une demande de rendez-vous ou de réservation n’est confirmée que par le professionnel. DIGIYLYFE ne confirme pas à sa place et ne perçoit pas le paiement de la prestation.</span></div>
+  
+    
+    <div class="resa-pricing">
+      <strong>UNE ADHÉSION DIGIYLYFE · MÊME PRÉSENCE</strong>
+      <div class="resa-pricing-actions">
+        <a href="https://digiylyfe.com/tarifs-adherents-1.html?country=fr" target="_blank" rel="noopener">ADHÉSION · 19 900 FCFA / mois · 45 € EUROPE</a>
+      </div>
+    </div>
+
+    
+    <div class="metiers-band" aria-label="Exemples de métiers RESA">
+      <strong>EXEMPLES DE MÉTIERS QUI PEUVENT ENTRER DANS DIGIY RESA</strong>
+      <div class="metiers-row">
+        <span class="metier-pill">🏛️ Architecte</span>
+        <span class="metier-pill">⚖️ Avocat</span>
+        <span class="metier-pill">🧮 Comptable</span>
+        <span class="metier-pill">💇 Coiffeur</span>
+        <span class="metier-pill">🔧 Garage</span>
+        <span class="metier-pill">💅 Esthétique</span>
+        <span class="metier-pill">💆 Massage</span>
+        <span class="metier-pill">🦷 Santé</span>
+        <span class="metier-pill">🏗️ Artisan</span>
+        <span class="metier-pill">🎓 Formation</span>
+      </div>
+      <div class="metiers-note">
+        Ce bandeau montre que RESA n’est pas limité à un seul secteur. Tout professionnel recevant sur rendez-vous,
+        demande de créneau ou réservation simple peut entrer dans ce moule.
+      </div>
+    </div>
+
+<article class="listing">
+      <a class="visual" href="https://f-g-nails.digiylyfe.com/" target="_blank" rel="noopener" aria-label="Voir FG NAILS">
+        <img src="https://f-g-nails.digiylyfe.com/fg-nails-carte-officielle.webp" alt="FG NAILS">
+        <span class="visual-hint">↗ <span>VOIR LA CARTE</span></span>
+      </a>
+      <div class="info">
+        <p class="eyebrow">ADHÉRENT / RÉFÉRENCE TERRAIN</p>
+        <div class="name-row">
+          <div><h2>FG NAILS</h2><p class="activity">Beauté · Onglerie · Soins</p></div>
+          <span class="area">📍 Saly · Sénégal</span>
+        </div>
+        <p class="resa-kind">📅 Rendez-vous beauté</p>
+        <div class="chips"><span class="chip">Beauté</span><span class="chip">Saly</span><span class="chip">Rendez-vous</span><span class="chip">WhatsApp</span></div>
+        <p class="desc">Onglerie, soins de beauté, sauna dôme, soins du visage et soins des cheveux. Le client contacte directement l’établissement pour convenir du moment.</p>
+        <p class="rule">La demande prépare le contact. Seul le professionnel confirme le créneau, la disponibilité, le prix final et la prestation.</p>
+        <div class="direct">
+          <div><strong>Contact direct</strong><span>+221 78 012 70 62</span></div>
+          <div><strong>Confirmation</strong><span>par le professionnel</span></div>
+          <div><strong>0 %</strong><span>commission DIGIYLYFE</span></div>
+        </div>
+        <div class="qrrow">
+          <img class="qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeAQAAAAB6HIMaAAAB8UlEQVR4nO2YQYrkMAxFn8uBWio3mKMoNyvqZq6j1AEanGWDwp+FUg0D09OrobVoYZIQbT6fb/9vNfFpHZfPe/DT/KqJJkCfDt6lXAB4VETrkvoEkyZho0/vkmZBtBegtQ28Pzfg+rwdvwZ7W74R0JdNu7+vYAobUQLQP5v7bbF7W1n2xr4VAPT3OnUradI1+nRMhXX7aK2xbwvOfgP6cztaa2tJbs8afSIp8D49f9XjFk3PbRWmfGqi6UXP26TRBI4pTHnw9oq6TS9zbIQJG10jbGiCFVVC6jbRnjybSnK7nK/g+tb6c+1va3/btG/BqJfBzlQTeH6Hja6R2aYet2jSJUxAn941wPukKloPU+BhI0xhChuaXlK3fMTFMPXTHcisWw/tBR6A5uP63N7btvDgBFzSeaen7QZ8SAIbZb2sp50lpTbCVHuXDWwkzgBpRP6viJZMs316n+Q6Ta0iWk+VYiOJxQYQNXU7XfP0spRrhrGq3JK3m0g+8dctsiS3WdPBIWcLrsRfDu2FvbXWFh5hd6Ctj2N9JbNyaD9mNa7JmRPwjOj1uD2vYOllr9MA8KiphLPyTPAzfdn9+tzqKeHVtHGdHntbYLE7++1YC+r2QjoCHCvH6mEjZyDfCejz+mN+O5GU6i2ZatrPJP+/NX8Ds4OaGAL3ITcAAAAASUVORK5CYII=" alt="QR FG NAILS">
+          <div><strong>QR · FG NAILS</strong><span>Le QR ouvre sa présence publique. Le contact reste direct.</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="https://f-g-nails.digiylyfe.com/" target="_blank" rel="noopener">VOIR LA CARTE / FICHE</a>
+          <a class="btn whatsapp" href="https://wa.me/221780127062" target="_blank" rel="noopener">WhatsApp direct</a>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="listing">
+      <a class="visual" href="https://babacar-plombier-pro.digiylyfe.com/" target="_blank" rel="noopener" aria-label="Voir BABACAR PLOMBIER PRO">
+        <img src="https://build.digiylyfe.com/babacar-plombier-pro.webp" alt="BABACAR PLOMBIER PRO">
+        <span class="visual-hint">↗ <span>VOIR LA CARTE</span></span>
+      </a>
+      <div class="info">
+        <p class="eyebrow">ADHÉRENT / RÉFÉRENCE TERRAIN</p>
+        <div class="name-row">
+          <div><h2>BABACAR PLOMBIER PRO</h2><p class="activity">Plombier · Dépannage · Installation</p></div>
+          <span class="area">📍 Saly · Mbour · Petite Côte</span>
+        </div>
+        <p class="resa-kind">📅 Demande d’intervention</p>
+        <div class="chips"><span class="chip">Artisan</span><span class="chip">Intervention</span><span class="chip">Sur devis</span><span class="chip">Contact direct</span></div>
+        <p class="desc">Fuite, dépannage, installation sanitaire, robinetterie, WC, douche, tuyauterie et canalisation. Le professionnel confirme disponibilité, diagnostic et devis.</p>
+        <p class="rule">La demande prépare le contact. Seul le professionnel confirme le créneau, la disponibilité, le prix final et la prestation.</p>
+        <div class="direct">
+          <div><strong>Contact direct</strong><span>+221 77 612 51 24</span></div>
+          <div><strong>Confirmation</strong><span>par le professionnel</span></div>
+          <div><strong>0 %</strong><span>commission DIGIYLYFE</span></div>
+        </div>
+        <div class="qrrow">
+          <img class="qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeAQAAAAB6HIMaAAAB8klEQVR4nO2YMW7cQAxF3ywFpKRu4KNQNwt8s9FRfIAAVLnACD/FSE4TO1VgFia2WIjNA/H5SU4TH8b5+DgH38l/JVECWIap379Z7xgVaUOSJTdnSDJJWZB2ARoBsTcMxH4uwbHar4JKuJP+CnG2bTl+/sgKQJ8mjw3vA4a/ni+9ANBfYwEEi6vBwt487W3DxVGQ9gF7a41js7fNMuxtA87W2lqQFt2B92kI+PWlniegjAEQlmGJpAHKKOq30iCUYQmA9+FSgpesrTouCGBcSuhKitY2waUMJcNlCQSukrV9QFjSVhbvlvvwPgAYXwf0SVy6lUy69oSksifg3TJMwjUIu5acorRKBljO/zFHsFXcwVCixJLZWROeqZBytA+8A8+XrtxhP1cWl2Usx1axyxJclgwCmPBTyfVqi5JBDGKKQbctlO2yq8U0DaFbxvBeVLewEM+V1jZTH/Bc4di+EujjmPuMSbqmA3jZm/cBPF/6s21na+e6w7VAfiXQZ8kdWOaTwqzzWwOG93q09+3wPtHU7ZpoJbvsaK21hR1igecaz3WWuqAS/rzVAEpMffptyS67TjDLmFYw5iwjSvrtOy2mrrzWxeG95DvYTXs5bZ+1HVS9efP9cOh23xHTckvSAswdbHgfrlnYkrpt3y/5/y35G4QejroKLlVGAAAAAElFTkSuQmCC" alt="QR BABACAR PLOMBIER PRO">
+          <div><strong>QR · BABACAR PLOMBIER PRO</strong><span>Le QR ouvre sa présence publique. Le contact reste direct.</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="https://babacar-plombier-pro.digiylyfe.com/" target="_blank" rel="noopener">VOIR LA CARTE / FICHE</a>
+          <a class="btn whatsapp" href="https://wa.me/221776125124" target="_blank" rel="noopener">WhatsApp direct</a>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="listing">
+      <a class="visual" href="https://part-chez-baptiste.digiylyfe.com/" target="_blank" rel="noopener" aria-label="Voir CHEZ BAPTISTE · SALY JOSEPH">
+        <img src="https://orange-pig-270004.hostingersite.com/wp-content/uploads/2025/06/042-BAPTISTE.png" alt="CHEZ BAPTISTE · SALY JOSEPH">
+        <span class="visual-hint">↗ <span>VOIR LA CARTE</span></span>
+      </a>
+      <div class="info">
+        <p class="eyebrow">ADHÉRENT / RÉFÉRENCE TERRAIN</p>
+        <div class="name-row">
+          <div><h2>CHEZ BAPTISTE · SALY JOSEPH</h2><p class="activity">Appartement · Séjour</p></div>
+          <span class="area">📍 Saly · Sénégal</span>
+        </div>
+        <p class="resa-kind">📅 Demande de disponibilité</p>
+        <div class="chips"><span class="chip">Séjour</span><span class="chip">4 personnes</span><span class="chip">30 000 / nuit</span><span class="chip">Direct</span></div>
+        <p class="desc">Appartement pour 4 personnes maximum. Le voyageur demande ses dates ; le propriétaire confirme directement la disponibilité et le montant final.</p>
+        <p class="rule">La demande prépare le contact. Seul le professionnel confirme le créneau, la disponibilité, le prix final et la prestation.</p>
+        <div class="direct">
+          <div><strong>Contact direct</strong><span>+221 77 134 28 89</span></div>
+          <div><strong>Confirmation</strong><span>par le professionnel</span></div>
+          <div><strong>0 %</strong><span>commission DIGIYLYFE</span></div>
+        </div>
+        <div class="qrrow">
+          <img class="qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeAQAAAAB6HIMaAAAB50lEQVR4nO2YMY4bMQxFn8wBtqSBHMBH0dxssTejgVzEN+CUBmT8FJKNFNlsFYTFDqYY+DcP39QXySY+fR6nzzX4Fr8SUQJYIknZBwyffvdRjvYEXRLQzmxcLTvHbpKyoLcnoLUdD7hCb5ewhKNt/xHoS/HYOd6Hh+X1ca4A9FfRhQdHg76VAPrjswGCDQSN/pMrHpuLoyDtKxP67y9QMhM2Zl4d3Ld+3xg/cvpMxdsBZccDj4ltyXCZYlT09oR/DFBit6bkce4c++NMyQRDCmWHrkSSKfAYUNJbJurwsOxSzA88hqsorQuXPR02VfYWW81MzPZguIYHVb01CQ9JJg36rASpKK2yDzowXFIowcOq0g6XJWPamwCWFKVVrExQvM6aZeVTtszEZbMS6EVPmWLWqkkDoJvCshf2tluCB/TZJKzyKEmLa9CnsdPkZW9BWun57y9sW8lQkPYEV+DedmDAW3Jv7X4JKSr2YNlXurqkeC0TVLUS1t7DNWdJy766hYK0CevymlHAbBVK9gmn566mA63tc4QcXNu55Owwr1pp+IoFYP1SjvYpHs1u79AHV1zDP+5tr+ftS+zt8vE4Y7d33fYN3qom2Bwe54yj7MNjzE6yIi2sNcKs2zDJsmbdtu9N/j8TfwHigo2hI2m5jQAAAABJRU5ErkJggg==" alt="QR CHEZ BAPTISTE · SALY JOSEPH">
+          <div><strong>QR · CHEZ BAPTISTE · SALY JOSEPH</strong><span>Le QR ouvre sa présence publique. Le contact reste direct.</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="https://part-chez-baptiste.digiylyfe.com/" target="_blank" rel="noopener">VOIR LA CARTE / FICHE</a>
+          <a class="btn whatsapp" href="https://wa.me/221771342889" target="_blank" rel="noopener">WhatsApp direct</a>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="listing">
+      <a class="visual" href="https://malraux-entre2.digiylyfe.com/" target="_blank" rel="noopener" aria-label="Voir LE MALRAUX">
+        <img src="https://malraux-entre2.digiylyfe.com/photos/malraux-salle.jpg" alt="LE MALRAUX">
+        <span class="visual-hint">↗ <span>VOIR LA CARTE</span></span>
+      </a>
+      <div class="info">
+        <p class="eyebrow">ADHÉRENT / RÉFÉRENCE TERRAIN</p>
+        <div class="name-row">
+          <div><h2>LE MALRAUX</h2><p class="activity">Restaurant · Cuisine périgordine</p></div>
+          <span class="area">📍 Sarlat-la-Canéda · France</span>
+        </div>
+        <p class="resa-kind">📅 Demande de table</p>
+        <div class="chips"><span class="chip">Restaurant</span><span class="chip">Sarlat</span><span class="chip">Table</span><span class="chip">Contact direct</span></div>
+        <p class="desc">Restaurant traditionnel à Sarlat. Le client contacte directement l’établissement pour demander une table ; le restaurant garde la confirmation.</p>
+        <p class="rule">La demande prépare le contact. Seul le professionnel confirme le créneau, la disponibilité, le prix final et la prestation.</p>
+        <div class="direct">
+          <div><strong>Contact direct</strong><span>+33 6 42 16 06 57</span></div>
+          <div><strong>Confirmation</strong><span>par le professionnel</span></div>
+          <div><strong>0 %</strong><span>commission DIGIYLYFE</span></div>
+        </div>
+        <div class="qrrow">
+          <img class="qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeAQAAAAB6HIMaAAAB6UlEQVR4nO2YTWrkUAyEP7cMWaohB5ijyDcLfbPXR8kBBp6XATU1C7mTLPKzGqJFhLGFtSmKeiU9LeLTuJ0+r8Fv8bsimgA2I102I33gxXdkO7QnCOkuB7/YjNw3kzR7chsQpqGJSQXeJjZ7cgvA/gSRYLqwbw0AfVn0sXJlXyCWcwdAH8YKqD5wO5OQj2N1sTdE++YJ7x+gpSesh1/tV4OXlXycK5RH9OsOaAblsS5AGukyjezIbSkhEvKe48JHSwdDGkngStAMmxTJbbmVRgmgclzpPZVwKiaX5WmFlWDfbP4soK9CM5LQrEYmTdIHkK5+3CJJkxoMTAOiElNTtHn3BFzHeDNpifbEvti8ri4IPW/A7fyzgL4KSekjfZgGLs0AbHZ1MI30gY90vQ66EC2VcPQvaZhUbw6L6Mmt7mMYEOnC1fmU1e2mDpc9bzZ5+TNy33qeMtNhXOmjpJtEy/kWadgMzdCMdB2K9aGOSjg6rxXmg1VKwB3RVswoN6jpS5OW3J7Yl2VZVq7sm3Sp6+RaDLdDi2atOwIfh4kRarr9eN3VyN5dHGjqCffivrzUMgFwpV9+GtCHsd6TeND1do6Hv4s9b1fHsukNvRqENMrHTKr//ZTwtqtRTV8+Xg2tH9rld5P/34r/ABcZkVE6WsQMAAAAAElFTkSuQmCC" alt="QR LE MALRAUX">
+          <div><strong>QR · LE MALRAUX</strong><span>Le QR ouvre sa présence publique. Le contact reste direct.</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="https://malraux-entre2.digiylyfe.com/" target="_blank" rel="noopener">VOIR LA CARTE / FICHE</a>
+          <a class="btn whatsapp" href="tel:+33642160657" target="_blank" rel="noopener">Appeler</a>
+        </div>
+      </div>
+    </article>
+    
+    <article class="listing placeholder-slot">
+      <a class="visual placeholder-visual" href="https://digiylyfe.com/tarifs-adherents-1.html?country=fr" target="_blank" rel="noopener">
+        <div class="place-band">PLACE À PRENDRE</div>
+        <div class="placeholder-core"><div class="icon">🦷</div><strong>CABINET / SANTÉ<br>VOTRE PLACE ICI</strong><small>Consultation · contrôle · rendez-vous</small></div>
+      </a>
+      <div class="info">
+        <p class="eyebrow">EMPLACEMENT FUTUR · RESA</p>
+        <div class="name-row"><div><h2>PLACE À PRENDRE</h2><p class="activity">Cabinet · Santé · Consultation</p></div><span class="area">📍 Votre zone</span></div>
+        <div class="chips"><span class="chip">Votre spécialité</span><span class="chip">Vos créneaux</span><span class="chip">Votre contact</span><span class="chip">Votre carte</span></div>
+        <p class="desc">Emplacement prévu pour un futur adhérent recevant sur rendez-vous. Le prix n’est jamais inventé avant diagnostic.</p>
+        <p class="rule">La carte reste libre jusqu’à l’arrivée d’un professionnel réel et validé.</p>
+        <div class="direct"><div><strong>Statut</strong><span>Place à prendre</span></div><div><strong>Confirmation</strong><span>par le futur professionnel</span></div><div><strong>0 %</strong><span>commission DIGIYLYFE</span></div></div>
+        <div class="qrrow"><div class="qr qr-empty">QR</div><div><strong>QR · FUTUR ADHÉRENT</strong><span>Le QR sera posé après validation de sa carte.</span></div></div>
+      </div>
+    </article>
+
+    <article class="listing placeholder-slot">
+      <a class="visual placeholder-visual" href="https://digiylyfe.com/tarifs-adherents-1.html?country=fr" target="_blank" rel="noopener">
+        <div class="place-band">PLACE À PRENDRE</div>
+        <div class="placeholder-core"><div class="icon">🔧</div><strong>GARAGE / SERVICE<br>VOTRE PLACE ICI</strong><small>Diagnostic · réparation · créneau</small></div>
+      </a>
+      <div class="info">
+        <p class="eyebrow">EMPLACEMENT FUTUR · RESA</p>
+        <div class="name-row"><div><h2>PLACE À PRENDRE</h2><p class="activity">Garage · Réparation · Service</p></div><span class="area">📍 Votre zone</span></div>
+        <div class="chips"><span class="chip">Votre service</span><span class="chip">Votre capacité</span><span class="chip">Votre zone</span><span class="chip">Votre contact</span></div>
+        <p class="desc">Emplacement libre pour un garage ou un service qui souhaite recevoir des demandes de créneau sans perdre le contact direct.</p>
+        <p class="rule">Le professionnel garde le diagnostic, le devis, le créneau et la confirmation.</p>
+        <div class="direct"><div><strong>Statut</strong><span>Place à prendre</span></div><div><strong>Contact</strong><span>À renseigner</span></div><div><strong>0 %</strong><span>commission DIGIYLYFE</span></div></div>
+        <div class="qrrow"><div class="qr qr-empty">QR</div><div><strong>QR · FUTUR SERVICE</strong><span>Le QR sera activé avec sa présence DIGIYLYFE.</span></div></div>
+      </div>
+    </article>
+
+  <footer data-i18n="footer">DIGIYLYFE.COM · RESA · 0 % COMMISSION</footer>
+</main>
+<script>
+const T = {"fr": {"tag": "ADHÉRENT DIGIYLYFE", "title": "DIGIY RESA · ADHÉRENTS", "subtitle": "Rendez-vous · Réservations directes · Le professionnel confirme", "joinq": "Vous recevez sur rendez-vous ou réservation ?", "join": "DEMANDE D’ADHÉSION · 19 900 FCFA / mois · 45 € EUROPE", "jointext": "Rejoignez DIGIYLYFE comme adhérent et rendez votre activité visible pour une demande directe de rendez-vous ou de réservation.", "role": "RÔLE DE DIGIYLYFE", "doctrine": "DIGIYLYFE publie la présence numérique de ses adhérents. Chaque professionnel reste seul responsable de ses créneaux, de sa disponibilité, de ses tarifs, de ses conditions, de ses obligations et de la prestation fournie. Une demande de rendez-vous ou de réservation n’est confirmée que par le professionnel. DIGIYLYFE ne confirme pas à sa place et ne perçoit pas le paiement de la prestation.", "contact": "Contact direct", "payment": "Paiement direct", "merchant": "au commerçant", "commission": "commission DIGIYLYFE", "availability": "Produits, disponibilité, prix et conditions : accord direct avec le commerçant, sous sa responsabilité.", "qr": "Scannez pour ouvrir et conserver sa présence DIGIYLYFE.", "card": "VOIR LA CARTE", "fiche": "VOIR LA FICHE", "site": "VOIR LE SITE", "wa": "WhatsApp direct", "footer": "DIGIYLYFE.COM · RESA · 0 % COMMISSION"}, "en": {"tag": "DIGIYLYFE MEMBER", "title": "DIGIY RESA · MEMBERS", "subtitle": "Appointments · Direct bookings · The professional confirms", "joinq": "Do customers book or make appointments with you?", "join": "MEMBERSHIP REQUEST · 19,900 FCFA / month · €45 EUROPE", "jointext": "Join DIGIYLYFE as a member and make your activity visible for direct appointment or booking requests.", "role": "ROLE OF DIGIYLYFE", "doctrine": "DIGIYLYFE publishes the digital presence of its members. Each professional remains solely responsible for schedules, availability, prices, conditions, obligations and the service provided. An appointment or booking request is confirmed only by the professional. DIGIYLYFE does not confirm on their behalf and does not collect payment for the service.", "contact": "Direct contact", "payment": "Direct payment", "merchant": "to merchant", "commission": "DIGIYLYFE commission", "availability": "Products, availability, prices and conditions: agreed directly with the merchant, under their responsibility.", "qr": "Scan to open and save their DIGIYLYFE presence.", "card": "VIEW CARD", "fiche": "VIEW PROFILE", "site": "VIEW SITE", "wa": "Direct WhatsApp", "footer": "DIGIYLYFE.COM · RESA · 0 % COMMISSION"}, "es": {"tag": "MIEMBRO DIGIYLYFE", "title": "DIGIY RESA · MIEMBROS", "subtitle": "Citas · Reservas directas · El profesional confirma", "joinq": "¿Recibes clientes con cita o reserva?", "join": "SOLICITUD DE ADHESIÓN · 19 900 FCFA / mes · 45 € EUROPA", "jointext": "Únete a DIGIYLYFE como miembro y prepara tu tarjeta de visita digital.", "role": "PAPEL DE DIGIYLYFE", "doctrine": "DIGIYLYFE publica la presencia digital de sus miembros. Cada comerciante es el único responsable de su actividad, productos, precios, obligaciones, stock, ventas, entregas y compromisos con sus clientes. DIGIYLYFE no vende en su nombre ni cobra sus ventas.", "contact": "Contacto directo", "payment": "Pago directo", "merchant": "al comerciante", "commission": "comisión DIGIYLYFE", "availability": "Productos, disponibilidad, precios y condiciones: acuerdo directo con el comerciante, bajo su responsabilidad.", "qr": "Escanea para abrir y guardar su presencia DIGIYLYFE.", "card": "VER TARJETA", "fiche": "VER FICHA", "site": "VER SITIO", "wa": "WhatsApp directo", "footer": "DIGIYLYFE.COM · RESA · 0 % COMMISSION"}, "pt": {"tag": "MEMBRO DIGIYLYFE", "title": "DIGIY RESA · MEMBROS", "subtitle": "Marcações · Reservas diretas · O profissional confirma", "joinq": "Recebe clientes por marcação ou reserva?", "join": "PEDIDO DE ADESÃO · 19 900 FCFA / mês · 45 € EUROPA", "jointext": "Junte-se à DIGIYLYFE como membro e prepare o seu cartão de visita digital.", "role": "PAPEL DA DIGIYLYFE", "doctrine": "A DIGIYLYFE publica a presença digital dos seus membros. Cada comerciante é o único responsável pela sua atividade, produtos, preços, obrigações, stock, vendas, entregas e compromissos com os clientes. A DIGIYLYFE não vende em seu nome nem recebe o pagamento das suas vendas.", "contact": "Contacto direto", "payment": "Pagamento direto", "merchant": "ao comerciante", "commission": "comissão DIGIYLYFE", "availability": "Produtos, disponibilidade, preços e condições: acordo direto com o comerciante, sob a sua responsabilidade.", "qr": "Digitalize para abrir e guardar a presença DIGIYLYFE.", "card": "VER CARTÃO", "fiche": "VER FICHA", "site": "VER SITE", "wa": "WhatsApp direto", "footer": "DIGIYLYFE.COM · RESA · 0 % COMMISSION"}, "de": {"tag": "DIGIYLYFE MITGLIED", "title": "DIGIY RESA · MITGLIEDER", "subtitle": "Termine · Direktreservierungen · Der Profi bestätigt", "joinq": "Arbeiten Sie mit Terminen oder Reservierungen?", "join": "MITGLIEDSCHAFT · 19.900 FCFA / Monat · 45 € EUROPA", "jointext": "Werden Sie DIGIYLYFE-Mitglied und erstellen Sie Ihre digitale Visitenkarte.", "role": "ROLLE VON DIGIYLYFE", "doctrine": "DIGIYLYFE veröffentlicht die digitale Präsenz seiner Mitglieder. Jeder Händler ist allein verantwortlich für Tätigkeit, Produkte, Preise, Pflichten, Bestand, Verkäufe, Lieferungen und Zusagen gegenüber Kunden. DIGIYLYFE verkauft nicht in seinem Namen und nimmt keine Zahlungen für seine Verkäufe entgegen.", "contact": "Direkter Kontakt", "payment": "Direkte Zahlung", "merchant": "an den Händler", "commission": "DIGIYLYFE Provision", "availability": "Produkte, Verfügbarkeit, Preise und Bedingungen: direkte Vereinbarung mit dem Händler in dessen Verantwortung.", "qr": "Scannen, um die DIGIYLYFE-Präsenz zu öffnen und zu speichern.", "card": "KARTE ANSEHEN", "fiche": "PROFIL ANSEHEN", "site": "WEBSITE", "wa": "WhatsApp direkt", "footer": "DIGIYLYFE.COM · RESA · 0 % COMMISSION"}, "it": {"tag": "ADERENTE DIGIYLYFE", "title": "DIGIY RESA · ADERENTI", "subtitle": "Appuntamenti · Prenotazioni dirette · Conferma del professionista", "joinq": "Ricevi su appuntamento o prenotazione?", "join": "ADESIONE · 19 900 FCFA / mese · 45 € EUROPA", "jointext": "Entra in DIGIYLYFE come aderente e prepara il tuo biglietto da visita digitale.", "role": "RUOLO DI DIGIYLYFE", "doctrine": "DIGIYLYFE pubblica la presenza digitale dei suoi aderenti. Ogni commerciante resta l'unico responsabile della propria attività, prodotti, prezzi, obblighi, scorte, vendite, consegne e impegni verso i clienti. DIGIYLYFE non vende al suo posto e non incassa i pagamenti delle sue vendite.", "contact": "Contatto diretto", "payment": "Pagamento diretto", "merchant": "al commerciante", "commission": "commissione DIGIYLYFE", "availability": "Prodotti, disponibilità, prezzi e condizioni: accordo diretto con il commerciante, sotto la sua responsabilità.", "qr": "Scansiona per aprire e salvare la presenza DIGIYLYFE.", "card": "VEDI BIGLIETTO", "fiche": "VEDI SCHEDA", "site": "VEDI SITO", "wa": "WhatsApp diretto", "footer": "DIGIYLYFE.COM · RESA · 0 % COMMISSION"}, "nl": {"tag": "DIGIYLYFE LID", "title": "DIGIY RESA · LEDEN", "subtitle": "Afspraken · Direct reserveren · De professional bevestigt", "joinq": "Werk je met afspraken of reserveringen?", "join": "LIDMAATSCHAP · 19.900 FCFA / maand · 45 € EUROPA", "jointext": "Word lid van DIGIYLYFE en maak je digitale visitekaart klaar.", "role": "ROL VAN DIGIYLYFE", "doctrine": "DIGIYLYFE publiceert de digitale aanwezigheid van zijn leden. Elke handelaar blijft zelf verantwoordelijk voor zijn activiteit, producten, prijzen, verplichtingen, voorraad, verkoop, leveringen en afspraken met klanten. DIGIYLYFE verkoopt niet namens hem en ontvangt geen betalingen voor zijn verkopen.", "contact": "Direct contact", "payment": "Direct betalen", "merchant": "aan handelaar", "commission": "DIGIYLYFE commissie", "availability": "Producten, beschikbaarheid, prijzen en voorwaarden: rechtstreeks afgesproken met de handelaar, onder diens verantwoordelijkheid.", "qr": "Scan om de DIGIYLYFE-pagina te openen en te bewaren.", "card": "BEKIJK KAART", "fiche": "BEKIJK FICHE", "site": "BEKIJK SITE", "wa": "WhatsApp direct", "footer": "DIGIYLYFE.COM · RESA · 0 % COMMISSION"}, "ar": {"tag": "عضو DIGIYLYFE", "title": "DIGIY RESA · الأعضاء", "subtitle": "مواعيد · حجوزات مباشرة · المهني يؤكد", "joinq": "هل تستقبل العملاء بموعد أو حجز؟", "join": "العضوية · 19,900 فرنك CFA / شهر · 45 € أوروبا", "jointext": "انضم إلى DIGIYLYFE كعضو وجهّز بطاقة عملك الرقمية.", "role": "دور DIGIYLYFE", "doctrine": "تنشر DIGIYLYFE الحضور الرقمي لأعضائها. يبقى كل تاجر مسؤولاً وحده عن نشاطه ومنتجاته وأسعاره والتزاماته ومخزونه ومبيعاته وتسليماته وتعهداته تجاه العملاء. لا تبيع DIGIYLYFE نيابة عنه ولا تستلم مدفوعات مبيعاته.", "contact": "تواصل مباشر", "payment": "دفع مباشر", "merchant": "للتاجر", "commission": "عمولة DIGIYLYFE", "availability": "المنتجات والتوفر والأسعار والشروط: اتفاق مباشر مع التاجر وتحت مسؤوليته.", "qr": "امسح الرمز لفتح وحفظ حضور DIGIYLYFE.", "card": "عرض البطاقة", "fiche": "عرض الصفحة", "site": "عرض الموقع", "wa": "واتساب مباشر", "footer": "DIGIYLYFE.COM · RESA · 0 % COMMISSION"}};
+function setLang(lang){
+  if(!T[lang]) lang='fr';
+  document.documentElement.lang=lang;
+  document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.dataset.i18n; if(T[lang][k]) el.textContent=T[lang][k];
+  });
+  document.querySelectorAll('#langs button').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+  const u=new URL(location.href); u.searchParams.set('lang',lang); history.replaceState(null,'',u);
+}
+document.querySelectorAll('#langs button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+setLang(new URLSearchParams(location.search).get('lang')||'fr');
+</script>
+
+<div class="digiy-global-home-return" style="max-width:980px;margin:18px auto;padding:0 14px;text-align:center">
+  <a href="https://digiylyfe.com/" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 15px;border-radius:999px;text-decoration:none;font:900 14px/1.2 system-ui,-apple-system,Segoe UI,sans-serif;border:1px solid rgba(127,127,127,.28);background:rgba(255,255,255,.08);color:inherit">🏠 Retour à l’accueil DIGIYLYFE</a>
+</div>
+</body>
+</html>
+
