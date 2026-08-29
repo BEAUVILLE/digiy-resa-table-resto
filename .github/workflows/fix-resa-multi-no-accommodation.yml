@@ -1,0 +1,65 @@
+name: Fix RESA multi without accommodation
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-resa-multi-no-accommodation.yml'
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Correct RESA scope and price
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          reps={
+          'Hébergement, chauffeur, restaurant, beauté, bien-être et services sur rendez-vous.':'Chauffeur, restaurant, beauté, bien-être et services sur rendez-vous.',
+          "{id:'baptiste-loc',icon:'🏠',name:'CHEZ BAPTISTE — Appartement à Saly',type:'accommodation',zone:'Saly · Petite Côte',chips:['Appartement','Réservation directe','Calendrier','Paiement direct'],url:'https://part-chez-baptiste.digiylyfe.com/',wa:'https://wa.me/221771342889'},\n":'',
+          "{id:'stay',icon:'🏡',title:'Villa / résidence',zone:'Somone',price:'28 000 FCFA / mois',chips:['Séjour','Disponibilités','Réservation directe','LOC'],url:'https://digiylyfe.com/demo-petite-cote.html?need=accommodation&variant=2&local=somone&lang='},":"{id:'nails',icon:'💅',title:'Onglerie / beauté',zone:'Ngaparou',price:'19 900 FCFA / mois',chips:['Ongles','Beauté','Rendez-vous direct','Carte digitale · QR'],url:'https://digiylyfe.com/demo-petite-cote.html?need=beauty&variant=2&local=ngaparou&lang='},",
+          "Une seule porte pour réserver un séjour, un trajet, une table, un soin ou une prestation.":"Une seule porte pour réserver un trajet, une table, un soin ou une prestation.",
+          "One door to book a stay, a ride, a table, a care appointment or a service.":"One door to book a ride, a table, a care appointment or a service.",
+          "Una sola puerta para reservar alojamiento, trayecto, mesa, cuidado o servicio.":"Una sola puerta para reservar trayecto, mesa, cuidado o servicio.",
+          "Uma única porta para reservar estadia, trajeto, mesa, cuidado ou serviço.":"Uma única porta para reservar trajeto, mesa, cuidado ou serviço.",
+          "Una sola porta per prenotare soggiorno, tragitto, tavolo, trattamento o servizio.":"Una sola porta per prenotare tragitto, tavolo, trattamento o servizio.",
+          "Eine Tür für Unterkunft, Fahrt, Tisch, Pflege oder Dienstleistung.":"Eine Tür für Fahrt, Tisch, Pflege oder Dienstleistung.",
+          "Eén deur om verblijf, rit, tafel, verzorging of dienst te reserveren.":"Eén deur om rit, tafel, verzorging of dienst te reserveren.",
+          "بوابة واحدة لحجز إقامة أو رحلة أو طاولة أو عناية أو خدمة.":"بوابة واحدة لحجز رحلة أو طاولة أو عناية أو خدمة.",
+          "RESA MULTI ne crée pas un nouveau tarif. Chaque professionnel conserve le tarif de sa catégorie métier : par exemple LOC reste à 28 000 FCFA / mois.":"RESA MULTI exclut l’hébergement : les métiers de réservation présentés ici sont à 19 900 FCFA / mois. L’hébergement reste dans LOC à 28 000 FCFA / mois.",
+          "RESA MULTI does not create a new price. Each professional keeps the price of their trade category; for example LOC remains 28,000 FCFA / month.":"RESA MULTI excludes accommodation: the reservation trades shown here are 19,900 FCFA / month. Accommodation remains in LOC at 28,000 FCFA / month.",
+          "RESA MULTI no crea una tarifa nueva. Cada profesional conserva la tarifa de su categoría; por ejemplo LOC sigue en 28 000 FCFA / mes.":"RESA MULTI excluye el alojamiento: los oficios de reserva mostrados aquí cuestan 19 900 FCFA / mes. El alojamiento permanece en LOC a 28 000 FCFA / mes.",
+          "RESA MULTI não cria uma nova tarifa. Cada profissional mantém a tarifa da sua categoria; por exemplo LOC continua em 28 000 FCFA / mês.":"RESA MULTI exclui alojamento: as atividades de reserva apresentadas aqui custam 19 900 FCFA / mês. O alojamento permanece no LOC a 28 000 FCFA / mês.",
+          "RESA MULTI non crea una nuova tariffa. Ogni professionista mantiene la tariffa della propria categoria; per esempio LOC resta a 28 000 FCFA / mese.":"RESA MULTI esclude l’alloggio: i mestieri di prenotazione mostrati qui costano 19 900 FCFA / mese. L’alloggio resta in LOC a 28 000 FCFA / mese.",
+          "RESA MULTI schafft keinen neuen Tarif. Jeder Profi behält den Tarif seiner Kategorie; LOC bleibt zum Beispiel bei 28 000 FCFA / Monat.":"RESA MULTI schließt Unterkunft aus: die hier gezeigten Reservierungsberufe kosten 19.900 FCFA / Monat. Unterkunft bleibt in LOC bei 28.000 FCFA / Monat.",
+          "RESA MULTI maakt geen nieuw tarief. Elke professional behoudt het tarief van zijn categorie; LOC blijft bijvoorbeeld 28 000 FCFA / maand.":"RESA MULTI sluit accommodatie uit: de hier getoonde reserveringsberoepen kosten 19 900 FCFA / maand. Accommodatie blijft in LOC op 28 000 FCFA / maand.",
+          "RESA MULTI لا تنشئ سعراً جديداً. يحتفظ كل مهني بسعر فئته؛ فمثلاً LOC يبقى 28 000 FCFA شهرياً.":"RESA MULTI تستثني الإقامة: المهن المعروضة هنا للحجز بسعر 19 900 FCFA شهرياً. تبقى الإقامة ضمن LOC بسعر 28 000 FCFA شهرياً."
+          }
+          for a,b in reps.items():
+              if a not in s:
+                  print('WARN missing:',a[:80])
+              s=s.replace(a,b)
+          if 'baptiste-loc' in s or "id:'stay'" in s or "price:'28 000 FCFA / mois'" in s:
+              raise SystemExit('Accommodation/28000 residue remains in RESA index')
+          if s.count("price:'19 900 FCFA / mois'") != 6:
+              raise SystemExit('RESA must expose exactly 6 open places at 19900')
+          p.write_text(s)
+
+          r=Path('README md')
+          t=r.read_text()
+          t=t.replace('- hébergement / séjour ;\n','')
+          t=t.replace('RESA MULTI n’invente pas un nouveau tarif. Chaque professionnel conserve le tarif de sa catégorie métier. Exemple : LOC reste à 28 000 FCFA / mois.','RESA MULTI exclut l’hébergement. Les métiers de réservation couverts par RESA MULTI sont à 19 900 FCFA / mois. L’hébergement reste dans LOC à 28 000 FCFA / mois.')
+          if '- hébergement / séjour' in t:
+              raise SystemExit('README accommodation residue')
+          r.write_text(t)
+          PY
+      - name: Commit correction and remove installer
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html 'README md'
+          git rm .github/workflows/fix-resa-multi-no-accommodation.yml
+          git commit -m "RESA MULTI: exclude accommodation and set 19900 [skip ci]"
+          git push
