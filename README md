@@ -1,53 +1,38 @@
-DIGIY RÉSA — Réservation de Tables en Ligne
-Super App DIGIYLYFE • Sénégal → Afrique • 0% commission
+DIGIY RÉSA MULTI — Porte transversale de réservation DIGIYLYFE
 
-DIGIY RÉSA est la vitrine officielle des restaurants et espaces partenaires permettant aux clients de réserver une table instantanément, sans commission, sans détours, avec un service fluide et moderne.
+Version actuelle : 29 août 2026
 
-L’objectif :
-🔥 mettre en valeur chaque partenaire
-🔥 offrir une expérience premium aux clients
-🔥 garder 100% des revenus pour le restaurant
+DIGIY RÉSA n’est plus limité à la réservation de tables de restaurant.
 
-🚀 Fonctionnalités
+DOCTRINE
+- Une porte de réservation pour plusieurs métiers.
+- Le client prépare sa demande.
+- La Carte Vitrine montre le professionnel.
+- La fiche métier reste le moteur du professionnel.
+- Le professionnel confirme lui-même disponibilité, créneau, conditions et montant final.
+- Paiement direct au professionnel.
+- 0 % commission DIGIYLYFE.
 
-Galerie des restaurants partenaires DIGIY.
+MÉTIERS / USAGES COUVERTS
+- restaurant / table ;
+- hébergement / séjour ;
+- chauffeur / transfert ;
+- beauté / coiffure / soins ;
+- massage / bien-être ;
+- prestation événementielle ou service sur rendez-vous.
 
-Fiches détaillées : photos, descriptions, horaires, catégories.
+PROCESS INDUSTRIEL
+BESOIN → CARTE VITRINE = VISAGE → FICHE MÉTIER = MOTEUR → CONFIRMATION PAR LE PROFESSIONNEL.
 
-Bouton Réserver une Table (lien externe ou page DIGIY si activée).
+RÈGLE COMMERCIALE
+RESA MULTI n’invente pas un nouveau tarif. Chaque professionnel conserve le tarif de sa catégorie métier. Exemple : LOC reste à 28 000 FCFA / mois.
 
-Bouton WhatsApp Direct avec message pré-rempli.
+PRÉSENCES RÉELLES
+Les professionnels réels apparaissent avant les exemples de recrutement. Une demande préparée ne vaut jamais confirmation de réservation.
 
-Interface 100% mobile-first (optimisée téléphones).
+PLACES À PRENDRE
+Les exemples servent uniquement à montrer ce que peut devenir une future présence DIGIYLYFE. Ils doivent toujours être identifiés comme démonstration / pas encore adhérent.
 
-Design premium DIGIY (Or + Vert Sénégal).
+Ancienne mécanique PRO RESA RESTO : ne pas restaurer. Elle reste dans son archive dédiée.
 
-Aucun backend requis pour la version statique → ultra légère, ultra rapide.
-
-🧩 Arborescence du projet
-DIGIY-RESA/
-│── index.html      → Page principale (galerie de restaurants)
-│── README.md       → Documentation du projet
-│── /assets         → (optionnel) Images locales si ajoutées
-
-🍽️ Concept DIGIY RÉSA
-
-La philosophie est simple :
-
-🔸 1. Le restaurateur reste maître de son argent
-
-DIGIY n’encaisse rien →
-Paiement direct, 0% commission.
-
-🔸 2. Le client réserve en quelques secondes
-
-Choix → Vue → Réservation → WhatsApp.
-Tout est pensé pour la rapidité et la simplicité.
-
-🔸 3. Vitrine digitale gratuite
-
-Chaque partenaire gagne une présence DIGIY :
-📸 photo
-📋 description
-📞 WhatsApp direct
-🌍 localisation (option)
+Humain au volant. IA dans l’atelier. Le professionnel garde la main.
