@@ -1,1 +1,150 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gestion BEAUTY</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>*{box-sizing:border-box}body{font:15px system-ui;background:#f8edf4;padding:18px;color:#342333}.wrap{max-width:760px;margin:auto}.card{background:#fff;border:1px solid #e5cfdb;border-radius:20px;padding:18px;margin-top:14px}input,select,textarea,button{width:100%;min-height:44px;margin-top:8px;border-radius:12px;border:1px solid #dbc7d2;padding:10px;font:inherit}textarea{min-height:90px}button{background:#7b2e5c;color:#fff;font-weight:900}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:650px){.grid{grid-template-columns:1fr}}</style></head><body><div class="wrap"><a href="./index.html?slug=test-resa-beauty-saly">← Vue publique</a><section class="card"><h1 id="title">💇 BEAUTY MASTER</h1><div id="who"></div><div class="grid"><input id="city" placeholder="Ville"><input id="zone" placeholder="Zone"><select id="status"><option value="available">Disponible</option><option value="busy">Occupé</option><option value="unavailable">Indisponible</option></select><input id="wa" placeholder="+221..."></div><textarea id="note" placeholder="Note d'ouverture"></textarea><textarea id="services" placeholder='Prestations JSON'></textarea><button id="save">ENREGISTRER</button><div id="msg"></div></section></div><script>(()=>{'use strict';const db=supabase.createClient('https://wesqmwjjtsefyjnluosj.supabase.co','sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3',{auth:{persistSession:true,detectSessionInUrl:true}}),$=id=>document.getElementById(id),slug=new URLSearchParams(location.search).get('slug')||'test-resa-beauty-saly';let id=null;async function boot(){const {data:{session}}=await db.auth.getSession();if(!session)return location.replace('./acces-proprietaire.html?slug='+encodeURIComponent(slug));$('who').textContent='Connecté : '+session.user.email;const {data,error}=await db.rpc('digiy_beauty_owner_get_v1',{p_slug:slug});if(error)return $('msg').textContent='⚠️ '+error.message;const r=Array.isArray(data)?data[0]:data;if(!r)return $('msg').textContent='Aucun accès propriétaire';id=r.id;$('title').textContent='💇 '+r.display_name;$('city').value=r.city||'';$('zone').value=r.zone||'';$('status').value=r.availability_status;$('wa').value=r.whatsapp_phone||'';$('note').value=r.opening_note||'';$('services').value=JSON.stringify(r.services||[],null,2)}$('save').onclick=async()=>{let services;try{services=JSON.parse($('services').value||'[]')}catch(e){return $('msg').textContent='⚠️ JSON prestations invalide'}const {error}=await db.rpc('digiy_beauty_owner_update_v1',{p_id:id,p_city:$('city').value,p_zone:$('zone').value,p_services:services,p_status:$('status').value,p_opening_note:$('note').value,p_whatsapp_phone:$('wa').value});$('msg').textContent=error?'⚠️ '+error.message:'✅ Profil BEAUTY mis à jour'};boot();})();</script></body></html>
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Gestion BEAUTY — DIGIYLYFE</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#fff7fb,#f4e8f0);color:#342333;font:15px system-ui,-apple-system,Segoe UI,sans-serif}
+.wrap{width:min(850px,calc(100% - 22px));margin:auto;padding:16px 0 40px}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.top a{color:#7b2e5c;text-decoration:none;font-weight:900}
+.card{background:#fff;border:1px solid #ead7e2;border-radius:22px;padding:20px;margin-top:14px;box-shadow:0 14px 34px #7b2e5c14}
+.session{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;background:#fff1f7;border-radius:14px;padding:11px 13px;font-size:12px;font-weight:900}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:grid;gap:5px}
+.field label{font-size:10px;font-weight:1000;text-transform:uppercase;color:#8a6278}
+input,select,textarea{width:100%;min-height:44px;border:1px solid #dcc5d3;border-radius:12px;padding:10px;font:inherit;background:#fff}
+textarea{min-height:86px;resize:vertical}
+button{border:0;border-radius:999px;min-height:44px;padding:10px 15px;background:#7b2e5c;color:#fff;font:inherit;font-weight:1000;cursor:pointer}
+.ghost{background:#fff;color:#7b2e5c;border:1px solid #d8bdcc}
+.service{display:grid;grid-template-columns:1.3fr .7fr .8fr auto;gap:8px;align-items:end;border:1px solid #ead7e2;border-radius:14px;padding:10px;margin-top:8px;background:#fffafd}
+.service button{min-width:44px;border-radius:12px;background:#fff;color:#9d335f;border:1px solid #e2bfd0}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.status{min-height:20px;margin-top:9px;font-weight:900;font-size:12px}
+.muted{color:#846b79;font-weight:700}
+@media(max-width:720px){.grid{grid-template-columns:1fr}.service{grid-template-columns:1fr 1fr}.service .wide{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <strong>💇 DIGIY RÉSA BEAUTY</strong>
+  <a id="publicLink" href="./index.html?slug=test-resa-beauty-saly">← Vue publique</a>
+</header>
+
+<section class="card">
+  <h1 id="title">TEST RÉSA BEAUTY · SALY</h1>
+  <div class="session">
+    <span id="who">Connexion…</span>
+    <button class="ghost" id="logout">Déconnexion</button>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Présence & contact</h2>
+  <div class="grid">
+    <div class="field"><label>Disponibilité</label>
+      <select id="status"><option value="available">Disponible</option><option value="busy">Occupé</option><option value="unavailable">Indisponible</option></select>
+    </div>
+    <div class="field"><label>WhatsApp public</label><input id="wa" inputmode="tel" autocomplete="tel" placeholder="+221 77 000 00 00"></div>
+    <div class="field"><label>Ville</label><input id="city" placeholder="Saly"></div>
+    <div class="field"><label>Zone / territoire</label><input id="zone" placeholder="Petite Côte"></div>
+  </div>
+  <div class="field" style="margin-top:12px"><label>Note d’ouverture</label><textarea id="note" placeholder="Ex : Créneaux test · confirmation directe par le salon"></textarea></div>
+</section>
+
+<section class="card">
+  <h2>Prestations & tarifs</h2>
+  <p class="muted">Le propriétaire peut ajouter, modifier ou retirer ses prestations.</p>
+  <div id="services"></div>
+  <div class="actions"><button class="ghost" id="addService">+ Ajouter une prestation</button></div>
+</section>
+
+<section class="card">
+  <button id="save">ENREGISTRER LES MODIFICATIONS</button>
+  <div id="msg" class="status"></div>
+</section>
+</div>
+
+<script>
+(()=>{'use strict';
+const db=supabase.createClient('https://wesqmwjjtsefyjnluosj.supabase.co','sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3',{auth:{persistSession:true,detectSessionInUrl:true}});
+const $=id=>document.getElementById(id);
+const slug=new URLSearchParams(location.search).get('slug')||'test-resa-beauty-saly';
+let beautyId=null, services=[];
+
+$('publicLink').href='./index.html?slug='+encodeURIComponent(slug);
+
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+function renderServices(){
+  $('services').innerHTML=services.map((s,i)=>'<div class="service">'+
+    '<div class="field wide"><label>Prestation</label><input data-i="'+i+'" data-k="name" value="'+esc(s.name||'')+'" placeholder="Brushing"></div>'+
+    '<div class="field"><label>Durée (min)</label><input type="number" min="5" step="5" data-i="'+i+'" data-k="duration_min" value="'+esc(s.duration_min||'')+'"></div>'+
+    '<div class="field"><label>Tarif FCFA</label><input type="number" min="0" step="500" data-i="'+i+'" data-k="price" value="'+esc(s.price||'')+'"></div>'+
+    '<button type="button" data-remove="'+i+'">✕</button>'+
+  '</div>').join('');
+
+  $('services').querySelectorAll('input[data-i]').forEach(el=>{
+    el.addEventListener('input',()=>{
+      const i=Number(el.dataset.i),k=el.dataset.k;
+      services[i][k]=(k==='name')?el.value:Number(el.value||0);
+    });
+  });
+  $('services').querySelectorAll('[data-remove]').forEach(btn=>{
+    btn.onclick=()=>{services.splice(Number(btn.dataset.remove),1);renderServices()};
+  });
+}
+
+$('addService').onclick=()=>{services.push({name:'',duration_min:45,price:0});renderServices()};
+
+async function boot(){
+  const {data:{session}}=await db.auth.getSession();
+  if(!session)return location.replace('./acces-proprietaire.html?slug='+encodeURIComponent(slug));
+  $('who').textContent='Connecté : '+(session.user.email||'propriétaire');
+
+  const {data,error}=await db.rpc('digiy_beauty_owner_get_v1',{p_slug:slug});
+  if(error)return $('msg').textContent='⚠️ '+error.message;
+  const r=Array.isArray(data)?data[0]:data;
+  if(!r)return $('msg').textContent='⚠️ Aucun accès propriétaire pour cette fiche.';
+
+  beautyId=r.id;
+  $('title').textContent='💇 '+r.display_name;
+  $('city').value=r.city||'';
+  $('zone').value=r.zone||'';
+  $('status').value=r.availability_status||'available';
+  $('wa').value=r.whatsapp_phone||'';
+  $('note').value=r.opening_note||'';
+  services=Array.isArray(r.services)?r.services:[];
+  renderServices();
+}
+
+$('save').onclick=async()=>{
+  if(!beautyId)return;
+  const clean=services.map(s=>({
+    name:String(s.name||'').trim(),
+    duration_min:Number(s.duration_min||0),
+    price:Number(s.price||0)
+  })).filter(s=>s.name);
+  const {error}=await db.rpc('digiy_beauty_owner_update_v1',{
+    p_id:beautyId,
+    p_city:$('city').value.trim(),
+    p_zone:$('zone').value.trim(),
+    p_services:clean,
+    p_status:$('status').value,
+    p_opening_note:$('note').value.trim(),
+    p_whatsapp_phone:$('wa').value.trim()
+  });
+  $('msg').textContent=error?'⚠️ '+error.message:'✅ Profil BEAUTY mis à jour.';
+};
+
+$('logout').onclick=async()=>{await db.auth.signOut();location.replace('./acces-proprietaire.html?slug='+encodeURIComponent(slug))};
+
+boot();
+})();
+</script>
+</body></html>
