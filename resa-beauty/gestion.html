@@ -21,7 +21,7 @@ input,select,textarea{width:100%;min-height:44px;border:1px solid #dcc5d3;border
 textarea{min-height:86px;resize:vertical}
 button{border:0;border-radius:999px;min-height:44px;padding:10px 15px;background:#7b2e5c;color:#fff;font:inherit;font-weight:1000;cursor:pointer}
 .ghost{background:#fff;color:#7b2e5c;border:1px solid #d8bdcc}
-.service{display:grid;grid-template-columns:1.3fr .7fr .8fr auto;gap:8px;align-items:end;border:1px solid #ead7e2;border-radius:14px;padding:10px;margin-top:8px;background:#fffafd}
+.service{display:grid;grid-template-columns:1.3fr .7fr .8fr auto;gap:8px;align-items:end;border:1px solid #ead7e2;border-radius:14px;padding:10px;margin-top:8px;background:#fffafd}.slotrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end;border:1px solid #ead7e2;border-radius:14px;padding:10px;margin-top:8px;background:#fffafd}.slotrow strong{align-self:center}
 .service button{min-width:44px;border-radius:12px;background:#fff;color:#9d335f;border:1px solid #e2bfd0}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .status{min-height:20px;margin-top:9px;font-weight:900;font-size:12px}
@@ -65,6 +65,14 @@ button{border:0;border-radius:999px;min-height:44px;padding:10px 15px;background
 </section>
 
 <section class="card">
+  <h2>Créneaux</h2>
+  <p class="muted">Choisis une date puis ouvre, bloque ou marque un créneau réservé.</p>
+  <div class="field"><label>Jour</label><input id="slotDay" type="date"></div>
+  <div id="slotList"></div>
+  <div id="slotMsg" class="status"></div>
+</section>
+
+<section class="card">
   <button id="save">ENREGISTRER LES MODIFICATIONS</button>
   <div id="msg" class="status"></div>
 </section>
@@ -102,6 +110,29 @@ function renderServices(){
 
 $('addService').onclick=()=>{services.push({name:'',duration_min:45,price:0});renderServices()};
 
+async function loadSlots(){
+  const day=$('slotDay').value;
+  if(!day)return;
+  $('slotMsg').textContent='Chargement…';
+  const {data,error}=await db.rpc('digiy_beauty_owner_slots_v1',{p_slug:slug,p_day:day});
+  if(error){$('slotMsg').textContent='⚠️ '+error.message;return}
+  $('slotMsg').textContent='';
+  $('slotList').innerHTML=(data||[]).map(r=>'<div class="slotrow">'+
+    '<strong>'+esc(String(r.slot_time||'').slice(0,5))+'</strong>'+
+    '<div class="field"><label>Statut</label><select data-slot="'+r.id+'">'+
+      '<option value="available"'+(r.status==='available'?' selected':'')+'>Disponible</option>'+
+      '<option value="blocked"'+(r.status==='blocked'?' selected':'')+'>Bloqué</option>'+
+      '<option value="booked"'+(r.status==='booked'?' selected':'')+'>Réservé</option>'+
+    '</select></div></div>').join('')||'<p class="muted">Aucun créneau pour ce jour.</p>';
+  $('slotList').querySelectorAll('select[data-slot]').forEach(sel=>{
+    sel.onchange=async()=>{
+      const {error}=await db.rpc('digiy_beauty_owner_set_slot_status_v1',{p_slot_id:sel.dataset.slot,p_status:sel.value});
+      $('slotMsg').textContent=error?'⚠️ '+error.message:'✅ Créneau mis à jour.';
+    };
+  });
+}
+$('slotDay').onchange=loadSlots;
+
 async function boot(){
   const {data:{session}}=await db.auth.getSession();
   if(!session)return location.replace('./acces-proprietaire.html?slug='+encodeURIComponent(slug));
@@ -121,6 +152,8 @@ async function boot(){
   $('note').value=r.opening_note||'';
   services=Array.isArray(r.services)?r.services:[];
   renderServices();
+  if(!$('slotDay').value)$('slotDay').value=new Date().toISOString().slice(0,10);
+  await loadSlots();
 }
 
 $('save').onclick=async()=>{
