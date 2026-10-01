@@ -26,6 +26,11 @@ button{border:0;border-radius:999px;min-height:44px;padding:10px 15px;background
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .status{min-height:20px;margin-top:9px;font-weight:900;font-size:12px}
 .muted{color:#846b79;font-weight:700}
+.booking{border:1px solid #ead7e2;border-radius:16px;padding:13px;margin-top:10px;background:#fffafd}
+.bookingTop{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.bookingName{font-size:17px;font-weight:1000}.bookingMeta{margin-top:6px;color:#846b79;font-size:13px;font-weight:800}
+.bookingActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.bookingActions a,.bookingActions button{min-height:40px;padding:8px 12px;border-radius:999px;text-decoration:none;font-size:12px;font-weight:1000}
+.confirm{background:#166534!important}.reject{background:#fff!important;color:#b91c1c!important;border:1px solid #fecaca!important}
 @media(max-width:720px){.grid{grid-template-columns:1fr}.service{grid-template-columns:1fr 1fr}.service .wide{grid-column:1/-1}}
 </style>
 </head>
@@ -62,6 +67,13 @@ button{border:0;border-radius:999px;min-height:44px;padding:10px 15px;background
   <p class="muted">Le propriétaire peut ajouter, modifier ou retirer ses prestations.</p>
   <div id="services"></div>
   <div class="actions"><button class="ghost" id="addService">+ Ajouter une prestation</button></div>
+</section>
+
+<section class="card">
+  <h2>Demandes de réservation</h2>
+  <p class="muted">Le client prépare sa demande. Tu confirmes ou refuses directement.</p>
+  <div id="bookings"></div>
+  <div id="bookingMsg" class="status"></div>
 </section>
 
 <section class="card">
@@ -110,6 +122,45 @@ function renderServices(){
 
 $('addService').onclick=()=>{services.push({name:'',duration_min:45,price:0});renderServices()};
 
+function bookingStatusLabel(v){
+  if(v==='request') return 'Nouvelle demande';
+  if(v==='confirmed') return 'Confirmée';
+  if(v==='cancelled') return 'Refusée';
+  return v||'Nouvelle demande';
+}
+function waDigits(v){return String(v||'').replace(/\D/g,'');}
+function dateLabel(v){if(!v)return '';try{return new Date(v+'T00:00:00').toLocaleDateString('fr-FR')}catch(_){return v}}
+
+async function loadBookings(){
+  const {data,error}=await db.rpc('digiy_beauty_owner_bookings_v1',{p_slug:slug});
+  if(error){$('bookingMsg').textContent='⚠️ '+error.message;return}
+  $('bookingMsg').textContent='';
+  $('bookings').innerHTML=(data||[]).map(r=>{
+    const digits=waDigits(r.client_whatsapp);
+    const when=[dateLabel(r.slot_day),String(r.slot_time||'').slice(0,5)].filter(Boolean).join(' · ');
+    const price=r.service_price?new Intl.NumberFormat('fr-FR').format(Number(r.service_price))+' FCFA':'';
+    const meta=[r.service_name,when,price].filter(Boolean).join(' · ');
+    const contact=digits?'<a class="ghost" href="https://wa.me/'+digits+'" target="_blank" rel="noopener">💬 WhatsApp client</a>':'';
+    const decision=r.status==='request'
+      ? '<button class="confirm" data-booking="'+r.id+'" data-status="confirmed">✅ Confirmer</button><button class="reject" data-booking="'+r.id+'" data-status="cancelled">✕ Refuser</button>'
+      : '';
+    return '<div class="booking"><div class="bookingTop"><div><div class="bookingName">'+esc(r.client_name||'Client')+'</div><div class="bookingMeta">'+esc(meta)+'</div></div><strong>'+esc(bookingStatusLabel(r.status))+'</strong></div><div class="bookingActions">'+contact+decision+'</div></div>';
+  }).join('')||'<p class="muted">Aucune demande de réservation pour le moment.</p>';
+
+  $('bookings').querySelectorAll('[data-booking]').forEach(btn=>{
+    btn.onclick=async()=>{
+      btn.disabled=true;
+      const {error}=await db.rpc('digiy_beauty_owner_set_booking_status_v1',{
+        p_booking_id:btn.dataset.booking,
+        p_status:btn.dataset.status
+      });
+      if(error){$('bookingMsg').textContent='⚠️ '+error.message;btn.disabled=false;return}
+      $('bookingMsg').textContent=btn.dataset.status==='confirmed'?'✅ Réservation confirmée.':'✅ Demande refusée.';
+      await Promise.all([loadBookings(),loadSlots()]);
+    };
+  });
+}
+
 async function loadSlots(){
   const day=$('slotDay').value;
   if(!day)return;
@@ -153,7 +204,7 @@ async function boot(){
   services=Array.isArray(r.services)?r.services:[];
   renderServices();
   if(!$('slotDay').value)$('slotDay').value=new Date().toISOString().slice(0,10);
-  await loadSlots();
+  await Promise.all([loadSlots(),loadBookings()]);
 }
 
 $('save').onclick=async()=>{
