@@ -54,6 +54,45 @@ ar:{kicker:'DIGIY RESA · متعدد المهن',title:'احجز مباشرة',l
 };
 function getLang(){var q='';try{q=(new URLSearchParams(location.search).get('lang')||'').slice(0,2).toLowerCase()}catch(e){}var saved='';try{saved=localStorage.getItem('digiy_resa_lang')||''}catch(e){}var h=(document.documentElement.lang||'fr').slice(0,2).toLowerCase();return T[q]?q:(T[saved]?saved:(T[h]?h:'fr'))}
 function esc(v){return String(v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function updateResaMachineMetadata(){
+  var services=REAL.map(function(r){
+    var phone='';
+    try{if(r.wa) phone=(new URL(r.wa)).pathname.replace(/^\//,'')}catch(e){}
+    return {
+      "@type":"Service",
+      "name":r.name,
+      "serviceType":r.type,
+      "areaServed":r.zone,
+      "url":r.url,
+      "telephone":phone||undefined,
+      "provider":{
+        "@type":"LocalBusiness",
+        "name":r.name,
+        "url":r.url
+      }
+    };
+  });
+  var schema={
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebPage",
+        "@id":"https://resa-table-resto.digiylyfe.com/",
+        "name":"DIGIY RÉSA MULTI — Réserver directement",
+        "description":"Une porte de réservation pour plusieurs métiers avec contact direct, paiement direct et 0 % commission.",
+        "url":"https://resa-table-resto.digiylyfe.com/"
+      }
+    ].concat(services)
+  };
+  var jsonLd=document.getElementById('digiy-resa-multi-schema');
+  if(!jsonLd){
+    jsonLd=document.createElement('script');
+    jsonLd.type='application/ld+json';
+    jsonLd.id='digiy-resa-multi-schema';
+    document.head.appendChild(jsonLd);
+  }
+  jsonLd.textContent=JSON.stringify(schema);
+}
 function render(){var l=getLang(),x=T[l]||T.fr;document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';document.getElementById('kicker').textContent=x.kicker;document.getElementById('title').textContent=x.title;document.getElementById('lead').textContent=x.lead;document.getElementById('doctrine').textContent=x.doctrine;document.getElementById('realTitle').textContent=x.realTitle;document.getElementById('realLead').textContent=x.realLead;document.getElementById('placesTitle').textContent=x.placesTitle;document.getElementById('placesLead').textContent=x.placesLead;document.getElementById('priceNote').textContent=x.priceNote;document.getElementById('footer').textContent=x.footer;document.getElementById('process').innerHTML=x.steps.map(function(s){return '<div class="step"><b>'+esc(s[0])+'</b>'+esc(s[1])+'</div>'}).join('');document.getElementById('realCards').innerHTML=REAL.map(function(r){return '<article class="card real"><span class="badge">'+esc(x.realBadge)+'</span><h3>'+r.icon+' '+esc(r.name)+'</h3><div class="meta">📍 '+esc(r.zone)+' · '+esc(x.types[r.type]||r.type)+'</div><div class="chips">'+r.chips.map(function(c){return '<span class="chip">'+esc(c)+'</span>'}).join('')+'</div><div class="rule">'+esc(x.rule)+'</div><div class="actions"><a class="btn primary" href="'+esc(r.url)+'"'+(r.sameTab?'':' target="_blank" rel="noopener"')+'>'+esc(x.open)+'</a>'+(r.wa?'<a class="btn secondary" href="'+esc(r.wa)+'" target="_blank" rel="noopener">'+esc(x.wa)+'</a>':'')+'</div></article>'}).join('');document.getElementById('demoCards').innerHTML='<div class="openPlacesTitle">'+esc(x.placesTitle)+'</div>'+DEMO.map(function(d){var url=d.url+l;return '<article class="card demo"><span class="badge">'+esc(x.demoBadge)+'</span><h3>'+d.icon+' '+esc(d.title)+'</h3><div class="meta">📍 '+esc(d.zone)+' · PETITE CÔTE<br>🪪 '+esc(x.demoSummary)+'</div><div class="chips">'+d.chips.map(function(c){return '<span class="chip">'+esc(c)+'</span>'}).join('')+'<span class="chip">'+esc(d.price)+'</span><span class="chip">'+esc(x.commission)+'</span></div><div class="actions"><a class="btn primary" href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(x.demoOpen)+'</a></div></article>'}).join('');document.querySelectorAll('[data-lang]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang')===l)})}
 document.getElementById('langs').addEventListener('click',function(e){var b=e.target.closest('[data-lang]');if(!b)return;var l=b.getAttribute('data-lang');try{localStorage.setItem('digiy_resa_lang',l)}catch(err){}var u=new URL(location.href);u.searchParams.set('lang',l);history.replaceState(null,'',u.pathname+u.search);render()});
 
@@ -72,7 +111,7 @@ async function hydrateDriverPresence(){
     render();
   }catch(e){}
 }
-render();hydrateDriverPresence();
+render();updateResaMachineMetadata();hydrateDriverPresence().then(updateResaMachineMetadata);
 })();
 </script>
 </body>
