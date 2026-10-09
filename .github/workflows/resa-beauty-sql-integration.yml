@@ -52,6 +52,11 @@ jobs:
           psql -X -v ON_ERROR_STOP=1 -f sql/20261009_p0_lock_private_resa_bookings.sql
           psql -X -v ON_ERROR_STOP=1 -f sql/20261009_beauty_booking_integrity_v2.sql
           psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_beauty_assertions.sql
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Execute isolated frontend integration tests
+        run: node --test tests/beauty-public-v2.test.cjs
       - name: Public frontend must request slot IDs from V2
         run: |
           grep -q "digiy_beauty_public_slots_v2" resa-beauty/index.html
