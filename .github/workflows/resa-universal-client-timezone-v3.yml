@@ -1,0 +1,64 @@
+name: RÉSA UNIVERSEL V3 — client et IANA isolés, sans CORE
+on:
+  pull_request:
+    paths:
+      - 'resa-universal/booking-client-core.mjs'
+      - 'tests/resa-universal-client-v3.test.mjs'
+      - 'sql/candidates/20261009_resa_universal_timezone_v3_ISOLATED*.sql'
+      - 'tests/sql/resa_universal_timezone_v3_assertions.sql'
+      - '.github/workflows/resa-universal-client-timezone-v3.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'resa-universal/booking-client-core.mjs'
+      - 'tests/resa-universal-client-v3.test.mjs'
+      - 'sql/candidates/20261009_resa_universal_timezone_v3_ISOLATED*.sql'
+      - 'tests/sql/resa_universal_timezone_v3_assertions.sql'
+      - '.github/workflows/resa-universal-client-timezone-v3.yml'
+permissions:
+  contents: read
+jobs:
+  client-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test tests/resa-universal-client-v3.test.mjs
+  timezone-disposable-postgresql:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: public.ecr.aws/docker/library/postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: test_only
+          POSTGRES_DB: digiy_appointments_test
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      PGHOST: localhost
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: test_only
+      PGDATABASE: digiy_appointments_test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PostgreSQL client
+        run: sudo apt-get update -qq && sudo apt-get install -y postgresql-client
+      - name: Synthetic A/B fixture and DST candidate (never production)
+        run: |
+          set -euo pipefail
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_beauty_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261009_resa_universal_timezone_v3_ISOLATED.sql
+      - name: Verify Paris DST, Dakar, rejected local times and access rights
+        run: psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_timezone_v3_assertions.sql
+      - name: Verify rollback and synthetic historical records
+        run: psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261009_resa_universal_timezone_v3_ISOLATED_ROLLBACK.sql
