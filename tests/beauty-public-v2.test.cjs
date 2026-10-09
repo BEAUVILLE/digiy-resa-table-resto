@@ -18,7 +18,7 @@ function element(id){
  e.classList={add(){},remove(){}};
  Object.defineProperty(e,'innerHTML',{get(){return e._html},set(v){
    e._html=String(v);
-   e._children=[...e._html.matchAll(/<button\\b[^>]*>/g)]
+   e._children=[...e._html.matchAll(/<button\b[^>]*>/g)]
      .map(([tag])=>{
         const child=element('child');
         child.dataset={};
