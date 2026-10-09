@@ -7,6 +7,7 @@ DECLARE
   v_booking1 uuid;
   v_booking2 uuid;
   v_data jsonb;
+  v_slot_count integer;
   v_denied boolean;
 BEGIN
   IF has_function_privilege('anon','public.digiy_resa_get_bookings_by_day(text,date)','EXECUTE') THEN
@@ -32,9 +33,8 @@ BEGIN
   END;
   IF NOT v_denied THEN RAISE EXCEPTION 'P0 FAIL: no JWT can read bookings'; END IF;
 
-  SELECT count(*) INTO STRICT v_data FROM (SELECT id FROM public.digiy_beauty_public_slots_v2('beauty-a','2026-10-12')) x;
-  -- Count represented as scalar JSONB for compact assertion.
-  IF v_data::text<>'1' THEN RAISE EXCEPTION 'V2 FAIL: public slot ID missing'; END IF;
+  SELECT count(*) INTO v_slot_count FROM public.digiy_beauty_public_slots_v2('beauty-a','2026-10-12');
+  IF v_slot_count<>1 THEN RAISE EXCEPTION 'V2 FAIL: public slot ID missing'; END IF;
   IF (SELECT count(*) FROM public.digiy_beauty_public_slots_v1('beauty-a','2026-10-12'))<>1 THEN
     RAISE EXCEPTION 'Backward compatibility V1 broken';
   END IF;
