@@ -1,0 +1,91 @@
+{
+  "version": "resa_trust_inheritance_v1",
+  "last_reviewed": "2026-10-09",
+  "status": "CONTRACT_ONLY_NO_PRODUCTION_RATINGS",
+  "source": {
+    "module": "LOC",
+    "repo": "BEAUVILLE/digiy-loc",
+    "eligibility": "trust/eligibility.mjs",
+    "rules": "docs/DIGIY_TRUST_CONTRAT_V1.md"
+  },
+  "master": {
+    "repo": "BEAUVILLE/digiy-master-modeles",
+    "path": "MASTER-MAITRE-RESA-V1/trust/resa-trust-contract-v1.json",
+    "widget": "MASTER-MAITRE-RESA-V1/trust/resa-trust-public-widget.mjs"
+  },
+  "active_modules": [
+    "RESA_UNIVERSAL_COMPATIBLE_APPOINTMENTS"
+  ],
+  "external_specialized_modules": [
+    "RESTO",
+    "LOC",
+    "DRIVER"
+  ],
+  "required_ratings": {
+    "quality": {
+      "required": true,
+      "stars_min": 1,
+      "stars_max": 5
+    },
+    "value_for_money": {
+      "required": true,
+      "stars_min": 1,
+      "stars_max": 5,
+      "independent_public_average": true,
+      "exclude_from_overall": true
+    }
+  },
+  "optional_ratings": [
+    "punctuality",
+    "welcome",
+    "availability",
+    "proximity",
+    "followup"
+  ],
+  "user_interface": {
+    "comment_field": false,
+    "comment_allowed": false,
+    "public_main_average": true,
+    "public_value_for_money_average_separate": true,
+    "detail_expand_on_click": true,
+    "no_fake_zero_or_default_stars": true,
+    "empty_state": "Pas encore d’évaluation vérifiée"
+  },
+  "client_proof": {
+    "reservation_only_sufficient": false,
+    "owner_done_status_only_sufficient": false,
+    "completed_service_required": true,
+    "independently_verified_client_required": true,
+    "owner_self_rating_denied": true,
+    "one_rating_per_completed_service": true,
+    "one_time_hash_invite": true,
+    "atomic_invite_consumption": true
+  },
+  "privacy": {
+    "no_public_customer_identity": true,
+    "no_public_client_phone": true,
+    "no_legal_tax_medical_case_details": true,
+    "server_aggregates_only": true
+  },
+  "production": {
+    "sql_enabled": false,
+    "public_ratings_enabled": false,
+    "public_submissions_enabled": false,
+    "core_modified": false,
+    "LOC_reviews_migrated": false,
+    "server_attestor_implemented_for_RESA": false,
+    "verified_review_aggregation_implemented": false
+  },
+  "known_blockers": [
+    "independent_completion_attestation",
+    "verified_customer_identity",
+    "one_time_invitation",
+    "secure_private_storage",
+    "atomic_write_and_unique_event",
+    "public_verified_only_aggregates",
+    "A_B_RLS_and_abuse_tests",
+    "no_financial_PAY_trigger_on_review",
+    "mobile_BAT"
+  ],
+  "gates_reference": "contracts/resa-universal-pre-sql-gates.json"
+}
