@@ -4,6 +4,9 @@ on:
     paths:
       - 'docs/RESA_UNIVERSEL_PRE_SQL_GO_NO_GO_20261009.md'
       - 'contracts/resa-universal-pre-sql-gates.json'
+      - 'contracts/resa-trust-inheritance-v1.json'
+      - 'tests/resa-trust-inheritance.test.cjs'
+      - 'docs/RESA_UNIVERSEL_V0_SQL_ISOLE_RESULTATS_20261009.md'
       - 'tests/resa-universal-pre-sql-contract.test.cjs'
       - '.github/workflows/resa-universal-pre-sql.yml'
   push:
@@ -25,4 +28,4 @@ jobs:
         with:
           node-version: '22'
       - name: Contrôler les portes GO/NO GO sans SQL ni données réelles
-        run: node --test tests/resa-universal-pre-sql-contract.test.cjs
+        run: node --test tests/resa-universal-pre-sql-contract.test.cjs tests/resa-trust-inheritance.test.cjs
