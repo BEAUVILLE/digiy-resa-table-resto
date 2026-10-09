@@ -82,21 +82,21 @@ button{border:0;border-radius:999px;min-height:44px;padding:10px 15px;background
   <div class="field"><label>Semaine commençant le lundi</label><input id="weekMonday" type="date"></div>
   <fieldset style="margin:12px 0;border:1px solid #ead7e2;border-radius:14px"><legend>Jours où tu reçois</legend>
     <div style="display:flex;flex-wrap:wrap;gap:12px">
-      <label><input type="checkbox" data-weekday="1" checked> Lundi</label><label><input type="checkbox" data-weekday="2" checked> Mardi</label>
-      <label><input type="checkbox" data-weekday="3" checked> Mercredi</label><label><input type="checkbox" data-weekday="4" checked> Jeudi</label>
-      <label><input type="checkbox" data-weekday="5" checked> Vendredi</label><label><input type="checkbox" data-weekday="6"> Samedi</label>
+      <label><input type="checkbox" data-weekday="1"> Lundi</label><label><input type="checkbox" data-weekday="2"> Mardi</label>
+      <label><input type="checkbox" data-weekday="3"> Mercredi</label><label><input type="checkbox" data-weekday="4"> Jeudi</label>
+      <label><input type="checkbox" data-weekday="5"> Vendredi</label><label><input type="checkbox" data-weekday="6"> Samedi</label>
       <label><input type="checkbox" data-weekday="7"> Dimanche</label>
     </div>
   </fieldset>
   <div style="display:flex;gap:10px;flex-wrap:wrap">
-    <div class="field"><label>Heure 1</label><input class="weekTime" type="time" value="09:00"></div>
-    <div class="field"><label>Heure 2</label><input class="weekTime" type="time" value="10:30"></div>
-    <div class="field"><label>Heure 3</label><input class="weekTime" type="time" value="12:00"></div>
-    <div class="field"><label>Heure 4</label><input class="weekTime" type="time" value="14:00"></div>
-    <div class="field"><label>Heure 5</label><input class="weekTime" type="time" value="15:30"></div>
-    <div class="field"><label>Heure 6</label><input class="weekTime" type="time" value="17:00"></div>
+    <div class="field"><label>Heure 1</label><input class="weekTime" type="time" value=""></div>
+    <div class="field"><label>Heure 2</label><input class="weekTime" type="time" value=""></div>
+    <div class="field"><label>Heure 3</label><input class="weekTime" type="time" value=""></div>
+    <div class="field"><label>Heure 4</label><input class="weekTime" type="time" value=""></div>
+    <div class="field"><label>Heure 5</label><input class="weekTime" type="time" value=""></div>
+    <div class="field"><label>Heure 6</label><input class="weekTime" type="time" value=""></div>
   </div>
-  <p class="muted" style="font-size:12px">Les six heures proposées reprennent l'ancien planning TEST SALY. Le propriétaire peut changer ou vider chaque heure, et choisir uniquement ses jours de travail.</p>
+  <p class="muted" style="font-size:12px">Le professionnel choisit librement les jours et les heures qu’il souhaite proposer. Aucune heure ni journée n’est imposée : seuls les créneaux volontairement ouverts deviennent visibles.</p>
   <button type="button" id="openWeek">📅 Ouvrir ces créneaux</button>
   <p id="weekMsg" class="status" role="status" aria-live="polite"></p>
   <h2>Gestion détaillée des créneaux</h2>
@@ -247,6 +247,13 @@ async function boot(){
   $('note').value=r.opening_note||'';
   services=Array.isArray(r.services)?r.services:[];
   renderServices();
+  // TEST SALY only: demonstrate its own six historical hours. Never pre-fill or
+  // pre-select another owner's days or hours.
+  if(slug==='test-resa-beauty-saly'){
+    const demo=['09:00','10:30','12:00','14:00','15:30','17:00'];
+    document.querySelectorAll('.weekTime').forEach((el,i)=>{if(demo[i])el.value=demo[i]});
+    document.querySelectorAll('[data-weekday]').forEach(el=>{el.checked=Number(el.dataset.weekday)<=5});
+  }
   if(!$('slotDay').value)$('slotDay').value=localDate(new Date());
   if(!$('weekMonday').value)$('weekMonday').value=comingMonday();
   await Promise.all([loadSlots(),loadBookings()]);
