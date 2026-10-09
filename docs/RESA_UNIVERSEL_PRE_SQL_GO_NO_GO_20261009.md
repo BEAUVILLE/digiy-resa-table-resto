@@ -36,7 +36,7 @@ Les observations sont des **photographies datées** et devront être revérifié
 4. **Capacité MVP :** un rendez-vous = un client/un créneau (`capacity=1`) tant que les capacités multi-places et les durées chevauchantes n'ont pas leurs propres tests transactionnels. Pour les groupes, employer une adaptation ultérieure explicitement validée.
 5. **Catalogue :** prestation, durée et conditions doivent provenir du serveur et de la fiche active, jamais d'un tarif/durée arbitraire communiqué par le navigateur.
 6. **Fuso-horaire :** dates et heures calculées selon le fuseau déclaré du professionnel (IANA), correctement distingué de celui du visiteur ; tester Sénégal/France et changements d'heure avant publication interterritoriale.
-7. **Contact et relation directs :** coordonnées et paiement restent entre client et professionnel. Pas de caisse ni commission DIGIYLYFE ; aucun enregistrement financier fictif.
+7. **Contact et relation directs :** coordonnées et paiement restent entre client et professionnel. Pas de caisse DIGIYLYFE, **0 % commission** ; aucun enregistrement financier fictif.
 8. **Confidentialité :** ne pas recueillir de motif juridique, médical, fiscal ni de dossier sensible dans le calendrier public. Le client ne voit jamais l'identité d'un autre client.
 9. **Spécialisations :** RESTO conserve tables/services/capacités ; LOC nuits/séjours ; DRIVER trajets/destinations ; les cas particuliers révélés sur le terrain font l'objet d'une fiche de qualification avant toute adaptation générique.
 
