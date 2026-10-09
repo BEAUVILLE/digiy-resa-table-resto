@@ -44,7 +44,7 @@ function msg(e){return String(e||'').slice(0,220).replace(/(?:sb_publishable_[a-
     assert.equal(result.selectedSlot,1,'slot linked to form');
     assert.deepEqual(errors,[],'no browser JS exceptions');
     result.ok=true;
-   }catch(e){result.ok=false;result.reason=msg(e.message);failures++;}
+   }catch(e){result.ok=false;result.reason=msg(e.message);if(mode==='candidate')failures++;}
    result.errors=errors.slice(0,6);
    result.network=network.slice(0,8);
    console.log('BEAUTY_CLIENT_DIAGNOSTIC '+JSON.stringify(result));
@@ -52,4 +52,5 @@ function msg(e){return String(e||'').slice(0,220).replace(/(?:sb_publishable_[a-
   }
  }finally{await browser.close()}
  if(failures)process.exitCode=1;
+ else console.log('CANDIDATE_REAL_SUPABASE_PASS; baseline LIVE may still be an earlier deployment');
 })().catch(e=>{console.error('BEAUTY_BROWSER_FATAL',msg(e.message));process.exitCode=1});
