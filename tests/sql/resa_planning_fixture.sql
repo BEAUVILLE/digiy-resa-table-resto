@@ -3,7 +3,7 @@ ALTER TABLE public.digiy_resa_profiles
  ADD COLUMN display_name text, ADD COLUMN business_type text,
  ADD COLUMN city text,ADD COLUMN whatsapp text,
  ADD COLUMN is_published boolean NOT NULL DEFAULT false;
-ALTER TABLE public.digiy_resa_bookings ADD COLUMN booking_time time,ADD COLUMN status text NOT NULL DEFAULT 'pending';
+ALTER TABLE public.digiy_resa_bookings ADD COLUMN booking_time time,ADD COLUMN status text NOT NULL DEFAULT 'pending',ADD COLUMN duration_minutes integer;
 CREATE TABLE public.digiy_resa_slots(
  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),slug text NOT NULL,
  slot_date date NOT NULL,start_time time NOT NULL,end_time time,
