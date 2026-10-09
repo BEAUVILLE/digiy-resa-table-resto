@@ -37,6 +37,7 @@ BEGIN
   ),'[]'::jsonb) INTO v_slots
   FROM public.digiy_resa_slots s
   WHERE s.slug=v_profile.slug
+    AND s.slot_date >= current_date
     AND s.slot_date BETWEEN p_start_date AND (p_start_date + 6);
 
   RETURN jsonb_build_object(
@@ -44,6 +45,7 @@ BEGIN
     'display_name',v_profile.display_name,
     'business_type',v_profile.business_type,
     'city',v_profile.city,
+    'public_whatsapp',CASE WHEN v_profile.whatsapp IS NOT NULL AND length(regexp_replace(v_profile.whatsapp,'[^0-9]','','g')) BETWEEN 7 AND 20 THEN regexp_replace(v_profile.whatsapp,'[^0-9]','','g') ELSE NULL END,
     'start_date',p_start_date,
     'slots',v_slots
   );
