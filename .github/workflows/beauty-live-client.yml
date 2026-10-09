@@ -1,0 +1,25 @@
+name: BEAUTY LIVE client — real public site and candidate
+on:
+  pull_request:
+    paths:
+      - 'resa-beauty/index.html'
+      - 'tests/beauty-live-client-smoke.cjs'
+      - '.github/workflows/beauty-live-client.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  real-client:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare Chromium
+        run: |
+          npm install --no-save --ignore-scripts playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check live site and candidate with real public RPCs (no booking)
+        run: node tests/beauty-live-client-smoke.cjs

@@ -15,7 +15,7 @@ class FixedDate extends Date{
 }
 function element(id){
  const e={id,value:'',textContent:'',href:'',_html:'',_children:[],onclick:null};
- e.classList={add(){},remove(){}};
+ e.classList={add(){},remove(){},toggle(){}};
  Object.defineProperty(e,'innerHTML',{get(){return e._html},set(v){
    e._html=String(v);
    e._children=[...e._html.matchAll(/<button\b[^>]*>/g)]
