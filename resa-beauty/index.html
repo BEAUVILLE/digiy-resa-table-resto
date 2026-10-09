@@ -77,21 +77,22 @@ async function loadWeekGrid(){
   '</div></article>';
  }).join('');
  $('calendarStatus').textContent=count?count+' créneau(x) réellement ouvert(s) sur cette semaine.':'Aucun créneau futur ouvert sur cette semaine. Le propriétaire doit renseigner ses disponibilités.';
- $('weekBoard').querySelectorAll('[data-week-slot]').forEach(btn=>btn.onclick=async()=>{
-   $('day').value=btn.dataset.weekDay;
-   await loadSlots();
-   const target=Array.from($('slots').querySelectorAll('[data-slot]')).find(x=>x.dataset.slot===btn.dataset.weekSlot);
-   if(!target){
-     $('selectionInfo').textContent='Ce créneau vient de changer. Choisis une autre heure.';
-     await loadWeekGrid();
-     return;
-   }
-   target.onclick();
+ $('weekBoard').querySelectorAll('[data-week-slot]').forEach(btn=>btn.onclick=()=>{
+   // Immediate client selection: no second RPC round-trip on tap.
+   // The booking RPC still verifies the actual slot and prevents collisions.
+   const day=btn.dataset.weekDay,slotId=btn.dataset.weekSlot,time=btn.textContent.trim();
+   if(!day||!slotId)return;
+   ++slotTicket; // Cancel any older day-response that could erase the selection.
+   $('day').value=day;
+   selectedSlot=slotId;
    $('weekBoard').querySelectorAll('[data-week-slot]').forEach(x=>x.classList.remove('selected'));
    btn.classList.add('selected');
-   $('week').querySelectorAll('.daybtn').forEach(x=>{x.classList.remove('active');if(x.dataset.day===btn.dataset.weekDay)x.classList.add('active')});
-   $('selectionInfo').textContent='✅ Horaire sélectionné : '+btn.dataset.weekDay+' à '+btn.textContent+'. Renseigne tes coordonnées pour envoyer ta demande.';
-   $('selectionInfo').scrollIntoView?.({block:'nearest',behavior:'smooth'});
+   $('week').querySelectorAll('.daybtn').forEach(x=>{
+     x.classList.toggle('active',x.dataset.day===day);
+   });
+   $('slots').innerHTML='<button type="button" class="slot active" data-slot="'+esc(slotId)+'">'+esc(time)+' · Disponible</button>';
+   $('selectionInfo').textContent='✅ Horaire sélectionné : '+day+' à '+time+'. Renseigne tes coordonnées pour envoyer ta demande.';
+   $('bookMsg').textContent='';
  });
 }
 async function loadSlots(){
