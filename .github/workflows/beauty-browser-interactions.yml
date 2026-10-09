@@ -1,0 +1,30 @@
+name: BEAUTY — vrais clics en navigateur
+on:
+  pull_request:
+    paths:
+      - 'resa-beauty/index.html'
+      - 'tests/beauty-browser-smoke.cjs'
+      - '.github/workflows/beauty-browser-interactions.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'resa-beauty/index.html'
+      - 'tests/beauty-browser-smoke.cjs'
+      - '.github/workflows/beauty-browser-interactions.yml'
+permissions:
+  contents: read
+jobs:
+  chromium:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Installer Playwright et Chromium
+        run: |
+          npm install --no-save --ignore-scripts playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Cliquer réellement sur calendrier et demande TEST
+        run: node tests/beauty-browser-smoke.cjs

@@ -128,3 +128,35 @@ test('aucune disponibilité future n’est inventée : colonnes visibles mais vi
  assert.match(el.calendarStatus.textContent,/Aucun créneau futur ouvert/);
  assert.equal(el.slots.querySelectorAll('[data-slot]').length,0);
 });
+
+test('clic sur une heure de la grille : sélection répercutée dans le formulaire avec confirmation visible',async()=>{
+ const {el,calls}=launch();
+ for(let i=0;i<5;i++)await flush();
+ const buttons=el.weekBoard.querySelectorAll('[data-week-slot]');
+ assert.ok(buttons.length>0,'at least one selectable time');
+ await buttons[0].onclick();
+ assert.match(el.selectionInfo.textContent,/Horaire sélectionné/);
+ assert.equal(el.day.value,buttons[0].dataset.weekDay);
+ assert.ok(el.slots.querySelectorAll('[data-slot]').some(x=>x.dataset.slot===buttons[0].dataset.weekSlot));
+ el.clientName.value='Client test';
+ el.clientWa.value='221771234567';
+ el.service.value='0';
+ await el.book.onclick();
+ assert.equal(calls.filter(x=>x.name==='digiy_beauty_public_book_v1').length,1);
+});
+test('clic sur le jour et navigation semaine suivante gardent les heures opérationnelles',async()=>{
+ const {el,calls}=launch();
+ for(let i=0;i<5;i++)await flush();
+ assert.equal(el.prevWeek.disabled,true,'no navigation into the past');
+ assert.equal(typeof el.nextWeek.onclick,'function');
+ const day=el.week.querySelectorAll('[data-day]')[1];
+ await day.onclick();
+ assert.equal(el.day.value,day.dataset.day);
+ assert.match(el.selectionInfo.textContent,/Jour choisi/);
+ const previousCalls=calls.filter(x=>x.name==='digiy_beauty_public_slots_v2').length;
+ await el.nextWeek.onclick();
+ for(let i=0;i<5;i++)await flush();
+ assert.equal(el.prevWeek.disabled,false);
+ assert.ok(calls.filter(x=>x.name==='digiy_beauty_public_slots_v2').length>previousCalls);
+ assert.match(el.selectionInfo.textContent,/Nouvelle semaine affichée/);
+});
