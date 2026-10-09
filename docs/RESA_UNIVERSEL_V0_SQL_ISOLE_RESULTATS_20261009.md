@@ -52,3 +52,15 @@ La confirmation automatique est un objectif validé **mais une étape technique 
 - Les portes de `contracts/resa-universal-pre-sql-gates.json` restent **bloquées pour la production**. Une CI verte du prototype ne signifie pas une autorisation de migration.
 
 **Doctrine immuable : 0 % commission, paiement et relation directs, professionnel maître de son agenda, RESTO/LOC/DRIVER et particularités terrain sur leurs moteurs propres.**
+
+## Héritage DIGIY TRUST de LOC — appréciations RÉSA (non activé)
+
+Référence canonique fusionnée : [MASTER-MAITRE-RESA-V1/CONTRAT-DIGIY-TRUST-RESA-V1.md](https://github.com/BEAUVILLE/digiy-master-modeles/blob/main/MASTER-MAITRE-RESA-V1/CONTRAT-DIGIY-TRUST-RESA-V1.md). Contrat machine local : [contracts/resa-trust-inheritance-v1.json](../contracts/resa-trust-inheritance-v1.json).
+
+**Parcours cible** : rendez-vous réservé → prestation réellement effectuée **et vérifiée indépendamment** → client vérifié → invitation unique → étoiles rapides **sans commentaire** → agrégats publics vérifiés. **Note générale visible**, détail des critères par clic et **note rapport qualité-prix distincte** (valeur perçue, jamais prix le plus bas).
+
+**Ne jamais** confondre `pending`, `confirmed` ou même `done` défini par le propriétaire avec une preuve indépendante d'une prestation. Aucune évaluation réelle ne doit être créée ou publiée par le candidat SQL V0 actuel. Le rapport qualité-prix est **exclu du calcul de la moyenne générale** et possède son propre agrégat.
+
+SERVICES PRO (avocat, comptable, architecte) partage ce modèle, sans aucune publication de contenu sensible sur les dossiers. RESTO, LOC et DRIVER conservent leurs moteurs spécialisés et leurs adaptateurs de preuve. Les règles spécifiques supplémentaires se décident sur le terrain.
+
+**Statut : NON DÉPLOYÉ**, aucune table d'avis, RPC TRUST, nouvelle permission ou résultat étoilé crée en CORE par cette documentation. Les protections LOC restent inchangées.
