@@ -1,4 +1,6 @@
 -- Disposable fixture extension. Do NOT run on digiy-core.
+-- The production BEAUTY slot primary key is generated server-side.
+ALTER TABLE public.digiy_beauty_master_slots ALTER COLUMN id SET DEFAULT gen_random_uuid();
 ALTER TABLE public.digiy_resa_profiles
  ADD COLUMN display_name text, ADD COLUMN business_type text,
  ADD COLUMN city text,ADD COLUMN whatsapp text,
