@@ -1,0 +1,63 @@
+name: RÉSA MULTI planning — PostgreSQL & client checks
+on:
+  pull_request:
+    paths:
+      - 'planning.html'
+      - 'index.html'
+      - 'resa-beauty/gestion.html'
+      - 'sql/20261009_resa_public_week_v1.sql'
+      - 'sql/20261009_beauty_owner_open_week_v1.sql'
+      - 'tests/sql/resa_planning_*.sql'
+      - 'tests/resa-planning-v2.test.cjs'
+      - '.github/workflows/resa-planning-integration.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'planning.html'
+      - 'index.html'
+      - 'resa-beauty/gestion.html'
+      - 'sql/20261009_resa_public_week_v1.sql'
+      - 'sql/20261009_beauty_owner_open_week_v1.sql'
+      - 'tests/sql/resa_planning_*.sql'
+      - 'tests/resa-planning-v2.test.cjs'
+      - '.github/workflows/resa-planning-integration.yml'
+permissions:
+  contents: read
+jobs:
+  verified-planning:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: public.ecr.aws/docker/library/postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: test_only
+          POSTGRES_DB: digiy_appointments_test
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: PostgreSQL integration tests with synthetic owners
+        env:
+          PGHOST: localhost
+          PGPORT: '5432'
+          PGUSER: postgres
+          PGPASSWORD: test_only
+          PGDATABASE: digiy_appointments_test
+        run: |
+          set -euo pipefail
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_beauty_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_planning_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/20261009_resa_public_week_v1.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/20261009_beauty_owner_open_week_v1.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_planning_assertions.sql
+      - name: Public and owner HTML contract tests
+        run: node --test tests/resa-planning-v2.test.cjs
