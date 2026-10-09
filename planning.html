@@ -56,7 +56,7 @@ button:focus-visible,input:focus-visible{outline:3px solid #ddaf4c;outline-offse
 <div id="days" class="days" aria-label="Disponibilités pour sept jours"></div>
 <div id="selection" hidden><strong id="selectedText"></strong>
 <p class="note">Ceci est une recherche de créneau, pas une réservation. Contactez directement le professionnel pour confirmer l'heure, la prestation et le tarif. DIGIYLYFE ne reçoit aucun paiement.</p>
-<button id="copy" type="button">Copier la date et l'heure</button></div>
+<button id="copy" type="button">Copier la date et l'heure</button> <a id="contact" target="_blank" rel="noopener noreferrer" hidden style="display:inline-block;border-radius:12px;background:#093b2b;color:#fff;font-weight:850;padding:10px 14px;text-decoration:none;min-height:44px">💬 Demander directement au professionnel</a> <a id="fiche" hidden style="color:#093b2b;font-weight:800">Voir la fiche professionnelle</a></div>
 </section>
 <p class="note">Paiement direct · Confirmation humaine · 0 % commission. Les horaires sont indicatifs jusqu'à confirmation du professionnel.</p>
 </main>
@@ -65,7 +65,7 @@ button:focus-visible,input:focus-visible{outline:3px solid #ddaf4c;outline-offse
 const db=supabase.createClient('https://wesqmwjjtsefyjnluosj.supabase.co','sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3');
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
-let start=new Date(),activeSlug='',chosen='',generation=0;
+let start=new Date(),activeSlug='',chosen='',generation=0,publicWa='';
 function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function add(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x}
 function dayLabel(s){return new Date(s+'T12:00:00').toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})}
@@ -75,7 +75,7 @@ function cell(type,text,cls){const e=document.createElement(type);e.textContent=
 async function load(){
  if(!activeSlug)return;
  const ticket=++generation;
- $('days').replaceChildren();$('selection').hidden=true;chosen='';
+ $('days').replaceChildren();$('selection').hidden=true;chosen='';publicWa='';$('contact').hidden=true;$('fiche').hidden=true;
  $('prev').disabled=true;$('next').disabled=true;
  announce('Consultation des horaires réels…');
  const {data,error}=await db.rpc('digiy_resa_public_week_v1',{p_slug:activeSlug,p_start_date:iso(start)});
@@ -85,6 +85,8 @@ async function load(){
   $('weekTitle').textContent='';return;
  }
  $('proTitle').textContent='📅 '+(data.display_name||'Professionnel')+' — '+(data.city||'RÉSA');
+ publicWa=typeof data.public_whatsapp==='string'?data.public_whatsapp:'';
+ $('fiche').href='https://resa.digiylyfe.com/fiche.html?slug='+encodeURIComponent(activeSlug);
  const slotRows=Array.isArray(data.slots)?data.slots:[];
  $('weekTitle').textContent=dayLabel(iso(start))+' → '+dayLabel(iso(add(start,6)));
  const now=today(),edge=add(now,56);$('prev').disabled=iso(start)<=iso(now);$('next').disabled=iso(add(start,7))>iso(edge);
@@ -108,6 +110,8 @@ async function load(){
      btn.classList.add('selected');chosen=date+' '+x.time;
      $('selectedText').textContent='Créneau repéré : '+dayLabel(date)+' à '+x.time;
      $('selection').hidden=false;
+     $('fiche').hidden=false;
+     if(publicWa){$('contact').hidden=false;$('contact').href='https://wa.me/'+publicWa+'?text='+encodeURIComponent('Bonjour, je souhaite demander un rendez-vous le '+date+' à '+x.time+'. Pouvez-vous confirmer votre disponibilité et les conditions ?');}else{$('contact').hidden=true;}
     });
    }
    times.append(btn);
