@@ -1,0 +1,96 @@
+{
+  "version": "2026-10-09.pre-sql.v1",
+  "scope": "universal_compatible_appointments_only",
+  "exceptions": [
+    "RESTO",
+    "LOC",
+    "DRIVER",
+    "OTHER_FIELD_CASES"
+  ],
+  "core_project": "digiy-core",
+  "phase": "PRE_SQL_AUDIT",
+  "production_sql_authorized": false,
+  "automatic_booking_production_ready": false,
+  "existing_generic_database_snapshot": {
+    "profiles": 0,
+    "slots": 0,
+    "bookings": 7,
+    "bookings_pending": 6,
+    "bookings_confirmed": 1,
+    "services_active": 8,
+    "all_bookings_without_current_profile": true,
+    "services_without_current_profile": 8,
+    "legacy_rpcs_public": [
+      "digiy_resa_create_booking",
+      "resa_create_booking_by_slug"
+    ],
+    "known_legacy_booking_effect": "digiy_resa_push_to_pay_after_status"
+  },
+  "required_server_invariants": [
+    "active_published_owner",
+    "active_real_service",
+    "actual_open_slot",
+    "price_duration_from_server",
+    "capacity_one_until_proven",
+    "atomic_lock_and_overlap_guard",
+    "idempotency_key",
+    "pending_vs_confirmed_true_state",
+    "owner_AB_isolation",
+    "client_privacy",
+    "cancel_releases_capacity",
+    "time_zone_test_senegal_france",
+    "PAY_side_effect_review",
+    "legacy_RPC_impact_review",
+    "rollback_verified_isolated"
+  ],
+  "gates": [
+    {
+      "id": "G01",
+      "name": "business_rules",
+      "status": "GO_DOC_ONLY"
+    },
+    {
+      "id": "G02",
+      "name": "client_owner_E2E_real_generic_instance",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "G03",
+      "name": "authorization_and_legacy_RPC",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "G04",
+      "name": "concurrency_and_overlapping_times",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "G05",
+      "name": "legacy_bookings_services_impact",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "G06",
+      "name": "PAY_side_effects",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "G07",
+      "name": "timezone_duration_catalogue",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "G08",
+      "name": "isolated_SQL_staging_rollback",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "G09",
+      "name": "core_real_BAT_and_release",
+      "status": "BLOCKED"
+    }
+  ],
+  "no_production_changes": true,
+  "next_phase": "prepare_SQL_only_in_separate_branch_after_controls_review",
+  "evidence": "docs/RESA_UNIVERSEL_PRE_SQL_GO_NO_GO_20261009.md"
+}
