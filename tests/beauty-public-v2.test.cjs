@@ -9,22 +9,35 @@ const scripts=[...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)].map(m=>
 assert.equal(scripts.length,1,'Expect exactly one application script');
 const clientScript=scripts[0];
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
+class FixedDate extends Date{
+ constructor(...args){super(...(args.length?args:['2026-10-09T08:00:00Z']))}
+ static now(){return new Date('2026-10-09T08:00:00Z').valueOf()}
+}
 function element(id){
  const e={id,value:'',textContent:'',href:'',_html:'',_children:[],onclick:null};
  e.classList={add(){},remove(){}};
  Object.defineProperty(e,'innerHTML',{get(){return e._html},set(v){
    e._html=String(v);
-   e._children=[...e._html.matchAll(/<button\b[^>]*\bdata-(day|slot)="([^"]+)"[^>]*>/g)]
-      .map(m=>{const el=element('child');el.dataset={[m[1]]:m[2]};return el;});
+   e._children=[...e._html.matchAll(/<button\\b[^>]*>/g)]
+     .map(([tag])=>{
+        const child=element('child');
+        child.dataset={};
+        for(const m of tag.matchAll(/data-([\w-]+)="([^"]+)"/g))
+           child.dataset[m[1].replace(/-([a-z])/g,(_,ch)=>ch.toUpperCase())]=m[2];
+        return child;
+     });
  }});
- e.querySelectorAll=selector=>selector.includes('slot')
-    ? e._children.filter(x=>'slot' in x.dataset)
-    : selector.includes('day')
-       ? e._children.filter(x=>'day' in x.dataset)
-       : e._children.filter(x=>selector.includes('.slot')?'slot' in x.dataset:true);
+ e.querySelectorAll=selector=>{
+   if(selector.includes('[data-week-slot]'))return e._children.filter(x=>'weekSlot' in x.dataset);
+   if(selector.includes('[data-slot]'))return e._children.filter(x=>'slot' in x.dataset);
+   if(selector.includes('[data-day]'))return e._children.filter(x=>'day' in x.dataset);
+   if(selector.includes('.slot'))return e._children.filter(x=>'slot' in x.dataset);
+   if(selector.includes('.daybtn'))return e._children.filter(x=>'day' in x.dataset);
+   return e._children;
+ };
  return e;
 }
-function launch({wrongPrice=false}={}){
+function launch({wrongPrice=false,noAvailable=false}={}){
  const names=['name','status','place','note','services','service','wa','waMissing',
    'week','day','slots','book','bookMsg','clientName','clientWa'];
  const el=Object.fromEntries(names.map(id=>[id,element(id)]));
@@ -36,7 +49,7 @@ function launch({wrongPrice=false}={}){
      return {data:[{slug:'test-resa-beauty-saly',display_name:'TEST BEAUTY',
        availability_status:'available',services:[{name:'Coiffure',duration_min:45,price:5000}]}],error:null};
    if(name==='digiy_beauty_public_slots_v2')
-     return {data:[{id:'30303030-3030-4030-8030-303030303030',slot_time:'11:00:00',status:slotStatus}],error:null};
+     return {data:noAvailable?[]:[{id:'30303030-3030-4030-8030-303030303030',slot_time:'11:00:00',status:slotStatus}],error:null};
    if(name==='digiy_beauty_public_book_v1'){
      if(wrongPrice)return {data:null,error:{message:'service offer changed; reload'}};
      slotStatus='booked';
@@ -48,7 +61,7 @@ function launch({wrongPrice=false}={}){
    supabase:{createClient:()=>({rpc})},
    document:{getElementById:id=>el[id]??(el[id]=element(id))},
    location:{search:'?slug=test-resa-beauty-saly'},
-   URLSearchParams,Date,Intl,Number,String,Promise,Array,Error
+   URLSearchParams,Date:FixedDate,Intl,Number,String,Promise,Array,Error
  },{timeout:2000});
  return {el,calls};
 }
@@ -91,4 +104,27 @@ test('aucune demande sans nom ni WhatsApp ni créneau sélectionné',async()=>{
  await el.book.onclick();
  assert.equal(calls.filter(x=>x.name==='digiy_beauty_public_book_v1').length,0);
  assert.match(el.bookMsg.textContent,/créneau/);
+});
+
+test('vrai planning visible de sept jours et navigation de la semaine',async()=>{
+ const {el,calls}=launch();
+ await flush();await flush();await flush();await flush();
+ assert.match(el.weekBoard.innerHTML,/weekcol/);
+ assert.equal((el.weekBoard.innerHTML.match(/class="weekcol"/g)||[]).length,7);
+ assert.ok(calls.filter(x=>x.name==='digiy_beauty_public_slots_v2').length>=7);
+ assert.match(el.calendarStatus.textContent,/créneau\(x\) réellement ouvert/);
+ assert.ok(el.weekBoard.querySelectorAll('[data-week-slot]').length>0);
+ assert.equal(typeof el.nextWeek.onclick,'function');
+ el.nextWeek.onclick();
+ await flush();await flush();await flush();
+ assert.match(el.weekRange.textContent,/→/);
+ assert.ok(el.prevWeek.disabled===false);
+});
+test('aucune disponibilité future n’est inventée : colonnes visibles mais vides',async()=>{
+ const {el}=launch({noAvailable:true});
+ await flush();await flush();await flush();await flush();
+ assert.equal((el.weekBoard.innerHTML.match(/class="weekcol"/g)||[]).length,7);
+ assert.equal(el.weekBoard.querySelectorAll('[data-week-slot]').length,0);
+ assert.match(el.calendarStatus.textContent,/Aucun créneau futur ouvert/);
+ assert.equal(el.slots.querySelectorAll('[data-slot]').length,0);
 });
