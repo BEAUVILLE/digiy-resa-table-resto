@@ -35,6 +35,7 @@ INSERT INTO public.digiy_resa_slots(id,slug,slot_date,start_time,end_time,status
 ('a0000000-0000-4000-8000-000000001600','resa-owner-a',current_date+8,'16:00','17:00','open',2),
 ('a0000000-0000-4000-8000-000000002200','resa-owner-a',current_date+9,'09:00','10:00','open',1),
 ('a0000000-0000-4000-8000-000000002230','resa-owner-a',current_date+9,'09:30','10:30','open',1),
+('a0000000-0000-4000-8000-000000003300','resa-owner-a',current_date+10,'10:00','11:00','open',1),
 ('b0000000-0000-4000-8000-000000001000','resa-owner-b',current_date+8,'10:00','11:00','open',1);
 -- Optional PAY stub: the new API must not update booking status.
 CREATE TABLE public.test_pay_side_effects(id uuid PRIMARY KEY DEFAULT gen_random_uuid());
