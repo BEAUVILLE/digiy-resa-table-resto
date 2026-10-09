@@ -72,7 +72,7 @@ async function loadWeekGrid(){
  $('weekBoard').querySelectorAll('[data-week-slot]').forEach(btn=>btn.onclick=async()=>{
    $('day').value=btn.dataset.weekDay;
    await loadSlots();
-   const target=$('slots').querySelectorAll('[data-slot]').find(x=>x.dataset.slot===btn.dataset.weekSlot);
+   const target=Array.from($('slots').querySelectorAll('[data-slot]')).find(x=>x.dataset.slot===btn.dataset.weekSlot);
    if(target)target.onclick();
    $('week').querySelectorAll('.daybtn').forEach(x=>{x.classList.remove('active');if(x.dataset.day===btn.dataset.weekDay)x.classList.add('active')});
    $('bookMsg').textContent='Créneau choisi : '+btn.dataset.weekDay+' à '+btn.textContent+'. Termine ta demande ci-dessous.';
