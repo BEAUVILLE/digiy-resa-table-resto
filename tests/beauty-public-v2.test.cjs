@@ -84,7 +84,7 @@ test('le client reçoit un véritable ID V2, puis le transmet pour une demande a
  assert.equal(booking[0].args.p_service_name,'Coiffure');
  assert.equal(booking[0].args.p_service_price,5000);
  assert.equal(booking[0].args.p_service_duration_min,45);
- assert.match(el.bookMsg.textContent,/Demande enregistrée/);
+ assert.match(el.bookMsg.textContent,/Demande TEST enregistrée\. Aucun vrai rendez-vous confirmé\./);
  assert.equal(el.slots.querySelectorAll('[data-slot]').length,0,'taken slot is hidden after booking');
 });
 test('le client ne publie pas un faux prix : refus serveur traduit en message',async()=>{
