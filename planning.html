@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,follow"><meta name="theme-color" content="#092d22">
+<title>DIGIY RÉSA · Planning hebdomadaire</title>
+<meta name="description" content="Consultez les vrais jours et horaires proposés par le professionnel, sans intermédiaire ni commission.">
+<style>
+:root{--bg:#f4f7f1;--forest:#093b2b;--ink:#173c31;--muted:#5a7467;--gold:#f1c766;--line:#c7dacc}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--ink);margin:0;font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:var(--forest);color:white;padding:20px clamp(12px,4vw,30px)}
+.wrap{max-width:1060px;margin:auto}h1{font-size:clamp(24px,4vw,39px);line-height:1.1;margin:8px 0}
+header p{margin:5px 0;color:#d5e6d9}
+main{max-width:1060px;margin:20px auto 70px;padding:0 12px}
+nav a{color:#fff;font-weight:800;text-underline-offset:3px}
+.card{background:white;border:1px solid var(--line);padding:clamp(15px,3vw,24px);border-radius:20px;margin:14px 0}
+form{display:flex;align-items:flex-end;gap:11px;flex-wrap:wrap}
+label{display:grid;gap:5px;font-weight:750;flex:1 1 230px}
+input,button{font:inherit;border-radius:12px;border:1px solid #9cb9a6;min-height:44px;padding:9px 12px}
+button{cursor:pointer;background:#e8f5e9;color:var(--forest);font-weight:800}
+button.primary{background:var(--forest);color:white;border-color:var(--forest)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus-visible{outline:3px solid #ddaf4c;outline-offset:3px}
+.note{color:var(--muted);font-size:13px}
+.weekNav{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:14px 0}
+#weekTitle{font-weight:850;font-size:18px}
+.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px}
+.day{border:1px solid var(--line);border-radius:16px;background:#fff;padding:12px 9px;min-height:170px}
+.day h3{font-size:13px;line-height:1.3;margin:0 0 6px}
+.day .summary{font-size:11px;color:var(--muted);display:block;margin-bottom:8px}
+.times{display:flex;flex-direction:column;gap:6px}
+.time{min-height:36px;padding:6px 3px;font-size:12px;background:#e5f5e8;border:1px solid #aad8b8;width:100%}
+.time.closed{background:#f4f0ee;color:#806b64;border-color:#dfd4ce;cursor:default}
+.time.selected{background:var(--forest);color:#fff}
+#feedback{font-weight:700;min-height:24px}
+#selection{border-left:4px solid var(--gold);padding:11px 15px;margin-top:14px;background:#fffbec;border-radius:9px}
+@media(max-width:860px){.days{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:540px){.days{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<header><div class="wrap"><nav><a href="./index.html">← RÉSA MULTI</a></nav>
+<h1>📅 Trouver un créneau</h1><p>Choisissez un jour et une heure dans le planning réel du professionnel.</p></div></header>
+<main>
+<div class="card"><form id="search">
+<label>Identifiant de la fiche professionnelle
+<input id="slug" type="text" required maxlength="150" autocomplete="off" placeholder="Identifiant transmis sur sa fiche"></label>
+<button type="submit" class="primary">🔎 Voir les disponibilités</button></form>
+<p class="note">Ce planning montre uniquement les créneaux ouverts par un professionnel actif et publié. Il n'affiche aucun professionnel de démonstration comme une activité réelle.</p>
+</div>
+<section class="card" aria-labelledby="proTitle">
+<h2 id="proTitle">Planning des rendez-vous</h2>
+<p id="feedback" role="status" aria-live="polite">Saisissez le code de la fiche pour consulter les créneaux.</p>
+<div class="weekNav"><button type="button" id="prev" disabled>← 7 jours précédents</button><span id="weekTitle"></span><button type="button" id="next" disabled>7 jours suivants →</button></div>
+<div id="days" class="days" aria-label="Disponibilités pour sept jours"></div>
+<div id="selection" hidden><strong id="selectedText"></strong>
+<p class="note">Ceci est une recherche de créneau, pas une réservation. Contactez directement le professionnel pour confirmer l'heure, la prestation et le tarif. DIGIYLYFE ne reçoit aucun paiement.</p>
+<button id="copy" type="button">Copier la date et l'heure</button></div>
+</section>
+<p class="note">Paiement direct · Confirmation humaine · 0 % commission. Les horaires sont indicatifs jusqu'à confirmation du professionnel.</p>
+</main>
+<script>
+(()=>{'use strict';
+const db=supabase.createClient('https://wesqmwjjtsefyjnluosj.supabase.co','sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3');
+const $=id=>document.getElementById(id);
+const params=new URLSearchParams(location.search);
+let start=new Date(),activeSlug='',chosen='',generation=0;
+function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function add(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x}
+function dayLabel(s){return new Date(s+'T12:00:00').toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})}
+function today(){const d=new Date();d.setHours(0,0,0,0);return d}
+function announce(t){$('feedback').textContent=t}
+function cell(type,text,cls){const e=document.createElement(type);e.textContent=text;if(cls)e.className=cls;return e}
+async function load(){
+ if(!activeSlug)return;
+ const ticket=++generation;
+ $('days').replaceChildren();$('selection').hidden=true;chosen='';
+ $('prev').disabled=true;$('next').disabled=true;
+ announce('Consultation des horaires réels…');
+ const {data,error}=await db.rpc('digiy_resa_public_week_v1',{p_slug:activeSlug,p_start_date:iso(start)});
+ if(ticket!==generation)return;
+ if(error||!data?.ok){
+  announce(error?'Planning temporairement indisponible.':'Aucun planning publié pour cette fiche.');
+  $('weekTitle').textContent='';return;
+ }
+ $('proTitle').textContent='📅 '+(data.display_name||'Professionnel')+' — '+(data.city||'RÉSA');
+ const slotRows=Array.isArray(data.slots)?data.slots:[];
+ $('weekTitle').textContent=dayLabel(iso(start))+' → '+dayLabel(iso(add(start,6)));
+ const now=today(),edge=add(now,56);$('prev').disabled=iso(start)<=iso(now);$('next').disabled=iso(add(start,7))>iso(edge);
+ let count=0;
+ for(let i=0;i<7;i++){
+  const date=iso(add(start,i));const rows=slotRows.filter(x=>x.date===date);
+  const col=cell('article','', 'day');col.append(cell('h3',dayLabel(date)));
+  const usable=rows.filter(x=>x.available && !(date===iso(now) && x.time<=new Date().toTimeString().slice(0,5))).length;
+  col.append(cell('span',usable?usable+' disponible(s)':'Aucun disponible','summary'));
+  const times=cell('div','', 'times');
+  if(!rows.length)times.append(cell('span','Pas de créneau ouvert','note'));
+  rows.forEach(x=>{
+   const usableNow=!!x.available && !(date===iso(now) && x.time<=new Date().toTimeString().slice(0,5));
+   const btn=cell('button',(x.time||'--:--')+(usableNow?' · libre':' · indisponible'),
+      'time'+(usableNow?'':' closed'));
+   btn.type='button';btn.disabled=!usableNow;
+   if(usableNow){
+    count++;
+    btn.addEventListener('click',()=>{
+     $('days').querySelectorAll('.time.selected').forEach(y=>y.classList.remove('selected'));
+     btn.classList.add('selected');chosen=date+' '+x.time;
+     $('selectedText').textContent='Créneau repéré : '+dayLabel(date)+' à '+x.time;
+     $('selection').hidden=false;
+    });
+   }
+   times.append(btn);
+  });
+  col.append(times);$('days').append(col);
+ }
+ announce(count?count+' horaire(s) ouvert(s) sur ces sept jours.':'Aucun créneau disponible pour ces sept jours.');
+}
+$('search').addEventListener('submit',ev=>{
+ ev.preventDefault();const slug=$('slug').value.trim();
+ if(!/^[\p{L}\p{N}_-]{2,150}$/u.test(slug)){announce('Identifiant invalide. Consultez la fiche du professionnel.');return}
+ activeSlug=slug;start=today();history.replaceState(null,'',location.pathname+'?slug='+encodeURIComponent(slug));
+ load();
+});
+$('prev').addEventListener('click',()=>{start=add(start,-7);load()});
+$('next').addEventListener('click',()=>{start=add(start,7);load()});
+$('copy').addEventListener('click',async()=>{if(!chosen)return;try{await navigator.clipboard.writeText(chosen);announce('Date et heure copiées.')}catch(_){announce(chosen)}});
+const initial=params.get('slug')||'';
+if(initial){$('slug').value=initial;$('search').requestSubmit()}
+})();
+</script>
+</body></html>
