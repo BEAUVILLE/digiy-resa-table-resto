@@ -2,7 +2,6 @@
 -- Snapshot reviewed on digiy-core 2026-10-09; original definition preserved in
 -- docs/RESA_BEAUTY_SECURITY_AUDIT_20261009.md for rollback review.
 -- No customer rows are read or changed by this migration.
-BEGIN;
 
 CREATE OR REPLACE FUNCTION public.digiy_resa_get_bookings_by_day(p_slug text, p_date date)
 RETURNS jsonb
@@ -60,4 +59,3 @@ $function$;
 REVOKE ALL ON FUNCTION public.digiy_resa_get_bookings_by_day(text,date) FROM PUBLIC, anon;
 GRANT EXECUTE ON FUNCTION public.digiy_resa_get_bookings_by_day(text,date) TO authenticated, service_role;
 
-COMMIT;
