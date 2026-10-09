@@ -77,7 +77,25 @@ button{border:0;border-radius:999px;min-height:44px;padding:10px 15px;background
 </section>
 
 <section class="card">
-  <h2>Créneaux</h2>
+  <h2>📅 Mon planning sur sept jours</h2>
+  <p class="muted">Ouvre uniquement les jours et heures que tu choisis. Les réservations et les créneaux déjà bloqués ne seront pas modifiés. L'ouverture de la semaine demande une connexion propriétaire.</p>
+  <div class="field"><label>Semaine commençant le lundi</label><input id="weekMonday" type="date"></div>
+  <fieldset style="margin:12px 0;border:1px solid #ead7e2;border-radius:14px"><legend>Jours où tu reçois</legend>
+    <div style="display:flex;flex-wrap:wrap;gap:12px">
+      <label><input type="checkbox" data-weekday="1" checked> Lundi</label><label><input type="checkbox" data-weekday="2" checked> Mardi</label>
+      <label><input type="checkbox" data-weekday="3" checked> Mercredi</label><label><input type="checkbox" data-weekday="4" checked> Jeudi</label>
+      <label><input type="checkbox" data-weekday="5" checked> Vendredi</label><label><input type="checkbox" data-weekday="6"> Samedi</label>
+      <label><input type="checkbox" data-weekday="7"> Dimanche</label>
+    </div>
+  </fieldset>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <div class="field"><label>Heure 1</label><input class="weekTime" type="time" value="09:00"></div>
+    <div class="field"><label>Heure 2</label><input class="weekTime" type="time" value="11:00"></div>
+    <div class="field"><label>Heure 3</label><input class="weekTime" type="time" value="14:00"></div>
+  </div>
+  <button type="button" id="openWeek">📅 Ouvrir ces créneaux</button>
+  <p id="weekMsg" class="status" role="status" aria-live="polite"></p>
+  <h2>Gestion détaillée des créneaux</h2>
   <p class="muted">Choisis une date puis ouvre, bloque ou marque un créneau réservé.</p>
   <div class="field"><label>Jour</label><input id="slotDay" type="date"></div>
   <div id="slotList"></div>
@@ -184,6 +202,28 @@ async function loadSlots(){
 }
 $('slotDay').onchange=loadSlots;
 
+function localDate(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function comingMonday(){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+((8-d.getDay())%7));return localDate(d)}
+$('openWeek').onclick=async()=>{
+ if(!beautyId){$('weekMsg').textContent='⚠️ Connecte-toi comme propriétaire.';return}
+ const monday=$('weekMonday').value;
+ const weekdays=Array.from(document.querySelectorAll('[data-weekday]:checked')).map(x=>Number(x.dataset.weekday));
+ const hours=Array.from(document.querySelectorAll('.weekTime')).map(x=>x.value).filter(Boolean);
+ if(!monday||new Date(monday+'T12:00:00').getDay()!==1) return $('weekMsg').textContent='⚠️ Sélectionne un lundi.';
+ if(!weekdays.length||!hours.length||new Set(hours).size!==hours.length)return $('weekMsg').textContent='⚠️ Choisis des jours et des heures différentes.';
+ $('openWeek').disabled=true;$('weekMsg').textContent='Enregistrement des seuls créneaux nouveaux…';
+ try{
+   const {data,error}=await db.rpc('digiy_beauty_owner_open_week_v1',{
+     p_slug:slug,p_start_date:monday,p_times:hours,p_weekdays:weekdays
+   });
+   if(error)throw error;
+   $('weekMsg').textContent='✅ '+data.added+' créneau(x) créé(s). '+data.existing_or_unchanged+' créneau(x) existant(s) préservé(s).';
+   $('slotDay').value=monday;
+   await loadSlots();
+ }catch(err){$('weekMsg').textContent='⚠️ '+(err?.message||'Impossible d’ouvrir la semaine.')}
+ finally{$('openWeek').disabled=false;}
+};
+
 async function boot(){
   const {data:{session}}=await db.auth.getSession();
   if(!session)return location.replace('./acces-proprietaire.html?slug='+encodeURIComponent(slug));
@@ -203,7 +243,8 @@ async function boot(){
   $('note').value=r.opening_note||'';
   services=Array.isArray(r.services)?r.services:[];
   renderServices();
-  if(!$('slotDay').value)$('slotDay').value=new Date().toISOString().slice(0,10);
+  if(!$('slotDay').value)$('slotDay').value=localDate(new Date());
+  if(!$('weekMonday').value)$('weekMonday').value=comingMonday();
   await Promise.all([loadSlots(),loadBookings()]);
 }
 
