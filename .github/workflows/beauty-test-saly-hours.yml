@@ -1,0 +1,30 @@
+name: BEAUTY TEST SALY — horaires librement choisis
+on:
+  pull_request:
+    paths:
+      - 'resa-beauty/gestion.html'
+      - 'resa-beauty/index.html'
+      - 'sql/20261009_beauty_test_saly_restore_historical_hours.sql'
+      - 'tests/beauty-test-saly-hours.test.cjs'
+      - '.github/workflows/beauty-test-saly-hours.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'resa-beauty/gestion.html'
+      - 'resa-beauty/index.html'
+      - 'sql/20261009_beauty_test_saly_restore_historical_hours.sql'
+      - 'tests/beauty-test-saly-hours.test.cjs'
+      - '.github/workflows/beauty-test-saly-hours.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Contrôler les horaires DEMO et les choix libres des pros
+        run: node --test tests/beauty-test-saly-hours.test.cjs
