@@ -16,6 +16,15 @@ BEGIN
  END IF;
 END $preflight$;
 
+-- Idempotency UUID identifies the request, NOT the booking primary key.
+-- Resolve actual synthetic booking IDs before switching to a tenant-limited role.
+SELECT set_config('test.owner_a_booking_id',id::text,false)
+FROM public.digiy_resa_bookings
+WHERE client_request_id='ca000000-0000-4000-8000-000000000001';
+SELECT set_config('test.owner_a_second_id',id::text,false)
+FROM public.digiy_resa_bookings
+WHERE client_request_id='ca000000-0000-4000-8000-000000000002';
+
 BEGIN;
 SET LOCAL ROLE authenticated;
 SELECT set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111',true);
@@ -34,17 +43,17 @@ BEGIN
   RAISE EXCEPTION 'owner A can read owner B';
  END IF;
  r:=public.digiy_resa_universal_owner_status_v1(
-   'ca000000-0000-4000-8000-000000000001','done');
+   current_setting('test.owner_a_booking_id')::uuid,'done');
  IF r->>'error'<>'invalid_transition' THEN
   RAISE EXCEPTION 'pending->done wrongly permitted: %',r;
  END IF;
  r:=public.digiy_resa_universal_owner_status_v1(
-   'ca000000-0000-4000-8000-000000000001','confirmed');
+   current_setting('test.owner_a_booking_id')::uuid,'confirmed');
  IF r->>'ok'<>'true' OR r->>'status'<>'confirmed' THEN
   RAISE EXCEPTION 'owner A cannot confirm own V1 booking %',r;
  END IF;
  r:=public.digiy_resa_universal_owner_status_v1(
-   'ca000000-0000-4000-8000-000000000001','confirmed');
+   current_setting('test.owner_a_booking_id')::uuid,'confirmed');
  IF r->>'error'<>'invalid_transition' THEN
   RAISE EXCEPTION 'repeat confirmation not blocked';
  END IF;
@@ -54,10 +63,10 @@ BEGIN
   RAISE EXCEPTION 'owner A touched legacy owner B: %',r;
  END IF;
  r:=public.digiy_resa_universal_owner_status_v1(
-   'ca000000-0000-4000-8000-000000000001','cancelled');
+   current_setting('test.owner_a_booking_id')::uuid,'cancelled');
  IF r->>'ok'<>'true' THEN RAISE EXCEPTION 'cancel own confirmed booking failed'; END IF;
  r:=public.digiy_resa_universal_owner_status_v1(
-   'ca000000-0000-4000-8000-000000000001','confirmed');
+   current_setting('test.owner_a_booking_id')::uuid,'confirmed');
  IF r->>'error'<>'invalid_transition' THEN
   RAISE EXCEPTION 'cancelled booking was resurrected'; END IF;
 END $auth_a$;
@@ -80,7 +89,7 @@ BEGIN
   RAISE EXCEPTION 'owner B can see owner A';
  END IF;
  r:=public.digiy_resa_universal_owner_status_v1(
-  'ca000000-0000-4000-8000-000000000002','cancelled');
+  current_setting('test.owner_a_second_id')::uuid,'cancelled');
  IF r->>'error'<>'not_found_or_forbidden' THEN
   RAISE EXCEPTION 'owner B can mutate owner A: %',r;
  END IF;
