@@ -1,0 +1,73 @@
+name: RÉSA universel V0 — SQL jetable, concurrence, rollback
+on:
+  pull_request:
+    paths:
+      - 'sql/candidates/20261009_resa_universal_v0_ISOLATED*.sql'
+      - 'tests/sql/resa_universal_v0_*.sql'
+      - 'tests/resa-universal-v0-concurrency.cjs'
+      - '.github/workflows/resa-universal-sql-isolated.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'sql/candidates/20261009_resa_universal_v0_ISOLATED*.sql'
+      - 'tests/sql/resa_universal_v0_*.sql'
+      - 'tests/resa-universal-v0-concurrency.cjs'
+      - '.github/workflows/resa-universal-sql-isolated.yml'
+permissions:
+  contents: read
+jobs:
+  isolated-postgresql:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: public.ecr.aws/docker/library/postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: test_only
+          POSTGRES_DB: digiy_appointments_test
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      PGHOST: localhost
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: test_only
+      PGDATABASE: digiy_appointments_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: PostgreSQL client
+        run: sudo apt-get update -qq && sudo apt-get install -y postgresql-client
+      - name: Fixture A/B isolée et SQL candidat
+        run: |
+          set -euo pipefail
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_beauty_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_planning_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_v0_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261009_resa_universal_v0_ISOLATED.sql
+      - name: Tests SQL contrat, anon et PAY sans écriture réelle
+        run: psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_v0_assertions.sql
+      - name: Deux sessions simultanées sur horaires chevauchants
+        run: node tests/resa-universal-v0-concurrency.cjs
+      - name: Rollback structural et préservation des réservations héritées
+        run: psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261009_resa_universal_v0_ISOLATED_ROLLBACK.sql
+      - name: Vérifier disparition des fonctions candidate et maintien des RPC héritées
+        run: |
+          psql -X -v ON_ERROR_STOP=1 <<'SQL'
+          DO $verify$
+          BEGIN
+            IF to_regprocedure('public.digiy_resa_universal_request_v0(text,uuid,uuid,text,text,uuid)') IS NOT NULL THEN
+              RAISE EXCEPTION 'candidate function survived rollback';
+            END IF;
+            IF to_regprocedure('public.resa_list_recent_bookings_by_slug(text,integer)') IS NULL THEN
+              RAISE EXCEPTION 'legacy booking reader was removed';
+            END IF;
+          END $verify$;
+          SQL
