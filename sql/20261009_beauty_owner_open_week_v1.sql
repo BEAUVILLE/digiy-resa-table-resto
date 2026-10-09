@@ -46,4 +46,4 @@ BEGIN
 END;
 $function$;
 REVOKE ALL ON FUNCTION public.digiy_beauty_owner_open_week_v1(text,date,time without time zone[],integer[]) FROM PUBLIC,anon;
-GRANT EXECUTE ON FUNCTION public.digiy_beauty_owner_open_week_v1(text,date,time without time zone[]) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.digiy_beauty_owner_open_week_v1(text,date,time without time zone[],integer[]) TO authenticated;
