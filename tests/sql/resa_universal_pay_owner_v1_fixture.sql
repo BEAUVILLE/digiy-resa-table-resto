@@ -22,7 +22,12 @@ BEGIN
  RETURN jsonb_build_object('ok',true,'booking_id',p_booking_id);
 END $pay$;
 
-GRANT USAGE ON SCHEMA public TO anon,authenticated;
+GRANT USAGE ON SCHEMA public,auth TO authenticated;
+GRANT EXECUTE ON FUNCTION auth.uid() TO authenticated;
+GRANT SELECT ON public.digiy_resa_profiles TO authenticated;
+ALTER TABLE public.digiy_resa_profiles ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "owner A/B profile fixture" ON public.digiy_resa_profiles
+FOR SELECT TO authenticated USING (auth_user_id=auth.uid());
 GRANT SELECT,UPDATE ON public.digiy_resa_bookings TO authenticated;
 ALTER TABLE public.digiy_resa_bookings ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "owner A/B read only own bookings fixture" ON public.digiy_resa_bookings
