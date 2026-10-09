@@ -41,4 +41,17 @@ async function query(s){
   "'cc000000-0000-4000-8000-000000000002'::uuid)"));
  assert.equal(count,1,'database must contain exactly one winner');
  console.log('PASS: simultaneous PostgreSQL clients on overlapping real slots => 1 pending request and 1 refusal');
+ const sameSlot='a0000000-0000-4000-8000-000000003300';
+ const sameKey='cc000000-0000-4000-8000-000000000003';
+ const [sameA,sameB]=await Promise.all([
+  query(sql(sameSlot,sameKey,'221770000023')),
+  query(sql(sameSlot,sameKey,'221770000023'))
+ ]);
+ const retries=[JSON.parse(sameA),JSON.parse(sameB)];
+ assert.ok(retries.every(x=>x.ok===true),'double-click using same idempotency key must succeed');
+ assert.equal(retries.filter(x=>x.already===false).length,1);
+ assert.equal(retries.filter(x=>x.already===true).length,1);
+ assert.equal(retries[0].booking_id,retries[1].booking_id);
+ assert.equal(Number(await query("SELECT count(*) FROM public.digiy_resa_bookings WHERE client_request_id='cc000000-0000-4000-8000-000000000003'::uuid")),1);
+ console.log('PASS: simultaneous double-click with same key => one booking and idempotent replay');
 })().catch(e=>{console.error(e);process.exitCode=1});
