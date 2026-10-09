@@ -9,6 +9,7 @@ DECLARE
  v_test uuid;
  v_result jsonb;
  v_blocked_id uuid;
+ v_before integer;
  v_denied boolean;
 BEGIN
  IF NOT has_function_privilege('anon','public.digiy_resa_public_week_v1(text,date)','EXECUTE')
@@ -39,10 +40,14 @@ BEGIN
  END;
  IF NOT v_denied THEN RAISE EXCEPTION 'no user can open a week'; END IF;
  PERFORM set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111',false);
+ SELECT count(*) INTO v_before FROM public.digiy_beauty_master_slots
+ WHERE beauty_id='10101010-1010-4010-8010-101010101010'
+   AND slot_day IN (v_mon,v_mon+2,v_mon+4)
+   AND slot_time IN ('09:00','11:00');
  v_result:=public.digiy_beauty_owner_open_week_v1(
   'beauty-a',v_mon,ARRAY['09:00','11:00']::time[],ARRAY[1,3,5]);
- IF (v_result->>'added')::int<>6 THEN
-  RAISE EXCEPTION 'expected 6 new owner-selected slots, got %',v_result;
+ IF (v_result->>'added')::int<>6-v_before THEN
+  RAISE EXCEPTION 'expected newly created slots only (6 minus pre-existing %), got %',v_before,v_result;
  END IF;
  v2:=public.digiy_beauty_owner_open_week_v1(
   'beauty-a',v_mon,ARRAY['09:00','11:00']::time[],ARRAY[1,3,5]);
