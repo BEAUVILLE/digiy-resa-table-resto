@@ -4,7 +4,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const vm=require('node:vm');
 const path=require('node:path');
-const html=fs.readFileSync(path.join(__dirname,'..','..','resa-beauty','index.html'),'utf8');
+const html=fs.readFileSync(path.join(__dirname,'..','resa-beauty','index.html'),'utf8');
 const scripts=[...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)].map(m=>m[1]).filter(s=>s.includes('digiy_beauty_public_book_v1'));
 assert.equal(scripts.length,1,'Expect exactly one application script');
 const clientScript=scripts[0];
