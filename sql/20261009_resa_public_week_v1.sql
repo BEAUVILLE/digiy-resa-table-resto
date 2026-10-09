@@ -30,8 +30,12 @@ BEGIN
       'available',s.status='open' AND NOT EXISTS(
         SELECT 1 FROM public.digiy_resa_bookings b
         WHERE b.slug=s.slug AND b.booking_date=s.slot_date
-          AND b.booking_time=s.start_time
           AND coalesce(b.status,'pending') IN ('pending','confirmed')
+          -- A booking overlapping this slot blocks it, even if start times differ.
+          AND (s.slot_date + s.start_time) <
+              (b.booking_date + b.booking_time + make_interval(mins => greatest(5,coalesce(b.duration_minutes,30))))
+          AND (s.slot_date + coalesce(s.end_time, (s.start_time + interval '30 minutes')::time)) >
+              (b.booking_date + b.booking_time)
       )
     ) ORDER BY s.slot_date,s.start_time
   ),'[]'::jsonb) INTO v_slots
