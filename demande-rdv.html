@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#073f32">
+<meta name="robots" content="index,follow">
+<title>Demander un rendez-vous à Saly · DIGIY RÉSA</title>
+<meta name="description" content="Choisissez la prestation, la zone, la date et l'heure souhaitées. Votre demande part par WhatsApp vers DIGIYLYFE, sans réservation ni paiement automatique.">
+<link rel="canonical" href="https://resa-table-resto.digiylyfe.com/demande-rdv.html">
+<style>
+:root{--g:#073f32;--g2:#0f5c44;--gold:#ecc360;--bg:#f5f8f3;--ink:#19382f;--muted:#5b7167;--line:#d1e2d7}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#e7f2e9,var(--bg) 40%);font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
+header{background:var(--g);color:#fff;padding:15px max(16px,calc((100% - 760px)/2));}
+a{color:var(--g)}
+header a{color:#e7f6e6;text-decoration:none;font-size:13px;font-weight:750}
+main{width:min(720px,calc(100% - 24px));margin:20px auto 50px}
+.intro{background:var(--g);color:white;padding:clamp(20px,5vw,32px);border-radius:23px}
+.intro h1{font-size:clamp(27px,6vw,43px);line-height:1.15;margin:12px 0}
+.intro p{margin:4px 0;color:#e0f0e8}
+.kicker{color:var(--gold);font-size:11px;letter-spacing:.08em;font-weight:900}
+.panel{background:white;border:1px solid var(--line);border-radius:22px;padding:clamp(16px,4vw,29px);margin:16px 0;box-shadow:0 10px 24px #083f2910}
+h2{font-size:22px;line-height:1.25;margin:0 0 13px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+label{display:grid;gap:5px;font-size:13px;font-weight:800}
+.full{grid-column:1/-1}
+input,select{border:1px solid #a7beae;border-radius:13px;padding:12px;font:16px system-ui,sans-serif;background:#fff;color:var(--ink);width:100%;min-height:47px}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+small,.muted{color:var(--muted);font-size:13px}
+.note{padding:12px 14px;border-radius:14px;background:#f8f2e1;border-left:4px solid var(--gold);font-size:13px}
+button{font:inherit;cursor:pointer;border-radius:14px;border:0;font-weight:900;padding:13px 16px;min-height:48px}
+.primary{background:var(--g);color:#fff;width:100%;margin-top:15px}
+.secondary{background:#e7f4ec;color:var(--g)}
+#feedback{min-height:24px;color:#145a41;font-weight:800}
+#preview{white-space:pre-wrap;background:#f3f7f2;border:1px solid var(--line);border-radius:14px;padding:13px;font-size:13px;word-break:break-word}
+.pills{display:flex;gap:9px;flex-wrap:wrap;font-size:12px;font-weight:850}.pills span{background:#d9ebdd;color:var(--g);border-radius:999px;padding:7px 10px}
+.footer{text-align:center;font-size:12px;color:var(--muted)}
+[hidden]{display:none!important}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><a href="./index.html">← DIGIY RÉSA MULTI</a></header>
+<main>
+<section class="intro">
+<div class="kicker">🦅 DIGIYLYFE · PILOTE PETITE CÔTE</div>
+<h1>📅 Demandez votre rendez-vous.</h1>
+<p>Une prestation, une date souhaitée, un message WhatsApp. Nous recevons la demande et vous orientons vers le professionnel concerné.</p>
+<div class="pills" style="margin-top:17px"><span>💬 WhatsApp direct</span><span>0 % commission</span><span>Sans paiement en ligne</span></div>
+</section>
+<section class="panel">
+<h2>Votre demande</h2>
+<form id="appointmentForm" novalidate>
+<div class="grid">
+<label class="full">Activité concernée *
+<select id="activity" required>
+<option value="">Choisir une activité</option>
+<option>Beauté et bien-être</option>
+<option>Artisan ou service à domicile</option>
+<option>Conseil et services professionnels</option>
+<option>Cours et accompagnement</option>
+<option>Autre activité sur rendez-vous</option>
+</select>
+</label>
+<label class="full">Prestation recherchée *
+<input id="service" maxlength="120" required placeholder="Ex. : coupe, consultation, cours, dépannage">
+</label>
+<label class="full">Ville ou secteur *
+<input id="locality" maxlength="90" required placeholder="Ex. : Saly, Ngaparou, Mbour">
+</label>
+<label>Date souhaitée *
+<input id="date" type="date" required>
+</label>
+<label>Heure souhaitée *
+<input id="time" type="time" required>
+</label>
+<label class="full">Votre prénom (facultatif)
+<input id="firstName" maxlength="70" autocomplete="given-name" placeholder="Pour personnaliser la demande">
+</label>
+</div>
+<p class="note">⚠️ Ceci est une <strong>demande de contact</strong>, pas une réservation enregistrée. La date et l'heure sont des souhaits : seul le professionnel confirme sa disponibilité et son tarif.</p>
+<button class="primary" type="submit">💬 Ouvrir ma demande dans WhatsApp →</button>
+<p id="feedback" role="status" aria-live="polite"></p>
+</form>
+<div id="review" hidden>
+<h2>Votre message</h2>
+<div id="preview"></div>
+<p class="muted">Si WhatsApp ne s'ouvre pas, copiez ce message et envoyez-le depuis l'application.</p>
+<button class="secondary" id="copy" type="button">📋 Copier le message</button>
+</div>
+</section>
+<p class="footer">Contact d'orientation DIGIYLYFE · Confirmation et règlement directement avec le professionnel. Les restaurants, logements et chauffeurs conservent leurs parcours spécialisés.</p>
+</main>
+<script type="module">
+import {buildWhatsAppEnquiry,validSlug,EnquiryError} from './resa-universal/pilot-whatsapp-v7.mjs';
+const el=id=>document.getElementById(id);
+const params=new URLSearchParams(location.search);
+const slug=params.get('slug')||'';
+const selectedSlug=validSlug(slug)?slug:'';
+const dakarParts=new Intl.DateTimeFormat('en-GB',{
+ timeZone:'Africa/Dakar',year:'numeric',month:'2-digit',day:'2-digit'
+}).formatToParts(new Date());
+const part=t=>dakarParts.find(p=>p.type===t)?.value||'';
+const today=part('year')+'-'+part('month')+'-'+part('day');
+el('date').min=today;
+el('date').value=today;
+let lastMessage='';
+el('appointmentForm').addEventListener('submit',event=>{
+ event.preventDefault();
+ const input={
+  activity:el('activity').value,service:el('service').value,
+  locality:el('locality').value,date:el('date').value,time:el('time').value,
+  firstName:el('firstName').value,slug:selectedSlug
+ };
+ try{
+  const result=buildWhatsAppEnquiry(input,{today});
+  lastMessage=result.message;
+  el('preview').textContent=result.message;
+  el('review').hidden=false;
+  el('feedback').textContent='✓ Message préparé. Vérifiez et envoyez-le dans WhatsApp pour que DIGIYLYFE le reçoive.';
+  // Real navigation occurs only from the user's explicit submit gesture.
+  // WhatsApp still requires the user to press Send in its own interface.
+  location.assign(result.url);
+ }catch(error){
+  el('feedback').textContent=error instanceof EnquiryError?
+   '⚠️ Vérifiez activité, prestation, secteur, date et heure souhaitées.':
+   '⚠️ Impossible de préparer le message.';
+ }
+});
+el('copy').addEventListener('click',async()=>{
+ if(!lastMessage)return;
+ try{await navigator.clipboard.writeText(lastMessage);el('feedback').textContent='✓ Message copié.'}
+ catch(_){el('feedback').textContent='Sélectionnez le texte affiché pour le copier.'}
+});
+</script>
+</body>
+</html>
