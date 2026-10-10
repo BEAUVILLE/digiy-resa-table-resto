@@ -1,0 +1,38 @@
+name: RÉSA V7 — pilote WhatsApp public, sans fausse réservation
+on:
+  pull_request:
+    paths:
+      - 'demande-rdv.html'
+      - 'planning.html'
+      - 'index.html'
+      - 'resa-universal/pilot-whatsapp-v7.mjs'
+      - 'tests/resa-whatsapp-pilot-v7.test.mjs'
+      - 'docs/RESA_V7_PILOTE_WHATSAPP_20261010.md'
+      - '.github/workflows/resa-v7-whatsapp-pilot.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'demande-rdv.html'
+      - 'planning.html'
+      - 'index.html'
+      - 'resa-universal/pilot-whatsapp-v7.mjs'
+      - 'tests/resa-whatsapp-pilot-v7.test.mjs'
+      - 'docs/RESA_V7_PILOTE_WHATSAPP_20261010.md'
+      - '.github/workflows/resa-v7-whatsapp-pilot.yml'
+permissions:
+  contents: read
+jobs:
+  public-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify enquiry module syntax and static path
+        run: node --check resa-universal/pilot-whatsapp-v7.mjs
+      - name: Test WhatsApp real lead and no database booking
+        run: node --test tests/resa-whatsapp-pilot-v7.test.mjs
+      - name: Preserve automatic booking client contract
+        run: node --test tests/resa-universal-client-v3.test.mjs tests/resa-universal-staging-flow-v4.test.mjs
