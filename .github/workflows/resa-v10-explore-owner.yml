@@ -50,10 +50,10 @@ jobs:
           test "$(sql "SET ROLE anon; SELECT count(*) FROM public.digiy_resa_services WHERE slug='saly-owner';" | tail -1)" = 0
           # Other owner cannot see pending private draft.
           test "$(sql "SET ROLE authenticated; SELECT set_config('request.jwt.claim.sub','22222222-2222-4222-8222-222222222222',false); SELECT set_config('digiy.test_mfa_ok','on',false); SELECT count(*) FROM public.digiy_resa_services WHERE slug='saly-owner';" | tail -1)" = 0
-          sql "$owner INSERT INTO public.digiy_resa_slots(slug,slot_date,start_time,end_time,status,capacity) VALUES('saly-owner','2099-10-10','09:00','11:00','open',1);" >/dev/null
-          refuse "$owner INSERT INTO public.digiy_resa_slots(slug,slot_date,start_time,end_time,status,capacity) VALUES('saly-owner','2099-10-10','10:00','11:00','open',1);"
-          refuse "$owner INSERT INTO public.digiy_resa_slots(slug,slot_date,start_time,end_time,status,capacity) VALUES('other-owner','2099-10-10','09:00','10:00','open',1);"
-          refuse "SET ROLE authenticated; SELECT set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111',false); SELECT set_config('digiy.test_mfa_ok','off',false); INSERT INTO public.digiy_resa_slots(slug,slot_date,start_time,end_time,status,capacity) VALUES('saly-owner','2099-10-11','09:00','10:00','open',1);"
+          sql "$owner INSERT INTO public.digiy_resa_slots(slug,slot_date,start_time,end_time,status,capacity) VALUES('saly-owner',CURRENT_DATE+1,'09:00','11:00','open',1);" >/dev/null
+          refuse "$owner INSERT INTO public.digiy_resa_slots(slug,slot_date,start_time,end_time,status,capacity) VALUES('saly-owner',CURRENT_DATE+1,'10:00','11:00','open',1);"
+          refuse "$owner INSERT INTO public.digiy_resa_slots(slug,slot_date,start_time,end_time,status,capacity) VALUES('other-owner',CURRENT_DATE+1,'09:00','10:00','open',1);"
+          refuse "SET ROLE authenticated; SELECT set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111',false); SELECT set_config('digiy.test_mfa_ok','off',false); INSERT INTO public.digiy_resa_slots(slug,slot_date,start_time,end_time,status,capacity) VALUES('saly-owner',CURRENT_DATE+2,'09:00','10:00','open',1);"
           test "$(sql 'SELECT count(*) FROM public.digiy_resa_universal_launch_controls WHERE enabled=true;')" = 0
           echo 'RESA_V10_OWNER_POSTGRES_RLS_OK: 2 owners isolated; draft private; MFA required; slots no-overlap; gate OFF'
       - name: Cleanup
