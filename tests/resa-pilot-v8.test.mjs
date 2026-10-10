@@ -49,9 +49,13 @@ test('server-gated V1 commit precedes client WhatsApp copy',async()=>{
  assert.equal(result.status,'pending');
  assert.equal(result.confirmed,false);
  assert.equal(result.bookingId,bookingId);
+ assert.equal(result.receiptLabel,'RDV posé · Paiement sur place');
+ assert.equal(result.paymentStatus,'not_collected');
+ assert.equal(result.paymentLocation,'professional_on_site');
+ assert.match(result.confirmationDetail,/confirmation du professionnel en attente/);
  assert.equal(result.whatsapp?.url.startsWith('https://wa.me/221771234567?text='),true);
  const decoded=new URL(result.whatsapp.url).searchParams.get('text');
- for(const part of [bookingId,'2026-10-20','10:00','Consultation','en attente de votre confirmation','Aucun détail médical'])assert.ok(decoded.includes(part),part);
+ for(const part of [bookingId,'2026-10-20','10:00','Consultation','en attente de votre confirmation','Aucun détail médical','RDV POSÉ · PAIEMENT SUR PLACE','Aucun paiement collecté par DIGIYLYFE'])assert.ok(decoded.includes(part),part);
  assert.deepEqual(calls.map(x=>x.name),
   ['digiy_resa_universal_pilot_gate_v1','digiy_resa_universal_public_options_v1','digiy_resa_universal_request_v1']);
  assert.deepEqual(calls[2].params.p_request_id,requestId);
@@ -91,4 +95,15 @@ test('owner WhatsApp message never appears before an accepted pending booking',(
  }
  const result=bookingWhatsappAfterCommit({bookingId,status:'pending',date:'2026-10-20',time:'10:00',slug,serviceName:'Consultation',professionalWhatsapp:''});
  assert.equal(result,null);
+});
+test('Le reçu et WhatsApp ne prétendent jamais à un paiement encaissé',async()=>{
+ const {client}=setup();
+ await client.load(args);client.choose({slotId,serviceId});
+ const result=await client.reserve({name:'Awa',phone:'221770000001'});
+ const text=result.receiptLabel+'\\n'+result.confirmationDetail+'\\n'+result.whatsapp.message;
+ assert.match(text,/RDV posé · Paiement sur place/i);
+ assert.match(text,/confirmation.*en attente/i);
+ assert.doesNotMatch(text,/paiement (reçu|encaissé|effectué)|payé|réglé en ligne/i);
+ assert.equal(result.status,'pending');
+ assert.equal(result.confirmed,false);
 });
