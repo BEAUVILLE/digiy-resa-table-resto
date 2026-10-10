@@ -50,6 +50,6 @@ export async function submitRequest({enabled=false,rpc,...data}={}){
  return Object.freeze({
   ok:true,confirmed:false,bookingId:result.booking_id,
   status:'pending',already:result.already===true,
-  message:'Demande enregistrée — en attente de confirmation du professionnel.'
+  message:'RDV posé · Paiement sur place. Créneau réservé, confirmation du professionnel en attente.'
  });
 }
