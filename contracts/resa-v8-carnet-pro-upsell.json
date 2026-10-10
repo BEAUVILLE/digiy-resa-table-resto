@@ -1,0 +1,53 @@
+{
+  "version": "2026-10-10.RESA_V8_CARNET_ADDON.v1",
+  "title": "RÉSA pose le rendez-vous, CARNET PRO suit le paiement réellement reçu",
+  "semantics": {
+    "booking_success": {
+      "label": "RDV posé · Paiement sur place",
+      "server_status": "pending",
+      "slot_locked": true,
+      "professional_confirmation_separate": true
+    },
+    "payment_status_after_booking": "not_collected",
+    "payment_location": "professional_on_site",
+    "payment_collection_by_digiylyfe": false,
+    "commission_rate_percent": 0,
+    "appointment_booking_is_not_payment": true,
+    "confirmed_is_not_paid": true,
+    "done_is_not_paid": true
+  },
+  "addon": {
+    "name": "CARNET PRO",
+    "country": "SN",
+    "monthly_price_fcfa": 13000,
+    "optional": true,
+    "independent_subscription": true,
+    "requires_professional_file": false,
+    "shown_to": "authenticated_professional_only",
+    "allowed_placement": [
+      "owner_cockpit",
+      "after_actual_payment_receipt",
+      "business_activity_summary"
+    ],
+    "forbidden_placement": [
+      "patient_booking_form",
+      "patient_booking_receipt",
+      "customer_whatsapp_copy"
+    ],
+    "owner_copy": "Après encaissement réel, suivez vos recettes dans CARNET PRO.",
+    "ledger_write_policy": "manual_and_explicit_after_actual_collection_only",
+    "direct_payment_methods": "professional_choice",
+    "payment_proof_required_before_ledger_record": "honest_actual_collection",
+    "automatic_bridge_to_carnet": false,
+    "automatic_bridge_to_pay": false
+  },
+  "protected": {
+    "trigger_name": "digiy_resa_push_to_pay_after_status",
+    "trigger_risk": "Current production trigger posts simulated revenue on status confirmed, even without real payment.",
+    "remediation_gate": "Disable any automatic financial side effect for client_request_id IS NOT NULL, preserving audited legacy behavior until migration.",
+    "client_contact_always_direct": true,
+    "real_core_sql_not_yet_deployed": true,
+    "backup_latest_restore_not_yet_proved": true,
+    "owner_A_B_real_auth_staging_not_yet_tested": true
+  }
+}
