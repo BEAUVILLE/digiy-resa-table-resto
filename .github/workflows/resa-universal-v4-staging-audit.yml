@@ -1,0 +1,32 @@
+name: RÉSA UNIVERSEL V4 — staging client et audit historique
+on:
+  pull_request:
+    paths:
+      - 'resa-universal/staging-booking-flow-v4.mjs'
+      - 'tests/resa-universal-staging-flow-v4.test.mjs'
+      - 'tests/resa-universal-v4-legacy-gates.test.mjs'
+      - 'docs/RESA_UNIVERSEL_V4_STAGING_LEGACY_AUDIT_20261010.md'
+      - '.github/workflows/resa-universal-v4-staging-audit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'resa-universal/staging-booking-flow-v4.mjs'
+      - 'tests/resa-universal-staging-flow-v4.test.mjs'
+      - 'tests/resa-universal-v4-legacy-gates.test.mjs'
+      - 'docs/RESA_UNIVERSEL_V4_STAGING_LEGACY_AUDIT_20261010.md'
+      - '.github/workflows/resa-universal-v4-staging-audit.yml'
+permissions:
+  contents: read
+jobs:
+  staging-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Client V3 and staging V4 contracts, idempotency, pending, concurrency
+        run: node --test tests/resa-universal-client-v3.test.mjs tests/resa-universal-staging-flow-v4.test.mjs
+      - name: Read-only audit guard and no accidental public activation
+        run: node --test tests/resa-universal-v4-legacy-gates.test.mjs
