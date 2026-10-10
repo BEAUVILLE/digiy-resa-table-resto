@@ -111,7 +111,18 @@ DROP POLICY IF EXISTS "RÉSA V10 owner phone security for slots" ON public.digiy
 CREATE POLICY "RÉSA V10 owner phone security for slots"
  ON public.digiy_resa_slots AS RESTRICTIVE FOR ALL TO authenticated
  USING (public.digiy_owner_mfa_gate())
- WITH CHECK (public.digiy_owner_mfa_gate());
+ WITH CHECK (
+   public.digiy_owner_mfa_gate()
+   AND digiy_resa_slots.slot_date BETWEEN
+     (statement_timestamp() AT TIME ZONE 'Africa/Dakar')::date
+     AND (statement_timestamp() AT TIME ZONE 'Africa/Dakar')::date + 56
+   AND digiy_resa_slots.slot_date + digiy_resa_slots.start_time >
+     (statement_timestamp() AT TIME ZONE 'Africa/Dakar')
+   AND digiy_resa_slots.end_time IS NOT NULL
+   AND digiy_resa_slots.end_time > digiy_resa_slots.start_time
+   AND digiy_resa_slots.end_time - digiy_resa_slots.start_time <= interval '8 hours'
+   AND coalesce(digiy_resa_slots.capacity,1)=1
+ );
 
 -- Do not expose the pilot switch via V10 rights.
 DO $postflight$
