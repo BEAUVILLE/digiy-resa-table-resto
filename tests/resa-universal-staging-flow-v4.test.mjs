@@ -51,7 +51,7 @@ test('invalid contact does not freeze an operation id; valid retry after network
  assert.equal(flow.phase,'uncertain');
  assert.equal(flow.hasUncertainRequest,true);
  await assert.rejects(flow.load(args),{code:'request_resolution_pending'});
- await assert.rejects(flow.choose({slotId,serviceId}),{code:'request_resolution_pending'});
+ assert.throws(()=>flow.choose({slotId,serviceId}),{code:'request_resolution_pending'});
  await assert.rejects(flow.request({...contact,phone:'221779999999'}),{code:'retry_data_changed'});
  const success=await flow.request(contact);
  assert.equal(success.status,'pending');assert.equal(success.confirmed,false);
