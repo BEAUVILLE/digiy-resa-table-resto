@@ -46,6 +46,8 @@ test('success says PENDING, never says paid or confirmed',async()=>{
  const result=await submitRequest({...base,rpc,enabled:true});
  assert.equal(result.status,'pending');assert.equal(result.confirmed,false);
  assert.match(result.message,/en attente/);
+ assert.match(result.message,/RDV posé · Paiement sur place/);
+ assert.doesNotMatch(result.message,/paiement reçu|encaissement effectué|payé/i);
  assert.doesNotMatch(result.message,/payé|confirmé/i);
  assert.equal(calls.length,1);
  assert.equal(calls[0][0],'digiy_resa_universal_request_v0');
