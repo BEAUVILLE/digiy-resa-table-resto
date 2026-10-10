@@ -91,9 +91,7 @@ DO $owner_a$
 DECLARE
  r jsonb;
  booking_id uuid:=current_setting('test.v5_a_booking_id')::uuid;
- before_count bigint;
- after_count bigint;
-BEGIN
+ BEGIN
  r:=public.digiy_resa_universal_owner_manage_v2(booking_id,'done',NULL);
  IF r->>'error'<>'invalid_transition' THEN
   RAISE EXCEPTION 'pending -> done incorrectly allowed: %',r;
@@ -134,14 +132,11 @@ BEGIN
 
  -- PAY is neutral when the universal appointment becomes confirmed,
  -- independent of the price defined on the synthetic service.
- before_count:=(SELECT count(*) FROM public.test_pay_side_effects);
+ -- The authenticated owner must not be granted SELECT on PAY.
+ -- A separate privileged post-action check below validates PAY neutrality.
  r:=public.digiy_resa_universal_owner_manage_v2(booking_id,'confirmed',NULL);
  IF r->>'ok'<>'true' OR r->>'status'<>'confirmed' THEN
   RAISE EXCEPTION 'owner A could not confirm V0 request: %',r;
- END IF;
- after_count:=(SELECT count(*) FROM public.test_pay_side_effects);
- IF after_count<>before_count THEN
-  RAISE EXCEPTION 'confirming universal appointment fabricated PAY income';
  END IF;
  r:=public.digiy_resa_universal_owner_manage_v2(booking_id,'confirmed',NULL);
  IF r->>'error'<>'invalid_transition' THEN
