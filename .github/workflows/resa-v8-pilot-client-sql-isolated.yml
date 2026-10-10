@@ -1,0 +1,98 @@
+name: RÉSA V8 — serveur fermé puis RDV posé, paiement sur place
+on:
+  pull_request:
+    paths:
+      - 'rdv-universel.html'
+      - 'resa-universal/pilot-booking-v8.mjs'
+      - 'resa-universal/booking-client-core.mjs'
+      - 'tests/resa-pilot-v8.test.mjs'
+      - 'tests/resa-v8-business-separation.test.mjs'
+      - 'tests/resa-universal-client-v3.test.mjs'
+      - 'contracts/resa-v8-carnet-pro-upsell.json'
+      - 'sql/candidates/20261010_resa_universal_v8_pilot_gate_ISOLATED.sql'
+      - 'sql/candidates/20261010_resa_universal_v8_pilot_gate_ISOLATED_ROLLBACK.sql'
+      - 'tests/sql/resa_universal_v8_gate_assertions.sql'
+      - 'docs/RESA_V8_REAL_RDV_PAIEMENT_SUR_PLACE_20261010.md'
+      - '.github/workflows/resa-v8-pilot-client-sql-isolated.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'rdv-universel.html'
+      - 'resa-universal/pilot-booking-v8.mjs'
+      - 'resa-universal/booking-client-core.mjs'
+      - 'tests/resa-pilot-v8.test.mjs'
+      - 'tests/resa-v8-business-separation.test.mjs'
+      - 'tests/resa-universal-client-v3.test.mjs'
+      - 'contracts/resa-v8-carnet-pro-upsell.json'
+      - 'sql/candidates/20261010_resa_universal_v8_pilot_gate_ISOLATED.sql'
+      - 'sql/candidates/20261010_resa_universal_v8_pilot_gate_ISOLATED_ROLLBACK.sql'
+      - 'tests/sql/resa_universal_v8_gate_assertions.sql'
+      - 'docs/RESA_V8_REAL_RDV_PAIEMENT_SUR_PLACE_20261010.md'
+      - '.github/workflows/resa-v8-pilot-client-sql-isolated.yml'
+permissions:
+  contents: read
+jobs:
+  v8-client:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify module syntax
+        run: |
+          node --check resa-universal/pilot-booking-v8.mjs
+          node --check resa-universal/booking-client-core.mjs
+      - name: Test RDV posé / WhatsApp after commit / CARNET PRO optional
+        run: |
+          node --test tests/resa-pilot-v8.test.mjs tests/resa-v8-business-separation.test.mjs
+          node --test tests/resa-universal-client-v3.test.mjs tests/resa-universal-staging-flow-v4.test.mjs
+  v8-pg17:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: public.ecr.aws/docker/library/postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: test_only
+          POSTGRES_DB: digiy_appointments_test
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      PGHOST: localhost
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: test_only
+      PGDATABASE: digiy_appointments_test
+    steps:
+      - uses: actions/checkout@v4
+      - name: PostgreSQL client
+        run: sudo apt-get update -qq && sudo apt-get install -y postgresql-client
+      - name: Load synthetic V0 V1 V5 V2 V8 candidates, no production connection
+        run: |
+          set -euo pipefail
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_beauty_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_planning_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_v0_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261009_resa_universal_v0_ISOLATED.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_pay_owner_v1_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261009_resa_universal_pay_owner_v1_ISOLATED.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_owner_manage_v2_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261010_resa_universal_owner_manage_v2_ISOLATED.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261009_resa_universal_public_options_v1_ISOLATED.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261010_resa_universal_v8_pilot_gate_ISOLATED.sql
+      - name: Prove server owner activation, pending locks slot, no fake PAY, rollback
+        run: |
+          set -euo pipefail
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_v8_gate_assertions.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261010_resa_universal_v8_pilot_gate_ISOLATED_ROLLBACK.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261010_resa_universal_owner_manage_v2_ISOLATED_ROLLBACK.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261009_resa_universal_public_options_v1_ISOLATED_ROLLBACK.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261009_resa_universal_pay_owner_v1_ISOLATED_ROLLBACK.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261009_resa_universal_v0_ISOLATED_ROLLBACK.sql
