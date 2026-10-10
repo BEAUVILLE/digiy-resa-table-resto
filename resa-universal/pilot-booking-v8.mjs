@@ -18,7 +18,8 @@ export function bookingWhatsappAfterCommit({bookingId,status,date,time,serviceNa
  const wa=digits(professionalWhatsapp);
  if(wa.length<10||wa.length>15)return null;
  const msg=[
-  'Bonjour, j’ai posé un rendez-vous via DIGIY RÉSA.',
+  '✅ RDV POSÉ · PAIEMENT SUR PLACE',
+  'Bonjour, j’ai posé mon rendez-vous via DIGIY RÉSA.',
   'Référence : '+bookingId,
   'Fiche : '+slug,
   'Prestation : '+safeString(serviceName,120),
@@ -26,7 +27,8 @@ export function bookingWhatsappAfterCommit({bookingId,status,date,time,serviceNa
   'Heure : '+time+' (Sénégal)',
   'Statut : rendez-vous enregistré, en attente de votre confirmation.',
   'Merci de consulter votre planning DIGIY.',
-  'Paiement direct, 0 % commission. Aucun détail médical.'
+  'Paiement sur place directement auprès du professionnel.',
+  'Aucun paiement collecté par DIGIYLYFE · 0 % commission · Aucun détail médical.'
  ].join('\n');
  return Object.freeze({url:'https://wa.me/'+wa+'?text='+encodeURIComponent(msg),message:msg});
 }
@@ -84,6 +86,9 @@ export function createResaPilotV8({rpc,makeRequestId}={}){
     ...current,slug:gate.slug,professionalWhatsapp:gate.public_whatsapp
    });
    return Object.freeze({...result,whatsapp:wa,
+     receiptLabel:'RDV posé · Paiement sur place',
+     confirmationDetail:'Créneau réservé, confirmation du professionnel en attente.',
+     paymentStatus:'not_collected',paymentLocation:'professional_on_site',
      date:current.date,time:current.time,serviceName:current.serviceName});
   }
  });
