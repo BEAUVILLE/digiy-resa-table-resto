@@ -57,6 +57,11 @@ button:focus-visible,input:focus-visible{outline:3px solid #ddaf4c;outline-offse
 <div id="selection" hidden><strong id="selectedText"></strong>
 <p class="note">Ceci est une recherche de créneau, pas une réservation. Contactez directement le professionnel pour confirmer l'heure, la prestation et le tarif. DIGIYLYFE ne reçoit aucun paiement.</p>
 <button id="copy" type="button">Copier la date et l'heure</button> <a id="contact" target="_blank" rel="noopener noreferrer" hidden style="display:inline-block;border-radius:12px;background:#093b2b;color:#fff;font-weight:850;padding:10px 14px;text-decoration:none;min-height:44px">💬 Demander directement au professionnel</a> <a id="fiche" hidden style="color:#093b2b;font-weight:800">Voir la fiche professionnelle</a></div>
+<div class="card" style="background:#f2f8ed">
+  <strong>Pas de créneau affiché ?</strong>
+  <p class="note">Faites connaître la prestation et la date souhaitées à DIGIYLYFE sur WhatsApp. Nous vous orientons vers le professionnel concerné. Cette demande ne bloque aucun créneau.</p>
+  <a id="pilotFallback" href="./demande-rdv.html" style="display:inline-block;background:#073f32;color:white;border-radius:12px;padding:11px 15px;min-height:44px;font-weight:850;text-decoration:none">💬 Envoyer ma demande sur WhatsApp →</a>
+</div>
 </section>
 <p class="note">Paiement direct · Confirmation humaine · 0 % commission. Les horaires sont indicatifs jusqu'à confirmation du professionnel.</p>
 </main>
@@ -76,6 +81,7 @@ async function load(){
  if(!activeSlug)return;
  const ticket=++generation;
  $('days').replaceChildren();$('selection').hidden=true;chosen='';publicWa='';$('contact').hidden=true;$('fiche').hidden=true;
+ $('pilotFallback').href='./demande-rdv.html'+(activeSlug?'?slug='+encodeURIComponent(activeSlug):'');
  $('prev').disabled=true;$('next').disabled=true;
  announce('Consultation des horaires réels…');
  const {data,error}=await db.rpc('digiy_resa_public_week_v1',{p_slug:activeSlug,p_start_date:iso(start)});
