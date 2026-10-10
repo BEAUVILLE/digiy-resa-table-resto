@@ -636,7 +636,7 @@ begin
     )
   );
 end;
-$function$
+$function$;
 
 -- 8. Final preflight assertion - new APIs do not expose raw V0,
 --    existing historical booking count/data is untouched by this migration.
