@@ -23,6 +23,9 @@ BEGIN
  OR to_regclass('public.digiy_resa_profiles') IS NULL THEN
   RAISE EXCEPTION 'RÉSA v9 required live relation missing';
  END IF;
+ IF to_regprocedure('public.digiy_resa_create_booking(text,text,text,date,time,integer,text,uuid)') IS NULL THEN
+  RAISE EXCEPTION 'RÉSA v9 original legacy booking entrypoint missing';
+ END IF;
  IF to_regprocedure('auth.uid()') IS NULL THEN
   RAISE EXCEPTION 'RÉSA v9 Supabase Auth unavailable';
  END IF;
@@ -520,7 +523,122 @@ REVOKE ALL ON FUNCTION public.digiy_resa_universal_request_v1(
 GRANT EXECUTE ON FUNCTION public.digiy_resa_universal_request_v1(
  text,uuid,uuid,text,text,uuid) TO anon,authenticated;
 
--- 7. Final preflight assertion - new APIs do not expose raw V0,
+-- 7. Legacy browser RPC isolation for new universal pilot owners:
+--    the old entrypoint remains unchanged for every owner without a
+--    V8 launch-control row. Pilot owners must use request_v1, never bypass
+--    real published slots or server idempotency through the old endpoint.
+CREATE OR REPLACE FUNCTION public.digiy_resa_create_booking(p_slug text, p_customer_name text, p_customer_phone text, p_booking_date date, p_booking_time time without time zone, p_guests_count integer, p_note_text text, p_service_id uuid)
+ RETURNS jsonb
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO pg_catalog, public
+AS $function$
+declare
+  v_slug text;
+  v_service public.digiy_resa_services%rowtype;
+  v_row public.digiy_resa_bookings%rowtype;
+begin
+  v_slug := lower(trim(coalesce(p_slug, '')));
+  -- Pilot professionals must never use the permissive legacy public RPC.
+  -- Old dossiers remain untouched: only a deliberate launch-control row
+  -- opts this owner out of the historical booking entrypoint.
+  if exists (
+    select 1 from public.digiy_resa_universal_launch_controls g
+    where g.slug = v_slug
+  ) then
+    return jsonb_build_object('ok',false,'error','use_secure_resa_universal_request_v1');
+  end if;
+
+  if v_slug = '' then
+    return jsonb_build_object('ok', false, 'error', 'slug_required');
+  end if;
+
+  if p_booking_date is null or p_booking_time is null then
+    return jsonb_build_object('ok', false, 'error', 'booking_datetime_required');
+  end if;
+
+  if coalesce(trim(p_customer_name), '') = '' then
+    return jsonb_build_object('ok', false, 'error', 'customer_name_required');
+  end if;
+
+  select *
+  into v_service
+  from public.digiy_resa_services
+  where id = p_service_id
+    and slug = v_slug
+    and coalesce(is_active, true) = true
+  limit 1;
+
+  if v_service.id is null then
+    return jsonb_build_object('ok', false, 'error', 'service_not_found');
+  end if;
+
+  if exists (
+    select 1
+    from public.digiy_resa_bookings b
+    where b.slug = v_slug
+      and b.booking_date = p_booking_date
+      and b.booking_time = p_booking_time
+      and b.status <> 'cancelled'
+  ) then
+    return jsonb_build_object('ok', false, 'error', 'slot_not_available');
+  end if;
+
+  insert into public.digiy_resa_bookings (
+    slug,
+    phone,
+    customer_name,
+    customer_phone,
+    booking_date,
+    booking_time,
+    guests_count,
+    note_text,
+    status,
+    service_id,
+    service_name,
+    duration_minutes,
+    price_fcfa
+  )
+  values (
+    v_slug,
+    regexp_replace(coalesce(p_customer_phone, ''), '\D', '', 'g'),
+    trim(p_customer_name),
+    regexp_replace(coalesce(p_customer_phone, ''), '\D', '', 'g'),
+    p_booking_date,
+    p_booking_time,
+    coalesce(p_guests_count, 1),
+    nullif(trim(coalesce(p_note_text, '')), ''),
+    'pending',
+    v_service.id,
+    v_service.service_name,
+    coalesce(v_service.duration_minutes, 30),
+    v_service.price_fcfa
+  )
+  returning *
+  into v_row;
+
+  return jsonb_build_object(
+    'ok', true,
+    'booking', jsonb_build_object(
+      'id', v_row.id,
+      'slug', v_row.slug,
+      'customer_name', v_row.customer_name,
+      'customer_phone', v_row.customer_phone,
+      'booking_date', v_row.booking_date,
+      'booking_time', v_row.booking_time,
+      'guests_count', v_row.guests_count,
+      'status', v_row.status,
+      'service_id', v_row.service_id,
+      'service_name', v_row.service_name,
+      'duration_minutes', v_row.duration_minutes,
+      'price_fcfa', v_row.price_fcfa,
+      'created_at', v_row.created_at
+    )
+  );
+end;
+$function$
+
+-- 8. Final preflight assertion - new APIs do not expose raw V0,
 --    existing historical booking count/data is untouched by this migration.
 DO $postcheck$
 BEGIN
