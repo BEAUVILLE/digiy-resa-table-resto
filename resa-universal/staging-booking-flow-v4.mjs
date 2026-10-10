@@ -72,15 +72,13 @@ export function createStagingBookingFlow({enabled=false,rpc,makeRequestId}={}){
    const nameClean=typeof name==='string'?name.trim():'';
    const contactKey=JSON.stringify([nameClean,digits(phone),selection.slotId,selection.serviceId]);
    if(fingerprint&&fingerprint!==contactKey)failure('retry_data_changed');
-   if(!operationId){
-    // A new operation gets exactly one UUID. A network retry reuses it.
-    operationId=makeRequestId();
-    fingerprint=contactKey;
-   }
+   // Invalid form entries must not consume the stable retry key.
+   // Allocate one UUID only after validating the payload.
+   const id=operationId||makeRequestId();
    const data={catalog:catalogue,slotId:selection.slotId,
-    serviceId:selection.serviceId,name:nameClean,phone,requestId:operationId};
-   // Validate before invoking the injected adapter.
+    serviceId:selection.serviceId,name:nameClean,phone,requestId:id};
    buildRequestPayload(data);
+   if(!operationId){operationId=id;fingerprint=contactKey;}
    inFlight=true;phase='submitting';
    try{
     const res=await submitRequest({...data,enabled:true,rpc});
