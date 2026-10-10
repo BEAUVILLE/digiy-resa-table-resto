@@ -9,10 +9,11 @@ const uuidRE=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-
 const digits=x=>String(x||'').replace(/\D/g,'');
 const fail=code=>{throw new BookingContractError(code)};
 const safeString=(x,max)=>String(x||'').replace(/[\u0000-\u001f\u007f]/g,' ').trim().slice(0,max);
+const validDate=x=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(String(x||'')))return false;const d=new Date(x+'T12:00:00Z');return Number.isFinite(d.getTime())&&d.toISOString().slice(0,10)===x;};
 
 export function bookingWhatsappAfterCommit({bookingId,status,date,time,serviceName,slug,professionalWhatsapp}={}){
  if(!uuidRE.test(String(bookingId||''))||status!=='pending')fail('booking_not_recorded');
- if(!/^\d{4}-\d{2}-\d{2}$/.test(String(date||''))||
+ if(!validDate(date)||
     !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(String(time||''))||
     !slugRE.test(String(slug||'')))fail('invalid_booking_info');
  const wa=digits(professionalWhatsapp);
