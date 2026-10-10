@@ -1,0 +1,89 @@
+name: RÉSA V5 — owner privé, PAY et annulations PG17 isolés
+on:
+  pull_request:
+    paths:
+      - 'sql/candidates/20261010_resa_universal_owner_manage_v2_ISOLATED*.sql'
+      - 'tests/sql/resa_universal_owner_manage_v2_*.sql'
+      - 'resa-universal/staging-owner-actions-v5.mjs'
+      - 'tests/resa-universal-owner-actions-v5.test.mjs'
+      - 'docs/RESA_UNIVERSEL_V5_OWNER_MANAGE_GATES_20261010.md'
+      - '.github/workflows/resa-universal-v5-owner-isolated.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'sql/candidates/20261010_resa_universal_owner_manage_v2_ISOLATED*.sql'
+      - 'tests/sql/resa_universal_owner_manage_v2_*.sql'
+      - 'resa-universal/staging-owner-actions-v5.mjs'
+      - 'tests/resa-universal-owner-actions-v5.test.mjs'
+      - 'docs/RESA_UNIVERSEL_V5_OWNER_MANAGE_GATES_20261010.md'
+      - '.github/workflows/resa-universal-v5-owner-isolated.yml'
+permissions:
+  contents: read
+jobs:
+  owner-client-adapter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Owner and client contract tests
+        run: node --test tests/resa-universal-owner-actions-v5.test.mjs tests/resa-universal-staging-flow-v4.test.mjs
+  owner-sql-pg17:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: public.ecr.aws/docker/library/postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: test_only
+          POSTGRES_DB: digiy_appointments_test
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      PGHOST: localhost
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: test_only
+      PGDATABASE: digiy_appointments_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install PostgreSQL client
+        run: sudo apt-get update -qq && sudo apt-get install -y postgresql-client
+      - name: V0 fixture, atomics and overlapping appointments
+        run: |
+          set -euo pipefail
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_beauty_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_planning_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_v0_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261009_resa_universal_v0_ISOLATED.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_v0_assertions.sql
+          node tests/resa-universal-v0-concurrency.cjs
+      - name: V1 fixture, financial guard and owner A/B
+        run: |
+          set -euo pipefail
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_pay_owner_v1_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261009_resa_universal_pay_owner_v1_ISOLATED.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_pay_owner_v1_assertions.sql
+      - name: Install V5 isolated owner statuses and private notes
+        run: |
+          set -euo pipefail
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_owner_manage_v2_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261010_resa_universal_owner_manage_v2_ISOLATED.sql
+      - name: Test anon / A/B / note / status / PAY / rollback preconditions
+        run: psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_owner_manage_v2_assertions.sql
+      - name: Roll back V5, then V1, then V0 on disposable PostgreSQL
+        run: |
+          set -euo pipefail
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261010_resa_universal_owner_manage_v2_ISOLATED_ROLLBACK.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261009_resa_universal_pay_owner_v1_ISOLATED_ROLLBACK.sql
+          psql -X -v ON_ERROR_STOP=1 -f sql/candidates/20261009_resa_universal_v0_ISOLATED_ROLLBACK.sql
