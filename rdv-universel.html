@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,follow"><meta name="theme-color" content="#073f32">
+<title>Poser mon rendez-vous · DIGIY RÉSA</title>
+<meta name="description" content="Choisir une prestation et un créneau disponible, RDV posé, paiement sur place.">
+<style>
+:root{--green:#073f32;--ink:#183b2c;--soft:#f4f8f3;--line:#cfded2;--gold:#ebc769}
+*{box-sizing:border-box}body{margin:0;background:var(--soft);font:16px/1.5 system-ui,sans-serif;color:var(--ink)}
+header{background:var(--green);color:white;padding:22px max(14px,calc((100% - 790px)/2))}
+header a{color:white;font-size:13px}h1{font-size:clamp(27px,6vw,42px);line-height:1.14;margin:9px 0}
+main{max-width:790px;margin:20px auto 45px;padding:0 12px}
+section{background:white;border:1px solid var(--line);border-radius:18px;padding:clamp(16px,4vw,24px);margin:13px 0}
+h2{margin:0 0 14px;font-size:20px}
+label{display:grid;gap:6px;font-weight:750;font-size:14px}
+input,select{border:1px solid #aac1af;border-radius:11px;padding:11px;font:inherit;min-height:48px;width:100%}
+button{background:var(--green);color:#fff;border:0;border-radius:11px;padding:12px 18px;font:inherit;font-weight:850;cursor:pointer;min-height:48px}
+button:disabled{opacity:.5}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.full{grid-column:1/-1}.notice{font-size:13px;color:#596e60}.success{border-left:5px solid #168a50}
+#status{font-weight:750}#receiptTitle{font-size:23px;font-weight:900}
+.wa{display:inline-flex;background:#12844e;color:#fff;padding:13px 18px;text-decoration:none;border-radius:11px;font-weight:850}
+[hidden]{display:none!important}@media(max-width:560px){.grid{grid-template-columns:1fr}}
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head><body>
+<header><a href="./index.html">← RÉSA MULTI</a><h1>📅 Poser mon rendez-vous</h1>
+<p>Choisissez un créneau libre, il est réservé dès son enregistrement. Paiement sur place.</p></header>
+<main>
+<section><h2>1 · Trouver mon professionnel</h2>
+<form id="searchForm"><div class="grid">
+<label>Code de fiche<input id="slug" required maxlength="150" autocomplete="off" placeholder="Code figurant sur sa fiche"></label>
+<label>Début de semaine<input id="date" type="date" required></label>
+</div><p class="notice">Seuls les professionnels publiés et autorisés à recevoir des rendez-vous sont accessibles.</p>
+<button type="submit" id="searchButton">Voir les disponibilités</button></form>
+<p id="status" role="status" aria-live="polite">Aucun rendez-vous n'est créé avant votre validation.</p>
+</section>
+<section id="choice" hidden><h2 id="proName">2 · Choisir ma prestation</h2>
+<div class="grid">
+<label>Prestation<select id="service"></select></label>
+<label>Horaire disponible<select id="slot"></select></label>
+</div><p class="notice">Les créneaux proviennent du planning du professionnel, jamais de dates inventées.</p>
+</section>
+<section id="contact" hidden><h2>3 · Poser mon rendez-vous</h2>
+<form id="reserveForm"><div class="grid">
+<label>Nom ou prénom<input id="customer" autocomplete="name" maxlength="120" required></label>
+<label>Numéro de contact<input id="phone" type="tel" autocomplete="tel" maxlength="25" required></label>
+</div><p class="notice">Paiement sur place auprès du professionnel, sans acompte DIGIYLYFE. Le créneau est bloqué au statut en attente, sans intervention du professionnel.</p>
+<button id="reserveButton" type="submit">✅ Poser mon RDV · Paiement sur place</button>
+</form></section>
+<section id="receipt" class="success" hidden role="status" aria-live="polite">
+<div id="receiptTitle">✅ RDV posé · Paiement sur place</div>
+<p id="receiptDetails"></p>
+<p class="notice">Le créneau est réservé. La confirmation du professionnel reste en attente. Aucun paiement n'a été encaissé par DIGIYLYFE.</p>
+<a id="whatsapp" class="wa" hidden rel="noopener noreferrer" target="_blank">💬 Envoyer mon RDV au professionnel</a>
+<p class="notice">WhatsApp est facultatif : le rendez-vous reste posé même sans envoyer ce message.</p>
+</section>
+<p class="notice">DIGIYLYFE · Contact et paiement directs · 0 % commission. Aucun motif médical recueilli. Pour une urgence médicale, contactez un service adapté.</p>
+</main>
+<script type="module">
+import {createResaPilotV8} from './resa-universal/pilot-booking-v8.mjs';
+const $=id=>document.getElementById(id);
+const db=supabase.createClient('https://wesqmwjjtsefyjnluosj.supabase.co','sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3');
+const client=createResaPilotV8({rpc:(name,args)=>db.rpc(name,args),makeRequestId:()=>crypto.randomUUID()});
+const now=new Intl.DateTimeFormat('en-CA',{timeZone:'Africa/Dakar',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+const p=kind=>now.find(x=>x.type===kind)?.value||'';
+const today=p('year')+'-'+p('month')+'-'+p('day');
+$('date').min=today;$('date').value=today;
+let busy=false;
+const status=text=>$('status').textContent=text;
+const params=new URLSearchParams(location.search);
+function reset(){
+ $('choice').hidden=true;$('contact').hidden=true;$('receipt').hidden=true;
+ $('slot').replaceChildren();$('service').replaceChildren();
+}
+function chooseSlot(){
+ const serviceId=$('service').value;const slots=client.options?.slots||[];
+ $('slot').replaceChildren();
+ for(const s of slots){
+  if(s.available!==true||!s.service_ids?.includes(serviceId))continue;
+  const op=document.createElement('option');
+  op.value=s.slot_id;op.textContent=s.date+' · '+s.time;
+  $('slot').append(op);
+ }
+ const hasSlot=$('slot').options.length>0;
+ $('contact').hidden=!hasSlot;
+ status(hasSlot?'Choisissez un créneau puis posez votre rendez-vous.':'Aucun créneau disponible pour cette prestation.');
+}
+$('service').addEventListener('change',chooseSlot);
+$('searchForm').addEventListener('submit',async event=>{
+ event.preventDefault();if(busy)return;
+ const slug=$('slug').value.trim().toLowerCase(),startDate=$('date').value;
+ if(!/^[a-z0-9_-]{2,150}$/.test(slug)){status('Code de fiche incorrect.');return;}
+ busy=true;reset();status('Lecture du planning réel…');
+ try{
+  const options=await client.load({slug,startDate});
+  $('proName').textContent='2 · '+(client.professional?.display_name||slug);
+  for(const item of options.services){
+   const op=document.createElement('option');op.value=item.service_id;
+   op.textContent=item.name+(item.price_fcfa==null?'':' · '+Number(item.price_fcfa).toLocaleString('fr-FR')+' FCFA');
+   $('service').append(op);
+  }
+  if(!options.services.length){status('Aucune prestation publiée actuellement.');return;}
+  $('choice').hidden=false;chooseSlot();
+ }catch(err){
+  status(err.code==='pilot_not_active'||err.code==='pilot_unavailable'
+    ?'Ce professionnel n’a pas encore activé les réservations automatiques. Aucun rendez-vous n’a été posé.'
+    :'Planning indisponible : aucun rendez-vous n’a été posé.');
+ }finally{busy=false}
+});
+$('reserveForm').addEventListener('submit',async event=>{
+ event.preventDefault();if(busy)return;
+ const slotId=$('slot').value,serviceId=$('service').value;
+ if(!slotId||!serviceId){status('Choisissez un créneau libre.');return;}
+ busy=true;$('reserveButton').disabled=true;status('Enregistrement auprès du serveur…');
+ try{
+  // The first call selects the immutable server IDs. On a network failure,
+  // retry with the exact same contact and UUID, without selecting again.
+  if(client.phase!=='uncertain')client.choose({slotId,serviceId});
+  const result=await client.reserve({name:$('customer').value,phone:$('phone').value});
+  $('receiptDetails').textContent=result.date+' à '+result.time+' · '+result.serviceName+' · Référence '+result.bookingId+' · confirmation professionnelle en attente.';
+  $('receipt').hidden=false;$('choice').hidden=true;$('contact').hidden=true;
+  if(result.whatsapp){$('whatsapp').href=result.whatsapp.url;$('whatsapp').hidden=false;}
+  else{$('whatsapp').hidden=true;$('whatsapp').removeAttribute('href');}
+  status('✅ RDV posé · Paiement sur place. Le créneau est bloqué.');
+ }catch(err){
+  status(err.code==='transport_failed'
+    ?'Connexion interrompue : état incertain. Réessayez le même bouton, sans changer vos coordonnées ni le créneau.'
+    :err.code==='slot_unavailable'
+      ?'Créneau devenu indisponible : aucun rendez-vous posé.'
+      :'Aucun reçu de rendez-vous : vérifiez vos informations ou contactez le professionnel.');
+ }finally{busy=false;$('reserveButton').disabled=false}
+});
+if(params.get('slug')){
+ $('slug').value=params.get('slug');$('searchForm').requestSubmit();
+}
+</script></body></html>
