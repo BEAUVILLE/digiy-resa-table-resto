@@ -19,8 +19,10 @@ BEGIN
  IF to_regprocedure('public.digiy_resa_universal_request_v0(text,uuid,uuid,text,text,uuid)') IS NULL THEN
   RAISE EXCEPTION 'V0 booking function unexpectedly lost';
  END IF;
+ -- Rollback is run in a separate psql process from the assertions, so
+ -- use the fixture's known count instead of relying on a session-local GUC.
  IF (SELECT count(*) FROM public.digiy_resa_bookings WHERE client_request_id IS NULL)
-  <>current_setting('test.v5_legacy_count')::bigint THEN
+  <>2 THEN
   RAISE EXCEPTION 'synthetic legacy rows not preserved on V5 rollback';
  END IF;
  RAISE NOTICE 'PASS: V5 owner RPC removed; V0/V1, PAY and legacy still intact';
