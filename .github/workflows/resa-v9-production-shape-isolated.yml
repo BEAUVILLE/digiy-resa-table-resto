@@ -60,6 +60,9 @@ jobs:
           set -euo pipefail
           { printf "SET digiy.resa_fixture_mode = 'on';\n"; cat sql/production/20261010_resa_universal_v0_v2_v5_v8_GATED.sql; } |
             psql -X -1 -v ON_ERROR_STOP=1
+      - name: Publish ONLY the synthetic owner in disposable DB after migration
+        run: |
+          psql -X -v ON_ERROR_STOP=1 -c "UPDATE public.digiy_resa_profiles SET is_published=true WHERE slug='resa-owner-a';"
       - name: Prove default OFF, server activation, pending booking, idempotence, overlap and no PAY
         run: psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_v8_gate_assertions.sql
       - name: Prove legacy writes remain and only owner V5 can change V0; A/B and no PAY
