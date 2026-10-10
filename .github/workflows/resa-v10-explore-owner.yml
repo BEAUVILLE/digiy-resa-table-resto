@@ -1,0 +1,61 @@
+name: RÉSA V10 — propriétaire EXPLORE isolé
+on:
+  pull_request:
+    paths:
+      - 'sql/production/20261010_resa_universal_v10_explore_owner_setup.sql'
+      - 'tests/fixtures/resa-v10-explore-owner-synthetic.sql'
+      - '.github/workflows/resa-v10-explore-owner.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'sql/production/20261010_resa_universal_v10_explore_owner_setup.sql'
+      - 'tests/fixtures/resa-v10-explore-owner-synthetic.sql'
+      - '.github/workflows/resa-v10-explore-owner.yml'
+permissions:
+  contents: read
+jobs:
+  postgres-rls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start disposable PG17, no external network
+        run: docker run --rm -d --network none --name digiy-v10-test -e POSTGRES_PASSWORD=synthetic postgres:17
+      - name: Install synthetic owners and V10 SQL
+        run: |
+          set -euo pipefail
+          for i in $(seq 1 40); do
+            if docker exec digiy-v10-test pg_isready -U postgres >/dev/null 2>&1; then break; fi
+            sleep 1
+          done
+          docker exec -i digiy-v10-test psql -U postgres -d postgres -X -v ON_ERROR_STOP=1 < tests/fixtures/resa-v10-explore-owner-synthetic.sql >/dev/null
+          docker exec -i digiy-v10-test psql -U postgres -d postgres -X -v ON_ERROR_STOP=1 < sql/production/20261010_resa_universal_v10_explore_owner_setup.sql >/dev/null
+      - name: Owner identity, unpublished drafts and MFA fail-closed
+        run: |
+          set -euo pipefail
+          sql(){ docker exec digiy-v10-test psql -U postgres -d postgres -X -v ON_ERROR_STOP=1 -Atq -c "$1"; }
+          refuse(){
+            if sql "$1" > /dev/null 2>&1; then
+              echo 'Unexpected allowed operation' >&2; exit 1
+            fi
+          }
+          owner="SET ROLE authenticated; SELECT set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111',false); SELECT set_config('digiy.test_mfa_ok','on',false);"
+          # Drafts can be saved but NOT publicly active until an admin publishes.
+          sql "$owner INSERT INTO public.digiy_resa_services(slug,service_name,duration_minutes,price_fcfa,is_active) VALUES('saly-owner','Sortie mer',90,NULL,false);" >/dev/null
+          refuse "$owner INSERT INTO public.digiy_resa_services(slug,service_name,duration_minutes,is_active) VALUES('saly-owner','Publication interdite',45,true);"
+          refuse "$owner INSERT INTO public.digiy_resa_services(slug,service_name,duration_minutes,is_active) VALUES('other-owner','Cross owner',45,false);"
+          refuse "$owner INSERT INTO public.digiy_resa_services(slug,service_name,duration_minutes,is_active) VALUES('saly-owner','Invalid',481,false);"
+          refuse "SET ROLE authenticated; SELECT set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111',false); SELECT set_config('digiy.test_mfa_ok','off',false); INSERT INTO public.digiy_resa_services(slug,service_name,duration_minutes,is_active) VALUES('saly-owner','Bypass MFA',30,false);"
+          test "$(sql "$owner SELECT count(*) FROM public.digiy_resa_services WHERE slug='saly-owner';" | tail -1)" = 1
+          test "$(sql "SET ROLE anon; SELECT count(*) FROM public.digiy_resa_services WHERE slug='saly-owner';" | tail -1)" = 0
+          # Other owner cannot see pending private draft.
+          test "$(sql "SET ROLE authenticated; SELECT set_config('request.jwt.claim.sub','22222222-2222-4222-8222-222222222222',false); SELECT set_config('digiy.test_mfa_ok','on',false); SELECT count(*) FROM public.digiy_resa_services WHERE slug='saly-owner';" | tail -1)" = 0
+          sql "$owner INSERT INTO public.digiy_resa_slots(slug,slot_date,start_time,end_time,status,capacity) VALUES('saly-owner',CURRENT_DATE+1,'09:00','11:00','open',1);" >/dev/null
+          refuse "$owner INSERT INTO public.digiy_resa_slots(slug,slot_date,start_time,end_time,status,capacity) VALUES('saly-owner',CURRENT_DATE+1,'10:00','11:00','open',1);"
+          refuse "$owner INSERT INTO public.digiy_resa_slots(slug,slot_date,start_time,end_time,status,capacity) VALUES('other-owner',CURRENT_DATE+1,'09:00','10:00','open',1);"
+          refuse "SET ROLE authenticated; SELECT set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111',false); SELECT set_config('digiy.test_mfa_ok','off',false); INSERT INTO public.digiy_resa_slots(slug,slot_date,start_time,end_time,status,capacity) VALUES('saly-owner',CURRENT_DATE+2,'09:00','10:00','open',1);"
+          test "$(sql 'SELECT count(*) FROM public.digiy_resa_universal_launch_controls WHERE enabled=true;')" = 0
+          echo 'RESA_V10_OWNER_POSTGRES_RLS_OK: 2 owners isolated; draft private; MFA required; slots no-overlap; gate OFF'
+      - name: Cleanup
+        if: always()
+        run: docker rm -f digiy-v10-test >/dev/null 2>&1 || true
