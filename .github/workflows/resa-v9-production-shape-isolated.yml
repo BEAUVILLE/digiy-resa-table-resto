@@ -1,0 +1,85 @@
+name: RÉSA V9 — migration PROD testée sur PG17 jetable
+on:
+  pull_request:
+    paths:
+      - 'sql/production/20261010_resa_universal_v0_v2_v5_v8_GATED.sql'
+      - 'sql/production/20261010_resa_universal_v9_SAFE_DISABLE.sql'
+      - 'tests/sql/resa_universal_v9_prod_shape_fixture.sql'
+      - 'tests/sql/resa_universal_v9_prod_owner_pay_assertions.sql'
+      - 'docs/RESA_V9_PRODUCTION_RELEASE_GATE_20261010.md'
+      - '.github/workflows/resa-v9-production-shape-isolated.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'sql/production/20261010_resa_universal_v0_v2_v5_v8_GATED.sql'
+      - 'sql/production/20261010_resa_universal_v9_SAFE_DISABLE.sql'
+      - 'tests/sql/resa_universal_v9_prod_shape_fixture.sql'
+      - 'tests/sql/resa_universal_v9_prod_owner_pay_assertions.sql'
+      - 'docs/RESA_V9_PRODUCTION_RELEASE_GATE_20261010.md'
+      - '.github/workflows/resa-v9-production-shape-isolated.yml'
+permissions:
+  contents: read
+jobs:
+  production-shaped-staging:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: public.ecr.aws/docker/library/postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: test_only
+          POSTGRES_DB: digiy_appointments_test
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      PGHOST: localhost
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: test_only
+      PGDATABASE: digiy_appointments_test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PG17 client
+        run: sudo apt-get update -qq && sudo apt-get install -y postgresql-client
+      - name: Build the representative production schema with historical triggers/policies
+        run: |
+          set -euo pipefail
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_beauty_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_planning_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_v0_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_pay_owner_v1_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_owner_manage_v2_fixture.sql
+          psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_v9_prod_shape_fixture.sql
+      - name: Run the production SQL candidate as one disposable transaction
+        run: |
+          set -euo pipefail
+          { printf "SET digiy.resa_fixture_mode = 'on';\n"; cat sql/production/20261010_resa_universal_v0_v2_v5_v8_GATED.sql; } |
+            psql -X -1 -v ON_ERROR_STOP=1
+      - name: Publish ONLY the synthetic owner in disposable DB after migration
+        run: |
+          psql -X -v ON_ERROR_STOP=1 -c "UPDATE public.digiy_resa_profiles SET is_published=true WHERE slug='resa-owner-a';"
+      - name: Prove default OFF, server activation, pending booking, idempotence, overlap and no PAY
+        run: psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_v8_gate_assertions.sql
+      - name: Prove legacy writes remain and only owner V5 can change V0; A/B and no PAY
+        run: psql -X -v ON_ERROR_STOP=1 -f tests/sql/resa_universal_v9_prod_owner_pay_assertions.sql
+      - name: Verify emergency disable preserves rows and revokes new bookings
+        run: |
+          set -euo pipefail
+          psql -X -v ON_ERROR_STOP=1 -f sql/production/20261010_resa_universal_v9_SAFE_DISABLE.sql
+          psql -X -v ON_ERROR_STOP=1 -c "
+            DO \$\$
+            BEGIN
+              IF has_function_privilege('anon',
+                  'public.digiy_resa_universal_request_v1(text,uuid,uuid,text,text,uuid)','EXECUTE') THEN
+                RAISE EXCEPTION 'Safe disable did not revoke V1';
+              END IF;
+              IF (SELECT count(*) FROM public.digiy_resa_bookings
+                  WHERE client_request_id IS NOT NULL)<>1 THEN
+                RAISE EXCEPTION 'Safe disable deleted client booking';
+              END IF;
+            END \$\$;"
