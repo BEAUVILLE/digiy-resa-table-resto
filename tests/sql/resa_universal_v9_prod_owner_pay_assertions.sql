@@ -19,6 +19,10 @@ BEGIN
   RAISE EXCEPTION 'PAY side effect before confirmation';
  END IF;
 END $checks$;
+-- Store the UUID in this test connection only; no private value printed.
+SELECT set_config('test.v9_client_booking',id::text,false)
+FROM public.digiy_resa_bookings
+WHERE client_request_id='c8000000-0000-4000-8000-000000000001';
 BEGIN;
 SET LOCAL ROLE authenticated;
 SELECT set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111',true);
@@ -33,6 +37,13 @@ BEGIN
  GET DIAGNOSTICS v_count=ROW_COUNT;
  IF v_count<>0 THEN
   RAISE EXCEPTION 'RLS allows owner to bypass V5 for a new booking';
+ END IF;
+ -- Legacy owner updates still work, no broad REVOKE that breaks old cockpit.
+ UPDATE public.digiy_resa_bookings SET note_text='Ancien dossier conserve'
+ WHERE id='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+ GET DIAGNOSTICS v_count=ROW_COUNT;
+ IF v_count<>1 THEN
+  RAISE EXCEPTION 'Legacy cockpit owner UPDATE broken';
  END IF;
  v_result:=public.digiy_resa_universal_owner_manage_v2(v_id,'note','Privé V9');
  IF v_result->>'ok'<>'true' OR v_result->>'status'<>'pending' THEN
