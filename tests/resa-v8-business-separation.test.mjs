@@ -1,0 +1,45 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const contract=JSON.parse(fs.readFileSync('contracts/resa-v8-carnet-pro-upsell.json','utf8'));
+const page=fs.readFileSync('rdv-universel.html','utf8');
+const pilot=fs.readFileSync('resa-universal/pilot-booking-v8.mjs','utf8');
+const sql=fs.readFileSync('sql/candidates/20261010_resa_universal_v8_pilot_gate_ISOLATED.sql','utf8');
+test('RDV posé ≠ confirmed ≠ paid, payment on site with no collection by DIGIYLYFE',()=>{
+ assert.equal(contract.semantics.booking_success.label,'RDV posé · Paiement sur place');
+ assert.equal(contract.semantics.booking_success.server_status,'pending');
+ assert.equal(contract.semantics.booking_success.slot_locked,true);
+ assert.equal(contract.semantics.appointment_booking_is_not_payment,true);
+ assert.equal(contract.semantics.confirmed_is_not_paid,true);
+ assert.equal(contract.semantics.done_is_not_paid,true);
+ assert.equal(contract.semantics.payment_collection_by_digiylyfe,false);
+ assert.equal(contract.semantics.commission_rate_percent,0);
+ assert.match(page,/RDV posé · Paiement sur place/);
+ assert.match(page,/confirmation du professionnel reste en attente/);
+ assert.match(page,/Aucun paiement n'a été encaissé par DIGIYLYFE/);
+ assert.match(pilot,/paymentStatus:'not_collected'/);
+});
+test('CARNET PRO is optional, professional-side only and never an automatic ledger',()=>{
+ assert.equal(contract.addon.name,'CARNET PRO');
+ assert.equal(contract.addon.monthly_price_fcfa,13000);
+ assert.equal(contract.addon.optional,true);
+ assert.equal(contract.addon.requires_professional_file,false);
+ assert.equal(contract.addon.shown_to,'authenticated_professional_only');
+ assert.equal(contract.addon.automatic_bridge_to_carnet,false);
+ assert.equal(contract.addon.automatic_bridge_to_pay,false);
+ assert.equal(contract.addon.ledger_write_policy,'manual_and_explicit_after_actual_collection_only');
+ assert.ok(contract.addon.forbidden_placement.includes('patient_booking_receipt'));
+ assert.doesNotMatch(page,/CARNET PRO|13 ?000/);
+ assert.doesNotMatch(pilot,/digiy_pay_movements|carnet_insertion|postIncome/);
+ assert.doesNotMatch(sql,/digiy_pay_movements|INSERT INTO public\.digiy_pay/);
+});
+test('all booking paths are controlled by live server gate, never by the URL',()=>{
+ assert.match(sql,/CREATE TABLE public\.digiy_resa_universal_launch_controls/);
+ assert.match(sql,/enabled boolean NOT NULL DEFAULT false/);
+ assert.match(sql,/REVOKE ALL ON FUNCTION public\.digiy_resa_universal_request_v0/);
+ assert.match(sql,/pilot_not_active/);
+ assert.match(sql,/FOR SHARE OF g,p/);
+ assert.match(page,/createResaPilotV8/);
+ assert.doesNotMatch(page,/RESA_V5_STAGING_ENABLED\s*=\s*true/);
+ assert.doesNotMatch(page,/localStorage|sessionStorage/);
+});
