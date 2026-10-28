@@ -23,11 +23,11 @@ html[dir="rtl"] body{text-align:right}html[dir="rtl"] .sectionHead p{text-align:
 <div class="top"><a class="back" href="https://digiylyfe.com/" id="back">← DIGIYLYFE.COM</a><div class="langs" id="langs"><button data-lang="fr">FR</button><button data-lang="en">EN</button><button data-lang="es">ES</button><button data-lang="pt">PT</button><button data-lang="it">IT</button><button data-lang="de">DE</button><button data-lang="nl">NL</button><button data-lang="ar">AR</button></div></div>
 <section class="hero"><div class="kicker" id="kicker"></div><h1 id="title"></h1><p id="lead"></p><div class="doctrine" id="doctrine"></div><div class="process" id="process"></div></section>
 <section class="section" aria-label="Planning des rendez-vous"><div class="card" style="border-color:#c6dbaa">
-<h2 id="planningTitle" style="margin:0 0 6px">📅 Planning des rendez-vous</h2>
-<p id="planningInfo" style="font-size:13px;color:var(--muted);margin:0 0 14px">Choisir un jour et un horaire réellement ouverts par un professionnel, puis le contacter directement pour confirmation. Aucun créneau fictif.</p>
-<a class="btn primary" id="planningLink" href="./planning.html">📅 Voir les créneaux disponibles →</a>
-<a class="btn secondary" id="manualRequest" href="./demande-rdv.html" style="margin:8px 0 0 8px">💬 Demander un rendez-vous sur WhatsApp →</a>
-<p style="font-size:11px;color:var(--muted);margin:9px 0 0">Sans horaire publié ? Transmettez votre demande à DIGIYLYFE sur WhatsApp. Le professionnel confirme ensuite, aucun créneau bloqué automatiquement.</p>
+<h2 id="planningTitle" style="margin:0 0 6px">📅 Rendez-vous multiservices</h2>
+<p id="planningInfo" style="font-size:13px;color:var(--muted);margin:0 0 14px">La consultation d'un planning exige une fiche professionnelle publiée et de vrais créneaux. Sans planning disponible, envoyez une demande directe : aucune réservation n'est créée automatiquement.</p>
+<a class="btn primary" id="manualRequest" href="./demande-rdv.html">💬 Demander un rendez-vous sur WhatsApp →</a>
+<a class="btn secondary" id="planningLink" href="./planning.html" style="margin:8px 0 0 8px">📅 Planning d'un professionnel →</a>
+<p style="font-size:11px;color:var(--muted);margin:9px 0 0">La date et l'heure souhaitées ne sont pas garanties : seul le professionnel confirme le rendez-vous et le prix. 0 % commission DIGIYLYFE.</p>
 </div></section>
 <section class="section"><div class="sectionHead"><h2 id="realTitle"></h2><p id="realLead"></p></div><div class="cards" id="realCards"></div></section>
 <section class="section"><div class="sectionHead"><h2 id="placesTitle"></h2><p id="placesLead"></p></div><div class="cards" id="demoCards"></div><div class="priceNote" id="priceNote"></div></section>
@@ -36,14 +36,14 @@ html[dir="rtl"] body{text-align:right}html[dir="rtl"] .sectionHead p{text-align:
 <script>
 (function(){'use strict';
 var PLANNING_LANG={
-fr:['📅 Planning des rendez-vous','Choisissez une date et un horaire réellement proposés, puis contactez directement le professionnel pour confirmation. Aucun créneau fictif.','📅 Voir le planning →'],
-en:['📅 Appointment calendar','Find real available times, then contact the professional for confirmation. No fabricated slots.','📅 View calendar →'],
-es:['📅 Calendario de citas','Elige horarios realmente ofrecidos y contacta directamente al profesional. Sin citas ficticias.','📅 Ver calendario →'],
-pt:['📅 Agenda de marcações','Escolha horários realmente disponíveis e contacte diretamente o profissional. Sem horários fictícios.','📅 Ver agenda →'],
-it:['📅 Calendario appuntamenti','Scegli orari realmente disponibili e contatta direttamente il professionista. Nessuna disponibilità inventata.','📅 Vedi calendario →'],
-de:['📅 Terminkalender','Wählen Sie echte freie Zeiten und kontaktieren Sie den Anbieter zur Bestätigung. Keine erfundenen Termine.','📅 Kalender ansehen →'],
-nl:['📅 Afsprakenkalender','Kies echte beschikbare tijden en neem direct contact op met de professional. Geen verzonnen tijdsloten.','📅 Bekijk kalender →'],
-ar:['📅 جدول المواعيد','اختر المواعيد المتاحة فعليًا وتواصل مع المهني مباشرة للتأكيد. لا مواعيد وهمية.','📅 عرض الجدول →']
+fr:['📅 Rendez-vous multiservices',"Un planning n'est visible que pour une fiche professionnelle publiée avec de vrais créneaux. Sinon, envoyez une demande directe sans réservation automatique.",'📅 Planning d’un professionnel →'],
+en:['📅 Multi-service appointments',"A calendar is available only for a published professional profile with real time slots. Otherwise, send a direct enquiry; no booking is created automatically.",'📅 Professional calendar →'],
+es:['📅 Citas multiservicio',"El calendario solo se muestra para una ficha profesional publicada con horarios reales. Si no hay, envía una solicitud directa sin reserva automática.",'📅 Agenda de un profesional →'],
+pt:['📅 Marcações multisserviços',"A agenda só aparece para uma ficha profissional publicada com horários reais. Caso contrário, envie um pedido direto, sem reserva automática.",'📅 Agenda de um profissional →'],
+it:['📅 Appuntamenti multiservizio',"Il calendario è disponibile solo per un profilo professionale pubblicato con orari reali. Altrimenti invia una richiesta diretta, senza prenotazione automatica.",'📅 Calendario del professionista →'],
+de:['📅 Termine für mehrere Dienste',"Ein Kalender ist nur für veröffentlichte Berufsprofile mit echten freien Zeiten verfügbar. Andernfalls senden Sie eine direkte Anfrage, ohne automatische Buchung.",'📅 Kalender eines Profis →'],
+nl:['📅 Multiservice-afspraken',"Een kalender is alleen beschikbaar voor een gepubliceerd professioneel profiel met echte tijdsloten. Stuur anders direct een aanvraag; er wordt niets automatisch geboekt.",'📅 Agenda van een professional →'],
+ar:['📅 مواعيد الخدمات المتعددة',"يظهر الجدول فقط لملف مهني منشور بمواعيد حقيقية. وإلا يمكنك إرسال طلب مباشر دون حجز تلقائي.",'📅 جدول أحد المهنيين ←']
 };
 var REAL=[
 {id:'lamine',icon:'🚗',name:'LAMINE — Chauffeur privé',type:'driver',zone:'Saly · Mbour · AIBD · Petite Côte',chips:['Transfert AIBD','Courses locales','Sur réservation','Contact direct'],url:'https://partenaire-lamine.digiylyfe.com/',wa:'https://wa.me/221784413680'},
