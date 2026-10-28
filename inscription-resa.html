@@ -1,15 +1,24 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="robots" content="noindex,follow">
-  <link rel="canonical" href="https://digiylyfe.com/">
-  <meta http-equiv="refresh" content="0;url=https://digiylyfe.com/">
-  <title>DIGIYLYFE</title>
-  <script>location.replace("https://digiylyfe.com/");</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,follow">
+<title>DIGIY RÉSA — Tarifs adhérents</title>
+<noscript><meta http-equiv="refresh" content="0;url=https://digiylyfe.com/tarifs-adherents-1.html?country=sn"></noscript>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var raw=String(q.get('country')||q.get('pays')||'sn').toLowerCase();
+  var country=raw==='fr'||raw==='france'?'fr':raw==='us'||raw==='usa'?'us':'sn';
+  var lang=String(q.get('lang')||'fr').slice(0,2).toLowerCase();
+  if(!['fr','en','es','pt','it','de','nl','ar'].includes(lang))lang='fr';
+  var destination=new URL('https://digiylyfe.com/tarifs-adherents-1.html');
+  destination.searchParams.set('country',country);
+  destination.searchParams.set('lang',lang);
+  location.replace(destination.toString());
+})();
+</script>
 </head>
-<body>
-  <p><a href="https://digiylyfe.com/">Continuer vers DIGIYLYFE.COM</a></p>
-</body>
+<body><p><a href="https://digiylyfe.com/tarifs-adherents-1.html?country=sn">Consulter les tarifs adhérents DIGIYLYFE</a></p></body>
 </html>
