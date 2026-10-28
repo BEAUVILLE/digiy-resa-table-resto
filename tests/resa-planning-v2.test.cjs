@@ -63,3 +63,13 @@ test('planning public : demande directe prioritaire et statut sans faux créneau
  assert.match(plan,/id="pilotFallback" href="\.\/demande-rdv\.html"/);
  assert.doesNotMatch(plan,/digiy_resa_create_booking|resa_create_booking_by_slug/);
 });
+
+test('tarifs RÉSA : source unique et palier LOC sans prix copié',()=>{
+  assert.match(home,/id="tarifsAdherents"/);
+  assert.match(home,/id="resaLocTarifs"/);
+  assert.match(home,/https:\/\/digiylyfe\.com\/tarifs-loc-v2\.html/);
+  assert.match(home,/https:\/\/digiylyfe\.com\/tarifs-adherents-1\.html/);
+  assert.doesNotMatch(home,/(?:19[ ,.\u00a0]?900|28[ ,.\u00a0]?000)\s*FCFA/i);
+  assert.match(home,/priceNote:/);
+  assert.match(home,/d\.price\?/);
+});
