@@ -41,17 +41,17 @@ button:focus-visible,input:focus-visible{outline:3px solid #ddaf4c;outline-offse
 </head>
 <body>
 <header><div class="wrap"><nav><a href="./index.html">← RÉSA MULTI</a></nav>
-<h1>📅 Trouver un créneau</h1><p>Choisissez un jour et une heure dans le planning réel du professionnel.</p></div></header>
+<h1>📅 Trouver un créneau</h1><p>Consultez les vrais créneaux d’un professionnel publié. Sans créneau affiché, envoyez une demande directe.</p></div></header>
 <main>
 <div class="card"><form id="search">
 <label>Identifiant de la fiche professionnelle
 <input id="slug" type="text" required maxlength="150" autocomplete="off" placeholder="Identifiant transmis sur sa fiche"></label>
 <button type="submit" class="primary">🔎 Voir les disponibilités</button></form>
-<p class="note">Ce planning montre uniquement les créneaux ouverts par un professionnel actif et publié. Il n'affiche aucun professionnel de démonstration comme une activité réelle.</p>
+<p class="note">Le planning nécessite le code de la fiche du professionnel. Les fiches non publiées, les horaires dépassés et les démonstrations ne donnent jamais de faux créneaux.</p>
 </div>
 <section class="card" aria-labelledby="proTitle">
 <h2 id="proTitle">Planning des rendez-vous</h2>
-<p id="feedback" role="status" aria-live="polite">Saisissez le code de la fiche pour consulter les créneaux.</p>
+<p id="feedback" role="status" aria-live="polite">Aucun professionnel sélectionné. Saisissez l’identifiant de sa fiche, ou envoyez une demande directe ci-dessous.</p>
 <div class="weekNav"><button type="button" id="prev" disabled>← 7 jours précédents</button><span id="weekTitle"></span><button type="button" id="next" disabled>7 jours suivants →</button></div>
 <div id="days" class="days" aria-label="Disponibilités pour sept jours"></div>
 <div id="selection" hidden><strong id="selectedText"></strong>
@@ -67,7 +67,7 @@ button:focus-visible,input:focus-visible{outline:3px solid #ddaf4c;outline-offse
 </main>
 <script>
 (()=>{'use strict';
-const db=supabase.createClient('https://wesqmwjjtsefyjnluosj.supabase.co','sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3');
+const db=window.supabase?window.supabase.createClient('https://wesqmwjjtsefyjnluosj.supabase.co','sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3'):null;
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
 let start=new Date(),activeSlug='',chosen='',generation=0,publicWa='';
@@ -84,10 +84,18 @@ async function load(){
  $('pilotFallback').href='./demande-rdv.html'+(activeSlug?'?slug='+encodeURIComponent(activeSlug):'');
  $('prev').disabled=true;$('next').disabled=true;
  announce('Consultation des horaires réels…');
- const {data,error}=await db.rpc('digiy_resa_public_week_v1',{p_slug:activeSlug,p_start_date:iso(start)});
+ if(!db){announce('Planning indisponible hors connexion. Envoyez votre demande directement sur WhatsApp.');$('weekTitle').textContent='';return;}
+ let result;
+ try{
+  result=await db.rpc('digiy_resa_public_week_v1',{p_slug:activeSlug,p_start_date:iso(start)});
+ }catch(_){
+  if(ticket!==generation)return;
+  announce('Impossible de charger le planning. Envoyez votre demande directe sur WhatsApp.');$('weekTitle').textContent='';return;
+ }
  if(ticket!==generation)return;
+ const {data,error}=result||{};
  if(error||!data?.ok){
-  announce(error?'Planning temporairement indisponible.':'Aucun planning publié pour cette fiche.');
+  announce(error?'Planning temporairement indisponible. Envoyez votre demande directe sur WhatsApp.':'Aucun planning publié pour cette fiche. Vous pouvez envoyer une demande directe sur WhatsApp.');
   $('weekTitle').textContent='';return;
  }
  $('proTitle').textContent='📅 '+(data.display_name||'Professionnel')+' — '+(data.city||'RÉSA');
@@ -124,7 +132,7 @@ async function load(){
   });
   col.append(times);$('days').append(col);
  }
- announce(count?count+' horaire(s) ouvert(s) sur ces sept jours.':'Aucun créneau disponible pour ces sept jours.');
+ announce(count?count+' horaire(s) ouvert(s) sur ces sept jours.':'Aucun créneau ouvert pour les sept jours affichés. Essayez la semaine suivante ou envoyez une demande directe sur WhatsApp.');
 }
 $('search').addEventListener('submit',ev=>{
  ev.preventDefault();const slug=$('slug').value.trim();
