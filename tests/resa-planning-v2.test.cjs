@@ -50,3 +50,16 @@ test('ouverture propriétaire BEAUTY sécurisée, par jours choisis, idempotente
  assert.match(ownerSQL,/REVOKE ALL.*FROM PUBLIC,anon/);
  assert.doesNotMatch(ownerSQL,/update public\.digiy_beauty_master_slots|delete from public\.digiy_beauty_master_slots/i);
 });
+
+test('planning public : demande directe prioritaire et statut sans faux créneau',()=>{
+ assert.match(home,/class="btn primary" id="manualRequest" href="\.\/demande-rdv\.html"/);
+ assert.match(home,/id="planningLink" href="\.\/planning\.html"/);
+ assert.match(home,/Un planning n'est visible que pour une fiche professionnelle publiée/);
+ assert.match(plan,/Aucun professionnel sélectionné/);
+ assert.match(plan,/Aucun planning publié pour cette fiche/);
+ assert.match(plan,/Aucun créneau ouvert pour les sept jours affichés/);
+ assert.match(plan,/Impossible de charger le planning/);
+ assert.match(plan,/window\.supabase\?/);
+ assert.match(plan,/id="pilotFallback" href="\.\/demande-rdv\.html"/);
+ assert.doesNotMatch(plan,/digiy_resa_create_booking|resa_create_booking_by_slug/);
+});
