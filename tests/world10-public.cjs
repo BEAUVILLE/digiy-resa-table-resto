@@ -10,7 +10,7 @@ assert.ok(begin>0);
 const start=begin+'var T='.length;
 const end=page.indexOf(';\nfunction ',start);
 assert.ok(end>start,'fin du dictionnaire attendue');
-const T=new Function('return ('+page.slice(start,end)+')')();
+const T=new Function('var T='+page.slice(start,end)+';return T')();
 assert.deepEqual(new Set(Object.keys(T)),new Set(languages));
 for(const lang of languages) {
   assert.deepEqual(new Set(Object.keys(T[lang])),new Set(Object.keys(T.fr)),'complet : '+lang);
@@ -22,6 +22,6 @@ assert.ok(T.wo.rule.includes('du réservation'));
 assert.ok(T.zh.rule.includes('不等于'));
 assert.ok(page.includes("locURL.searchParams.set('lang',l)"));
 assert.ok(page.includes('REAL.map'));
-const scripts=[...page.matchAll(/<script\\b([^>]*)>([\\s\\S]*?)<\\/script>/g)].filter(m=>m[2].trim()&&!m[1].includes('application/ld+json'));
-for(const m of scripts)new Function(m[2]);
+const scripts=page.split('<script').slice(1).map(x=>{const a=x.indexOf('>'),b=x.indexOf('</script>');return [x.slice(0,a),x.slice(a+1,b)]}).filter(x=>x[1].trim()&&!x[0].includes('application/ld+json'));
+for(const m of scripts)new Function(m[1]);
 console.log('DIGIY RÉSA MULTI: 10/10 langues, JS et doctrines contrôlés');
