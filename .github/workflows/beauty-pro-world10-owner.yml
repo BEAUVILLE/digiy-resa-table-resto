@@ -1,0 +1,32 @@
+name: DIGIY BEAUTY PRO · WORLD10 accès propriétaire
+
+on:
+  pull_request:
+    paths:
+      - 'resa-beauty/world10-pro.js'
+      - 'resa-beauty/acces-proprietaire.html'
+      - 'resa-beauty/gestion.html'
+      - 'tests/test_beauty_pro_world10_owner.py'
+      - 'tests/beauty-pro-world10.test.cjs'
+      - '.github/workflows/beauty-pro-world10-owner.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'resa-beauty/world10-pro.js'
+      - 'resa-beauty/acces-proprietaire.html'
+      - 'resa-beauty/gestion.html'
+      - 'tests/test_beauty_pro_world10_owner.py'
+      - 'tests/beauty-pro-world10.test.cjs'
+      - '.github/workflows/beauty-pro-world10-owner.yml'
+permissions:
+  contents: read
+jobs:
+  beauty-pro-world10:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit des dix langues et des accès propriétaires
+        run: python3 -m unittest discover -s tests -p 'test_beauty_pro_world10_owner.py' -v
+      - name: Bascule réelle des langues sans altérer les données du salon
+        run: node --test tests/beauty-pro-world10.test.cjs
