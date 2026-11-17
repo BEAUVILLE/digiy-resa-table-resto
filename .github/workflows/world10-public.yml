@@ -1,0 +1,17 @@
+name: DIGIY RÉSA MULTI · WORLD10 interface publique
+on:
+  pull_request:
+    paths: ['index.html', 'tests/world10-public.cjs', '.github/workflows/world10-public.yml']
+  push:
+    branches: [main]
+    paths: ['index.html', 'tests/world10-public.cjs', '.github/workflows/world10-public.yml']
+permissions:
+  contents: read
+jobs:
+  translations:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Vérifier langues, scripts et doctrine
+        run: node tests/world10-public.cjs
