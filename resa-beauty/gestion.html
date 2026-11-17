@@ -116,10 +116,12 @@ button{border:0;border-radius:999px;min-height:44px;padding:10px 15px;background
 (()=>{'use strict';
 const db=supabase.createClient('https://wesqmwjjtsefyjnluosj.supabase.co','sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3',{auth:{persistSession:true,detectSessionInUrl:true}});
 const $=id=>document.getElementById(id);
-const slug=new URLSearchParams(location.search).get('slug')||'test-resa-beauty-saly';
+const rawSlug=new URLSearchParams(location.search).get('slug')||'';
+const slug=/^[a-z0-9][a-z0-9-]{0,79}$/.test(rawSlug)?rawSlug:'';
+const lang=new URLSearchParams(location.search).get('lang')||'fr';
 let beautyId=null, services=[];
 
-$('publicLink').href='./index.html?slug='+encodeURIComponent(slug);
+$('publicLink').href=slug?'./index.html?slug='+encodeURIComponent(slug)+'&lang='+encodeURIComponent(lang):'./index.html';
 
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
@@ -229,8 +231,9 @@ $('openWeek').onclick=async()=>{
 };
 
 async function boot(){
+  if(!slug){$('msg').textContent='⚠️ Restaurant BEAUTY non identifié. Retourne à la fiche professionnelle.';$('save').disabled=true;$('openWeek').disabled=true;return}
   const {data:{session}}=await db.auth.getSession();
-  if(!session)return location.replace('./acces-proprietaire.html?slug='+encodeURIComponent(slug));
+  if(!session)return location.replace('./acces-proprietaire.html?slug='+encodeURIComponent(slug)+'&lang='+encodeURIComponent(lang));
   $('who').textContent='Connecté : '+(session.user.email||'propriétaire');
 
   const {data,error}=await db.rpc('digiy_beauty_owner_get_v1',{p_slug:slug});
@@ -278,7 +281,7 @@ $('save').onclick=async()=>{
   $('msg').textContent=error?'⚠️ '+error.message:'✅ Profil BEAUTY mis à jour.';
 };
 
-$('logout').onclick=async()=>{await db.auth.signOut();location.replace('./acces-proprietaire.html?slug='+encodeURIComponent(slug))};
+$('logout').onclick=async()=>{await db.auth.signOut();location.replace('./acces-proprietaire.html?slug='+encodeURIComponent(slug)+'&lang='+encodeURIComponent(lang))};
 
 boot();
 })();
