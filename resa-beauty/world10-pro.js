@@ -10,3 +10,116 @@
  if(!langs.includes(lang)){try{lang=localStorage.getItem("digiy_beauty_pro_lang")}catch(_){}}
  if(!langs.includes(lang))lang="fr";
  const t=text=>{const row=phrase.get(text);return row?row[langs.indexOf(lang)]:text};
+
+ const originals=new WeakMap(), attrOriginals=new WeakMap();
+ function businessValue(parent){
+   return !!parent.closest("#title, .bookingName, .bookingMeta, .bookingName *, .bookingMeta *, input, textarea, [data-owned]");
+ }
+ function translateDynamic(original,parent){
+   const value=original.trim();
+   const row=reverse.get(value);
+   if(row) return row[langs.indexOf(lang)];
+   const connected=phrase.get("Connecté : ");
+   for(const prefix of connected){
+     if(value.startsWith(prefix)){
+       return connected[langs.indexOf(lang)]+value.slice(prefix.length);
+     }
+   }
+   // Les nombres de créneaux sont des valeurs métier. Seuls leurs libellés sont traduits.
+   if(parent.id==="weekMsg"){
+     const m=value.match(/^✅ (\d+) créneau\(x\) créé\(s\)\. (\d+) créneau\(x\) existant\(s\) préservé\(s\)\.$/);
+     if(m){
+       return "✅ "+m[1]+t(" créneau(x) créé(s). ")+m[2]+t(" créneau(x) existant(s) préservé(s).");
+     }
+   }
+   return value;
+ }
+ function translateNode(node){
+   const parent=node?.parentElement;
+   if(!parent||parent.closest("script,style,noscript,code")||businessValue(parent))return;
+   const current=node.nodeValue;
+   let snapshot=originals.get(node);
+   if(!snapshot || current!==snapshot.last){
+     snapshot={original:current,last:current};
+     originals.set(node,snapshot);
+   }
+   const original=snapshot.original;
+   const leading=(original.match(/^\s*/)||[""])[0];
+   const trailing=(original.match(/\s*$/)||[""])[0];
+   const value=original.trim();
+   if(!value)return;
+   const translated=translateDynamic(original,parent);
+   const next=leading+translated+trailing;
+   if(current!==next){snapshot.last=next;node.nodeValue=next}
+ }
+ function translateAttrs(){
+   const attrs=["placeholder","aria-label","title"];
+   for(const attr of attrs){
+     document.querySelectorAll("["+attr+"]").forEach(el=>{
+       if(el.closest("[data-owned]"))return;
+       const current=el.getAttribute(attr);
+       if(!current)return;
+       let prev=attrOriginals.get(el);
+       if(!prev){prev={};attrOriginals.set(el,prev)}
+       let snap=prev[attr];
+       if(!snap || snap.last!==current) snap=prev[attr]={original:current,last:current};
+       const row=reverse.get(snap.original);
+       if(!row)return;
+       const next=row[langs.indexOf(lang)];
+       if(current!==next){snap.last=next;el.setAttribute(attr,next)}
+     });
+   }
+ }
+ function keepLanguageInLinks(){
+   document.querySelectorAll('a[href]').forEach(a=>{
+     const current=a.getAttribute("href");
+     if(!current||current.startsWith("#")||current.startsWith("javascript:"))return;
+     let url;
+     try{url=new URL(current,location.href)}catch(_){return}
+     if(url.origin!==location.origin)return;
+     if(url.searchParams.get("lang")===lang)return;
+     url.searchParams.set("lang",lang);
+     a.setAttribute("href",url.toString());
+   });
+ }
+ function translatePage(){
+   document.documentElement.lang=lang;
+   document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+   const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+   while(walker.nextNode())translateNode(walker.currentNode);
+   translateAttrs();
+   keepLanguageInLinks();
+   const titleRow=reverse.get(document.title);
+   if(titleRow)document.title=titleRow[langs.indexOf(lang)];
+   const picker=document.getElementById("beautyProWorld10");
+   if(picker)picker.value=lang;
+ }
+ function setLang(next){
+   if(!langs.includes(next))return;
+   lang=next;
+   try{localStorage.setItem("digiy_beauty_pro_lang",lang)}catch(_){}
+   const url=new URL(location.href);url.searchParams.set("lang",lang);
+   history.replaceState(null,"",url);
+   translatePage();
+ }
+ function boot(){
+   const header=document.querySelector("header.top")||document.querySelector("body > .card")||document.querySelector(".card");
+   if(header && !document.getElementById("beautyProWorld10")){
+     const picker=document.createElement("select");
+     picker.id="beautyProWorld10";
+     picker.setAttribute("aria-label","Langue");
+     picker.style.cssText="max-width:130px;min-height:41px;border:2px solid #ba799f;border-radius:12px;padding:8px;background:white;color:#342333;direction:ltr;font:900 13px system-ui";
+     for(let i=0;i<langs.length;i++){
+       const option=document.createElement("option");
+       option.value=langs[i];option.textContent=names[i];picker.appendChild(option);
+     }
+     picker.addEventListener("change",()=>setLang(picker.value));
+     header.appendChild(picker);
+   }
+   translatePage();
+   new MutationObserver(()=>translatePage()).observe(document.body,{childList:true,subtree:true,characterData:true});
+   window.DIGIY_BEAUTY_PRO_WORLD10={locales:langs.slice(),getLang:()=>lang,setLang,translate:t};
+ }
+ if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot,{once:true});
+ else boot();
+})();
