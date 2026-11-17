@@ -13,7 +13,9 @@
 
  const originals=new WeakMap(), attrOriginals=new WeakMap();
  function businessValue(parent){
-   return !!parent.closest("#title, .bookingName, .bookingMeta, .bookingName *, .bookingMeta *, input, textarea, [data-owned]");
+   const title=parent.closest("#title");
+   if(title && !reverse.has(title.textContent.trim()))return true; // nom réel du salon, intouchable
+   return !!parent.closest(".bookingName, .bookingMeta, .bookingName *, .bookingMeta *, input, textarea, [data-owned]");
  }
  function translateDynamic(original,parent){
    const value=original.trim();
