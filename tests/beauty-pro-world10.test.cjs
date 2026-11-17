@@ -20,7 +20,7 @@ function makePage(items,href='./index.html?slug=salon-saly'){
    parentElement:{
      id:item.id||'',
      closest(sel){
-       if(item.owned && sel.includes('#title, .bookingName'))return {};
+       if(item.owned && sel.includes('.bookingName, .bookingMeta'))return {};
        return null;
      }
    }
