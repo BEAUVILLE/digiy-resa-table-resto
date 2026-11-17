@@ -69,7 +69,8 @@ class BeautyProWorld10(unittest.TestCase):
         self.assertIn('name="robots" content="noindex,nofollow,noarchive"',GESTION)
 
     def test_no_business_or_private_data_translated(self):
-        self.assertIn('#title, .bookingName, .bookingMeta',WORLD10)
+        self.assertIn('!reverse.has(title.textContent.trim())',WORLD10)
+        self.assertIn('.bookingName, .bookingMeta',WORLD10)
         self.assertIn("input, textarea",WORLD10)
         self.assertIn("p_services:clean",GESTION)
         self.assertIn("digiy_beauty_owner_update_v1",GESTION)
