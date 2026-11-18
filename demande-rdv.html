@@ -45,57 +45,82 @@ button{font:inherit;cursor:pointer;border-radius:14px;border:0;font-weight:900;p
 <main>
 <section class="intro">
 <div class="kicker">🦅 DIGIYLYFE · PILOTE PETITE CÔTE</div>
-<h1>📅 Demandez votre rendez-vous.</h1>
-<p>Une prestation, une date souhaitée, un message WhatsApp. Nous recevons la demande et vous orientons vers le professionnel concerné.</p>
-<div class="pills" style="margin-top:17px"><span>💬 WhatsApp direct</span><span>0 % commission</span><span>Sans paiement en ligne</span></div>
+<h1 data-rdv-text="0">📅 Demandez votre rendez-vous.</h1>
+<p data-rdv-text="1">Une prestation, une date souhaitée, un message WhatsApp. Nous recevons la demande et vous orientons vers le professionnel concerné.</p>
+<div class="pills" style="margin-top:17px"><span data-rdv-text="2">💬 WhatsApp direct</span><span>0 % commission</span><span data-rdv-text="3">Sans paiement en ligne</span></div>
 </section>
 <section class="panel">
-<h2>Votre demande</h2>
+<h2 data-rdv-text="4">Votre demande</h2>
 <form id="appointmentForm" novalidate>
 <div class="grid">
-<label class="full">Activité concernée *
+<label class="full"><span data-rdv-text="5">Activité concernée *</span>
 <select id="activity" required>
-<option value="">Choisir une activité</option>
-<option>Beauté et bien-être</option>
-<option>Artisan ou service à domicile</option>
-<option>Conseil et services professionnels</option>
-<option>Cours et accompagnement</option>
-<option>Autre activité sur rendez-vous</option>
+<option value="" data-rdv-text="6">Choisir une activité</option>
+<option value="Beauté et bien-être" data-rdv-text="7">Beauté et bien-être</option>
+<option value="Artisan ou service à domicile" data-rdv-text="8">Artisan ou service à domicile</option>
+<option value="Conseil et services professionnels" data-rdv-text="9">Conseil et services professionnels</option>
+<option value="Cours et accompagnement" data-rdv-text="10">Cours et accompagnement</option>
+<option value="Autre activité sur rendez-vous" data-rdv-text="11">Autre activité sur rendez-vous</option>
 </select>
 </label>
-<label class="full">Prestation recherchée *
+<label class="full"><span data-rdv-text="12">Prestation recherchée *</span>
 <input id="service" maxlength="120" required placeholder="Ex. : coupe, consultation, cours, dépannage">
 </label>
-<label class="full">Ville ou secteur *
+<label class="full"><span data-rdv-text="13">Ville ou secteur *</span>
 <input id="locality" maxlength="90" required placeholder="Ex. : Saly, Ngaparou, Mbour">
 </label>
-<label>Date souhaitée *
+<label><span data-rdv-text="14">Date souhaitée *</span>
 <input id="date" type="date" required>
 </label>
-<label>Heure souhaitée *
+<label><span data-rdv-text="15">Heure souhaitée *</span>
 <input id="time" type="time" required>
 </label>
-<label class="full">Votre prénom (facultatif)
+<label class="full"><span data-rdv-text="16">Votre prénom (facultatif)</span>
 <input id="firstName" maxlength="70" autocomplete="given-name" placeholder="Pour personnaliser la demande">
 </label>
 </div>
-<p class="note">⚠️ Ceci est une <strong>demande de contact</strong>, pas une réservation enregistrée. La date et l'heure sont des souhaits : seul le professionnel confirme sa disponibilité et son tarif.</p>
-<button class="primary" type="submit">💬 Ouvrir ma demande dans WhatsApp →</button>
+<p class="note" data-rdv-text="17">⚠️ Ceci est une <strong>demande de contact</strong>, pas une réservation enregistrée. La date et l'heure sont des souhaits : seul le professionnel confirme sa disponibilité et son tarif.</p>
+<button class="primary" type="submit" data-rdv-text="18">💬 Ouvrir ma demande dans WhatsApp →</button>
 <p id="feedback" role="status" aria-live="polite"></p>
 </form>
 <div id="review" hidden>
-<h2>Votre message</h2>
+<h2 data-rdv-text="19">Votre message</h2>
 <div id="preview"></div>
-<p class="muted">Si WhatsApp ne s'ouvre pas, copiez ce message et envoyez-le depuis l'application.</p>
-<button class="secondary" id="copy" type="button">📋 Copier le message</button>
+<p class="muted" data-rdv-text="20">Si WhatsApp ne s'ouvre pas, copiez ce message et envoyez-le depuis l'application.</p>
+<button class="secondary" id="copy" type="button" data-rdv-text="21">📋 Copier le message</button>
 </div>
 </section>
-<p class="footer">Contact d'orientation DIGIYLYFE · Confirmation et règlement directement avec le professionnel. Les restaurants, logements et chauffeurs conservent leurs parcours spécialisés.</p>
+<p class="footer" data-rdv-text="22">Contact d'orientation DIGIYLYFE · Confirmation et règlement directement avec le professionnel. Les restaurants, logements et chauffeurs conservent leurs parcours spécialisés.</p>
 </main>
 <script type="module">
 import {buildWhatsAppEnquiry,validSlug,EnquiryError} from './resa-universal/pilot-whatsapp-v7.mjs';
 const el=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
+const translations = {
+  en: "Request an appointment|Choose a service and preferred date. DIGIYLYFE receives your WhatsApp request and directs you to the professional.|Direct WhatsApp|No online payment|Your request|Activity|Choose an activity|Beauty and wellness|Trades or home services|Consulting and professional services|Lessons and coaching|Other appointment-based activity|Service requested|Town or area|Preferred date|Preferred time|First name (optional)|This sends a contact request. The professional confirms availability and price.|Open my request in WhatsApp|Your message|If WhatsApp does not open, copy this message and send it in the app.|Copy message|DIGIYLYFE helps direct your request. Confirm and pay directly with the professional.|Message ready. Review it and send it in WhatsApp.|Check the activity, service, area, date and time.|Could not prepare the message.|Message copied.|Select the text to copy it.",
+  es: "Solicita una cita|Elige un servicio y una fecha. DIGIYLYFE recibe tu solicitud por WhatsApp y te orienta hacia el profesional.|WhatsApp directo|Sin pago en línea|Tu solicitud|Actividad|Elige una actividad|Belleza y bienestar|Oficios o servicios a domicilio|Asesoría y servicios profesionales|Clases y acompañamiento|Otra actividad con cita|Servicio solicitado|Ciudad o zona|Fecha deseada|Hora deseada|Nombre (opcional)|Esto envía una solicitud de contacto. El profesional confirma disponibilidad y precio.|Abrir mi solicitud en WhatsApp|Tu mensaje|Si WhatsApp no se abre, copia el mensaje y envíalo desde la aplicación.|Copiar mensaje|DIGIYLYFE orienta tu solicitud. Confirma y paga directamente con el profesional.|Revisa el mensaje y envíalo en WhatsApp.|Revisa la actividad, el servicio, la zona, la fecha y la hora.|No se pudo preparar el mensaje.|Mensaje copiado.|Selecciona el texto para copiarlo.",
+  pt: "Peça um agendamento|Escolha um serviço e uma data. A DIGIYLYFE recebe seu pedido pelo WhatsApp e orienta você até o profissional.|WhatsApp direto|Sem pagamento on-line|Seu pedido|Atividade|Escolha uma atividade|Beleza e bem-estar|Ofícios ou serviços em domicílio|Consultoria e serviços profissionais|Aulas e acompanhamento|Outra atividade com agendamento|Serviço desejado|Cidade ou região|Data desejada|Hora desejada|Nome (opcional)|Este é um pedido de contato. O profissional confirma a disponibilidade e o preço.|Abrir meu pedido no WhatsApp|Sua mensagem|Se o WhatsApp não abrir, copie a mensagem e envie pelo aplicativo.|Copiar mensagem|A DIGIYLYFE orienta seu pedido. Confirme e pague diretamente ao profissional.|Confira a mensagem e envie pelo WhatsApp.|Confira a atividade, o serviço, a região, a data e a hora.|Não foi possível preparar a mensagem.|Mensagem copiada.|Selecione o texto para copiá-lo.",
+  it: "Richiedi un appuntamento|Scegli un servizio e una data. DIGIYLYFE riceve la richiesta su WhatsApp e ti indirizza al professionista.|WhatsApp diretto|Nessun pagamento online|La tua richiesta|Attività|Scegli un’attività|Bellezza e benessere|Artigiani o servizi a domicilio|Consulenza e servizi professionali|Lezioni e tutoraggio|Altra attività su appuntamento|Servizio richiesto|Città o zona|Data desiderata|Ora desiderata|Nome (facoltativo)|Questa è una richiesta di contatto. Il professionista conferma disponibilità e prezzo.|Apri la richiesta in WhatsApp|Il tuo messaggio|Se WhatsApp non si apre, copia il messaggio e invialo dall’app.|Copia il messaggio|DIGIYLYFE indirizza la richiesta. Conferma e paga direttamente al professionista.|Controlla il messaggio e invialo su WhatsApp.|Controlla attività, servizio, zona, data e ora.|Impossibile preparare il messaggio.|Messaggio copiato.|Seleziona il testo per copiarlo.",
+  de: "Termin anfragen|Wähle eine Leistung und einen Wunschtermin. DIGIYLYFE erhält deine Anfrage per WhatsApp und verweist dich an den Anbieter.|Direkt per WhatsApp|Keine Online-Zahlung|Deine Anfrage|Tätigkeit|Tätigkeit auswählen|Schönheit und Wellness|Handwerk oder Dienstleistungen zu Hause|Beratung und professionelle Dienstleistungen|Unterricht und Begleitung|Sonstige Tätigkeit nach Termin|Gewünschte Leistung|Ort oder Gegend|Wunschdatum|Wunschuhrzeit|Vorname (optional)|Dies ist eine Kontaktanfrage. Der Anbieter bestätigt Verfügbarkeit und Preis.|Anfrage in WhatsApp öffnen|Deine Nachricht|Falls WhatsApp sich nicht öffnet, kopiere die Nachricht und sende sie in der App.|Nachricht kopieren|DIGIYLYFE hilft bei der Weiterleitung. Bestätigung und Zahlung erfolgen direkt beim Anbieter.|Prüfe die Nachricht und sende sie in WhatsApp.|Prüfe Tätigkeit, Leistung, Gegend, Datum und Uhrzeit.|Die Nachricht konnte nicht vorbereitet werden.|Nachricht kopiert.|Markiere den Text zum Kopieren.",
+  nl: "Vraag een afspraak aan|Kies een dienst en gewenste datum. DIGIYLYFE ontvangt je verzoek via WhatsApp en verwijst je naar de dienstverlener.|Rechtstreeks via WhatsApp|Geen online betaling|Je aanvraag|Activiteit|Kies een activiteit|Schoonheid en welzijn|Vakwerk of diensten aan huis|Advies en professionele diensten|Lessen en begeleiding|Andere activiteit op afspraak|Gewenste dienst|Plaats of regio|Gewenste datum|Gewenste tijd|Voornaam (optioneel)|Dit is een contactverzoek. De dienstverlener bevestigt de beschikbaarheid en prijs.|Open mijn aanvraag in WhatsApp|Je bericht|Als WhatsApp niet opent, kopieer het bericht en verstuur het vanuit de app.|Kopieer bericht|DIGIYLYFE helpt je op weg. Bevestig en betaal rechtstreeks bij de dienstverlener.|Controleer het bericht en verstuur het in WhatsApp.|Controleer activiteit, dienst, regio, datum en tijd.|Het bericht kon niet worden opgesteld.|Bericht gekopieerd.|Selecteer de tekst om die te kopiëren.",
+  ar: "اطلب موعدًا|اختر الخدمة والتاريخ المطلوب. يستقبل DIGIYLYFE طلبك عبر واتساب ويرشدك إلى مقدم الخدمة.|واتساب مباشر|دون دفع إلكتروني|طلبك|النشاط|اختر نشاطًا|الجمال والعناية|الحرف أو الخدمات المنزلية|الاستشارات والخدمات المهنية|الدروس والمرافقة|نشاط آخر بموعد|الخدمة المطلوبة|المدينة أو المنطقة|التاريخ المطلوب|الوقت المطلوب|الاسم الأول (اختياري)|هذا طلب تواصل. يؤكد مقدم الخدمة التوفر والسعر.|افتح طلبي في واتساب|رسالتك|إذا لم يُفتح واتساب، انسخ الرسالة وأرسلها من التطبيق.|انسخ الرسالة|يساعدك DIGIYLYFE في التوجيه. التأكيد والدفع مباشرة مع مقدم الخدمة.|راجع الرسالة ثم أرسلها في واتساب.|راجع النشاط والخدمة والمنطقة والتاريخ والوقت.|تعذّر إعداد الرسالة.|تم نسخ الرسالة.|حدّد النص لنسخه.",
+  zh: "申请预约|请选择服务与意向日期。DIGIYLYFE 通过 WhatsApp 接收申请，并为您指引相应的服务人员。|WhatsApp 直接联系|无需在线付款|您的申请|服务类别|请选择服务类别|美容与健康|手工维修或上门服务|咨询与专业服务|课程与辅导|其他预约服务|所需服务|城市或区域|意向日期|意向时间|名字（选填）|这是一项联系申请。服务人员将确认是否有空及价格。|在 WhatsApp 打开申请|您的消息|如果无法打开 WhatsApp，请复制消息并在应用内发送。|复制消息|DIGIYLYFE 协助转介。请直接与服务人员确认并付款。|请检查消息并在 WhatsApp 中发送。|请检查类别、服务、区域、日期和时间。|无法生成消息。|消息已复制。|请选择文本以复制。",
+  wo: "Laaj ndaje|Tànnal liggéey bi ak bés bi nga bëgg. DIGIYLYFE dina jot sa laaj ci WhatsApp te won la ki koy def.|WhatsApp jub|Amul fey ci internet|Sa laaj|Xeetu liggéey|Tànnal xeetu liggéey|Taar ak yaram wu wér|Liggéeyu loxo walla liggéey ci kër|Xelal ak liggéeyu profesiyoneel|Njàng ak ndimbal|Beneen liggéey buy laaj ndaje|Liggéey bi nga bëgg|Dëkk walla gox|Bés bi nga bëgg|Waxtu wi nga bëgg|Sa tur (soo ko bëggee)|Laaj ngir jokkoo la. Ki di liggéey mooy dëggal waxtu wi ak njëg bi.|Ubbil sama laaj ci WhatsApp|Sa bataaxal|Su WhatsApp ubbeeku, duppi bataaxal bi te yónnee ko ci app bi.|Duppi bataaxal bi|DIGIYLYFE dina la won ki koy def. Dëggalal ndaje bi te fey ci ki di liggéey.|Seetal bataaxal bi te yónnee ko ci WhatsApp.|Seetal liggéey bi, gox bi, bés bi ak waxtu wi.|Mënul a waajal bataaxal bi.|Duppi nañu bataaxal bi.|Tànnal mbind mi ngir duppi ko.",
+};
+const requestedLang = (params.get('lang') || '').toLowerCase();
+const lang = Object.hasOwn(translations, requestedLang) ? requestedLang : 'fr';
+const copy = translations[lang]?.split('|');
+document.documentElement.lang = lang;
+document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+const back = document.querySelector('header a');
+if (params.has('lang')) back.href = './index.html?lang=' + encodeURIComponent(lang);
+if (copy) {
+ document.querySelectorAll('[data-rdv-text]').forEach(element => {
+  element.textContent = copy[Number(element.dataset.rdvText)];
+ });
+ document.title = copy[0] + ' · DIGIY RÉSA';
+ for (const id of ['service', 'locality', 'firstName']) el(id).removeAttribute('placeholder');
+}
 const slug=params.get('slug')||'';
 const selectedSlug=validSlug(slug)?slug:'';
 const dakarParts=new Intl.DateTimeFormat('en-GB',{
@@ -118,20 +143,20 @@ el('appointmentForm').addEventListener('submit',event=>{
   lastMessage=result.message;
   el('preview').textContent=result.message;
   el('review').hidden=false;
-  el('feedback').textContent='✓ Message préparé. Vérifiez et envoyez-le dans WhatsApp pour que DIGIYLYFE le reçoive.';
+  el('feedback').textContent=(copy?.[23] ?? '✓ Message préparé. Vérifiez et envoyez-le dans WhatsApp pour que DIGIYLYFE le reçoive.');
   // Real navigation occurs only from the user's explicit submit gesture.
   // WhatsApp still requires the user to press Send in its own interface.
   location.assign(result.url);
  }catch(error){
   el('feedback').textContent=error instanceof EnquiryError?
-   '⚠️ Vérifiez activité, prestation, secteur, date et heure souhaitées.':
-   '⚠️ Impossible de préparer le message.';
+   (copy?.[24] ?? '⚠️ Vérifiez activité, prestation, secteur, date et heure souhaitées.'):
+   (copy?.[25] ?? '⚠️ Impossible de préparer le message.');
  }
 });
 el('copy').addEventListener('click',async()=>{
  if(!lastMessage)return;
- try{await navigator.clipboard.writeText(lastMessage);el('feedback').textContent='✓ Message copié.'}
- catch(_){el('feedback').textContent='Sélectionnez le texte affiché pour le copier.'}
+ try{await navigator.clipboard.writeText(lastMessage);el('feedback').textContent=(copy?.[26] ?? '✓ Message copié.')}
+ catch(_){el('feedback').textContent=(copy?.[27] ?? 'Sélectionnez le texte affiché pour le copier.')}
 });
 </script>
 </body>
