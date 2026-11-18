@@ -41,29 +41,29 @@ button:focus-visible,input:focus-visible{outline:3px solid #ddaf4c;outline-offse
 </head>
 <body>
 <header><div class="wrap"><nav><a href="./index.html">← RÉSA MULTI</a></nav>
-<h1>📅 Trouver un créneau</h1><p>Consultez les vrais créneaux d’un professionnel publié. Sans créneau affiché, envoyez une demande directe.</p></div></header>
+<h1 data-planning-text="0">📅 Trouver un créneau</h1><p data-planning-text="1">Consultez les vrais créneaux d’un professionnel publié. Sans créneau affiché, envoyez une demande directe.</p></div></header>
 <main>
 <div class="card"><form id="search">
-<label>Identifiant de la fiche professionnelle
-<input id="slug" type="text" required maxlength="150" autocomplete="off" placeholder="Identifiant transmis sur sa fiche"></label>
-<button type="submit" class="primary">🔎 Voir les disponibilités</button></form>
-<p class="note">Le planning nécessite le code de la fiche du professionnel. Les fiches non publiées, les horaires dépassés et les démonstrations ne donnent jamais de faux créneaux.</p>
+<label><span data-planning-text="2">Identifiant de la fiche professionnelle</span>
+<input id="slug" type="text" required maxlength="150" autocomplete="off" placeholder="Identifiant transmis sur sa fiche" data-planning-text="3"></label>
+<button type="submit" class="primary" data-planning-text="4">🔎 Voir les disponibilités</button></form>
+<p class="note" data-planning-text="5">Le planning nécessite le code de la fiche du professionnel. Les fiches non publiées, les horaires dépassés et les démonstrations ne donnent jamais de faux créneaux.</p>
 </div>
 <section class="card" aria-labelledby="proTitle">
-<h2 id="proTitle">Planning des rendez-vous</h2>
-<p id="feedback" role="status" aria-live="polite">Aucun professionnel sélectionné. Saisissez l’identifiant de sa fiche, ou envoyez une demande directe ci-dessous.</p>
-<div class="weekNav"><button type="button" id="prev" disabled>← 7 jours précédents</button><span id="weekTitle"></span><button type="button" id="next" disabled>7 jours suivants →</button></div>
-<div id="days" class="days" aria-label="Disponibilités pour sept jours"></div>
+<h2 id="proTitle" data-planning-text="6">Planning des rendez-vous</h2>
+<p id="feedback" role="status" aria-live="polite" data-planning-text="7">Aucun professionnel sélectionné. Saisissez l’identifiant de sa fiche, ou envoyez une demande directe ci-dessous.</p>
+<div class="weekNav"><button type="button" id="prev" disabled data-planning-text="8">← 7 jours précédents</button><span id="weekTitle"></span><button type="button" id="next" disabled data-planning-text="9">7 jours suivants →</button></div>
+<div id="days" class="days" aria-label="Disponibilités pour sept jours" data-planning-text="10"></div>
 <div id="selection" hidden><strong id="selectedText"></strong>
-<p class="note">Ceci est une recherche de créneau, pas une réservation. Contactez directement le professionnel pour confirmer l'heure, la prestation et le tarif. DIGIYLYFE ne reçoit aucun paiement.</p>
-<button id="copy" type="button">Copier la date et l'heure</button> <a id="contact" target="_blank" rel="noopener noreferrer" hidden style="display:inline-block;border-radius:12px;background:#093b2b;color:#fff;font-weight:850;padding:10px 14px;text-decoration:none;min-height:44px">💬 Demander directement au professionnel</a> <a id="fiche" hidden style="color:#093b2b;font-weight:800">Voir la fiche professionnelle</a></div>
+<p class="note" data-planning-text="11">Ceci est une recherche de créneau, pas une réservation. Contactez directement le professionnel pour confirmer l'heure, la prestation et le tarif. DIGIYLYFE ne reçoit aucun paiement.</p>
+<button id="copy" type="button" data-planning-text="12">Copier la date et l'heure</button> <a id="contact" target="_blank" rel="noopener noreferrer" hidden style="display:inline-block;border-radius:12px;background:#093b2b;color:#fff;font-weight:850;padding:10px 14px;text-decoration:none;min-height:44px" data-planning-text="13">💬 Demander directement au professionnel</a> <a id="fiche" hidden style="color:#093b2b;font-weight:800" data-planning-text="14">Voir la fiche professionnelle</a></div>
 <div class="card" style="background:#f2f8ed">
-  <strong>Pas de créneau affiché ?</strong>
-  <p class="note">Faites connaître la prestation et la date souhaitées à DIGIYLYFE sur WhatsApp. Nous vous orientons vers le professionnel concerné. Cette demande ne bloque aucun créneau.</p>
-  <a id="pilotFallback" href="./demande-rdv.html" style="display:inline-block;background:#073f32;color:white;border-radius:12px;padding:11px 15px;min-height:44px;font-weight:850;text-decoration:none">💬 Envoyer ma demande sur WhatsApp →</a>
+  <strong data-planning-text="15">Pas de créneau affiché ?</strong>
+  <p class="note" data-planning-text="16">Faites connaître la prestation et la date souhaitées à DIGIYLYFE sur WhatsApp. Nous vous orientons vers le professionnel concerné. Cette demande ne bloque aucun créneau.</p>
+  <a id="pilotFallback" href="./demande-rdv.html" style="display:inline-block;background:#073f32;color:white;border-radius:12px;padding:11px 15px;min-height:44px;font-weight:850;text-decoration:none" data-planning-text="17">💬 Envoyer ma demande sur WhatsApp →</a>
 </div>
 </section>
-<p class="note">Paiement direct · Confirmation humaine · 0 % commission. Les horaires sont indicatifs jusqu'à confirmation du professionnel.</p>
+<p class="note" data-planning-text="18">Paiement direct · Confirmation humaine · 0 % commission. Les horaires sont indicatifs jusqu'à confirmation du professionnel.</p>
 </main>
 <script>
 (()=>{'use strict';
@@ -72,6 +72,30 @@ const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
 const requestedLang=(params.get('lang')||'').toLowerCase();
 const lang=/^(fr|en|es|pt|it|de|nl|ar|wo|zh)$/.test(requestedLang)?requestedLang:'fr';
+const translations={
+ en: "Find a time|View a professional’s published availability or send a request directly.|Professional profile ID|ID shown on the profile|Check availability|Enter the code from the professional’s profile.|Appointment schedule|Enter a profile ID or send a request below.|Previous 7 days|Next 7 days|Availability for seven days|Ask the professional to confirm the time, service and price.|Copy date and time|Ask the professional|View profile|No times displayed?|Send your request to DIGIYLYFE on WhatsApp. This does not hold a time.|Send a WhatsApp request|Confirm and pay directly with the professional. 0% commission.|Checking availability…|Schedule unavailable. Send a request on WhatsApp.|No schedule published for this profile.|Professional|Available times|No open times|Available|Unavailable|Selected time|Open times this week|Check the profile ID.|Date and time copied.",
+ es: "Busca un horario|Consulta la disponibilidad publicada o envía una solicitud directa.|Identificador de la ficha|Código de la ficha|Ver disponibilidad|Introduce el código de la ficha del profesional.|Agenda de citas|Introduce un código o envía una solicitud abajo.|7 días anteriores|7 días siguientes|Disponibilidad para siete días|Pide al profesional que confirme hora, servicio y precio.|Copiar fecha y hora|Consultar al profesional|Ver ficha|¿No hay horas disponibles?|Envía tu solicitud a DIGIYLYFE por WhatsApp. No se bloquea ningún horario.|Enviar solicitud por WhatsApp|Confirma y paga directamente al profesional. 0 % de comisión.|Consultando disponibilidad…|Agenda no disponible. Envía tu solicitud por WhatsApp.|Esta ficha no tiene agenda publicada.|Profesional|Horas disponibles|No hay horas libres|Disponible|No disponible|Hora seleccionada|Horas libres esta semana|Revisa el identificador de la ficha.|Fecha y hora copiadas.",
+ pt: "Encontre um horário|Consulte a disponibilidade publicada ou envie um pedido direto.|Identificador do perfil|Código do perfil|Ver disponibilidade|Informe o código do perfil do profissional.|Agenda de atendimentos|Informe um código ou envie um pedido abaixo.|7 dias anteriores|Próximos 7 dias|Disponibilidade para sete dias|Peça ao profissional que confirme horário, serviço e preço.|Copiar data e hora|Consultar o profissional|Ver perfil|Nenhum horário exibido?|Envie seu pedido à DIGIYLYFE pelo WhatsApp. Isso não bloqueia horários.|Enviar pedido pelo WhatsApp|Confirme e pague diretamente ao profissional. 0% de comissão.|Consultando disponibilidade…|Agenda indisponível. Envie seu pedido pelo WhatsApp.|Este perfil não tem agenda publicada.|Profissional|Horários disponíveis|Nenhum horário livre|Disponível|Indisponível|Horário selecionado|Horários livres nesta semana|Confira o código do perfil.|Data e hora copiadas.",
+ it: "Trova un orario|Consulta la disponibilità pubblicata o invia una richiesta diretta.|Codice del profilo|Codice riportato sul profilo|Verifica la disponibilità|Inserisci il codice del profilo del professionista.|Agenda degli appuntamenti|Inserisci un codice o invia una richiesta qui sotto.|7 giorni precedenti|7 giorni successivi|Disponibilità per sette giorni|Chiedi al professionista di confermare orario, servizio e prezzo.|Copia data e ora|Chiedi al professionista|Vedi il profilo|Nessun orario visibile?|Invia la richiesta a DIGIYLYFE su WhatsApp. Gli orari restano liberi.|Invia una richiesta su WhatsApp|Conferma e paga direttamente al professionista. Commissione 0%.|Ricerca della disponibilità…|Agenda non disponibile. Invia la richiesta su WhatsApp.|Il profilo non ha un’agenda pubblicata.|Professionista|Orari disponibili|Nessun orario libero|Disponibile|Non disponibile|Orario selezionato|Orari liberi questa settimana|Controlla il codice del profilo.|Data e ora copiate.",
+ de: "Termin finden|Prüfe veröffentlichte Termine oder sende eine direkte Anfrage.|Profilkennung|Kennung auf dem Profil|Verfügbarkeit prüfen|Gib die Kennung aus dem Profil des Anbieters ein.|Terminplan|Gib eine Profilkennung ein oder sende unten eine Anfrage.|Vorherige 7 Tage|Nächste 7 Tage|Verfügbarkeit für sieben Tage|Bitte den Anbieter, Uhrzeit, Leistung und Preis zu bestätigen.|Datum und Uhrzeit kopieren|Beim Anbieter anfragen|Profil ansehen|Keine Termine sichtbar?|Sende deine Anfrage per WhatsApp an DIGIYLYFE. Dadurch wird kein Termin geblockt.|Anfrage per WhatsApp senden|Bestätige und bezahle direkt beim Anbieter. 0 % Provision.|Verfügbarkeit wird geprüft…|Terminplan nicht verfügbar. Sende deine Anfrage per WhatsApp.|Für dieses Profil ist kein Terminplan veröffentlicht.|Anbieter|Verfügbare Termine|Keine freien Termine|Verfügbar|Nicht verfügbar|Ausgewählter Termin|Freie Termine in dieser Woche|Prüfe die Profilkennung.|Datum und Uhrzeit kopiert.",
+ nl: "Vind een tijdstip|Bekijk de gepubliceerde beschikbaarheid of stuur een rechtstreeks verzoek.|Profielcode|Code op het profiel|Bekijk beschikbaarheid|Voer de code op het profiel van de dienstverlener in.|Afsprakenplanning|Voer een profielcode in of stuur hieronder een aanvraag.|Vorige 7 dagen|Volgende 7 dagen|Beschikbaarheid voor zeven dagen|Vraag de dienstverlener om tijd, dienst en prijs te bevestigen.|Kopieer datum en tijd|Vraag het de dienstverlener|Bekijk profiel|Geen tijdstippen zichtbaar?|Stuur je aanvraag via WhatsApp naar DIGIYLYFE. Dit houdt geen tijdstip bezet.|Stuur een aanvraag via WhatsApp|Bevestig en betaal rechtstreeks bij de dienstverlener. 0% commissie.|Beschikbaarheid wordt opgehaald…|Planning niet beschikbaar. Stuur je aanvraag via WhatsApp.|Er is geen planning gepubliceerd voor dit profiel.|Dienstverlener|Beschikbare tijden|Geen vrije tijden|Beschikbaar|Niet beschikbaar|Gekozen tijdstip|Vrije tijden deze week|Controleer de profielcode.|Datum en tijd gekopieerd.",
+ ar: "اعثر على موعد|اطّلع على الأوقات المنشورة أو أرسل طلبًا مباشرًا.|رمز ملف مقدم الخدمة|الرمز الموجود في الملف|عرض الأوقات المتاحة|أدخل الرمز الموجود في ملف مقدم الخدمة.|جدول المواعيد|أدخل رمز الملف أو أرسل طلبًا أدناه.|الأيام السبعة السابقة|الأيام السبعة التالية|الأوقات المتاحة لسبعة أيام|اطلب من مقدم الخدمة تأكيد الوقت والخدمة والسعر.|نسخ التاريخ والوقت|اسأل مقدم الخدمة|عرض الملف|لا تظهر أي أوقات؟|أرسل طلبك إلى DIGIYLYFE عبر واتساب. هذا الطلب لا يحجز موعدًا.|إرسال طلب عبر واتساب|أكّد الموعد وادفع مباشرة لمقدم الخدمة. عمولة 0٪.|جارٍ التحقق من الأوقات المتاحة…|الجدول غير متاح. أرسل طلبك عبر واتساب.|لا يوجد جدول منشور لهذا الملف.|مقدم الخدمة|الأوقات المتاحة|لا توجد أوقات شاغرة|متاح|غير متاح|الوقت المحدد|الأوقات الشاغرة هذا الأسبوع|تحقق من رمز الملف.|تم نسخ التاريخ والوقت.",
+ zh: "查找空闲时段|查看服务人员已公布的时段，或直接发送请求。|服务人员档案编号|档案上的编号|查看空闲时段|请输入服务人员档案上的编号。|预约日程|请输入档案编号，或在下方发送请求。|前七天|后七天|七天内的空闲时段|请向服务人员确认时间、服务和价格。|复制日期和时间|直接询问服务人员|查看档案|没有显示时段？|通过 WhatsApp 向 DIGIYLYFE 发送请求。此操作不会占用时段。|通过 WhatsApp 发送请求|请直接向服务人员确认并付款。佣金为 0%。|正在查询空闲时段…|暂时无法查看日程。请通过 WhatsApp 发送请求。|该档案未公布日程。|服务人员|可用时段|没有空闲时段|可用|不可用|所选时段|本周空闲时段|请检查档案编号。|日期和时间已复制。",
+ wo: "Seet waxtu|Seetal waxtu yi ki di liggéey siiwal walla yónnee laaj jub.|Koodu kart bi|Kood bi nekk ci kart bi|Xool waxtu yi féex|Dugal kood bi nekk ci kartu ki di liggéey.|Palaanu ndaje yi|Dugal koodu kart bi walla yónnee laaj ci suuf.|7 fan yi weesu|7 fan yi di ñëw|Waxtu yi féex ci 7 fan|Laajal ki di liggéey mu dëggal waxtu wi, liggéey bi ak njëg bi.|Duppi bés bi ak waxtu wi|Laaj ki di liggéey|Xool kart bi|Gisoo waxtu wu féex?|Yónneel sa laaj ci WhatsApp bu DIGIYLYFE. Laaj bii du tëj waxtu.|Yónnee laaj ci WhatsApp|Dëggalal te fey ci ki di liggéey. 0 % komisoŋ.|Ñu ngi seet waxtu yi…|Palaan bi jàppandiku wul. Yónneel sa laaj ci WhatsApp.|Siiwaluñu palaan ci kart bii.|Ki di liggéey|Waxtu yi féex|Amul waxtu wu féex|Féex na|Féexul|Waxtu wi nga tànn|Waxtu yi féex ci ayu-bés bii|Seetal koodu kart bi.|Duppi nañu bés bi ak waxtu wi.",
+};
+const copy=translations[lang]?.split('|');
+const tr=(index,french)=>copy?.[index]??french;
+document.documentElement.lang=lang;
+document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+if(copy){
+ document.title=copy[6]+' · DIGIY RÉSA';
+ document.querySelectorAll('[data-planning-text]').forEach(element=>{
+  const index=Number(element.dataset.planningText);
+  if(index===3)element.placeholder=copy[index];
+  else if(index===10)element.setAttribute('aria-label',copy[index]);
+  else element.textContent=copy[index];
+ });
+}
 function withLanguage(path, query={}){
  const target=new URL(path,location.href);
  for(const [key,value] of Object.entries(query))target.searchParams.set(key,value);
@@ -93,22 +117,22 @@ async function load(){
  $('days').replaceChildren();$('selection').hidden=true;chosen='';publicWa='';$('contact').hidden=true;$('fiche').hidden=true;
  $('pilotFallback').href=withLanguage('./demande-rdv.html',{slug:activeSlug});
  $('prev').disabled=true;$('next').disabled=true;
- announce('Consultation des horaires réels…');
- if(!db){announce('Planning indisponible hors connexion. Envoyez votre demande directement sur WhatsApp.');$('weekTitle').textContent='';return;}
+ announce(tr(19,'Consultation des horaires réels…'));
+ if(!db){announce(tr(20,'Planning indisponible hors connexion. Envoyez votre demande directement sur WhatsApp.'));$('weekTitle').textContent='';return;}
  let result;
  try{
   result=await db.rpc('digiy_resa_public_week_v1',{p_slug:activeSlug,p_start_date:iso(start)});
  }catch(_){
   if(ticket!==generation)return;
-  announce('Impossible de charger le planning. Envoyez votre demande directe sur WhatsApp.');$('weekTitle').textContent='';return;
+  announce(tr(20,'Impossible de charger le planning. Envoyez votre demande directe sur WhatsApp.'));$('weekTitle').textContent='';return;
  }
  if(ticket!==generation)return;
  const {data,error}=result||{};
  if(error||!data?.ok){
-  announce(error?'Planning temporairement indisponible. Envoyez votre demande directe sur WhatsApp.':'Aucun planning publié pour cette fiche. Vous pouvez envoyer une demande directe sur WhatsApp.');
+  announce(error?tr(20,'Planning temporairement indisponible. Envoyez votre demande directe sur WhatsApp.'):tr(21,'Aucun planning publié pour cette fiche. Vous pouvez envoyer une demande directe sur WhatsApp.'));
   $('weekTitle').textContent='';return;
  }
- $('proTitle').textContent='📅 '+(data.display_name||'Professionnel')+' — '+(data.city||'RÉSA');
+ $('proTitle').textContent='📅 '+(data.display_name||tr(22,'Professionnel'))+' — '+(data.city||'RÉSA');
  publicWa=typeof data.public_whatsapp==='string'?data.public_whatsapp:'';
  $('fiche').href=withLanguage('https://resa.digiylyfe.com/fiche.html',{slug:activeSlug});
  const slotRows=Array.isArray(data.slots)?data.slots:[];
@@ -119,12 +143,12 @@ async function load(){
   const date=iso(add(start,i));const rows=slotRows.filter(x=>x.date===date);
   const col=cell('article','', 'day');col.append(cell('h3',dayLabel(date)));
   const usable=rows.filter(x=>x.available && !(date===iso(now) && x.time<=new Date().toTimeString().slice(0,5))).length;
-  col.append(cell('span',usable?usable+' disponible(s)':'Aucun disponible','summary'));
+  col.append(cell('span',usable?(copy?tr(23,'')+' : '+usable:usable+' disponible(s)'):tr(24,'Aucun disponible'),'summary'));
   const times=cell('div','', 'times');
-  if(!rows.length)times.append(cell('span','Pas de créneau ouvert','note'));
+  if(!rows.length)times.append(cell('span',tr(24,'Pas de créneau ouvert'),'note'));
   rows.forEach(x=>{
    const usableNow=!!x.available && !(date===iso(now) && x.time<=new Date().toTimeString().slice(0,5));
-   const btn=cell('button',(x.time||'--:--')+(usableNow?' · libre':' · indisponible'),
+   const btn=cell('button',(x.time||'--:--')+(' · '+(usableNow?tr(25,'libre'):tr(26,'indisponible'))),
       'time'+(usableNow?'':' closed'));
    btn.type='button';btn.disabled=!usableNow;
    if(usableNow){
@@ -132,7 +156,7 @@ async function load(){
     btn.addEventListener('click',()=>{
      $('days').querySelectorAll('.time.selected').forEach(y=>y.classList.remove('selected'));
      btn.classList.add('selected');chosen=date+' '+x.time;
-     $('selectedText').textContent='Créneau repéré : '+dayLabel(date)+' à '+x.time;
+     $('selectedText').textContent=tr(27,'Créneau repéré')+' : '+dayLabel(date)+' · '+x.time;
      $('selection').hidden=false;
      $('fiche').hidden=false;
      if(publicWa){$('contact').hidden=false;$('contact').href='https://wa.me/'+publicWa+'?text='+encodeURIComponent('Bonjour, je souhaite demander un rendez-vous le '+date+' à '+x.time+'. Pouvez-vous confirmer votre disponibilité et les conditions ?');}else{$('contact').hidden=true;}
@@ -142,17 +166,17 @@ async function load(){
   });
   col.append(times);$('days').append(col);
  }
- announce(count?count+' horaire(s) ouvert(s) sur ces sept jours.':'Aucun créneau ouvert pour les sept jours affichés. Essayez la semaine suivante ou envoyez une demande directe sur WhatsApp.');
+ announce(count?(copy?tr(28,'')+' : '+count:count+' horaire(s) ouvert(s) sur ces sept jours.'):tr(24,'Aucun créneau ouvert pour les sept jours affichés. Essayez la semaine suivante ou envoyez une demande directe sur WhatsApp.'));
 }
 $('search').addEventListener('submit',ev=>{
  ev.preventDefault();const slug=$('slug').value.trim();
- if(!/^[\p{L}\p{N}_-]{2,150}$/u.test(slug)){announce('Identifiant invalide. Consultez la fiche du professionnel.');return}
+ if(!/^[\p{L}\p{N}_-]{2,150}$/u.test(slug)){announce(tr(29,'Identifiant invalide. Consultez la fiche du professionnel.'));return}
  activeSlug=slug;start=today();history.replaceState(null,'',withLanguage(location.pathname,{slug}));
  load();
 });
 $('prev').addEventListener('click',()=>{start=add(start,-7);load()});
 $('next').addEventListener('click',()=>{start=add(start,7);load()});
-$('copy').addEventListener('click',async()=>{if(!chosen)return;try{await navigator.clipboard.writeText(chosen);announce('Date et heure copiées.')}catch(_){announce(chosen)}});
+$('copy').addEventListener('click',async()=>{if(!chosen)return;try{await navigator.clipboard.writeText(chosen);announce(tr(30,'Date et heure copiées.'))}catch(_){announce(chosen)}});
 const initial=params.get('slug')||'';
 if(initial){$('slug').value=initial;$('search').requestSubmit()}
 })();
