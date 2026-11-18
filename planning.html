@@ -70,10 +70,20 @@ button:focus-visible,input:focus-visible{outline:3px solid #ddaf4c;outline-offse
 const db=window.supabase?window.supabase.createClient('https://wesqmwjjtsefyjnluosj.supabase.co','sb_publishable_tGHItRgeWDmGjnd0CK1DVQ_BIep4Ug3'):null;
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
+const requestedLang=(params.get('lang')||'').toLowerCase();
+const lang=/^(fr|en|es|pt|it|de|nl|ar|wo|zh)$/.test(requestedLang)?requestedLang:'fr';
+function withLanguage(path, query={}){
+ const target=new URL(path,location.href);
+ for(const [key,value] of Object.entries(query))target.searchParams.set(key,value);
+ target.searchParams.set('lang',lang);
+ return target.href;
+}
+document.querySelector('header nav a').href=withLanguage('./index.html');
+$('pilotFallback').href=withLanguage('./demande-rdv.html');
 let start=new Date(),activeSlug='',chosen='',generation=0,publicWa='';
 function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function add(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x}
-function dayLabel(s){return new Date(s+'T12:00:00').toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})}
+function dayLabel(s){return new Date(s+'T12:00:00').toLocaleDateString(lang,{weekday:'short',day:'numeric',month:'short'})}
 function today(){const d=new Date();d.setHours(0,0,0,0);return d}
 function announce(t){$('feedback').textContent=t}
 function cell(type,text,cls){const e=document.createElement(type);e.textContent=text;if(cls)e.className=cls;return e}
@@ -81,7 +91,7 @@ async function load(){
  if(!activeSlug)return;
  const ticket=++generation;
  $('days').replaceChildren();$('selection').hidden=true;chosen='';publicWa='';$('contact').hidden=true;$('fiche').hidden=true;
- $('pilotFallback').href='./demande-rdv.html'+(activeSlug?'?slug='+encodeURIComponent(activeSlug):'');
+ $('pilotFallback').href=withLanguage('./demande-rdv.html',{slug:activeSlug});
  $('prev').disabled=true;$('next').disabled=true;
  announce('Consultation des horaires réels…');
  if(!db){announce('Planning indisponible hors connexion. Envoyez votre demande directement sur WhatsApp.');$('weekTitle').textContent='';return;}
@@ -100,7 +110,7 @@ async function load(){
  }
  $('proTitle').textContent='📅 '+(data.display_name||'Professionnel')+' — '+(data.city||'RÉSA');
  publicWa=typeof data.public_whatsapp==='string'?data.public_whatsapp:'';
- $('fiche').href='https://resa.digiylyfe.com/fiche.html?slug='+encodeURIComponent(activeSlug);
+ $('fiche').href=withLanguage('https://resa.digiylyfe.com/fiche.html',{slug:activeSlug});
  const slotRows=Array.isArray(data.slots)?data.slots:[];
  $('weekTitle').textContent=dayLabel(iso(start))+' → '+dayLabel(iso(add(start,6)));
  const now=today(),edge=add(now,56);$('prev').disabled=iso(start)<=iso(now);$('next').disabled=iso(add(start,7))>iso(edge);
@@ -137,7 +147,7 @@ async function load(){
 $('search').addEventListener('submit',ev=>{
  ev.preventDefault();const slug=$('slug').value.trim();
  if(!/^[\p{L}\p{N}_-]{2,150}$/u.test(slug)){announce('Identifiant invalide. Consultez la fiche du professionnel.');return}
- activeSlug=slug;start=today();history.replaceState(null,'',location.pathname+'?slug='+encodeURIComponent(slug));
+ activeSlug=slug;start=today();history.replaceState(null,'',withLanguage(location.pathname,{slug}));
  load();
 });
 $('prev').addEventListener('click',()=>{start=add(start,-7);load()});
