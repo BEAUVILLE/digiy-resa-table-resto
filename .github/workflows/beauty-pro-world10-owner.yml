@@ -6,6 +6,8 @@ on:
       - 'resa-beauty/world10-pro.js'
       - 'resa-beauty/acces-proprietaire.html'
       - 'resa-beauty/gestion.html'
+      - 'resa-beauty/decision-contact.js'
+      - 'tests/beauty-decision-contact.test.cjs'
       - 'tests/test_beauty_pro_world10_owner.py'
       - 'tests/beauty-pro-world10.test.cjs'
       - '.github/workflows/beauty-pro-world10-owner.yml'
@@ -15,6 +17,8 @@ on:
       - 'resa-beauty/world10-pro.js'
       - 'resa-beauty/acces-proprietaire.html'
       - 'resa-beauty/gestion.html'
+      - 'resa-beauty/decision-contact.js'
+      - 'tests/beauty-decision-contact.test.cjs'
       - 'tests/test_beauty_pro_world10_owner.py'
       - 'tests/beauty-pro-world10.test.cjs'
       - '.github/workflows/beauty-pro-world10-owner.yml'
@@ -30,3 +34,5 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_beauty_pro_world10_owner.py' -v
       - name: Bascule réelle des langues sans altérer les données du salon
         run: node --test tests/beauty-pro-world10.test.cjs
+      - name: Réponses de décision manuelles et privacy, sans données de production
+        run: node --test tests/beauty-decision-contact.test.cjs
