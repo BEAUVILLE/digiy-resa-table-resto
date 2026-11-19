@@ -38,10 +38,20 @@ function msg(e){return String(e||'').slice(0,220).replace(/(?:sb_publishable_[a-
     }
     assert.ok(result.pageTitle.includes('BEAUTY'),'profile name');
     assert.equal(result.days,7,'seven day calendar');
-    assert.ok(result.clickableHours>0,'available public times');
     assert.ok(result.serviceOptions>0,'services');
-    assert.match(result.selection||'',/sélectionné/i,'hour is clickable');
-    assert.equal(result.selectedSlot,1,'slot linked to form');
+    assert.equal(result.weekNextEnabled,true,'next week remains accessible');
+    if(result.clickableHours>0){
+      assert.match(result.selection||'',/sélectionné/i,'hour is clickable');
+      assert.equal(result.selectedSlot,1,'slot linked to form');
+    }else{
+      // Real availability is owner-controlled. No open hours is a valid state,
+      // not permission to fabricate a slot merely to satisfy CI.
+      assert.match(result.calendar||'',/Aucun créneau futur ouvert sur cette semaine/i,
+        'empty calendar must show a clear no-availability message');
+      assert.equal(await page.locator('#slots .slot.active').count(),0,
+        'no artificial selection when the owner opened no future slot');
+      result.emptyStateVerified=true;
+    }
     assert.deepEqual(errors,[],'no browser JS exceptions');
     result.ok=true;
    }catch(e){result.ok=false;result.reason=msg(e.message);if(mode==='candidate')failures++;}

@@ -6,6 +6,7 @@
 <meta name="robots" content="noindex,nofollow,noarchive">
 <title>Gestion BEAUTY — DIGIYLYFE</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./decision-contact.js"></script>
 <script src="./world10-pro.js" defer></script>
 <style>
 *{box-sizing:border-box}
@@ -73,6 +74,7 @@ button{border:0;border-radius:999px;min-height:44px;padding:10px 15px;background
 <section class="card">
   <h2>Demandes de réservation</h2>
   <p class="muted">Le client prépare sa demande. Tu confirmes ou refuses directement.</p>
+<p class="muted">Après confirmation ou refus, clique sur « Prévenir le client » pour préparer un message WhatsApp : aucun message n’est envoyé automatiquement.</p>
   <div id="bookings"></div>
   <div id="bookingMsg" class="status"></div>
 </section>
@@ -165,7 +167,16 @@ async function loadBookings(){
     const when=[dateLabel(r.slot_day),String(r.slot_time||'').slice(0,5)].filter(Boolean).join(' · ');
     const price=r.service_price?new Intl.NumberFormat('fr-FR').format(Number(r.service_price))+' FCFA':'';
     const meta=[r.service_name,when,price].filter(Boolean).join(' · ');
-    const contact=digits?'<a class="ghost" href="https://wa.me/'+digits+'" target="_blank" rel="noopener">💬 WhatsApp client</a>':'';
+    // A decision only creates a voluntary, prefilled WhatsApp link; no message is sent.
+    const decisionUrl=window.DIGIYBeautyContact?.buildDecisionLink({
+      phone:r.client_whatsapp,status:r.status,service:r.service_name,
+      day:r.slot_day,time:r.slot_time
+    });
+    const contact=decisionUrl
+      ? '<a class="ghost" href="'+esc(decisionUrl)+'" target="_blank" rel="noopener noreferrer">💬 Prévenir le client</a>'
+      : /^\d{7,20}$/.test(digits)
+        ? '<a class="ghost" href="https://wa.me/'+digits+'" target="_blank" rel="noopener noreferrer">💬 WhatsApp client</a>'
+        : '';
     const decision=r.status==='request'
       ? '<button class="confirm" data-booking="'+r.id+'" data-status="confirmed">✅ Confirmer</button><button class="reject" data-booking="'+r.id+'" data-status="cancelled">✕ Refuser</button>'
       : '';
